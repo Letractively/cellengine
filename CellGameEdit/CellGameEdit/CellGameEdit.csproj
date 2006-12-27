@@ -1,0 +1,368 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{944C393E-7A36-43B2-9767-13C8CC50BBDF}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CellGameEdit</RootNamespace>
+    <AssemblyName>CellGameEdit</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Output.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Output.Designer.cs">
+      <DependentUpon>Output.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\SpriteForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\SpriteForm.Designer.cs">
+      <DependentUpon>SpriteForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\Util.cs" />
+    <Compile Include="PM\WorldForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\WorldForm.Designer.cs">
+      <DependentUpon>WorldForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Settings1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings1.settings</DependentUpon>
+    </Compile>
+    <Compile Include="TextDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TextDialog.Designer.cs">
+      <DependentUpon>TextDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\ImagesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\ImagesForm.Designer.cs">
+      <DependentUpon>ImagesForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\MapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\MapForm.Designer.cs">
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\ProjectForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\ProjectForm.Designer.cs">
+      <DependentUpon>ProjectForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Output.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Output.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\SpriteForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SpriteForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\WorldForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WorldForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TextDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\ImagesForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ImagesForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\MapForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MapForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\ProjectForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProjectForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resource1.resx">
+      <SubType>Designer</SubType>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource1.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Resource1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource1.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CellLib\CellLib.vjsproj">
+      <Project>{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}</Project>
+      <Name>CellLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\J2me\J2me.vjsproj">
+      <Project>{FD2F9C5E-1581-47B2-B3CD-75683F91394C}</Project>
+      <Name>J2me</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image1.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image2.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image3.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image4.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image5.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image6.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image7.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image8.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image9.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image10.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image11.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image13.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image12.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image14.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image15.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image16.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image17.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image18.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image19.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image20.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image21.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image22.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image23.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image24.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image25.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Resources\Image26.bmp" />
+    <None Include="Settings1.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image27.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image28.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image29.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image30.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image31.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image32.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image33.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image34.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image35.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image36.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image37.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image38.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image39.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image40.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image41.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image42.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image43.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image44.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image45.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image46.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image47.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image48.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image49.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image50.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image51.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image52.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image53.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image54.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image55.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image56.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image57.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image58.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image59.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Image60.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="script\ResesScript.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

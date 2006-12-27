@@ -1,0 +1,241 @@
+﻿package javax.microedition.lcdui;
+
+/**
+ * Graphics 的摘要说明。
+ */
+public class Graphics
+{
+	protected System.Drawing.Graphics dg;
+	protected System.Drawing.Pen pen = System.Drawing.Pens.get_Black();
+	protected System.Drawing.Brush brush = System.Drawing.Brushes.get_Black();
+	protected System.Drawing.Font font = new System.Drawing.Font(System.Drawing.FontFamily.get_Families()[0],8);
+	protected System.Drawing.Color color = System.Drawing.Color.get_Black();
+
+	/** 不翻转 */
+	final static byte TRANS_NONE = 0;
+	/** 水平翻转 */
+	final static byte TRANS_H = 2;
+	/** 垂直翻转 */
+	final static byte TRANS_V = 1;
+	/** 180度翻转 */
+	final static byte TRANS_HV = 3;
+	/** 逆时针90度翻转 */
+	final static byte TRANS_90 = 6;
+	/** 逆时针270度翻转 */
+	final static byte TRANS_270 = 5;
+	/** 先逆时针90度翻转，然后在水平翻转 */
+	final static byte TRANS_H90 = 4;
+	/** 先逆时针90度翻转，然后在垂直翻转 */
+	final static byte TRANS_V90 = 7;
+	/** 180度翻转 */
+	final static byte TRANS_180 = 3; // 180 = HV
+
+	
+
+	//    public static Graphics g;
+	//public static int BASELINE	;
+	//public static int BOTTOM	;
+	//public static int DOTTED	;
+	//public static int HCENTER	;
+	public static int LEFT		;
+	//public static int RIGHT		;
+	//public static int SOLID		;
+	public static int TOP		;
+	//public static int VCENTER	;
+
+
+	public Graphics(System.Drawing.Graphics sdg)
+	{
+		dg = sdg;
+	}
+
+
+	public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
+	{
+		dg.DrawArc(pen,x,y,width,height,startAngle,arcAngle);
+	}
+	public void drawImage(javax.microedition.lcdui.Image img, int x, int y, int anchor)
+	{
+		dg.DrawImage(img.dimg,
+			new System.Drawing.Rectangle(x, y, img.getWidth(), img.getHeight()),
+			new System.Drawing.Rectangle(0, 0, img.getWidth(), img.getHeight()),
+			System.Drawing.GraphicsUnit.Pixel
+			);
+	}
+	public void drawLine(int x1, int y1, int x2, int y2)
+	{
+		dg.DrawLine(pen, x1, y1, x2, y2);
+	}
+	public void drawRect(int x, int y, int width, int height)
+	{
+		dg.DrawRectangle(pen, x, y, width, height);
+	}
+
+	public void drawImage(
+		javax.microedition.lcdui.Image img, 
+		int x, int y, 
+		System.Drawing.RotateFlipType transform,
+		int anchor)
+	{
+		img.dimg.RotateFlip(transform);
+		dg.DrawImage(img.dimg, 
+			new System.Drawing.Rectangle(x, y, img.getWidth(), img.getHeight()),
+			new System.Drawing.Rectangle(0, 0, img.getWidth(), img.getHeight()),
+			System.Drawing.GraphicsUnit.Pixel
+			);
+		switch (transform)
+		{
+			case System.Drawing.RotateFlipType.RotateNoneFlipX://4
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
+				break;
+			case System.Drawing.RotateFlipType.RotateNoneFlipY://6
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
+				break;
+			//case TRANS_180:
+			case System.Drawing.RotateFlipType.RotateNoneFlipXY://2
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipXY);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipNone://1
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipNone://3
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipX://5
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipX);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipX://7
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipX);
+				break;
+			default:
+		}
+		//img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipNone);
+
+	}
+
+
+	public void drawRegion(javax.microedition.lcdui.Image src, int x_src, int y_src, int width, int height, int transform, int x_dest, int y_dest, int anchor)
+	{
+		System.Drawing.RotateFlipType rt = System.Drawing.RotateFlipType.RotateNoneFlipNone;
+		switch(transform)
+		{
+		case TRANS_H :
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.RotateNoneFlipX);
+			break;
+		case TRANS_V :
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.RotateNoneFlipY);
+			break;
+		//case TRANS_180:
+		case TRANS_HV:
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.RotateNoneFlipXY);
+			break;
+		case TRANS_90:
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.Rotate90FlipNone);
+			break;
+		case TRANS_270:
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.Rotate270FlipNone);
+			break;
+		case TRANS_H90:
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.Rotate90FlipX);
+			break;
+		case TRANS_V90:
+			src.dimg.RotateFlip(rt = System.Drawing.RotateFlipType.Rotate90FlipY);
+			break;
+		case TRANS_NONE:
+			
+			break;
+		default:
+		}
+		dg.DrawImage(src.dimg,
+			new System.Drawing.Rectangle(0, 0, width, height),
+			new System.Drawing.Rectangle(x_src, y_src, width, height),
+			System.Drawing.GraphicsUnit.Pixel);
+		switch (rt)
+		{
+			case System.Drawing.RotateFlipType.RotateNoneFlipX://4
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
+				break;
+			case System.Drawing.RotateFlipType.RotateNoneFlipY://6
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
+				break;
+			//case TRANS_180:
+			case System.Drawing.RotateFlipType.RotateNoneFlipXY://2
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipXY);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipNone://1
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipNone://3
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipX://5
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipX);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipX://7
+				src.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipX);
+				break;
+			default:
+		}
+		//src.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipNone);
+		
+		
+	}
+
+	public void drawString(String str, int x, int y, int anchor)
+	{
+		
+		dg.DrawString(str, font, brush, x, y);
+	}
+
+	public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle)
+	{
+		dg.FillPie(brush, x, y, width, height, startAngle, arcAngle);
+	}
+	public void fillRect(int x, int y, int width, int height)
+	{
+		dg.FillRectangle(brush, x, y, width, height);
+	}
+	
+	
+	public int getClipHeight()
+	{
+		return (int)dg.get_ClipBounds().get_Height();
+	}
+	public int getClipWidth()
+	{
+		return (int)dg.get_ClipBounds().get_Width();
+	}
+	public int getClipX()
+	{
+		return (int)dg.get_ClipBounds().get_X();
+	}
+	public int getClipY()
+	{
+		return (int)dg.get_ClipBounds().get_Y();
+	}
+
+	public void setClip(int x, int y, int width, int height)
+	{
+		dg.SetClip(new System.Drawing.Rectangle(x, y, width, height));
+	}
+	public void setColor(int RGB)
+	{
+		color = System.Drawing.Color.FromArgb(RGB);
+		pen = new System.Drawing.Pen(color);
+		brush = pen.get_Brush();
+	}
+
+	public void setColor(int red, int green, int blue)
+	{
+		color = System.Drawing.Color.FromArgb(red, green, blue);
+		pen = new System.Drawing.Pen(color);
+		brush = pen.get_Brush();
+	}
+	public void setColor(int alpha,int red, int green, int blue)
+	{
+		color = System.Drawing.Color.FromArgb(alpha,red, green, blue);
+		pen = new System.Drawing.Pen(color);
+		brush = pen.get_Brush();
+	}
+
+}

@@ -1,0 +1,132 @@
+﻿package javax.microedition.lcdui;
+import java.io.IOException;
+
+public class Image
+{
+	protected System.Drawing.Image dimg;
+	private boolean mutable = true;
+
+	public boolean selected = false;
+	public int x = 0;
+	public int y = 0;
+
+	public boolean used = false;
+
+	public Image(System.Drawing.Image DImage)
+	{
+		dimg = DImage;
+		mutable = false;
+
+	}
+
+
+	public static javax.microedition.lcdui.Image createImage(byte[] imageData, int imageOffset, int imageLength)
+	{
+		
+		ubyte[] data = new ubyte[imageLength];
+
+		for (int i = 0; i < imageLength; i++)
+		{
+			data[i] = (ubyte)imageData[imageOffset+i];
+		}
+
+
+		System.IO.MemoryStream ms = new System.IO.MemoryStream(data);
+
+		System.Drawing.Image image = System.Drawing.Image.FromStream(ms);
+		
+		Image ret = new Image(image);
+
+		ret.mutable = false;
+		return ret;
+		
+	}
+
+	public static javax.microedition.lcdui.Image createImage(javax.microedition.lcdui.Image source) 
+	{
+
+		try{
+			return (javax.microedition.lcdui.Image)(source.clone());
+		}catch(CloneNotSupportedException err){
+			System.Windows.Forms.MessageBox.Show(err.get_Message()); 
+			return null;
+		}
+	}
+
+	public static javax.microedition.lcdui.Image createImage(int width, int height)
+	{
+		System.Drawing.Image image = new System.Drawing.Bitmap(width, height);
+		Image ret = new Image(image);
+		return ret;
+	}
+
+	public static javax.microedition.lcdui.Image createImage(String name) throws IOException
+	{
+
+		System.Drawing.Image image = System.Drawing.Image.FromFile(name);
+
+		Image ret = new Image(image);
+		ret.mutable = false;
+		return ret;
+	}
+
+	public static javax.microedition.lcdui.Image createRGBImage(int[] rgb, int width, int height, boolean processAlpha)
+	{
+		System.Drawing.Image image = new System.Drawing.Bitmap(width, height);
+
+		Image ret = new Image(image);
+
+		return ret;
+	}
+
+	public static javax.microedition.lcdui.Image createImage(javax.microedition.lcdui.Image image, int x, int y, int width, int height, int transform)
+	{
+
+		Image ret = Image.createImage(width, height);
+
+		ret.getGraphics().drawRegion(image, x, y, width, height, transform, 0, 0,0);
+
+
+		return ret;
+
+	}
+
+	//-----------------------------------------------------------------------------------------------------------------------------------
+
+	public Graphics getGraphics()
+	{
+		Graphics g = new Graphics(System.Drawing.Graphics.FromImage(dimg));
+
+		return g;
+	}
+
+	
+
+	public int getHeight()
+	{
+		return dimg.get_Height();
+	}
+	public int getWidth()
+	{
+	
+		return dimg.get_Width();
+	}
+
+	public boolean isMutable()
+	{
+		return true;
+	}
+
+	public void getRGB(int[] rgbData, int offset, int scanlength, int x, int y, int width, int height)
+	{
+	
+	}
+
+
+	public System.Drawing.Image getDImage()
+	{
+		return dimg;
+	}
+
+
+}
