@@ -1,0 +1,80 @@
+﻿package AppGameBMS;
+
+import System.Collections.Generic.*;
+import System.ComponentModel.*;
+import System.Data.*;
+import System.Drawing.*;
+import System.Windows.Forms.*;
+
+/**
+ * About 的摘要说明。
+ */
+public class About extends System.Windows.Forms.Form
+{
+	private RichTextBox richTextBox1;
+	/**
+	 * 必需的设计器变量。
+	 */
+	private System.ComponentModel.IContainer components;
+
+	public About()
+	{
+		//
+		// Windows Form 设计器支持所必需的
+		//
+		InitializeComponent();
+
+		//
+		// TODO: 在 InitializeComponent 调用之后添加任何构造函数代码
+		//
+	}
+
+	#region Windows 窗体设计器生成的代码
+	/**
+     * 清理所有正在使用的资源。
+     */
+	protected void Dispose(boolean disposing)
+	{
+		if (disposing)
+		{
+			if (components != null)
+			{
+				components.Dispose();
+			}
+		}
+		super.Dispose(disposing);
+	}
+
+	/**
+	 * 设计器支持所需的方法 - 不要
+	 * 使用代码编辑器修改此方法的内容。
+	 */
+	private void InitializeComponent()
+	{
+		this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+		this.SuspendLayout();
+		// 
+		// richTextBox1
+		// 
+		this.richTextBox1.set_Location(new System.Drawing.Point(12, 12));
+		this.richTextBox1.set_Name("richTextBox1");
+		this.richTextBox1.set_ReadOnly(true);
+		this.richTextBox1.set_Size(new System.Drawing.Size(332, 134));
+		this.richTextBox1.set_TabIndex(0);
+		this.richTextBox1.set_Text("Email : drummer_waza@hotmail.com\nMSN : drummer_waza@hotmail.com\nQQ : 26958445 \nQQ" +
+		"群 : 10911748");
+		// 
+		// About
+		// 
+		this.set_AutoScaleDimensions(new System.Drawing.SizeF(6F, 12F));
+		this.set_AutoScaleMode(System.Windows.Forms.AutoScaleMode.Font);
+		this.set_ClientSize(new System.Drawing.Size(356, 158));
+		this.get_Controls().Add(this.richTextBox1);
+		this.set_Name("About");
+		this.set_StartPosition(System.Windows.Forms.FormStartPosition.CenterParent);
+		this.set_Text("BmsPlayer (beta) Produced  by WAZA");
+		this.ResumeLayout(false);
+
+	}
+	#endregion
+}

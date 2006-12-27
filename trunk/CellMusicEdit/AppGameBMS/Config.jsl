@@ -1,0 +1,856 @@
+﻿package AppGameBMS;
+
+import System.Collections.Generic.*;
+import System.ComponentModel.*;
+import System.Data.*;
+import System.Drawing.*;
+import System.Windows.Forms.*;
+
+/**
+ * Config 的摘要说明。
+ */
+public class Config extends System.Windows.Forms.Form
+{
+	private TabControl tabControl1;
+	private TabPage tabPage1;
+	private TabPage tabPage2;
+	private Label label1;
+	private Button button18;
+	private Button button19;
+	private NumericUpDown numericUpDown1;
+	private Label label2;
+	private CheckedListBox checkedListBox1;
+	private TextBox textBox6;
+	private TextBox textBox7;
+	private TextBox textBox8;
+	private TextBox textBox9;
+	private TextBox textBox10;
+	private TextBox textBox5;
+	private TextBox textBox4;
+	private TextBox textBox3;
+	private TextBox textBox2;
+	private TextBox textBox1;
+	private TextBox textBox12;
+	private TextBox textBox11;
+	private Label label4;
+	private Label label3;
+	private Timer timer1;
+	private TextBox textBox16;
+	private TextBox textBox15;
+	private TextBox textBox14;
+	private TextBox textBox13;
+	private Label label5;
+	private NumericUpDown numericUpDown2;
+	private Label label7;
+	private Label label6;
+	private TrackBar trackBar2;
+	private TrackBar trackBar1;
+	/**
+	 * 必需的设计器变量。
+	 */
+	private System.ComponentModel.IContainer components;
+
+	public Config()
+	{
+		//
+		// Windows Form 设计器支持所必需的
+		//
+		InitializeComponent();
+
+		//
+		// TODO: 在 InitializeComponent 调用之后添加任何构造函数代码
+		//
+		numericUpDown1.set_Value(Form1.configFile.get_LineCount());
+		numericUpDown2.set_Value(Form1.configFile.get_GameSpeed());
+
+		trackBar1.set_Value(Form1.configFile.get_VolumeBGM());
+		trackBar2.set_Value(Form1.configFile.get_VolumeKEY());
+
+		checkedListBox1.SetItemChecked(0, Form1.configFile.get_Auto1PKeySC());
+		checkedListBox1.SetItemChecked(1, Form1.configFile.get_Auto1PKey1());
+		checkedListBox1.SetItemChecked(2, Form1.configFile.get_Auto1PKey2());
+		checkedListBox1.SetItemChecked(3, Form1.configFile.get_Auto1PKey3());
+		checkedListBox1.SetItemChecked(4, Form1.configFile.get_Auto1PKey4());
+		checkedListBox1.SetItemChecked(5, Form1.configFile.get_Auto1PKey5());
+		checkedListBox1.SetItemChecked(6, Form1.configFile.get_Auto1PKey6());
+		checkedListBox1.SetItemChecked(7, Form1.configFile.get_Auto1PKey7());
+
+		checkedListBox1.SetItemChecked(8, Form1.configFile.get_Auto2PKey1());
+		checkedListBox1.SetItemChecked(9, Form1.configFile.get_Auto2PKey2());
+		checkedListBox1.SetItemChecked(10, Form1.configFile.get_Auto2PKey3());
+		checkedListBox1.SetItemChecked(11, Form1.configFile.get_Auto2PKey4());
+		checkedListBox1.SetItemChecked(12, Form1.configFile.get_Auto2PKey5());
+		checkedListBox1.SetItemChecked(13, Form1.configFile.get_Auto2PKey6());
+		checkedListBox1.SetItemChecked(14, Form1.configFile.get_Auto2PKey7());
+		checkedListBox1.SetItemChecked(15, Form1.configFile.get_Auto2PKeySC());
+
+
+		
+
+		timer1.Start();
+	}
+
+	#region Windows 窗体设计器生成的代码
+	/**
+     * 清理所有正在使用的资源。
+     */
+	protected void Dispose(boolean disposing)
+	{
+		if (disposing)
+		{
+			if (components != null)
+			{
+				components.Dispose();
+			}
+		}
+		super.Dispose(disposing);
+	}
+
+	/**
+	 * 设计器支持所需的方法 - 不要
+	 * 使用代码编辑器修改此方法的内容。
+	 */
+	private void InitializeComponent()
+	{
+		this.components = new System.ComponentModel.Container();
+		this.tabControl1 = new System.Windows.Forms.TabControl();
+		this.tabPage1 = new System.Windows.Forms.TabPage();
+		this.textBox16 = new System.Windows.Forms.TextBox();
+		this.textBox15 = new System.Windows.Forms.TextBox();
+		this.textBox14 = new System.Windows.Forms.TextBox();
+		this.textBox13 = new System.Windows.Forms.TextBox();
+		this.label4 = new System.Windows.Forms.Label();
+		this.label3 = new System.Windows.Forms.Label();
+		this.textBox12 = new System.Windows.Forms.TextBox();
+		this.textBox11 = new System.Windows.Forms.TextBox();
+		this.textBox6 = new System.Windows.Forms.TextBox();
+		this.textBox7 = new System.Windows.Forms.TextBox();
+		this.textBox8 = new System.Windows.Forms.TextBox();
+		this.textBox9 = new System.Windows.Forms.TextBox();
+		this.textBox10 = new System.Windows.Forms.TextBox();
+		this.textBox5 = new System.Windows.Forms.TextBox();
+		this.textBox4 = new System.Windows.Forms.TextBox();
+		this.textBox3 = new System.Windows.Forms.TextBox();
+		this.textBox2 = new System.Windows.Forms.TextBox();
+		this.textBox1 = new System.Windows.Forms.TextBox();
+		this.label2 = new System.Windows.Forms.Label();
+		this.checkedListBox1 = new System.Windows.Forms.CheckedListBox();
+		this.tabPage2 = new System.Windows.Forms.TabPage();
+		this.trackBar2 = new System.Windows.Forms.TrackBar();
+		this.trackBar1 = new System.Windows.Forms.TrackBar();
+		this.label7 = new System.Windows.Forms.Label();
+		this.label6 = new System.Windows.Forms.Label();
+		this.label5 = new System.Windows.Forms.Label();
+		this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+		this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+		this.label1 = new System.Windows.Forms.Label();
+		this.button18 = new System.Windows.Forms.Button();
+		this.button19 = new System.Windows.Forms.Button();
+		this.timer1 = new System.Windows.Forms.Timer(this.components);
+		this.tabControl1.SuspendLayout();
+		this.tabPage1.SuspendLayout();
+		this.tabPage2.SuspendLayout();
+		((System.ComponentModel.ISupportInitialize)(this.trackBar2)).BeginInit();
+		((System.ComponentModel.ISupportInitialize)(this.trackBar1)).BeginInit();
+		((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
+		((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+		this.SuspendLayout();
+		// 
+		// tabControl1
+		// 
+		this.tabControl1.get_Controls().Add(this.tabPage1);
+		this.tabControl1.get_Controls().Add(this.tabPage2);
+		this.tabControl1.set_Dock(System.Windows.Forms.DockStyle.Top);
+		this.tabControl1.set_Location(new System.Drawing.Point(0, 0));
+		this.tabControl1.set_Name("tabControl1");
+		this.tabControl1.set_SelectedIndex(0);
+		this.tabControl1.set_Size(new System.Drawing.Size(577, 339));
+		this.tabControl1.set_TabIndex(0);
+		// 
+		// tabPage1
+		// 
+		this.tabPage1.get_Controls().Add(this.textBox16);
+		this.tabPage1.get_Controls().Add(this.textBox15);
+		this.tabPage1.get_Controls().Add(this.textBox14);
+		this.tabPage1.get_Controls().Add(this.textBox13);
+		this.tabPage1.get_Controls().Add(this.label4);
+		this.tabPage1.get_Controls().Add(this.label3);
+		this.tabPage1.get_Controls().Add(this.textBox12);
+		this.tabPage1.get_Controls().Add(this.textBox11);
+		this.tabPage1.get_Controls().Add(this.textBox6);
+		this.tabPage1.get_Controls().Add(this.textBox7);
+		this.tabPage1.get_Controls().Add(this.textBox8);
+		this.tabPage1.get_Controls().Add(this.textBox9);
+		this.tabPage1.get_Controls().Add(this.textBox10);
+		this.tabPage1.get_Controls().Add(this.textBox5);
+		this.tabPage1.get_Controls().Add(this.textBox4);
+		this.tabPage1.get_Controls().Add(this.textBox3);
+		this.tabPage1.get_Controls().Add(this.textBox2);
+		this.tabPage1.get_Controls().Add(this.textBox1);
+		this.tabPage1.get_Controls().Add(this.label2);
+		this.tabPage1.get_Controls().Add(this.checkedListBox1);
+		this.tabPage1.set_Location(new System.Drawing.Point(4, 22));
+		this.tabPage1.set_Name("tabPage1");
+		this.tabPage1.set_Padding(new System.Windows.Forms.Padding(3));
+		this.tabPage1.set_Size(new System.Drawing.Size(569, 313));
+		this.tabPage1.set_TabIndex(0);
+		this.tabPage1.set_Text("Key Setting");
+		this.tabPage1.set_UseVisualStyleBackColor(true);
+		this.tabPage1.add_Click(new System.EventHandler(this.tabPage1_Click));
+		// 
+		// textBox16
+		// 
+		this.textBox16.set_BackColor(System.Drawing.Color.get_Red());
+		this.textBox16.set_Location(new System.Drawing.Point(29, 252));
+		this.textBox16.set_Name("textBox16");
+		this.textBox16.set_Size(new System.Drawing.Size(248, 21));
+		this.textBox16.set_TabIndex(24);
+		this.textBox16.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox16_KeyDown));
+		// 
+		// textBox15
+		// 
+		this.textBox15.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox15.set_Location(new System.Drawing.Point(29, 225));
+		this.textBox15.set_Name("textBox15");
+		this.textBox15.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox15.set_TabIndex(23);
+		this.textBox15.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox15_KeyDown));
+		// 
+		// textBox14
+		// 
+		this.textBox14.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox14.set_Location(new System.Drawing.Point(156, 213));
+		this.textBox14.set_Name("textBox14");
+		this.textBox14.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox14.set_TabIndex(22);
+		this.textBox14.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox14_KeyDown));
+		// 
+		// textBox13
+		// 
+		this.textBox13.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox13.set_Location(new System.Drawing.Point(29, 198));
+		this.textBox13.set_Name("textBox13");
+		this.textBox13.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox13.set_TabIndex(21);
+		this.textBox13.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox13_KeyDown));
+		// 
+		// label4
+		// 
+		this.label4.set_AutoSize(true);
+		this.label4.set_Location(new System.Drawing.Point(6, 147));
+		this.label4.set_Name("label4");
+		this.label4.set_Size(new System.Drawing.Size(17, 12));
+		this.label4.set_TabIndex(20);
+		this.label4.set_Text("2P");
+		// 
+		// label3
+		// 
+		this.label3.set_AutoSize(true);
+		this.label3.set_Location(new System.Drawing.Point(6, 12));
+		this.label3.set_Name("label3");
+		this.label3.set_Size(new System.Drawing.Size(17, 12));
+		this.label3.set_TabIndex(19);
+		this.label3.set_Text("1P");
+		// 
+		// textBox12
+		// 
+		this.textBox12.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox12.set_Location(new System.Drawing.Point(156, 186));
+		this.textBox12.set_Name("textBox12");
+		this.textBox12.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox12.set_TabIndex(18);
+		this.textBox12.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox12_KeyDown));
+		// 
+		// textBox11
+		// 
+		this.textBox11.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox11.set_Location(new System.Drawing.Point(29, 171));
+		this.textBox11.set_Name("textBox11");
+		this.textBox11.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox11.set_TabIndex(17);
+		this.textBox11.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox11_KeyDown));
+		// 
+		// textBox6
+		// 
+		this.textBox6.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox6.set_Location(new System.Drawing.Point(29, 90));
+		this.textBox6.set_Name("textBox6");
+		this.textBox6.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox6.set_TabIndex(16);
+		this.textBox6.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox6_KeyDown));
+		// 
+		// textBox7
+		// 
+		this.textBox7.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox7.set_Location(new System.Drawing.Point(156, 103));
+		this.textBox7.set_Name("textBox7");
+		this.textBox7.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox7.set_TabIndex(15);
+		this.textBox7.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox7_KeyDown));
+		// 
+		// textBox8
+		// 
+		this.textBox8.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox8.set_Location(new System.Drawing.Point(29, 117));
+		this.textBox8.set_Name("textBox8");
+		this.textBox8.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox8.set_TabIndex(14);
+		this.textBox8.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox8_KeyDown));
+		// 
+		// textBox9
+		// 
+		this.textBox9.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox9.set_Location(new System.Drawing.Point(29, 144));
+		this.textBox9.set_Name("textBox9");
+		this.textBox9.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox9.set_TabIndex(13);
+		this.textBox9.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox9_KeyDown));
+		// 
+		// textBox10
+		// 
+		this.textBox10.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox10.set_Location(new System.Drawing.Point(156, 159));
+		this.textBox10.set_Name("textBox10");
+		this.textBox10.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox10.set_TabIndex(12);
+		this.textBox10.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox10_KeyDown));
+		// 
+		// textBox5
+		// 
+		this.textBox5.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox5.set_Location(new System.Drawing.Point(156, 76));
+		this.textBox5.set_Name("textBox5");
+		this.textBox5.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox5.set_TabIndex(11);
+		this.textBox5.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox5_KeyDown));
+		// 
+		// textBox4
+		// 
+		this.textBox4.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox4.set_Location(new System.Drawing.Point(29, 63));
+		this.textBox4.set_Name("textBox4");
+		this.textBox4.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox4.set_TabIndex(10);
+		this.textBox4.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox4_KeyDown));
+		// 
+		// textBox3
+		// 
+		this.textBox3.set_BackColor(System.Drawing.Color.FromArgb(((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)128))), ((int)(System.Int32)(((ubyte)255)))));
+		this.textBox3.set_Location(new System.Drawing.Point(156, 49));
+		this.textBox3.set_Name("textBox3");
+		this.textBox3.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox3.set_TabIndex(9);
+		this.textBox3.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox3_KeyDown));
+		// 
+		// textBox2
+		// 
+		this.textBox2.set_BackColor(System.Drawing.Color.get_Gray());
+		this.textBox2.set_Location(new System.Drawing.Point(29, 36));
+		this.textBox2.set_Name("textBox2");
+		this.textBox2.set_Size(new System.Drawing.Size(121, 21));
+		this.textBox2.set_TabIndex(8);
+		this.textBox2.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox2_KeyDown));
+		// 
+		// textBox1
+		// 
+		this.textBox1.set_BackColor(System.Drawing.Color.get_Red());
+		this.textBox1.set_Location(new System.Drawing.Point(29, 9));
+		this.textBox1.set_Name("textBox1");
+		this.textBox1.set_Size(new System.Drawing.Size(248, 21));
+		this.textBox1.set_TabIndex(7);
+		this.textBox1.add_TextChanged(new System.EventHandler(this.textBox1_TextChanged));
+		this.textBox1.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown));
+		// 
+		// label2
+		// 
+		this.label2.set_AutoSize(true);
+		this.label2.set_Location(new System.Drawing.Point(414, 12));
+		this.label2.set_Name("label2");
+		this.label2.set_Size(new System.Drawing.Size(53, 12));
+		this.label2.set_TabIndex(6);
+		this.label2.set_Text("Key Auto");
+		// 
+		// checkedListBox1
+		// 
+		this.checkedListBox1.set_CheckOnClick(true);
+		this.checkedListBox1.set_FormattingEnabled(true);
+		this.checkedListBox1.get_Items().AddRange(new Object[] {
+            "1P SC",
+            "1P KEY 1",
+            "1P KEY 2",
+            "1P KEY 3",
+            "1P KEY 4",
+            "1P KEY 5",
+            "1P KEY 6",
+            "1P KEY 7",
+            "2P KEY 1",
+            "2P KEY 2",
+            "2P KEY 3",
+            "2P KEY 4",
+            "2P KEY 5",
+            "2P KEY 6",
+            "2P KEY 7",
+            "2P SC"}
+		);
+		this.checkedListBox1.set_Location(new System.Drawing.Point(473, 9));
+		this.checkedListBox1.set_Name("checkedListBox1");
+		this.checkedListBox1.set_Size(new System.Drawing.Size(88, 260));
+		this.checkedListBox1.set_TabIndex(5);
+		// 
+		// tabPage2
+		// 
+		this.tabPage2.get_Controls().Add(this.trackBar2);
+		this.tabPage2.get_Controls().Add(this.trackBar1);
+		this.tabPage2.get_Controls().Add(this.label7);
+		this.tabPage2.get_Controls().Add(this.label6);
+		this.tabPage2.get_Controls().Add(this.label5);
+		this.tabPage2.get_Controls().Add(this.numericUpDown2);
+		this.tabPage2.get_Controls().Add(this.numericUpDown1);
+		this.tabPage2.get_Controls().Add(this.label1);
+		this.tabPage2.set_Location(new System.Drawing.Point(4, 22));
+		this.tabPage2.set_Name("tabPage2");
+		this.tabPage2.set_Padding(new System.Windows.Forms.Padding(3));
+		this.tabPage2.set_Size(new System.Drawing.Size(569, 313));
+		this.tabPage2.set_TabIndex(1);
+		this.tabPage2.set_Text("Game Setting");
+		this.tabPage2.set_UseVisualStyleBackColor(true);
+		// 
+		// trackBar2
+		// 
+		this.trackBar2.set_Location(new System.Drawing.Point(79, 113));
+		this.trackBar2.set_Maximum(100);
+		this.trackBar2.set_Name("trackBar2");
+		this.trackBar2.set_Size(new System.Drawing.Size(120, 42));
+		this.trackBar2.set_TabIndex(8);
+		this.trackBar2.set_TickFrequency(5);
+		// 
+		// trackBar1
+		// 
+		this.trackBar1.set_Location(new System.Drawing.Point(79, 65));
+		this.trackBar1.set_Maximum(100);
+		this.trackBar1.set_Name("trackBar1");
+		this.trackBar1.set_Size(new System.Drawing.Size(120, 42));
+		this.trackBar1.set_TabIndex(7);
+		this.trackBar1.set_TickFrequency(5);
+		// 
+		// label7
+		// 
+		this.label7.set_AutoSize(true);
+		this.label7.set_Location(new System.Drawing.Point(8, 113));
+		this.label7.set_Name("label7");
+		this.label7.set_Size(new System.Drawing.Size(65, 12));
+		this.label7.set_TabIndex(6);
+		this.label7.set_Text("Volume KEY");
+		// 
+		// label6
+		// 
+		this.label6.set_AutoSize(true);
+		this.label6.set_Location(new System.Drawing.Point(8, 65));
+		this.label6.set_Name("label6");
+		this.label6.set_Size(new System.Drawing.Size(65, 12));
+		this.label6.set_TabIndex(5);
+		this.label6.set_Text("Volume BGM");
+		// 
+		// label5
+		// 
+		this.label5.set_AutoSize(true);
+		this.label5.set_Location(new System.Drawing.Point(8, 38));
+		this.label5.set_Name("label5");
+		this.label5.set_Size(new System.Drawing.Size(35, 12));
+		this.label5.set_TabIndex(4);
+		this.label5.set_Text("Speed");
+		// 
+		// numericUpDown2
+		// 
+		this.numericUpDown2.set_Location(new System.Drawing.Point(79, 38));
+		this.numericUpDown2.set_Minimum(new System.Decimal(new int[] {
+            1,
+            0,
+            0,
+            0}
+		));
+		this.numericUpDown2.set_Name("numericUpDown2");
+		this.numericUpDown2.set_ReadOnly(true);
+		this.numericUpDown2.set_Size(new System.Drawing.Size(120, 21));
+		this.numericUpDown2.set_TabIndex(3);
+		this.numericUpDown2.set_Value(new System.Decimal(new int[] {
+            20,
+            0,
+            0,
+            0}
+		));
+		// 
+		// numericUpDown1
+		// 
+		this.numericUpDown1.set_Location(new System.Drawing.Point(79, 11));
+		this.numericUpDown1.set_Maximum(new System.Decimal(new int[] {
+            16,
+            0,
+            0,
+            0}
+		));
+		this.numericUpDown1.set_Minimum(new System.Decimal(new int[] {
+            1,
+            0,
+            0,
+            0}
+		));
+		this.numericUpDown1.set_Name("numericUpDown1");
+		this.numericUpDown1.set_ReadOnly(true);
+		this.numericUpDown1.set_Size(new System.Drawing.Size(120, 21));
+		this.numericUpDown1.set_TabIndex(2);
+		this.numericUpDown1.set_Value(new System.Decimal(new int[] {
+            8,
+            0,
+            0,
+            0}
+		));
+		// 
+		// label1
+		// 
+		this.label1.set_AutoSize(true);
+		this.label1.set_Location(new System.Drawing.Point(8, 11));
+		this.label1.set_Name("label1");
+		this.label1.set_Size(new System.Drawing.Size(65, 12));
+		this.label1.set_TabIndex(1);
+		this.label1.set_Text("Key Number");
+		// 
+		// button18
+		// 
+		this.button18.set_Location(new System.Drawing.Point(409, 345));
+		this.button18.set_Name("button18");
+		this.button18.set_Size(new System.Drawing.Size(75, 23));
+		this.button18.set_TabIndex(1);
+		this.button18.set_Text("OK");
+		this.button18.set_UseVisualStyleBackColor(true);
+		this.button18.add_Click(new System.EventHandler(this.button18_Click));
+		// 
+		// button19
+		// 
+		this.button19.set_Location(new System.Drawing.Point(490, 345));
+		this.button19.set_Name("button19");
+		this.button19.set_Size(new System.Drawing.Size(75, 23));
+		this.button19.set_TabIndex(2);
+		this.button19.set_Text("Cancel");
+		this.button19.set_UseVisualStyleBackColor(true);
+		this.button19.add_Click(new System.EventHandler(this.button19_Click));
+		// 
+		// timer1
+		// 
+		this.timer1.set_Enabled(true);
+		this.timer1.set_Interval(20);
+		this.timer1.add_Tick(new System.EventHandler(this.timer1_Tick));
+		// 
+		// Config
+		// 
+		this.set_AutoScaleDimensions(new System.Drawing.SizeF(6F, 12F));
+		this.set_AutoScaleMode(System.Windows.Forms.AutoScaleMode.Font);
+		this.set_ClientSize(new System.Drawing.Size(577, 380));
+		this.get_Controls().Add(this.button19);
+		this.get_Controls().Add(this.button18);
+		this.get_Controls().Add(this.tabControl1);
+		this.set_Name("Config");
+		this.set_StartPosition(System.Windows.Forms.FormStartPosition.CenterParent);
+		this.set_Text("Config");
+		this.add_Load(new System.EventHandler(this.Config_Load));
+		this.tabControl1.ResumeLayout(false);
+		this.tabPage1.ResumeLayout(false);
+		this.tabPage1.PerformLayout();
+		this.tabPage2.ResumeLayout(false);
+		this.tabPage2.PerformLayout();
+		((System.ComponentModel.ISupportInitialize)(this.trackBar2)).EndInit();
+		((System.ComponentModel.ISupportInitialize)(this.trackBar1)).EndInit();
+		((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
+		((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+		this.ResumeLayout(false);
+
+	}
+	#endregion
+
+	private void button18_Click(Object sender, System.EventArgs e)
+	{
+		Form1.configFile.set_LineCount(numericUpDown1.get_Value());
+		Form1.configFile.set_GameSpeed(numericUpDown2.get_Value());
+
+		Form1.configFile.set_VolumeBGM(trackBar1.get_Value());
+		Form1.configFile.set_VolumeKEY(trackBar2.get_Value());
+
+		Form1.configFile.set_Auto1PKeySC(checkedListBox1.GetItemChecked(0));
+		Form1.configFile.set_Auto1PKey1(checkedListBox1.GetItemChecked(1));
+		Form1.configFile.set_Auto1PKey2(checkedListBox1.GetItemChecked(2));
+		Form1.configFile.set_Auto1PKey3(checkedListBox1.GetItemChecked(3));
+		Form1.configFile.set_Auto1PKey4(checkedListBox1.GetItemChecked(4));
+		Form1.configFile.set_Auto1PKey5(checkedListBox1.GetItemChecked(5));
+		Form1.configFile.set_Auto1PKey6(checkedListBox1.GetItemChecked(6));
+		Form1.configFile.set_Auto1PKey7(checkedListBox1.GetItemChecked(7));
+
+		Form1.configFile.set_Auto2PKey1(checkedListBox1.GetItemChecked(8));
+		Form1.configFile.set_Auto2PKey2(checkedListBox1.GetItemChecked(9));
+		Form1.configFile.set_Auto2PKey3(checkedListBox1.GetItemChecked(10));
+		Form1.configFile.set_Auto2PKey4(checkedListBox1.GetItemChecked(11));
+		Form1.configFile.set_Auto2PKey5(checkedListBox1.GetItemChecked(12));
+		Form1.configFile.set_Auto2PKey6(checkedListBox1.GetItemChecked(13));
+		Form1.configFile.set_Auto2PKey7(checkedListBox1.GetItemChecked(14));
+		Form1.configFile.set_Auto2PKeySC(checkedListBox1.GetItemChecked(15));
+
+		Form1.configFile.Save();
+		this.Close();
+	}
+
+	private void button19_Click(Object sender, System.EventArgs e)
+	{
+		this.Close();
+	}
+
+	private void Config_Load(Object sender, System.EventArgs e)
+	{
+
+	}
+
+	private void listBox1_SelectedIndexChanged(Object sender, System.EventArgs e)
+	{
+
+	}
+
+	private void tabPage1_Click(Object sender, System.EventArgs e)
+	{
+
+	}
+
+	private void timer1_Tick(Object sender, System.EventArgs e)
+	{
+		textBox1.set_Text("SC : "+Form1.configFile.get_Hit1PKeySC().toString());
+		textBox2.set_Text("Key1 : " + Form1.configFile.get_Hit1PKey1().toString());
+		textBox3.set_Text("Key2 : " + Form1.configFile.get_Hit1PKey2().toString());
+		textBox4.set_Text("Key3 : " + Form1.configFile.get_Hit1PKey3().toString());
+		textBox5.set_Text("Key4 : " + Form1.configFile.get_Hit1PKey4().toString());
+		textBox6.set_Text("Key5 : " + Form1.configFile.get_Hit1PKey5().toString());
+		textBox7.set_Text("Key6 : " + Form1.configFile.get_Hit1PKey6().toString());
+		textBox8.set_Text("Key7 : " + Form1.configFile.get_Hit1PKey7().toString());
+
+		textBox9.set_Text("Key1 : " + Form1.configFile.get_Hit2PKey1().toString());
+		textBox10.set_Text("Key2 : " + Form1.configFile.get_Hit2PKey2().toString());
+		textBox11.set_Text("Key3 : " + Form1.configFile.get_Hit2PKey3().toString());
+		textBox12.set_Text("Key4 : " + Form1.configFile.get_Hit2PKey4().toString());
+		textBox13.set_Text("Key5 : " + Form1.configFile.get_Hit2PKey5().toString());
+		textBox14.set_Text("Key6 : " + Form1.configFile.get_Hit2PKey6().toString());
+		textBox15.set_Text("Key7 : " + Form1.configFile.get_Hit2PKey7().toString());
+		textBox16.set_Text("SC : " + Form1.configFile.get_Hit2PKeySC().toString());
+	}
+
+	private void textBox1_TextChanged(Object sender, System.EventArgs e)
+	{
+		
+	}
+
+	//--------------------------------------------------------------------------------
+
+
+	private void textBox1_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKeySC(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKeySC(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox2_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey1(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey1(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox3_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey2(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey2(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox4_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey3(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey3(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox5_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey4(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey4(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox6_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey5(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey5(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox7_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey6(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey6(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox8_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit1PKey7(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit1PKey7(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox9_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey1(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey1(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox10_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey2(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey2(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox11_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey3(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey3(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox12_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey4(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey4(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox13_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey5(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey5(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox14_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey6(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey6(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox15_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKey7(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKey7(e.get_KeyCode());
+		}
+		
+	}
+
+	private void textBox16_KeyDown(Object sender, KeyEventArgs e)
+	{
+		if (e.get_KeyCode() == Keys.Escape)
+		{
+			Form1.configFile.set_Hit2PKeySC(Keys.None);
+		}
+		else
+		{
+			Form1.configFile.set_Hit2PKeySC(e.get_KeyCode());
+		}
+		
+	}
+}

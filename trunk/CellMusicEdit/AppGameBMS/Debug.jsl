@@ -1,0 +1,114 @@
+﻿package AppGameBMS;
+
+import System.Collections.Generic.*;
+import System.ComponentModel.*;
+import System.Data.*;
+import System.Drawing.*;
+import System.Windows.Forms.*;
+
+/**
+ * Debug 的摘要说明。
+ */
+public class Debug extends System.Windows.Forms.Form
+{
+	private System.IO.StringWriter stringWriter;
+
+	private TextBox textBox1;
+	private Timer timer1;
+	/**
+	 * 必需的设计器变量。
+	 */
+	private System.ComponentModel.IContainer components;
+
+	public Debug()
+	{
+		//
+		// Windows Form 设计器支持所必需的
+		//
+		InitializeComponent();
+
+		//
+		// TODO: 在 InitializeComponent 调用之后添加任何构造函数代码
+		//
+		stringWriter = new System.IO.StringWriter();
+		System.Console.SetOut(stringWriter);
+		
+	}
+
+	#region Windows 窗体设计器生成的代码
+	/**
+     * 清理所有正在使用的资源。
+     */
+	protected void Dispose(boolean disposing)
+	{
+		if (disposing)
+		{
+			if (components != null)
+			{
+				components.Dispose();
+			}
+		}
+		super.Dispose(disposing);
+	}
+
+	/**
+	 * 设计器支持所需的方法 - 不要
+	 * 使用代码编辑器修改此方法的内容。
+	 */
+	private void InitializeComponent()
+	{
+		this.components = new System.ComponentModel.Container();
+		this.textBox1 = new System.Windows.Forms.TextBox();
+		this.timer1 = new System.Windows.Forms.Timer(this.components);
+		this.SuspendLayout();
+		// 
+		// textBox1
+		// 
+		this.textBox1.set_Dock(System.Windows.Forms.DockStyle.Fill);
+		this.textBox1.set_Location(new System.Drawing.Point(0, 0));
+		this.textBox1.set_Multiline(true);
+		this.textBox1.set_Name("textBox1");
+		this.textBox1.set_ScrollBars(System.Windows.Forms.ScrollBars.Both);
+		this.textBox1.set_Size(new System.Drawing.Size(579, 299));
+		this.textBox1.set_TabIndex(4);
+		this.textBox1.add_TextChanged(new System.EventHandler(this.textBox1_TextChanged));
+		// 
+		// timer1
+		// 
+		this.timer1.set_Enabled(true);
+		this.timer1.add_Tick(new System.EventHandler(this.timer1_Tick));
+		// 
+		// Debug
+		// 
+		this.set_AutoScaleDimensions(new System.Drawing.SizeF(6F, 12F));
+		this.set_AutoScaleMode(System.Windows.Forms.AutoScaleMode.Font);
+		this.set_ClientSize(new System.Drawing.Size(579, 299));
+		this.get_Controls().Add(this.textBox1);
+		this.set_Name("Debug");
+		this.set_Text("Debug");
+		this.ResumeLayout(false);
+		this.PerformLayout();
+
+	}
+	#endregion
+
+	private void textBox1_TextChanged(Object sender, System.EventArgs e)
+	{
+		
+		
+	}
+
+	private void timer1_Tick(Object sender, System.EventArgs e)
+	{
+		this.textBox1.set_Text(stringWriter.toString());
+
+		if (this.textBox1.get_Focused() == false)
+		{
+			this.textBox1.Select(this.textBox1.get_Text().length(), 0);
+			this.textBox1.ScrollToCaret();
+			
+		}
+
+		
+	}
+}

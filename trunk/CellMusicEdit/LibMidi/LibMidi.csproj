@@ -1,0 +1,81 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{9BA48BB2-1210-4957-9D9A-FBF3F0042C1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Cell.LibMidi</RootNamespace>
+    <AssemblyName>LibMidi</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BMSCanvas.cs" />
+    <Compile Include="DJZCanvas.cs" />
+    <Compile Include="FormatBMS.cs" />
+    <Compile Include="FormatDJZ.cs" />
+    <Compile Include="MidiLib.cs" />
+    <Compile Include="midi\ControllerEventListener.cs" />
+    <Compile Include="midi\Instrument.cs" />
+    <Compile Include="midi\MetaEventListener.cs" />
+    <Compile Include="midi\MetaMessage.cs" />
+    <Compile Include="midi\MidiChannel.cs" />
+    <Compile Include="midi\MidiDevice.cs" />
+    <Compile Include="midi\MidiDevice.Info.cs" />
+    <Compile Include="midi\MidiEvent.cs" />
+    <Compile Include="midi\MidiFileFormat.cs" />
+    <Compile Include="midi\MidiMessage.cs" />
+    <Compile Include="midi\MidiSystem.cs" />
+    <Compile Include="midi\Patch.cs" />
+    <Compile Include="midi\Receiver.cs" />
+    <Compile Include="midi\Sequence.cs" />
+    <Compile Include="midi\Sequencer.cs" />
+    <Compile Include="midi\Sequencer.SyncMode.cs" />
+    <Compile Include="midi\ShortMessage.cs" />
+    <Compile Include="midi\Soundbank.cs" />
+    <Compile Include="midi\SoundbankResource.cs" />
+    <Compile Include="midi\Synthesizer.cs" />
+    <Compile Include="midi\SysexMessage.cs" />
+    <Compile Include="midi\Track.cs" />
+    <Compile Include="midi\Transmitter.cs" />
+    <Compile Include="midi\VoiceStatus.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BMSPlayer\LibMGPlayer.vjsproj">
+      <Project>{05585818-F01B-4583-ABDD-C31E2CE9BB1E}</Project>
+      <Name>LibMGPlayer</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
