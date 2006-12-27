@@ -1,0 +1,24 @@
+﻿package Cell;
+
+/**
+ * FramRate 的摘要说明。
+ */
+public class FrameRate
+{
+	public static int CalculateFrameRate()
+	{
+		if (System.Environment.get_TickCount() - lastTick >= 1000)
+		{
+			lastFrameRate = frameRate;
+			frameRate = 0;
+			lastTick = System.Environment.get_TickCount();
+		}
+		frameRate++;
+		return lastFrameRate;
+	}
+	private static int lastTick;
+	private static int lastFrameRate;
+	private static int frameRate;
+
+
+}

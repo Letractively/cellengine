@@ -1,0 +1,911 @@
+﻿package AppGameBMS;
+
+import System.Collections.Generic.*;
+import System.Data.*;
+import System.Drawing.*;
+import System.ComponentModel.*;
+import System.Windows.Forms.*;
+import Microsoft.DirectX.DirectSound.*;
+
+import Cell.LibBMSPlayer.*;
+import Cell.*;
+
+/**
+ * Form1 的摘要说明。
+ */
+public class Form1 extends System.Windows.Forms.Form implements Cell.LibBMSPlayer.MGPlayerListener
+{
+
+	public static Settings1 configFile = new Settings1();
+
+	Device dev;
+	BufferDescription buffer_desc;
+	EffectDescription[] effects;
+
+
+	private PictureBox pictureBox1;
+	private Timer timer1;
+
+	private Panel panel1;
+	private MenuStrip menuStrip1;
+	private ToolStripMenuItem openToolStripMenuItem;
+	private ToolStripMenuItem openToolStripMenuItem1;
+	private ToolStripMenuItem exitToolStripMenuItem;
+	private ToolStripMenuItem closeToolStripMenuItem;
+	private ToolStripSeparator toolStripMenuItem1;
+	private ToolStripMenuItem viewToolStripMenuItem;
+	private ToolStripMenuItem debugToolStripMenuItem;
+	private ToolStripMenuItem optionToolStripMenuItem;
+	private ToolStripMenuItem configToolStripMenuItem;
+	private ToolStripMenuItem aboutToolStripMenuItem;
+	private ToolStripMenuItem aboutToolStripMenuItem1;
+
+	/**
+	 * 必需的设计器变量。
+	 */
+	private System.ComponentModel.IContainer components;
+
+	public Form1()
+	{
+		//
+		// Windows Form 设计器支持所必需的
+		//
+		InitializeComponent();
+
+		//
+		// TODO: 在 InitializeComponent 调用之后添加任何构造函数代码
+		//
+
+		//Create and setup the sound device.
+		dev = new Device();
+		dev.SetCooperativeLevel(this, CooperativeLevel.Normal);
+
+		//Create and setup the buffer description.
+		buffer_desc = new BufferDescription();
+		//buffer_desc.set_ControlEffects(true); //this has to be true to use effects.
+		//buffer_desc.set_GlobalFocus(true); //play sound even if application loses focus.
+		//buffer_desc.set_ControlPositionNotify(true);
+		buffer_desc.set_ControlVolume(true);
+		//buffer_desc.set_StaticBuffer(true);
+		
+
+		//Create an array of effects descriptions, 
+		//set the effect objects to echo and chorus and 
+		//set it in the buffer.
+		//effects = new EffectDescription[2];
+		//effects[0].set_GuidEffectClass(DSoundHelper.StandardEchoGuid);
+		//effects[1].set_GuidEffectClass(DSoundHelper.StandardChorusGuid);
+
+		BMSPlayer.setDevice(dev,buffer_desc,effects);
+	}
+
+	#region Windows 窗体设计器生成的代码
+	/**
+     * 清理所有正在使用的资源。
+     */
+	protected void Dispose(boolean disposing)
+	{
+		if (disposing)
+		{
+			if (components != null)
+			{
+				components.Dispose();
+			}
+		}
+		super.Dispose(disposing);
+	}
+
+	/**
+	 * 设计器支持所需的方法 - 不要
+	 * 使用代码编辑器修改此方法的内容。
+	 */
+	private void InitializeComponent()
+	{
+		this.components = new System.ComponentModel.Container();
+		this.pictureBox1 = new System.Windows.Forms.PictureBox();
+		this.timer1 = new System.Windows.Forms.Timer(this.components);
+		this.panel1 = new System.Windows.Forms.Panel();
+		this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+		this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+		this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
+		this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.optionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.configToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+		this.aboutToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+		((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+		this.panel1.SuspendLayout();
+		this.menuStrip1.SuspendLayout();
+		this.SuspendLayout();
+		// 
+		// pictureBox1
+		// 
+		this.pictureBox1.set_BackColor(System.Drawing.Color.get_Black());
+		this.pictureBox1.set_Dock(System.Windows.Forms.DockStyle.Fill);
+		this.pictureBox1.set_Location(new System.Drawing.Point(0, 0));
+		this.pictureBox1.set_Name("pictureBox1");
+		this.pictureBox1.set_Size(new System.Drawing.Size(492, 346));
+		this.pictureBox1.set_SizeMode(System.Windows.Forms.PictureBoxSizeMode.StretchImage);
+		this.pictureBox1.set_TabIndex(0);
+		this.pictureBox1.set_TabStop(false);
+		this.pictureBox1.add_Paint(new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint));
+		// 
+		// timer1
+		// 
+		this.timer1.set_Enabled(true);
+		this.timer1.set_Interval(10);
+		this.timer1.add_Tick(new System.EventHandler(this.timer1_Tick));
+		// 
+		// panel1
+		// 
+		this.panel1.set_AutoScroll(true);
+		this.panel1.get_Controls().Add(this.pictureBox1);
+		this.panel1.set_Dock(System.Windows.Forms.DockStyle.Fill);
+		this.panel1.set_Location(new System.Drawing.Point(0, 24));
+		this.panel1.set_Name("panel1");
+		this.panel1.set_Size(new System.Drawing.Size(492, 346));
+		this.panel1.set_TabIndex(1);
+		// 
+		// menuStrip1
+		// 
+		this.menuStrip1.get_Items().AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.optionToolStripMenuItem,
+            this.aboutToolStripMenuItem}
+		);
+		this.menuStrip1.set_Location(new System.Drawing.Point(0, 0));
+		this.menuStrip1.set_Name("menuStrip1");
+		this.menuStrip1.set_Size(new System.Drawing.Size(492, 24));
+		this.menuStrip1.set_TabIndex(2);
+		this.menuStrip1.set_Text("menuStrip1");
+		// 
+		// openToolStripMenuItem
+		// 
+		this.openToolStripMenuItem.get_DropDownItems().AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem1,
+            this.closeToolStripMenuItem,
+            this.toolStripMenuItem1,
+            this.exitToolStripMenuItem}
+		);
+		this.openToolStripMenuItem.set_Name("openToolStripMenuItem");
+		this.openToolStripMenuItem.set_Size(new System.Drawing.Size(35, 20));
+		this.openToolStripMenuItem.set_Text("File");
+		// 
+		// openToolStripMenuItem1
+		// 
+		this.openToolStripMenuItem1.set_Name("openToolStripMenuItem1");
+		this.openToolStripMenuItem1.set_Size(new System.Drawing.Size(100, 22));
+		this.openToolStripMenuItem1.set_Text("Open");
+		this.openToolStripMenuItem1.add_Click(new System.EventHandler(this.openToolStripMenuItem1_Click));
+		// 
+		// closeToolStripMenuItem
+		// 
+		this.closeToolStripMenuItem.set_Name("closeToolStripMenuItem");
+		this.closeToolStripMenuItem.set_Size(new System.Drawing.Size(100, 22));
+		this.closeToolStripMenuItem.set_Text("Close");
+		this.closeToolStripMenuItem.add_Click(new System.EventHandler(this.closeToolStripMenuItem_Click));
+		// 
+		// toolStripMenuItem1
+		// 
+		this.toolStripMenuItem1.set_Name("toolStripMenuItem1");
+		this.toolStripMenuItem1.set_Size(new System.Drawing.Size(97, 6));
+		// 
+		// exitToolStripMenuItem
+		// 
+		this.exitToolStripMenuItem.set_Name("exitToolStripMenuItem");
+		this.exitToolStripMenuItem.set_Size(new System.Drawing.Size(100, 22));
+		this.exitToolStripMenuItem.set_Text("Exit");
+		this.exitToolStripMenuItem.add_Click(new System.EventHandler(this.exitToolStripMenuItem_Click));
+		// 
+		// viewToolStripMenuItem
+		// 
+		this.viewToolStripMenuItem.get_DropDownItems().AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.debugToolStripMenuItem}
+		);
+		this.viewToolStripMenuItem.set_Name("viewToolStripMenuItem");
+		this.viewToolStripMenuItem.set_Size(new System.Drawing.Size(41, 20));
+		this.viewToolStripMenuItem.set_Text("View");
+		// 
+		// debugToolStripMenuItem
+		// 
+		this.debugToolStripMenuItem.set_Name("debugToolStripMenuItem");
+		this.debugToolStripMenuItem.set_Size(new System.Drawing.Size(105, 22));
+		this.debugToolStripMenuItem.set_Text("Debug");
+		this.debugToolStripMenuItem.add_Click(new System.EventHandler(this.debugToolStripMenuItem_Click));
+		// 
+		// optionToolStripMenuItem
+		// 
+		this.optionToolStripMenuItem.get_DropDownItems().AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configToolStripMenuItem}
+		);
+		this.optionToolStripMenuItem.set_Name("optionToolStripMenuItem");
+		this.optionToolStripMenuItem.set_Size(new System.Drawing.Size(51, 20));
+		this.optionToolStripMenuItem.set_Text("Option");
+		// 
+		// configToolStripMenuItem
+		// 
+		this.configToolStripMenuItem.set_Name("configToolStripMenuItem");
+		this.configToolStripMenuItem.set_Size(new System.Drawing.Size(105, 22));
+		this.configToolStripMenuItem.set_Text("Config");
+		this.configToolStripMenuItem.add_Click(new System.EventHandler(this.configToolStripMenuItem_Click));
+		// 
+		// aboutToolStripMenuItem
+		// 
+		this.aboutToolStripMenuItem.get_DropDownItems().AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem1}
+		);
+		this.aboutToolStripMenuItem.set_Name("aboutToolStripMenuItem");
+		this.aboutToolStripMenuItem.set_Size(new System.Drawing.Size(40, 20));
+		this.aboutToolStripMenuItem.set_Text("Help");
+		// 
+		// aboutToolStripMenuItem1
+		// 
+		this.aboutToolStripMenuItem1.set_Name("aboutToolStripMenuItem1");
+		this.aboutToolStripMenuItem1.set_Size(new System.Drawing.Size(103, 22));
+		this.aboutToolStripMenuItem1.set_Text("About");
+		this.aboutToolStripMenuItem1.add_Click(new System.EventHandler(this.aboutToolStripMenuItem1_Click));
+		// 
+		// Form1
+		// 
+		this.set_AutoScaleDimensions(new System.Drawing.SizeF(6F, 12F));
+		this.set_AutoScaleMode(System.Windows.Forms.AutoScaleMode.Font);
+		this.set_AutoScroll(true);
+		this.set_ClientSize(new System.Drawing.Size(492, 370));
+		this.get_Controls().Add(this.panel1);
+		this.get_Controls().Add(this.menuStrip1);
+		this.set_DoubleBuffered(true);
+		this.set_MainMenuStrip(this.menuStrip1);
+		this.set_Name("Form1");
+		this.set_Text("BmsPlayer (beta) Produced  by WAZA");
+		this.add_Paint(new System.Windows.Forms.PaintEventHandler(this.OnPaint));
+		this.add_MouseClick(new System.Windows.Forms.MouseEventHandler(this.Form1_MouseClick));
+		this.add_Click(new System.EventHandler(this.Form1_Click));
+		this.add_KeyUp(new System.Windows.Forms.KeyEventHandler(this.Form1_KeyUp));
+		this.add_KeyDown(new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown));
+		this.add_Load(new System.EventHandler(this.Form1_Load));
+		((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+		this.panel1.ResumeLayout(false);
+		this.menuStrip1.ResumeLayout(false);
+		this.menuStrip1.PerformLayout();
+		this.ResumeLayout(false);
+		this.PerformLayout();
+
+	}
+	#endregion
+
+
+	private void Form1_Load(Object sender, System.EventArgs e)
+	{
+		timer1.Start();
+	}
+
+	private void OnPaint(Object sender, PaintEventArgs e)
+	{
+
+	}
+
+	private void pictureBox1_Paint(Object sender, PaintEventArgs e)
+	{
+		Graphics g = e.get_Graphics();
+		
+
+		if (bmsPlayer != null)
+		{
+			Logic();
+			Render(g);
+		}
+
+		for (int i = 0; i < LineCount; i++)
+		{
+			KeyDown[i] = false;
+			KeyUp[i] = false;
+
+		}
+
+		this.set_Text("FPS:" + Cell.FrameRate.CalculateFrameRate());
+	}
+
+	private void timer1_Tick(Object sender, System.EventArgs e)
+	{
+		pictureBox1.Invalidate();
+	}
+
+	private void Form1_Click(Object sender, System.EventArgs e)
+	{
+	}
+
+	private void Form1_MouseClick(Object sender, MouseEventArgs e)
+	{
+	}
+
+	private void Form1_KeyDown(Object sender, KeyEventArgs e)
+	{
+		//Util.print(" : KeyCode=" + e.get_KeyCode());
+		//Util.print(" : KeyData=" + e.get_KeyData());
+		//Util.print(" : KeyValue=" + e.get_KeyValue());
+		//Util.println();
+
+		
+	
+		if (bmsPlayer != null)
+		{
+
+			if (e.get_KeyCode() == Keys.Up)
+			{
+				bmsPlayer.setSpeed(bmsPlayer.getSpeed() + 1);
+			}
+			if (e.get_KeyCode() == Keys.Down)
+			{
+				bmsPlayer.setSpeed(bmsPlayer.getSpeed() - 1);
+			}
+
+
+			if (e.get_KeyCode() == configFile.get_Hit1PKeySC())
+			{
+				if (0 < KeyDown.length && KeyHold[0] == false) KeyDown[0] = true;
+				if (0 < KeyDown.length) KeyHold[0] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey1())
+			{
+				if (1 < KeyDown.length && KeyHold[1] == false) KeyDown[1] = true;
+				if (1 < KeyDown.length) KeyHold[1] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey2())
+			{
+				if (2 < KeyDown.length && KeyHold[2] == false) KeyDown[2] = true;
+				if (2 < KeyDown.length) KeyHold[2] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey3())
+			{
+				if (3 < KeyDown.length && KeyHold[3] == false) KeyDown[3] = true;
+				if (3 < KeyDown.length) KeyHold[3] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey4())
+			{
+				if (4 < KeyDown.length && KeyHold[4] == false) KeyDown[4] = true;
+				if (4 < KeyDown.length) KeyHold[4] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey5())
+			{
+				if (5 < KeyDown.length && KeyHold[5] == false) KeyDown[5] = true;
+				if (5 < KeyDown.length) KeyHold[5] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey6())
+			{
+				if (6 < KeyDown.length && KeyHold[6] == false) KeyDown[6] = true;
+				if (6 < KeyDown.length) KeyHold[6] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey7())
+			{
+				if (7 < KeyDown.length && KeyHold[7] == false) KeyDown[7] = true;
+				if (7 < KeyDown.length) KeyHold[7] = true;
+			}
+
+
+
+			if (e.get_KeyCode() == configFile.get_Hit2PKey1())
+			{
+				if (8 < KeyDown.length && KeyHold[8] == false) KeyDown[8] = true;
+				if (8 < KeyDown.length) KeyHold[8] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey2())
+			{
+				if (9 < KeyDown.length && KeyHold[9] == false) KeyDown[9] = true;
+				if (9 < KeyDown.length) KeyHold[9] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey3())
+			{
+				if (10 < KeyDown.length && KeyHold[10] == false) KeyDown[10] = true;
+				if (10 < KeyDown.length) KeyHold[10] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey4())
+			{
+				if (11 < KeyDown.length && KeyHold[11] == false) KeyDown[11] = true;
+				if (11 < KeyDown.length) KeyHold[11] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey5())
+			{
+				if (12 < KeyDown.length && KeyHold[12] == false) KeyDown[12] = true;
+				if (12 < KeyDown.length) KeyHold[12] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey6())
+			{
+				if (13 < KeyDown.length && KeyHold[13] == false) KeyDown[13] = true;
+				if (13 < KeyDown.length) KeyHold[13] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey7())
+			{
+				if (14 < KeyDown.length && KeyHold[14] == false) KeyDown[14] = true;
+				if (14 < KeyDown.length) KeyHold[14] = true;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKeySC())
+			{
+				if (15 < KeyDown.length && KeyHold[15] == false) KeyDown[15] = true;
+				if (15 < KeyDown.length) KeyHold[15] = true;
+			}
+		}
+
+	}
+
+	private void Form1_KeyUp(Object sender, KeyEventArgs e)
+	{
+		if (bmsPlayer != null)
+		{
+			if (e.get_KeyCode() == configFile.get_Hit1PKeySC())
+			{
+				if (0 < KeyDown.length) KeyUp[0] = true;
+				if (0 < KeyDown.length) KeyHold[0] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey1())
+			{
+				if (1 < KeyDown.length) KeyUp[1] = true;
+				if (1 < KeyDown.length) KeyHold[1] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey2())
+			{
+				if (2 < KeyDown.length) KeyUp[2] = true;
+				if (2 < KeyDown.length) KeyHold[2] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey3())
+			{
+				if (3 < KeyDown.length) KeyUp[3] = true;
+				if (3 < KeyDown.length) KeyHold[3] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey4())
+			{
+				if (4 < KeyDown.length) KeyUp[4] = true;
+				if (4 < KeyDown.length) KeyHold[4] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey5())
+			{
+				if (5 < KeyDown.length) KeyUp[5] = true;
+				if (5 < KeyDown.length) KeyHold[5] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey6())
+			{
+				if (6 < KeyDown.length) KeyUp[6] = true;
+				if (6 < KeyDown.length) KeyHold[6] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit1PKey7())
+			{
+				if (7 < KeyDown.length) KeyUp[7] = true;
+				if (7 < KeyDown.length) KeyHold[7] = false;
+			}
+
+
+
+			if (e.get_KeyCode() == configFile.get_Hit2PKey1())
+			{
+				if (8 < KeyDown.length) KeyUp[8] = true;
+				if (8 < KeyDown.length) KeyHold[8] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey2())
+			{
+				if (9 < KeyDown.length) KeyUp[9] = true;
+				if (9 < KeyDown.length) KeyHold[9] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey3())
+			{
+				if (10 < KeyDown.length) KeyUp[10] = true;
+				if (10 < KeyDown.length) KeyHold[10] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey4())
+			{
+				if (11 < KeyDown.length) KeyUp[11] = true;
+				if (11 < KeyDown.length) KeyHold[11] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey5())
+			{
+				if (12 < KeyDown.length) KeyUp[12] = true;
+				if (12 < KeyDown.length) KeyHold[12] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey6())
+			{
+				if (13 < KeyDown.length) KeyUp[13] = true;
+				if (13 < KeyDown.length) KeyHold[13] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKey7())
+			{
+				if (14 < KeyDown.length) KeyUp[14] = true;
+				if (14 < KeyDown.length) KeyHold[14] = false;
+			}
+			if (e.get_KeyCode() == configFile.get_Hit2PKeySC())
+			{
+				if (15 < KeyDown.length) KeyUp[15] = true;
+				if (15 < KeyDown.length) KeyHold[15] = false;
+			}
+		}
+	}
+
+	private void openToolStripMenuItem1_Click(Object sender, System.EventArgs e)
+	{
+		
+
+		System.Windows.Forms.OpenFileDialog openFileDialog1 = new OpenFileDialog();
+
+		openFileDialog1.set_Filter("BMS File (*.bms)|*.bms|BME File (*.bme)|*.bme|DTX File (*.dtx)|*.dtx|All File (*.*)|*.*");
+
+		if (DialogResult.OK == openFileDialog1.ShowDialog())
+		{
+
+			CloseBMS();
+
+			String fileName = openFileDialog1.get_FileName();
+
+			GameCanvas(
+				fileName, 
+				dev, 
+				buffer_desc, 
+				effects, 
+				System.Decimal.ToInt32(configFile.get_LineCount()), 
+				16, 
+				4);
+		}
+
+	}
+
+	private void closeToolStripMenuItem_Click(Object sender, System.EventArgs e)
+	{
+		CloseBMS();
+	}
+
+	private void exitToolStripMenuItem_Click(Object sender, System.EventArgs e)
+	{
+
+		Close();
+	}
+
+	private void debugToolStripMenuItem_Click(Object sender, System.EventArgs e)
+	{
+		Debug debug = new Debug();
+		debug.Show();
+	}
+
+	private void configToolStripMenuItem_Click(Object sender, System.EventArgs e)
+	{
+		Config cfg = new Config();
+		cfg.ShowDialog(this);
+		//cfg.Show();
+		
+	}
+
+	private void aboutToolStripMenuItem1_Click(Object sender, System.EventArgs e)
+	{
+		About about = new About();
+		about.ShowDialog(this);
+		//about.Show();
+		
+	}
+
+//-----------------------------------------------------------------------------------------------------------------------
+
+	#region GameEngine
+
+	int Frame = 0;
+
+	int ww ;
+	int wh ;
+
+	int tile_w ;
+	int tile_h ;
+
+	int LineCount;
+
+	BMSPlayer bmsPlayer;//音乐游戏引擎播放器
+
+	long BaseTime;
+	long PlayTime;
+
+	long CurTime;
+	long PreTime;
+
+	int[] hit ;
+
+	boolean[] KeyDown;
+	boolean[] KeyHold;
+	boolean[] KeyUp;
+
+	boolean[] KeyAuto;
+
+
+	int Combo = 0;
+	int ComboPos = 0;
+
+	public void GameCanvas(
+		String bmsFile,
+		Device dev,
+		BufferDescription buffer_desc,
+		EffectDescription[] effects,
+		int lineCount,
+		int tileWidth,
+		int tileHeight)
+	{
+		//
+		// TODO: 在此处添加构造函数逻辑
+		//
+
+		Combo = 0;
+		ComboPos = 0;
+
+		tile_w = tileWidth;
+		tile_h = tileHeight;
+
+
+		LineCount = lineCount;
+
+		hit = new int[LineCount];
+
+		KeyDown = new boolean[LineCount];
+		KeyHold = new boolean[LineCount];
+		KeyUp   = new boolean[LineCount];
+		KeyAuto = new boolean[LineCount];
+
+		bmsPlayer = new BMSPlayer(
+				this,//将本窗体用于监视MGPlayer
+				bmsFile,
+				LineCount//8个游戏轨道
+				);
+
+		Util.println("Load BMS File : " + bmsFile);
+
+		//bmsPlayer.AutoPlay = true;
+		bmsPlayer.realTimeKeySound = true;
+		bmsPlayer.realTimeBGMSound = true;
+		bmsPlayer.setSpeed(System.Decimal.ToInt32(configFile.get_GameSpeed()));
+		bmsPlayer.setVolumeBGM(configFile.get_VolumeBGM());
+		bmsPlayer.setVolumeKEY(configFile.get_VolumeKEY());
+
+		PlayTime = 0;
+		BaseTime = System.currentTimeMillis();
+		CurTime = System.currentTimeMillis();
+		PreTime = System.currentTimeMillis();
+	}
+
+	public void CloseBMS()
+	{
+		if (bmsPlayer != null)
+		{
+			bmsPlayer.CloseSound();
+			bmsPlayer = null;
+		}
+
+	}
+
+	public void Logic()
+	{
+		if (0 < KeyAuto.length) KeyAuto[0] = configFile.get_Auto1PKeySC();
+		if (1 < KeyAuto.length) KeyAuto[1] = configFile.get_Auto1PKey1();
+		if (2 < KeyAuto.length) KeyAuto[2] = configFile.get_Auto1PKey2();
+		if (3 < KeyAuto.length) KeyAuto[3] = configFile.get_Auto1PKey3();
+		if (4 < KeyAuto.length) KeyAuto[4] = configFile.get_Auto1PKey4();
+		if (5 < KeyAuto.length) KeyAuto[5] = configFile.get_Auto1PKey5();
+		if (6 < KeyAuto.length) KeyAuto[6] = configFile.get_Auto1PKey6();
+		if (7 < KeyAuto.length) KeyAuto[7] = configFile.get_Auto1PKey7();
+
+		if (8 < KeyAuto.length) KeyAuto[8] = configFile.get_Auto2PKey1();
+		if (9 < KeyAuto.length) KeyAuto[9] = configFile.get_Auto2PKey2();
+		if (10 < KeyAuto.length) KeyAuto[10] = configFile.get_Auto2PKey3();
+		if (11 < KeyAuto.length) KeyAuto[11] = configFile.get_Auto2PKey4();
+		if (12 < KeyAuto.length) KeyAuto[12] = configFile.get_Auto2PKey5();
+		if (13 < KeyAuto.length) KeyAuto[13] = configFile.get_Auto2PKey6();
+		if (14 < KeyAuto.length) KeyAuto[14] = configFile.get_Auto2PKey7();
+		if (15 < KeyAuto.length) KeyAuto[15] = configFile.get_Auto2PKeySC();
+
+		for (int i = 0; i < LineCount; i++)
+		{
+			if (KeyAuto[i])
+			{
+				bmsPlayer.hitAuto(i);
+			}
+
+			if (KeyDown[i])
+			{
+				//Util.print(" Down "+i);
+				bmsPlayer.keyDown(i);
+			}
+
+			if(KeyUp[i])
+			{
+				//Util.print(" Up " + i);
+				bmsPlayer.keyUp(i);
+			}
+
+			if (KeyHold[i])
+			{
+				//Util.println(" Hold " + i);
+				bmsPlayer.keyHold(i);
+			}
+		}
+
+		
+
+		if (bmsPlayer.isEnd())
+		{
+			//Util.println("Sound End !");
+		}
+
+		wh = this.pictureBox1.get_Height() - 32;
+		bmsPlayer.ScreenHeight = wh;
+
+		//用系统时钟来圆滑播放时间
+		CurTime = System.currentTimeMillis();
+		PlayTime += (CurTime - PreTime);
+		PreTime = CurTime;
+
+		//音乐游戏引擎主逻辑
+		bmsPlayer.update(PlayTime);
+
+
+		Frame++;
+	}
+
+
+
+	public void Render(Graphics g)
+	{
+		//g.Clear(Color.get_Black());
+
+		if (bmsPlayer.getBMP()!=null)g.DrawImage(bmsPlayer.getBMP(), 32 + 8 + 1 + (tile_w + 1) * LineCount, 32);
+
+		for (int i = 0; i < LineCount; i++)
+		{
+			if (KeyHold[i] || KeyAuto[i])
+			{
+				g.FillRectangle(Brushes.get_Gray(),8 + 1 + i * (tile_w + 1),0,tile_w,wh);
+			}
+		}
+
+		int[] NoteLine = bmsPlayer.getFullNoteLine();
+		for (int i = 0; i < NoteLine.length; i++)
+		{
+			// draw full note line
+			if (wh - NoteLine[i] > 0 && wh - NoteLine[i] < wh)
+			{
+				g.DrawLine(
+					new Pen(Brushes.get_Gray()),
+					8 + 1 + (tile_w + 1) * 0,
+						wh - NoteLine[i],
+					8 + 1 + (tile_w + 1) * LineCount - 1,
+						wh - NoteLine[i]
+						);
+				g.DrawString(
+						(bmsPlayer.getFullNoteCount() + i) + "",
+						this.get_Font(),
+						Brushes.get_Gray(),
+						8 + 1 + (tile_w + 1) * LineCount + 4,
+						wh - NoteLine[i] - this.get_Font().get_Height()
+						);
+			}
+		}
+
+		// draw line
+		for (int i = 0; i <= hit.length; i++)
+		{
+			g.DrawLine(new Pen(Brushes.get_Gray()), 8 + i * (tile_w + 1), 0, 8 + i * (tile_w + 1), wh);
+		}
+		// draw base line
+		g.FillRectangle(Brushes.get_Red(), 8 + 1, wh - tile_h + 1, hit.length * (tile_w + 1) - 1, tile_h);
+
+
+		int[][] Pos = bmsPlayer.getPos();
+		int[][] PosLong = bmsPlayer.getPosLong();
+
+		for (int i = 0; i < hit.length; i++)
+		{
+			// draw note long
+			for (int j = 0; j < PosLong[i].length ; j+=2)
+			{
+				if (PosLong[i][j+0] > wh)
+				{
+					break;
+				}
+				int rx = 8 + 1 + i * (tile_w + 1);
+				int ry = wh - PosLong[i][j + 0] - PosLong[i][j + 1] ;
+				int rw = tile_w;
+				int rh = PosLong[i][j + 1] ;
+
+				if (PosLong[i][j + 0] + PosLong[i][j + 1] >= 0 )
+				{
+					g.FillRectangle(Brushes.get_White(), rx, ry , rw, ry + rh > wh ? wh - ry : rh);
+					g.DrawRectangle(new Pen(Brushes.get_Gray()), rx, ry, rw - 1, ry + rh > wh ? wh - ry : rh);
+				}
+
+			}
+
+			// draw note
+			for (int j = 0; j < Pos[i].length; j++)
+			{
+				if (Pos[i][j] > wh)
+				{
+					break;
+				}
+				int rx = 8 + 1 + i * (tile_w + 1);
+				int ry = wh - Pos[i][j] - tile_h;
+				int rw = tile_w;
+				int rh = tile_h;
+
+				if (Pos[i][j] >= 0 )
+				{
+					g.FillRectangle(Brushes.get_White(), rx, ry , rw, rh);
+					g.DrawRectangle(new Pen(Brushes.get_Gray()), rx, ry, rw - 1, rh - 1);
+				}
+			}
+			// draw hit
+			if (hit[i] > 0)
+			{
+				g.DrawArc(
+					new Pen(Brushes.get_White()),
+						8 + 1 + i * (tile_w + 1) + tile_w / 2 - hit[i] / 2,
+						wh - hit[i] / 2,
+						hit[i],
+						hit[i],
+						0,
+						360
+						);
+				hit[i] -= 2;
+			}
+		}
+
+
+		// draw combo
+		if (Combo > 1)
+		{
+			
+			Font font = new Font(this.get_Font().get_Name(),32);
+			g.DrawString(Combo + " COMBO", font, Brushes.get_Yellow(), 16, 128 - ComboPos);
+		}
+		if (ComboPos < 32) ComboPos += 1;
+	}
+
+	//  call back function
+	public void beatBPM(int beatCount)
+	{
+		//每32个beat，和主音乐同步一次。
+
+	}
+	//  call back function
+	public void hitNote(int line, int acc)
+	{
+		hit[line] = 32;
+		Combo++;
+		ComboPos = 0;
+		//        CSUtil.println("Acc : "+acc+"%");
+	}
+
+	public void releaseNote(int line, int acc)
+	{
+		
+		hit[line] = 32;
+		Combo++;
+		ComboPos = 0;
+	}
+
+	public void holdNote(int line)
+	{
+		
+		hit[line] = 16+Frame%8*2;
+	}
+
+	//  call back function
+	public void lostNote(int line)
+	{
+		//CSUtil.println("Lost at "+line);
+		Combo = 0;
+	}
+	//  call back function
+	public void showNote(int[][] pos)
+	{
+
+	}
+
+	#endregion
+
+
+
+
+}

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="CellStudio">
+</Property><Property Name="解决方案文件" Value="E:\WAZA\Visual Studio 2005\Projects\CellStudio\CellStudio.sln">
+</Property><Property Name="Date" Value="2006年6月22日">
+</Property><Property Name="Time" Value="14:56:20">
+</Property></Properties><Event ErrorLevel="1" Project="E:\WAZA\Visual Studio 2005\Projects\CellStudio\DjZoneEditor\DjZoneEditor.csproj" Source="DjZoneEditor\DjZoneEditor.csproj" Description="MSB2014: 在文件“E:\WAZA\Visual Studio 2005\Projects\CellStudio\CellStudio.sln”中没有列出 GUID 为 {5DA5140B-D083-48DE-BA82-D241C23829E6} 的“项目到项目”引用，因此无法转换该引用。">
+</Event><Event ErrorLevel="1" Project="E:\WAZA\Visual Studio 2005\Projects\CellStudio\DjZoneEditor\DjZoneEditor.csproj" Source="DjZoneEditor\DjZoneEditor.csproj" Description="MSB2014: 在文件“E:\WAZA\Visual Studio 2005\Projects\CellStudio\CellStudio.sln”中没有列出 GUID 为 {BFE134F1-1EBB-4B37-88D5-6317BA00B214} 的“项目到项目”引用，因此无法转换该引用。">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\DjZoneEditor.csproj" Description="项目文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\DjZoneEditor.csproj">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\DjZoneEditor.csproj.user" Description="项目用户文件成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\DjZoneEditor.csproj.user">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\AssemblyInfo.cs" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\AssemblyInfo.cs">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form1.cs" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form1.cs">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form2.cs" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form2.cs">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form3.cs" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form3.cs">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form4.cs" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form4.cs">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\App.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\App.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\bitmap.rc" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\bitmap.rc">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Bitmap_1.bmp" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Bitmap_1.bmp">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Bitmap_2.bmp" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Bitmap_2.bmp">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Bitmap_3.bmp" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Bitmap_3.bmp">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_1.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_1.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_2.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_2.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_3.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_3.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_4.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_4.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_5.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_5.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\res\Icon_6.ico" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\res\Icon_6.ico">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form1.resx" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form1.resx">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form2.resx" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form2.resx">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form3.resx" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form3.resx">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\Form4.resx" Description="文件已成功备份为 E:\WAZA\Visual Studio 2005\Projects\CellStudio\Backup\Form4.resx">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\DjZoneEditor.csproj" Description="项目已成功转换">
+</Event><Event ErrorLevel="3" Project="DjZoneEditor" Source="DjZoneEditor\DjZoneEditor.csproj" Description="Converted">
+</Event><Event ErrorLevel="0" Project="DjZoneEditor" Source="DjZoneEditor\DjZoneEditor.csproj" Description="扫描完成: 项目文件不需要升级。">
+</Event></UpgradeLog>
