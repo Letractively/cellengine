@@ -13,12 +13,30 @@ public class SpritePass extends CSprite implements IState {
 
 	public SpritePass(CSprite father) {
 		super(father);
-		super.addState(this);
+		super.setState(this);
 		
 	}
 	
 	public void update() {
 
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
+	 */
+	public void tryChangeState() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#onState()
+	 */
+	public void onState() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

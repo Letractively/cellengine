@@ -13,6 +13,24 @@ import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
 
 public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
+	 */
+	public void tryChangeState() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#onState()
+	 */
+	public void onState() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	final float MAX_MOBILITY	= 1f; 	//最大机动性 = 8度
 	final float MAX_SPEED		= 4f;	//最大速度
 	
@@ -36,7 +54,7 @@ public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 	
 	public SpriteDrift(CSprite father){
 		super(father);
-		this.addState(this);
+		this.setState(this);
 		haveMapBlock = false;
     	haveSprBlock = false;
     	SpeedX256 = 0;
