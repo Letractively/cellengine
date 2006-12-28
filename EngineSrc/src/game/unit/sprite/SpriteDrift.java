@@ -16,7 +16,6 @@ public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 	final float MAX_MOBILITY	= 1f; 	//最大机动性 = 8度
 	final float MAX_SPEED		= 4f;	//最大速度
 	
-	
 	float MX = 0;
 	float MY = 0;
 	
