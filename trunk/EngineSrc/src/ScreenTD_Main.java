@@ -5,6 +5,7 @@ import game.unit.sprite.SpritePatrol;
 import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.CImages20;
+import com.morefuntek.cell.IImages;
 import com.morefuntek.cell.Game.CCamera;
 import com.morefuntek.cell.Game.CMap;
 import com.morefuntek.cell.Game.CScreen;
@@ -29,48 +30,43 @@ public class ScreenTD_Main extends CScreen {
     
        	
        	// res
-       	CImages20 mapTile = new CImages20();
-       	CImages20 sprTile = new CImages20();
+       	IImages mapTile = new CImages20();
+       	IImages sprTile = new CImages20();
        	
-       	Reses.buildClipImages_unamed_Tile(mapTile);
-       	Reses.buildClipImages_unamed_Tile2(sprTile);
+       	ResesScript.buildClipImages_MapTile(mapTile);
+       	ResesScript.buildClipImages_SprTile(sprTile);
        	
        	// map type
-       	map = Reses.createMap_unamed_Tile_unamed_Map(mapTile, false, false);
+       	map = ResesScript.createMap_Map00(mapTile, false, false);
        	
        	// spr type
-       	CSprite ut2_u_Spr01 = Reses.createSprite_unamed_Tile2_unamed_Sprite(sprTile);
-       	CSprite ut2_u_Spr02 = Reses.createSprite_unamed_Tile2_unamed_Sprite2(sprTile);
-    	CSprite ut2_u_Spr03 = Reses.createSprite_unamed_Tile2_unamed_Sprite3(sprTile);
-    	
+        CSprite enemy = ResesScript.createSprite_Enemy00(sprTile);
+
        	// camera 
        	cam = new CCamera(0,0,176,208,map,true,0);
        	
        	// world
-       	world = new TD_Level();
-    	((TD_Level)world).Map0000_unamed_Map = map;// setmap
-    	((TD_Level)world).addCamera(cam);//set camera
-       	((TD_Level)world).initPath();// init path
-       	((TD_Level)world).initUnit();
+       	world = new world_Level00();
+    	((world_Level00)world).Map0000_Map00 = map;// setmap
+    	((world_Level00)world).addCamera(cam);//set camera
+       	((world_Level00)world).initPath();// init path
+       	((world_Level00)world).initUnit();
        	
        	sprs = new CSprite[4];
-       	sprs[0] = new SpritePatrol(ut2_u_Spr01,world.WayPoints[0]);
-    	sprs[1] = new SpritePatrol(ut2_u_Spr02,world.WayPoints[1]);
-    	sprs[2] = new SpritePatrol(ut2_u_Spr02,world.WayPoints[2]);
-    	sprs[3] = new SpritePatrol(ut2_u_Spr03,world.WayPoints[3]);
+       	sprs[0] = new SpritePatrol(enemy,world.WayPoints[0]);
+    	sprs[1] = new SpritePatrol(enemy,world.WayPoints[0]);
+    	sprs[2] = new SpritePatrol(enemy,world.WayPoints[0]);
+    	sprs[3] = new SpritePatrol(enemy,world.WayPoints[0]);
 
     	world.addSprites(sprs);
     	
-       	world.addCamera(cam);
 
-
- 
        	resetTimer();
 	}
 	
 	public void notifyLogic() {
-    	if(isKeyDown(KEY_A)){ChangeSubSreen(GameMIDlet.SCREEN_KEY_TD_MAIN);}
-    	if(isKeyDown(KEY_B)){ChangeSubSreen(GameMIDlet.SCREEN_KEY_LOGO);}
+    	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
+    	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
     	if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
     	
     	if(isPointerDown()){}
