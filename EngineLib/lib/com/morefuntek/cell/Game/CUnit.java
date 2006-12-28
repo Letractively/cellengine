@@ -26,34 +26,26 @@ public class CUnit extends CObject
 
 //	---------------------------------------------------------------------------------------------
 
-	protected Vector onState = null;
+	protected IState onState = null;
 
 	/**
-	 * 添加一个状态
+	 * 设置状态
 	 * @param state 
 	 */
-	public void addState(IState state){
-		if(onState==null)onState = new Vector();
-		onState.addElement(state);
+	public void setState(IState state){
+		onState = state;
 	}
 	
-	/**
-	 * 删除一个状态
-	 * @param state 
-	 */
-	public void delState(IState state){
-		if(onState==null)return;
-		onState.removeElement(state);
+	public IState getState(){
+		return onState;
 	}
-
+	
 	/**
 	 * 更新所有状态 
 	 */
 	public void updateStates(){
 		if(onState==null)return;
-		for(int i=0;i<onState.size();i++){
-			((IState)onState.elementAt(i)).update();
-		}
+		onState.update();
 	}
 	
 	

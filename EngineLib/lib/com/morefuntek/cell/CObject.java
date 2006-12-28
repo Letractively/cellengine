@@ -20,7 +20,8 @@ public class CObject {
 	// ------------------------------------------------------
 	/**DEBUG dip 开关*/
 	static public boolean IsDebug = false;
-
+	static public boolean IsNokia = false;
+	
 	// ------------------------------------------------------
 
 	/**公共随机数*/

@@ -445,7 +445,7 @@ public class CSprite extends CUnit {
 	 * @param y
 	 * @return ÊÇ·ñ±»×èµ²
 	 */
-	public boolean mov(int x,int y){
+	public boolean tryMove(int x,int y){
 		
 		if(x==0 && y==0)return false;
 		
@@ -550,6 +550,16 @@ public class CSprite extends CUnit {
 		
 	}
 
+	public boolean tryMoveX(int x){
+		
+		return false;
+	}
+	
+	public boolean tryMoveY(int y){
+		
+		return false;
+	}
+	
 //	------------------------------------------------------------------------------------------
 
 	/**

@@ -7,8 +7,7 @@ package com.morefuntek.cell.Game;
  * @version 1.0
  */
 public interface IState {
-	/**
-	 * 游戏单位的回调函数。 
-	 */
+	
 	public void update();
+	
 }
