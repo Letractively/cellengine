@@ -22,7 +22,7 @@ public class SpritePatrol extends CSprite implements IState {
 
 	public SpritePatrol(CSprite father,CWayPoint next){
 		super(father);
-		super.addState(this);
+		super.setState(this);
 		
 		NextWayPoint = next;
 		
@@ -62,5 +62,23 @@ public class SpritePatrol extends CSprite implements IState {
 		VPos256 += SpeedY256 ; 
 		X = HPos256/256;
 		Y = VPos256/256;
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
+	 */
+	public void tryChangeState() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#onState()
+	 */
+	public void onState() {
+		// TODO Auto-generated method stub
+		
 	}
 }

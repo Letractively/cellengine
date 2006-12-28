@@ -13,7 +13,7 @@ public class SpriteShoot extends CSprite implements IState , IParticleLauncher {
 	
 	public SpriteShoot(CSprite spr) {
 		super(spr);
-		super.addState(this);
+		super.setState(this);
 		
 		
 	}
@@ -30,6 +30,24 @@ public class SpriteShoot extends CSprite implements IState , IParticleLauncher {
 	public void particleRender(Graphics g, CParticle particle, int id) {}
 
 	public void particleTerminated(CParticle particle, int id) {}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
+	 */
+	public void tryChangeState() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#onState()
+	 */
+	public void onState() {
+		// TODO Auto-generated method stub
+		
+	}
 
 	
 	

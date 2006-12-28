@@ -16,7 +16,7 @@ public class SpriteTowerDefence extends CSprite implements IState {
 	
 	public SpriteTowerDefence(CSprite father){
 		super(father);
-		super.addState(this);
+		super.setState(this);
 		
 	}
 	
@@ -31,6 +31,24 @@ public class SpriteTowerDefence extends CSprite implements IState {
 	
 	public void fire(CSprite shoot){
 		if(FreezeTime>0)return;
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
+	 */
+	public void tryChangeState() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.Game.IState#onState()
+	 */
+	public void onState() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	
