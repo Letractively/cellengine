@@ -47,12 +47,12 @@ public class SpritePatrol extends CSprite implements IState {
 			if(NextWayPoint.getNextCount()>0){
 				int id = Math.abs(Random.nextInt()%NextWayPoint.getNextCount());
 				NextWayPoint = NextWayPoint.getNextPoint(id);
-				int bx = Math.abs(NextWayPoint.X - X)/MaxSpeed;
-				int by = Math.abs(NextWayPoint.Y - Y)/MaxSpeed;
+				int bx = Math.abs(NextWayPoint.X - X)*256/MaxSpeed;
+				int by = Math.abs(NextWayPoint.Y - Y)*256/MaxSpeed;
 				int d = Math.max(bx,by);
 				if(d!=0){
-					SpeedX256 = (NextWayPoint.X - X) * 256 / d ;
-					SpeedY256 = (NextWayPoint.Y - Y) * 256 / d ;
+					SpeedX256 = (NextWayPoint.X - X) * 256 * 256 / d ;
+					SpeedY256 = (NextWayPoint.Y - Y) * 256 * 256 / d ;
 					
 				}
 			}

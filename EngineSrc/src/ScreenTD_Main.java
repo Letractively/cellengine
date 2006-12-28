@@ -1,3 +1,4 @@
+import game.unit.UnitPatrol;
 import game.unit.sprite.SpriteDrift;
 import game.unit.sprite.SpritePatrol;
 
@@ -53,11 +54,16 @@ public class ScreenTD_Main extends CScreen {
        	((world_Level00)world).initUnit();
        	
        	sprs = new CSprite[4];
-       	sprs[0] = new SpritePatrol(enemy,world.WayPoints[0]);
-    	sprs[1] = new SpritePatrol(enemy,world.WayPoints[0]);
-    	sprs[2] = new SpritePatrol(enemy,world.WayPoints[0]);
-    	sprs[3] = new SpritePatrol(enemy,world.WayPoints[0]);
+       	sprs[0] = new CSprite(enemy);
+    	sprs[1] = new CSprite(enemy);
+    	sprs[2] = new CSprite(enemy);
+    	sprs[3] = new CSprite(enemy);
 
+    	new UnitPatrol(sprs[0],world.WayPoints[0]);
+    	new UnitPatrol(sprs[1],world.WayPoints[0]);
+    	new UnitPatrol(sprs[2],world.WayPoints[0]);
+    	new UnitPatrol(sprs[3],world.WayPoints[0]);
+    	
     	world.addSprites(sprs);
     	
 
