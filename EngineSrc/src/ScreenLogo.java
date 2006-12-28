@@ -15,12 +15,13 @@ import com.morefuntek.cell.Game.CScreen;
 final public class ScreenLogo extends CScreen {
 
     private Image splogo;
+    
     int index = 0 ;
+    
     private String[] list = new String[]{
-    		"Particle demo",
-    		"A* findpath demo",
-    		"Bluetooth server",
-    		"Bluetooth client"	
+    		"ScreenMain",
+    		"ScreenMain2",
+    		"ScreenTD_Main",
     };
     
 	public ScreenLogo() {
@@ -43,20 +44,7 @@ final public class ScreenLogo extends CScreen {
 		}
 		if(isKeyDown(KEY_C)){
 			if(!isTransition()){
-				switch(index){
-				case 0:
-					ChangeSubSreen(GameMIDlet.SCREEN_KEY_MAIN);
-					break;
-				case 1:
-					ChangeSubSreen(GameMIDlet.SCREEN_KEY_MAIN2);
-					break;
-				case 2:
-					ChangeSubSreen(GameMIDlet.SCREEN_KEY_BT_S);
-					break;
-				case 3:
-					ChangeSubSreen(GameMIDlet.SCREEN_KEY_BT_C);
-					break;
-				}
+				ChangeSubSreen(list[index]);
 			}
 		}
 		

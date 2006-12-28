@@ -101,8 +101,8 @@ public class ScreenMain2 extends CScreen {
 	public void notifyLogic() {
 		if(isKeyDown(KEY_STAR)) {FrameDelay --;}
 	    if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
-    	if(isKeyDown(KEY_A)){ChangeSubSreen(GameMIDlet.SCREEN_KEY_MAIN2);}
-    	if(isKeyDown(KEY_B)){ChangeSubSreen(GameMIDlet.SCREEN_KEY_LOGO);}
+    	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
+    	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
     	if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
     	
 //    	if(isPointerDown()){

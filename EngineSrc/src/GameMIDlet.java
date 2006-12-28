@@ -1,34 +1,45 @@
 
+import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
 import com.morefuntek.cell.CCanvas20;
+import com.morefuntek.cell.CCanvasNokia;
+import com.morefuntek.cell.CObject;
 import com.morefuntek.cell.Game.CScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
-
-//------------------------------------------------------------------------------------------
-	CCanvas20 canvas ;
-	
-	//屏幕类型，根据不同的游戏，实现不同的SCREEN
-//	final static String SCREEN_KEY_NONE 		= "0";
-	final static String SCREEN_KEY_LOGO 		= "ScreenLogo";
-	final static String SCREEN_KEY_MAIN			= "ScreenMain";
-	final static String SCREEN_KEY_MAIN2		= "ScreenMain2";
-	final static String SCREEN_KEY_BT_S			= "ScreenBTServer";
-	final static String SCREEN_KEY_BT_C			= "ScreenBTClient";
-	final static String SCREEN_KEY_TD_MAIN		= "ScreenTD_Main";
 	
 	static public boolean ExitGame = false;
 	
+	Canvas canvas ;
+
+//------------------------------------------------------------------------------------------
+	
+	
 	public GameMIDlet() {
-//#ifdef _DEBUG
-		System.out.println("_DEBUG");
+//#ifndef _DEBUG
+		CObject.IsDebug = false;
+//#else
+		CObject.IsDebug = true;
+//#endif	
+		
+//#ifdef _NOKIA_UI
+		CObject.IsNokia = true;
+//#else
+		CObject.IsNokia = false;
 //#endif		
+		
 		System.out.println("Total Memory = "+(Runtime.getRuntime().totalMemory()/1024)+"(K byte)");
 
-		canvas = new CCanvas20();
-		canvas.setFullScreenMode(true);
+		if(CObject.IsNokia){
+			canvas = new CCanvasNokia();
+		}else{
+			canvas = new CCanvas20();
+			canvas.setFullScreenMode(true);
+		}
+
+		
 		CScreen.SCREEN_WIDTH = canvas.getWidth();
 		CScreen.SCREEN_HEIGHT = canvas.getHeight();
 		CScreen.SCREEN_HCENTER = canvas.getWidth()/2;
@@ -39,7 +50,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		Display.getDisplay(this).setCurrent(canvas);
 
 		//切换当前屏幕到ScreenSCWorld
-		CScreen.ChangeSubSreen(SCREEN_KEY_MAIN2);
+		CScreen.ChangeSubSreen("ScreenLogo");
 
 		(new Thread(this)).start();
 
