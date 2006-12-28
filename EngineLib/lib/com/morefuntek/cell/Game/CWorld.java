@@ -22,11 +22,12 @@ public class CWorld extends CObject {
 	
 	public CWayPoint[] WayPoints ;
 	
+	public boolean isRPGView = true;
+	
 	/**
 	 * 构造函数 
 	 */
 	public CWorld(){
-
 	}
 	
 	/**
@@ -36,6 +37,7 @@ public class CWorld extends CObject {
 	 * @param sprs 精灵
 	 */
 	public CWorld(CMap map,CCamera camera,CSprite[] sprs) {
+
 		setMap(map);
 		setCamera(camera);
 
@@ -55,7 +57,18 @@ public class CWorld extends CObject {
 		camera.world = this;
 	}
 	public void addSprite(CSprite spr){
-		this.Sprs.addElement(spr);
+		if(isRPGView){
+			int index = 0 ;
+			for(int i=0;i<Sprs.size();i++){
+				if(getSprite(i).Y > spr.Y){
+					index = i;
+					break;
+				}
+			}
+			this.Sprs.insertElementAt(spr, index);
+		}else{
+			this.Sprs.addElement(spr);
+		}
 		spr.world = this;
 	}
 	public void addSprites(CSprite[] sprs){
