@@ -31,11 +31,11 @@ public class CSprite extends CUnit {
 	/** 是否活动 */
 	public boolean Active 			= true; 
 	/** 是否和精灵有阻挡 */
-	public boolean haveSprBlock 	= true;
+	public boolean haveSprBlock 	= false;
 	/** 是否和地图有阻挡 */
-	public boolean haveMapBlock 	= true;
+	public boolean haveMapBlock 	= false;
 	/**该精灵当前是否在摄象机内，只读*/
-	public boolean OnScreen 		= true;
+	public boolean OnScreen 		= false;
 	
 //	----------------------------------------------------------------------------------------------
 //	动画相关

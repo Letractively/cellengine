@@ -17,6 +17,8 @@ import com.morefuntek.cell.CObject;
 abstract public class AScreen extends CObject {
 //	-------------------------------------------------------------------------------------------------------
 //	game refer
+	static public boolean ExitGame = false;
+	
 	static public AScreen CurSubScreen = null;
 	
 	/**фад╩©М*/
@@ -42,6 +44,8 @@ abstract public class AScreen extends CObject {
 	static private int Timer = 1;
 	static private long CurTime = 0 ;
 	//	------------------------------------------------------------------------------------------------------	
+
+	
 
 	
 	/**
@@ -218,21 +222,14 @@ abstract public class AScreen extends CObject {
 	    		System.gc();
 				Thread.sleep(1);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
 			}
 			
 			try {
 				CurSubScreen = (AScreen)((Class.forName(NextScreenClassName)).newInstance());
-			} catch (InstantiationException e) {
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}finally{
-				
+			} catch (Exception e) {
+				ExitGame = true;
 			}
-
+			
 	    	KeyEnable = true;
 			LogicEnable = true;
 	    	setTransitionIn();
