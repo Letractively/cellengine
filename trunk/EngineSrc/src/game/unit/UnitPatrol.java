@@ -4,10 +4,9 @@ import com.morefuntek.cell.CObject;
 import com.morefuntek.cell.Game.CCD;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWayPoint;
-import com.morefuntek.cell.Game.IEvent;
 import com.morefuntek.cell.Game.IState;
 
-public class UnitPatrol extends CObject implements IState , IEvent {
+public class UnitPatrol extends CObject implements IState  {
 
 	final int STATE_PATROL	= 0;
 	final int STATE_HOLD	= 0;
