@@ -27,30 +27,34 @@ public class UnitPatrol extends CObject implements IState  {
 	
 	
 	public void update() {
-		switch(state){
-		case STATE_MOVE : 
-			if(isEndMove()){
-				startHold();
-			}else{
-				onMove();
-			}
-			break;
-		case STATE_HOLD : 
-			if(isEndHold()){
-				startSwing();
-			}else{
-				onHold();
-			}
-			break;
-		case STATE_SWING : 
-			if(isEndSwing()){
-				startMove();
-			}else{
-				onSwing();
-			}
-			break;
+//		switch(state){
+//		case STATE_MOVE : 
+//			if(isEndMove()){
+//				startHold();
+//			}else{
+//				onMove();
+//			}
+//			break;
+//		case STATE_HOLD : 
+//			if(isEndHold()){
+//				startSwing();
+//			}else{
+//				onHold();
+//			}
+//			break;
+//		case STATE_SWING : 
+//			if(isEndSwing()){
+//				startMove();
+//			}else{
+//				onSwing();
+//			}
+//			break;
+//		}
+		if(isEndMove()){
+			startMove();
+		}else{
+			onMove();
 		}
-		
 	}
 	
 //---------------------------------------------------------------------------------------
@@ -72,21 +76,22 @@ public class UnitPatrol extends CObject implements IState  {
 
 	//patrol
 	public CWayPoint NextWayPoint;
-	public int MaxSpeed = Math.abs(Random.nextInt()%4);
+	private CWayPoint PrewWayPoint;
+	public int MaxSpeed = 1/*+Math.abs(Random.nextInt()%4)*/;
 	public void onMove(){
 		spr.DirectX = NextWayPoint.X - spr.X;
 		spr.DirectY = NextWayPoint.Y - spr.Y;
 	
 		if(spr.DirectX == 0 && spr.DirectY == 0){
-			spr.setCurrentFrame(0, spr.getCurrentFrame());
+			spr.setCurrentFrame(2, spr.getCurrentFrame());
 		}else if(spr.DirectY < 0 ){
 			spr.setCurrentFrame(0, spr.getCurrentFrame());
 		}else if(spr.DirectY > 0){
 			spr.setCurrentFrame(2, spr.getCurrentFrame());
-		}else if(spr.DirectX < 3){
+		}else if(spr.DirectX < 0){
+			spr.setCurrentFrame(3, spr.getCurrentFrame());
+		}else if(spr.DirectX > 0){
 			spr.setCurrentFrame(1, spr.getCurrentFrame());
-		}else if(spr.DirectX > 1){
-			spr.setCurrentFrame(2, spr.getCurrentFrame());
 		}
 		
 		spr.nextCycFrame();
@@ -103,7 +108,14 @@ public class UnitPatrol extends CObject implements IState  {
 	public void startMove(){
 		if(NextWayPoint.getNextCount()>0){
 			int id = Math.abs(Random.nextInt()%NextWayPoint.getNextCount());
-			NextWayPoint = NextWayPoint.getNextPoint(id);
+			if(PrewWayPoint != NextWayPoint.getNextPoint(id)){
+				PrewWayPoint = NextWayPoint;
+				NextWayPoint = NextWayPoint.getNextPoint(id);
+			}else{
+				PrewWayPoint = NextWayPoint;
+				NextWayPoint = NextWayPoint.getNextPoint((id+1)%NextWayPoint.getNextCount());
+			}
+			
 		}
 		state = STATE_MOVE;
 	}

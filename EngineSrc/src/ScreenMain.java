@@ -357,7 +357,7 @@ public class ScreenMain extends AScreen {
         if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
     	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
     	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
-    	if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
+    	if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
     	
     	if(SpawnCount>0){
     		if(isPointerHold()){

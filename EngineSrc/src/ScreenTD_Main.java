@@ -22,13 +22,17 @@ public class ScreenTD_Main extends AScreen {
 	CMap 		map;
 	CCamera 	cam;
 	
-	CSprite 	sprs[];
+	CSprite 	enemys[];
+	CSprite		towners[];
+	CSprite		volatiles[];
+	CSprite		point;
 	
 	public ScreenTD_Main(){
 
 		
-       	IsDebug = true;
+       	IsDebug = false;
     
+       	FrameDelay = 25;
        	
        	// res
        	IImages mapTile = new CImages20();
@@ -53,50 +57,49 @@ public class ScreenTD_Main extends AScreen {
        	((world_Level00)world).initPath();// init path
        	((world_Level00)world).initUnit();
        	
-       	sprs = new CSprite[4];
-       	sprs[0] = new CSprite(enemy);
-    	sprs[1] = new CSprite(enemy);
-    	sprs[2] = new CSprite(enemy);
-    	sprs[3] = new CSprite(enemy);
+       	enemys = new CSprite[32];
+       	for(int i=0;i<enemys.length;i++){
+       		enemys[i] = new CSprite(enemy);
+       		new UnitPatrol(enemys[i],world.WayPoints[0]);
+       		enemys[i].Y = -32 - i*32;
+       	}
 
-    	new UnitPatrol(sprs[0],world.WayPoints[0]);
-    	new UnitPatrol(sprs[1],world.WayPoints[0]);
-    	new UnitPatrol(sprs[2],world.WayPoints[0]);
-    	new UnitPatrol(sprs[3],world.WayPoints[0]);
     	
-    	world.addSprites(sprs);
+    	world.addSprites(enemys);
     	
 
        	resetTimer();
 	}
 	
 	public void notifyLogic() {
+    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
+        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
     	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
     	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
-    	if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
+    	if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
     	
     	if(isPointerDown()){}
     	if(isKeyDown(KEY_C)){}
     	
     	
-    	if(isKeyHold(KEY_UP|KEY_3)){
-    		//sprs[1].mov(0,-4);
+    	if(isKeyHold(KEY_UP)){
+    		cam.mov(0,-4);
     	} 
-    	if(isKeyHold(KEY_DOWN|KEY_6)){
-    		//sprs[1].mov(0,4);
+    	if(isKeyHold(KEY_DOWN)){
+    		cam.mov(0, 4);
     	}
-    	if(isKeyHold(KEY_LEFT|KEY_1)){
-    		//sprs[1].mov(-4,0);
+    	if(isKeyHold(KEY_LEFT)){
+    		cam.mov(-4, 0);
     	}
-		if(isKeyHold(KEY_RIGHT|KEY_2)){
-			//sprs[1].mov(4,0);
+		if(isKeyHold(KEY_RIGHT)){
+			cam.mov( 4,0);
 		}
 
 		world.update();
     	
-		int cdx = sprs[0].X - (cam.getX() + cam.getWidth() /2);
-    	int cdy = sprs[0].Y - (cam.getY() + cam.getHeight()/2);
-    	cam.mov(cdx,cdy);
+//		int cdx = sprs[0].X - (cam.getX() + cam.getWidth() /2);
+//    	int cdy = sprs[0].Y - (cam.getY() + cam.getHeight()/2);
+//    	cam.mov(cdx,cdy);
     	
         tickTimer();
         

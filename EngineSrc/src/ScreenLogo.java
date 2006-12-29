@@ -32,7 +32,7 @@ final public class ScreenLogo extends AScreen {
 	}
 
 	public void notifyLogic() {
-		if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
+		if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
 		
 		if(isKeyDown(KEY_DOWN)){
 			index ++;
