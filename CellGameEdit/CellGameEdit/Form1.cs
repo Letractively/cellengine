@@ -42,6 +42,7 @@ namespace CellGameEdit
             if (prjForm == null || prjForm.Visible == false)
             {
                 FolderBrowserDialog dir = new FolderBrowserDialog();
+       
                 if (dir.ShowDialog() == DialogResult.OK)
                 {
                     if (System.IO.File.Exists(dir.SelectedPath + "\\Project.xml"))
@@ -52,8 +53,8 @@ namespace CellGameEdit
                     {
 
 
-                        System.IO.Directory.CreateDirectory(dir.SelectedPath);
-                        System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
+                        //System.IO.Directory.CreateDirectory(dir.SelectedPath);
+                        //System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
                         
                         ProjectForm.workSpace = dir.SelectedPath;
 
@@ -165,7 +166,8 @@ namespace CellGameEdit
             {
                 try
                 {
-                    String dir = System.IO.Directory.GetCurrentDirectory() + "\\script\\";
+
+                    String dir = Application.StartupPath + "\\script\\";
                     //String dir = ProjectForm.workSpace + "\\script\\";
 
                     if (System.IO.Directory.Exists(dir))

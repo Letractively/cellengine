@@ -54,6 +54,7 @@ namespace CellGameEdit.PM
         public SpriteForm(String name,ImagesForm images)
         {
             InitializeComponent();
+            pictureBox2.Image = new System.Drawing.Bitmap(pictureBox2.Width, pictureBox2.Height);
 
             id = name;
             super = images;
@@ -76,6 +77,8 @@ namespace CellGameEdit.PM
                 }
             }
 
+            
+
             AnimTable = new Hashtable();
             animCount = 0;
 
@@ -85,6 +88,8 @@ namespace CellGameEdit.PM
         protected SpriteForm(SerializationInfo info, StreamingContext context)
         {
             InitializeComponent();
+            pictureBox2.Image = new System.Drawing.Bitmap(pictureBox2.Width, pictureBox2.Height);
+
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
@@ -680,12 +685,7 @@ namespace CellGameEdit.PM
                                 " 宽：" + srcGetImage(i).getWidth() +
                                 " 高：" + srcGetImage(i).getHeight();
 
-                            if( dstGetCurSubIndexes().Length == 1 )
-                            {
-                                framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = i;
-                                dstRefersh();
-                            }
-
+                           
                             pictureBox1.Refresh();
                             break;
                         }
@@ -1096,6 +1096,20 @@ namespace CellGameEdit.PM
             //framesRefersh();
             dstRefersh();
         }
+        private void toolStripButton20_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dstGetCurSubIndexes().Length == 1)
+                {
+                    framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = srcIndex;
+                    framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcRect.Width;
+                    framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcRect.Height;
+                    dstRefersh();
+                }
+            }catch(Exception err){}
+            dstRefersh();
+        }
         private void toolStripButton16_Click(object sender, EventArgs e)
         {
             if (tabControl1.SelectedIndex == 0)
@@ -1305,10 +1319,14 @@ namespace CellGameEdit.PM
 
         }
 
-
+        // dst box
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
+           // pictureBox2.SizeMode = PictureBoxSizeMode.
+
             Graphics g = new Graphics(e.Graphics);
+
+            //Graphics g = new Graphics(System.Drawing.Graphics.FromImage(pictureBox2.Image));
 
             if (framesGetCurFrame() != null)
             {
@@ -1324,7 +1342,7 @@ namespace CellGameEdit.PM
                     pictureBox2.Height / 2);
             }
 
-           
+            //e.Graphics.DrawImage(pictureBox2.Image,0,0);
 
             System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
@@ -1724,6 +1742,8 @@ namespace CellGameEdit.PM
         
         
         }
+
+
 
        
 
