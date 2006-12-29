@@ -10,8 +10,6 @@ import com.morefuntek.cell.Game.AScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
-	static public boolean ExitGame = false;
-	
 	Canvas canvas ;
 
 //------------------------------------------------------------------------------------------
@@ -70,7 +68,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 	final public void run() {
 		long UsedTime;
 		try{
-			while (!GameMIDlet.ExitGame) {
+			while (!AScreen.ExitGame) {
 				UsedTime = System.currentTimeMillis();
 
 				canvas.repaint();

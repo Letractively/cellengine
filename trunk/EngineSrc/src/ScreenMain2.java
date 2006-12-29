@@ -103,7 +103,7 @@ public class ScreenMain2 extends AScreen {
 	    if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
     	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
     	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
-    	if(isKeyHold(KEY_0)){GameMIDlet.ExitGame = true;}
+    	if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
     	
 //    	if(isPointerDown()){
 //    		int bx = world.toWorldPosX(getPointerX()) / map.getCellW();
