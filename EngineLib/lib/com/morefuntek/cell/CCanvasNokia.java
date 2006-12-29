@@ -4,7 +4,7 @@ package com.morefuntek.cell;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 import com.nokia.mid.ui.FullCanvas;
 
 
@@ -35,71 +35,71 @@ public class CCanvasNokia extends FullCanvas{
 		if (this.hasPointerEvents()) System.out.println("support Pointer Events !");
 		if (this.hasPointerMotionEvents()) System.out.println("support Pointer Dragged !");
 
-		CScreen.SCREEN_WIDTH = getWidth();
-		CScreen.SCREEN_HEIGHT = getHeight();
-		CScreen.SCREEN_HCENTER = getWidth()/2;
-		CScreen.SCREEN_VCENTER = getHeight()/2;
-		CScreen.println("Screen W = " + CScreen.SCREEN_WIDTH);
-		CScreen.println("Screen H = " + CScreen.SCREEN_HEIGHT);
+		AScreen.SCREEN_WIDTH = getWidth();
+		AScreen.SCREEN_HEIGHT = getHeight();
+		AScreen.SCREEN_HCENTER = getWidth()/2;
+		AScreen.SCREEN_VCENTER = getHeight()/2;
+		AScreen.println("Screen W = " + AScreen.SCREEN_WIDTH);
+		AScreen.println("Screen H = " + AScreen.SCREEN_HEIGHT);
 	}
 	
 	protected void sizeChanged(int w, int h) {
-		CScreen.SCREEN_WIDTH = w;
-		CScreen.SCREEN_HEIGHT = h;
-		CScreen.SCREEN_HCENTER = w/2;
-		CScreen.SCREEN_VCENTER = h/2;
-		CScreen.println("Change Screen W = " + w);
-		CScreen.println("Change Screen H = " + h);
+		AScreen.SCREEN_WIDTH = w;
+		AScreen.SCREEN_HEIGHT = h;
+		AScreen.SCREEN_HCENTER = w/2;
+		AScreen.SCREEN_VCENTER = h/2;
+		AScreen.println("Change Screen W = " + w);
+		AScreen.println("Change Screen H = " + h);
 	}
 	
 	//-------------------------------------------------------------------------------------
 	static final public int getKeyValue(int keyCode) {
 		switch (keyCode) {
 			case Canvas.KEY_NUM0 :
-				return CScreen.KEY_0;
+				return AScreen.KEY_0;
 			case Canvas.KEY_NUM1 :
-				return CScreen.KEY_1;
+				return AScreen.KEY_1;
 			case Canvas.KEY_NUM2 :
-				return CScreen.KEY_2;
+				return AScreen.KEY_2;
 			case Canvas.KEY_NUM3 :
-				return CScreen.KEY_3;
+				return AScreen.KEY_3;
 			case Canvas.KEY_NUM4 :
-				return CScreen.KEY_4;
+				return AScreen.KEY_4;
 			case Canvas.KEY_NUM5 :
-				return CScreen.KEY_5;
+				return AScreen.KEY_5;
 			case Canvas.KEY_NUM6 :
-				return CScreen.KEY_6;
+				return AScreen.KEY_6;
 			case Canvas.KEY_NUM7 :
-				return CScreen.KEY_7;
+				return AScreen.KEY_7;
 			case Canvas.KEY_NUM8 :
-				return CScreen.KEY_8;
+				return AScreen.KEY_8;
 			case Canvas.KEY_NUM9 :
-				return CScreen.KEY_9;
+				return AScreen.KEY_9;
 			case Canvas.KEY_POUND :
-				return CScreen.KEY_POUND;
+				return AScreen.KEY_POUND;
 			case Canvas.KEY_STAR :
-				return CScreen.KEY_STAR;
+				return AScreen.KEY_STAR;
 			case -1 :
 			case 1 :
-				return CScreen.KEY_UP;
+				return AScreen.KEY_UP;
 			case -2 :
 			case 6 :
-				return CScreen.KEY_DOWN;
+				return AScreen.KEY_DOWN;
 			case -3 :
 			case 2 :
-				return CScreen.KEY_LEFT;
+				return AScreen.KEY_LEFT;
 			case -4 :
 			case 5 :
-				return CScreen.KEY_RIGHT;
+				return AScreen.KEY_RIGHT;
 			case -6 :
 			case 21 :
-				return CScreen.KEY_A;
+				return AScreen.KEY_A;
 			case -7 :
 			case 22 :
-				return CScreen.KEY_B;
+				return AScreen.KEY_B;
 			case -5 :
 			case 20 :
-				return CScreen.KEY_C;
+				return AScreen.KEY_C;
 			default :
 				return 0;
 		}
@@ -107,36 +107,36 @@ public class CCanvasNokia extends FullCanvas{
 	
 	final protected void keyPressed(int keyCode) {
 		int Code = getKeyValue(keyCode);
-		CScreen.KeyDownState |= Code;
-		CScreen.KeyState |= Code;
+		AScreen.KeyDownState |= Code;
+		AScreen.KeyState |= Code;
 	}
 
 	final protected void keyReleased(int keyCode) {
 		int Code = getKeyValue(keyCode);
-		CScreen.KeyUpState |= Code;
-		CScreen.KeyState &= (~Code);
+		AScreen.KeyUpState |= Code;
+		AScreen.KeyState &= (~Code);
 	}
 
 	final protected void pointerPressed(int x, int y) {
-		CScreen.PointerState = true;
-		CScreen.PointerDownState = true;
-		CScreen.PointerDragState = false;
-		CScreen.PointerX = x;
-		CScreen.PointerY = y;
+		AScreen.PointerState = true;
+		AScreen.PointerDownState = true;
+		AScreen.PointerDragState = false;
+		AScreen.PointerX = x;
+		AScreen.PointerY = y;
 	}
 
 	final protected void pointerReleased(int x, int y) {
-		CScreen.PointerState = false;
-		CScreen.PointerUpState = true;
-		CScreen.PointerDragState = false;
-		CScreen.PointerX = x;
-		CScreen.PointerY = y;
+		AScreen.PointerState = false;
+		AScreen.PointerUpState = true;
+		AScreen.PointerDragState = false;
+		AScreen.PointerX = x;
+		AScreen.PointerY = y;
 	}
 
 	final protected void pointerDragged(int x, int y) {
-		CScreen.PointerDragState = true;
-		CScreen.PointerX = x;
-		CScreen.PointerY = y;
+		AScreen.PointerDragState = true;
+		AScreen.PointerX = x;
+		AScreen.PointerY = y;
 	}
 
 
@@ -144,29 +144,29 @@ public class CCanvasNokia extends FullCanvas{
 	//-------------------------------------------------------------------------------------------------
 
 	final protected void paint(Graphics g) {
-		CScreen.queryKey();
+		AScreen.queryKey();
 		
-		CScreen.TryChangeSubSreen();
+		AScreen.TryChangeSubSreen();
 		
-		if(CScreen.CurSubScreen!=null){
-			if(CScreen.LogicEnable){
-				CScreen.CurSubScreen.notifyLogic();
+		if(AScreen.CurSubScreen!=null){
+			if(AScreen.LogicEnable){
+				AScreen.CurSubScreen.notifyLogic();
 			}
-			if(CScreen.RenderEnable){
-				CScreen.CurSubScreen.notifyRender(g);
+			if(AScreen.RenderEnable){
+				AScreen.CurSubScreen.notifyRender(g);
 			}
-			if(CScreen.TransitionEnable==false){
-				CScreen.Transition = false;
+			if(AScreen.TransitionEnable==false){
+				AScreen.Transition = false;
 			}
 		}
 		
-		CScreen.Transition(g,getWidth(),getHeight());
+		AScreen.Transition(g,getWidth(),getHeight());
 		
 //#ifdef _DEBUG		
 		final String d = new String(new byte[]{73,116,32,105,115,32,97,32,68,101,109,111});
-		CScreen.drawString(g,d, 
-				-CScreen.getStringWidth(d) + 
-				(Math.abs((int)System.currentTimeMillis()/20) % (CScreen.SCREEN_WIDTH+CScreen.getStringWidth(d)) ) , 
+		AScreen.drawString(g,d, 
+				-AScreen.getStringWidth(d) + 
+				(Math.abs((int)System.currentTimeMillis()/20) % (AScreen.SCREEN_WIDTH+AScreen.getStringWidth(d)) ) , 
 				8, ((int)System.currentTimeMillis()&0xffffffff));
 //#endif
 	}
@@ -175,17 +175,17 @@ public class CCanvasNokia extends FullCanvas{
 
 
 	protected void hideNotify() {
-		if(CScreen.CurSubScreen!=null){
-			if(CScreen.LogicEnable){
-				CScreen.CurSubScreen.notifyPause();
+		if(AScreen.CurSubScreen!=null){
+			if(AScreen.LogicEnable){
+				AScreen.CurSubScreen.notifyPause();
 			}
 		}
 	}
 	
 	protected void showNotify() {
-		if(CScreen.CurSubScreen!=null){
-			if(CScreen.LogicEnable){
-				CScreen.CurSubScreen.notifyResume();
+		if(AScreen.CurSubScreen!=null){
+			if(AScreen.LogicEnable){
+				AScreen.CurSubScreen.notifyResume();
 			}
 		}
 	

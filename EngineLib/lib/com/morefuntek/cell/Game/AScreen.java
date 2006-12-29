@@ -14,10 +14,10 @@ import com.morefuntek.cell.CObject;
  * @since 2006-11-30 
  * @version 1.0
  */
-abstract public class CScreen extends CObject {
+abstract public class AScreen extends CObject {
 //	-------------------------------------------------------------------------------------------------------
 //	game refer
-	static public CScreen CurSubScreen = null;
+	static public AScreen CurSubScreen = null;
 	
 	/**фад╩©М*/
 	static public int SCREEN_WIDTH = 176;
@@ -171,8 +171,8 @@ abstract public class CScreen extends CObject {
 			g.setColor(0xffffffff);
 		    g.drawString(
 		    		TransitionText, 
-		    		w/2-CScreen.CurFont.stringWidth(TransitionText)/2, 
-		    		h/2-CScreen.CurFont.getHeight()/2, 
+		    		w/2-AScreen.CurFont.stringWidth(TransitionText)/2, 
+		    		h/2-AScreen.CurFont.getHeight()/2, 
 		    		0
 		    		);
 		}
@@ -222,7 +222,7 @@ abstract public class CScreen extends CObject {
 			}
 			
 			try {
-				CurSubScreen = (CScreen)((Class.forName(NextScreenClassName)).newInstance());
+				CurSubScreen = (AScreen)((Class.forName(NextScreenClassName)).newInstance());
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

@@ -163,6 +163,25 @@ public class CWorld extends CObject {
 	    	
 			Camera.render(g);
 			
+//			#ifdef _DEBUG
+			for(int i=0;IsDebug && WayPoints!=null && i<WayPoints.length;i++){
+				if(CCD.cdRect(
+						WayPoints[i].X-1, 
+						WayPoints[i].Y-1, 
+						WayPoints[i].X+1, 
+						WayPoints[i].Y+1, 
+						Camera.X, 
+						Camera.Y, 
+						Camera.X + Camera.getWidth(), 
+						Camera.Y + Camera.getHeight()
+						)){
+					WayPoints[i].render(g, 
+							-Camera.X+Camera.WindowX, 
+							-Camera.Y+Camera.WindowY);
+				}
+			}
+//#endif
+
 			for(int i=0;i<Sprs.size();i++){
 				if(CCD.cdRect(
 						((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
@@ -182,25 +201,6 @@ public class CWorld extends CObject {
 					((CSprite)Sprs.elementAt(i)).OnScreen = false;
 				}
 			}
-			
-//#ifdef _DEBUG
-			for(int i=0;IsDebug && WayPoints!=null && i<WayPoints.length;i++){
-				if(CCD.cdRect(
-						WayPoints[i].X-1, 
-						WayPoints[i].Y-1, 
-						WayPoints[i].X+1, 
-						WayPoints[i].Y+1, 
-						Camera.X, 
-						Camera.Y, 
-						Camera.X + Camera.getWidth(), 
-						Camera.Y + Camera.getHeight()
-						)){
-					WayPoints[i].render(g, 
-							-Camera.X+Camera.WindowX, 
-							-Camera.Y+Camera.WindowY);
-				}
-			}
-//#endif
 			
 			g.setClip(cx,cy,cw,ch);
 		}catch(NullPointerException err){
