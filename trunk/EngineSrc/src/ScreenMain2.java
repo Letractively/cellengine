@@ -12,7 +12,7 @@ import com.morefuntek.cell.Game.CCD;
 import com.morefuntek.cell.Game.CCamera;
 import com.morefuntek.cell.Game.CCollides;
 import com.morefuntek.cell.Game.CMap;
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWayPoint;
 import com.morefuntek.cell.Game.CWorld;
@@ -20,7 +20,7 @@ import com.morefuntek.cell.Game.AI.CAStar;
 
 
 //继承抽象类CScreen并实现其中的方法
-public class ScreenMain2 extends CScreen {
+public class ScreenMain2 extends AScreen {
 	Random random = new Random();
 
 	// game world

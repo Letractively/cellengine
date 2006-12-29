@@ -6,7 +6,7 @@ import javax.microedition.midlet.MIDlet;
 import com.morefuntek.cell.CCanvas20;
 import com.morefuntek.cell.CCanvasNokia;
 import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
@@ -40,17 +40,17 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		}
 
 		
-		CScreen.SCREEN_WIDTH = canvas.getWidth();
-		CScreen.SCREEN_HEIGHT = canvas.getHeight();
-		CScreen.SCREEN_HCENTER = canvas.getWidth()/2;
-		CScreen.SCREEN_VCENTER = canvas.getHeight()/2;
-		System.out.println("Screen W = " + CScreen.SCREEN_WIDTH);
-		System.out.println("Screen H = " + CScreen.SCREEN_HEIGHT);
+		AScreen.SCREEN_WIDTH = canvas.getWidth();
+		AScreen.SCREEN_HEIGHT = canvas.getHeight();
+		AScreen.SCREEN_HCENTER = canvas.getWidth()/2;
+		AScreen.SCREEN_VCENTER = canvas.getHeight()/2;
+		System.out.println("Screen W = " + AScreen.SCREEN_WIDTH);
+		System.out.println("Screen H = " + AScreen.SCREEN_HEIGHT);
 		
 		Display.getDisplay(this).setCurrent(canvas);
 
 		//ÇÐ»»µ±Ç°ÆÁÄ»µ½ScreenSCWorld
-		CScreen.ChangeSubSreen("ScreenLogo");
+		AScreen.ChangeSubSreen("ScreenLogo");
 
 		(new Thread(this)).start();
 
@@ -78,8 +78,8 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 				
 				UsedTime = System.currentTimeMillis() - UsedTime;
 				
-				if (UsedTime < CScreen.FrameDelay) {
-					Thread.sleep(CScreen.FrameDelay - UsedTime);
+				if (UsedTime < AScreen.FrameDelay) {
+					Thread.sleep(AScreen.FrameDelay - UsedTime);
 				}else{
 				    //Thread.sleep(1);
 				}

@@ -9,13 +9,13 @@ import com.morefuntek.cell.CImages20;
 import com.morefuntek.cell.IImages;
 import com.morefuntek.cell.Game.CCamera;
 import com.morefuntek.cell.Game.CMap;
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWorld;
 import com.morefuntek.cell.Game.CWayPoint;;
 
 //继承抽象类CScreen并实现其中的方法
-public class ScreenTD_Main extends CScreen {
+public class ScreenTD_Main extends AScreen {
 
 	// game world
 	CWorld 		world;

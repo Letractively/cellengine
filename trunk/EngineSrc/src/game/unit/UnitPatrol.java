@@ -1,6 +1,7 @@
 package game.unit;
 
 import com.morefuntek.cell.CObject;
+import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CCD;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWayPoint;
@@ -8,82 +9,128 @@ import com.morefuntek.cell.Game.IState;
 
 public class UnitPatrol extends CObject implements IState  {
 
-	final int STATE_PATROL	= 0;
-	final int STATE_HOLD	= 0;
-	
-	int state = 0;
-	
-	CSprite spr ;
-	CWayPoint next ;
-	
-	int MaxSpeed = 1 + Math.abs(Random.nextInt() % 4);
+	final public int STATE_MOVE 	= 0;
+	final public int STATE_HOLD 	= 1;
+	final public int STATE_SWING	= 2;
 
-	public UnitPatrol(CSprite stuff, CWayPoint start){
+	public int state = 0;
+	
+	//-------------------------------------------------------------------------------------------------
+	
+	public CSprite spr;
+	
+	public UnitPatrol(CSprite stuff, CWayPoint next){
 		spr = stuff;
+		NextWayPoint = next;
 		spr.setState(this);
-		
-		next = start;
 	}
+	
 	
 	public void update() {
-		onEvent();
-		changeEvent();
+		switch(state){
+		case STATE_MOVE : 
+			if(isEndMove()){
+				startHold();
+			}else{
+				onMove();
+			}
+			break;
+		case STATE_HOLD : 
+			if(isEndHold()){
+				startSwing();
+			}else{
+				onHold();
+			}
+			break;
+		case STATE_SWING : 
+			if(isEndSwing()){
+				startMove();
+			}else{
+				onSwing();
+			}
+			break;
+		}
+		
 	}
-
-	public void changeEvent() {
-		changePatrol();
-	}
-
-	public void onEvent() {
-		onPatrol();
-	}
-
-//	----------------------------------------------------------------------------------------------------------------
 	
-	public void changePatrol(){
-		if(CCD.cdRect(
+//---------------------------------------------------------------------------------------
+	//hold
+	public int HoldTime = 100;
+	public void onHold(){
+		HoldTime--;
+		spr.setCurrentFrame(0, 0);
+	}
+	public void startHold(){
+		HoldTime = Math.abs(Random.nextInt()%200);
+		state = STATE_HOLD;
+	}
+	public boolean isEndHold(){
+		return HoldTime<0;
+	}
+	
+//------------------------------------------------------------------------------------
+
+	//patrol
+	public CWayPoint NextWayPoint;
+	public int MaxSpeed = Math.abs(Random.nextInt()%4);
+	public void onMove(){
+		spr.DirectX = NextWayPoint.X - spr.X;
+		spr.DirectY = NextWayPoint.Y - spr.Y;
+	
+		if(spr.DirectX == 0 && spr.DirectY == 0){
+			spr.setCurrentFrame(0, spr.getCurrentFrame());
+		}else if(spr.DirectY < 0 ){
+			spr.setCurrentFrame(0, spr.getCurrentFrame());
+		}else if(spr.DirectY > 0){
+			spr.setCurrentFrame(2, spr.getCurrentFrame());
+		}else if(spr.DirectX < 3){
+			spr.setCurrentFrame(1, spr.getCurrentFrame());
+		}else if(spr.DirectX > 1){
+			spr.setCurrentFrame(2, spr.getCurrentFrame());
+		}
+		
+		spr.nextCycFrame();
+		
+		int dx = (spr.DirectX==0 ? 0 : (spr.DirectX>0 ? MaxSpeed : -MaxSpeed));
+		int dy = (spr.DirectY==0 ? 0 : (spr.DirectY>0 ? MaxSpeed : -MaxSpeed));
+		
+		if(Math.abs(dx)>Math.abs(spr.DirectX))dx = spr.DirectX;
+		if(Math.abs(dy)>Math.abs(spr.DirectY))dy = spr.DirectY;
+		
+		spr.tryMove(dx, dy);
+
+	}
+	public void startMove(){
+		if(NextWayPoint.getNextCount()>0){
+			int id = Math.abs(Random.nextInt()%NextWayPoint.getNextCount());
+			NextWayPoint = NextWayPoint.getNextPoint(id);
+		}
+		state = STATE_MOVE;
+	}
+	public boolean isEndMove(){
+		return CCD.cdRect(
 				spr.X - MaxSpeed, spr.Y - MaxSpeed, 
 				spr.X + MaxSpeed, spr.Y + MaxSpeed, 
-				next.X , next.Y , 
-				next.X , next.Y ) ){
-			if(next.getNextCount()>0){
-				int id = Math.abs(Random.nextInt()%next.getNextCount());
-				
-				if (next == next.getNextPoint(id) &&
-					next.getNextCount()>1){
-					next = next.getNextPoint((id+1)%next.getNextCount());
-				}else{
-					next = next.getNextPoint(id);
-				}
-				
-				
-			}
-		}
-	}
-	public void onPatrol(){
-		spr.DirectX = (next.X - spr.X);
-		spr.DirectY = (next.Y - spr.Y);
-		
-		spr.DirectX = spr.DirectX == 0 ? 0 : spr.DirectX/Math.abs(spr.DirectX);
-		spr.DirectY = spr.DirectY == 0 ? 0 : spr.DirectY/Math.abs(spr.DirectY);
-		
-		spr.X += spr.DirectX*MaxSpeed;
-		spr.Y += spr.DirectY*MaxSpeed;
-	
-		if(spr.DirectY==0 && spr.DirectX==0){
-			spr.setCurrentFrame(2, 0);
-		}else if(spr.DirectY<0){
-			spr.setCurrentFrame(0, spr.getCurrentFrame());
-		}else if(spr.DirectY>0){
-			spr.setCurrentFrame(2, spr.getCurrentFrame());
-		}else if(spr.DirectX<0){
-			spr.setCurrentFrame(3, spr.getCurrentFrame());
-		}else if(spr.DirectX>0){
-			spr.setCurrentFrame(1, spr.getCurrentFrame());
-		}
-		spr.nextCycFrame();
+				NextWayPoint.X , NextWayPoint.Y , 
+				NextWayPoint.X , NextWayPoint.Y );
 	}
 	
-	
-	
+//	------------------------------------------------------------------------------------
+
+	//patrol
+	public int SwingTime = 100;
+
+	public void onSwing(){
+		SwingTime--;
+		spr.setCurrentFrame(AScreen.getTimer()%4, 0);
+		
+		
+	}
+	public void startSwing(){
+		SwingTime = Math.abs(Random.nextInt()%200);
+		state = STATE_SWING;
+	}
+	public boolean isEndSwing(){
+		return SwingTime<0;
+	}
 }
