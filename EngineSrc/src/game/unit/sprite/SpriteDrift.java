@@ -4,7 +4,7 @@ import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.Game.CCD;
 import com.morefuntek.cell.Game.CCollides;
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.IState;
 import com.morefuntek.cell.ParticleSystem.CParticle;
@@ -129,7 +129,7 @@ public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 		Y = (int)MY;
 		
 		if(touch_Spr_Map(this, CD_TYPE_MAP, world.getMap())){
-			println("touch back" + CScreen.getTimer());
+			println("touch back" + AScreen.getTimer());
 			
 			InertiaSpeed *= -1;
 			
@@ -166,7 +166,7 @@ public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 		
 
 		if(touch_Spr_Map(this, CD_TYPE_MAP, world.getMap())){
-			println("turn cut " + CScreen.getTimer());
+			println("turn cut " + AScreen.getTimer());
 			InertiaDirect -= dd ;
 			AccDirect *= -1;
 		}

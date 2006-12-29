@@ -2,7 +2,7 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 
 
 
@@ -12,7 +12,7 @@ import com.morefuntek.cell.Game.CScreen;
 
 
 
-final public class ScreenLogo extends CScreen {
+final public class ScreenLogo extends AScreen {
 
     private Image splogo;
     
@@ -56,7 +56,7 @@ final public class ScreenLogo extends CScreen {
 			drawString(g, 
 					list[i], 
 					1, 
-					1 + (CScreen.getStringHeight()+1) * i, 
+					1 + (AScreen.getStringHeight()+1) * i, 
 					i==index /*&& getTimer()%2==0*/ ? 0xff808080 : 0xff000000 );
 		}
 		

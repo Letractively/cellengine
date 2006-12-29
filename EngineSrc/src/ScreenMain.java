@@ -4,7 +4,7 @@ import java.util.Random;
 import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.CScreen;
+import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.ParticleSystem.CParticle;
 import com.morefuntek.cell.ParticleSystem.CParticleSystem;
 import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
@@ -54,13 +54,13 @@ class MyParticleLauncher implements IParticleLauncher {
 		particle.Color = 255;
 		particle.Timer = 0;
 		
-		if(CScreen.isKeyDown(CScreen.KEY_ANY)){
-			particle.X = CScreen.SCREEN_HCENTER * Div;
-			particle.Y = CScreen.SCREEN_VCENTER * Div;
+		if(AScreen.isKeyDown(AScreen.KEY_ANY)){
+			particle.X = AScreen.SCREEN_HCENTER * Div;
+			particle.Y = AScreen.SCREEN_VCENTER * Div;
 		}
-		if(CScreen.isPointerHold()){
-			particle.X = CScreen.getPointerX() * Div;
-			particle.Y = CScreen.getPointerY() * Div;
+		if(AScreen.isPointerHold()){
+			particle.X = AScreen.getPointerX() * Div;
+			particle.Y = AScreen.getPointerY() * Div;
 		}
 		
 		particle.SpeedX = 0;
@@ -158,8 +158,8 @@ class ParticleLauncherRain implements IParticleLauncher {
 	int WindSpeed = Div * 2;
 	int Gravity = Div * 16 ;
 	
-	int Width = CScreen.SCREEN_WIDTH ;
-	int Height = CScreen.SCREEN_HEIGHT ;
+	int Width = AScreen.SCREEN_WIDTH ;
+	int Height = AScreen.SCREEN_HEIGHT ;
 
 	public void particleTerminated(CParticle particle, int id) {
 		
@@ -250,8 +250,8 @@ class ParticleLauncherSnow implements IParticleLauncher  {
 	int WindSpeed = Div * 1;
 	int Gravity = Div * 2 ;
 	
-	int Width = CScreen.SCREEN_WIDTH ;
-	int Height = CScreen.SCREEN_HEIGHT ;
+	int Width = AScreen.SCREEN_WIDTH ;
+	int Height = AScreen.SCREEN_HEIGHT ;
 
 	public void particleTerminated(CParticle particle, int id) {
 		
@@ -309,7 +309,7 @@ class ParticleLauncherSnow implements IParticleLauncher  {
  * TODO To change the template for this generated type comment go to
  * Window - Preferences - Java - Code Style - Code Templates
  */
-public class ScreenMain extends CScreen {
+public class ScreenMain extends AScreen {
 	Random random = new Random();
 	// particle system
 	int SpawnCount = 1 ;
@@ -413,7 +413,7 @@ public class ScreenMain extends CScreen {
         
         if(SpawnCount>0){
         	myParticleSystem.render(g);
-	        CScreen.drawString(g,
+	        AScreen.drawString(g,
 					"partical Type : " + MyParticleLauncher.Type +
 					" Count : " + SpawnCount, 
 					1 ,1+32, 
@@ -427,7 +427,7 @@ public class ScreenMain extends CScreen {
 	    		snow.render(g);
 	    		break;
 	    	}
-	        CScreen.drawString(g,
+	        AScreen.drawString(g,
 	 				"Weather Type : " + WeatherType[Weather] ,
 	 				1 ,1+64, 
 	 				0xffffffff);
