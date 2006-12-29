@@ -143,7 +143,7 @@ public class CSprite extends CUnit {
 	}
 
 	/**
-	 * 类似 拷贝构造函数
+	 * 类似 拷贝构造函数,浅表
 	 * @param spr 
 	 */
 	public CSprite(CSprite spr){
@@ -438,7 +438,7 @@ public class CSprite extends CUnit {
 	
 //	------------------------------------------------------------------------------------------
 
-	
+	private static int adjustSprID[] = null;
 	/**
 	 * 阻挡性移动，如果被阻挡，精灵停在阻挡物体边缘。
 	 * @param x
@@ -457,14 +457,15 @@ public class CSprite extends CUnit {
 		X+=x;
 		Y+=y;
 		
-		int adjustSprID[] = null;
+		if(adjustSprID==null || adjustSprID.length < world.Sprs.size()){
+			adjustSprID = new int[world.Sprs.size()];
+		}
 		int p = 0;
 		
 		boolean adjustSpr = false;
 		boolean adjustMap = false;
 		
 		if(this.haveSprBlock){
-			adjustSprID = new int[world.Sprs.size()];
 			for(int i=world.Sprs.size()-1;i>=0;i--){
 				adjustSprID[world.Sprs.size()-1 - i] = -1 ;
 				if(!this.equals(((CSprite)world.Sprs.elementAt(i))) && 
@@ -488,7 +489,7 @@ public class CSprite extends CUnit {
 			adjustMap = touch_Spr_Map(this, CD_TYPE_MAP,this.world.Map);
 		}
 		
-		if(adjustMap==true||adjustSpr==true){
+		if(adjustMap||adjustSpr){
 			X-=x;
 			Y-=y;
 			while(X!=dstX){
@@ -543,22 +544,37 @@ public class CSprite extends CUnit {
 					}
 				}
 			}
-			return true;
-		}else{
-			return false;
+		}
+			
+		// 调整精灵优先级别
+		if(world.isRPGView && dy!=0){
+			int s = world.Sprs.indexOf(this);
+			int d = s + dy;
+			while( 	s<world.Sprs.size() && s>=0 &&
+					d<world.Sprs.size() && d>=0 ){
+				
+				CSprite that = (CSprite)world.Sprs.elementAt(d);
+				
+				if(dy<0 && that.Y <= this.Y){
+					break;
+				} 
+				if(dy>0 && that.Y >= this.Y){
+					break;
+				}
+				
+				world.Sprs.setElementAt(that, s);
+				world.Sprs.setElementAt(this, d);
+				
+//				println("exchange "+s+" to "+d);
+				s = d ;
+				d = s + dy;
+			}
 		}
 		
+		return adjustMap||adjustSpr;
+
 	}
 
-	public boolean tryMoveX(int x){
-		
-		return false;
-	}
-	
-	public boolean tryMoveY(int y){
-		
-		return false;
-	}
 	
 //	------------------------------------------------------------------------------------------
 

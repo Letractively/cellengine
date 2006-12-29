@@ -8,7 +8,7 @@ import com.morefuntek.cell.CObject;
  * @since 2006-11-30 
  * @version 1.0
  */
-abstract public class CGroup extends CObject {
+public class CGroup extends CObject {
 
 	protected int Frames[][];
 	

@@ -170,13 +170,16 @@ public class CCollides extends CGroup{
 	static public boolean touch(
 			CCollides c1,int index1,int x1,int y1,
 			CCollides c2,int index2,int x2,int y2){
-		for(int i=c1.Frames[index1].length-1;i>=0;i--){
-			for(int j=c2.Frames[index2].length-1;j>=0;j--){
-				if( CCD.touch(
-						c1.cds[c1.Frames[index1][i]], x1, y1, // 
-						c2.cds[c2.Frames[index2][j]], x2, y2, //
-						true)){
-					return true;
+
+		if(touchArea(c1, x1, y1, c2, x2, y2)){
+			for(int i=c1.Frames[index1].length-1;i>=0;i--){
+				for(int j=c2.Frames[index2].length-1;j>=0;j--){
+					if( CCD.touch(
+							c1.cds[c1.Frames[index1][i]], x1, y1, // 
+							c2.cds[c2.Frames[index2][j]], x2, y2, //
+							true)){
+						return true;
+					}
 				}
 			}
 		}

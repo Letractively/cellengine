@@ -382,8 +382,8 @@ public class CCamera extends CUnit {
 				
 				for(int y=0;y<BufBH;y++){
 					for(int x=0;x<BufBW;x++){
-						if(!Map.testSameAnimateTile(CScreen.getTimer()-1, CScreen.getTimer(), sbx, sby)){
-							Map.renderAnimateCell(bg, CScreen.getTimer(), dbx*CellW, dby*CellH, sbx, sby);
+						if(!Map.testSameAnimateTile(AScreen.getTimer()-1, AScreen.getTimer(), sbx, sby)){
+							Map.renderAnimateCell(bg, AScreen.getTimer(), dbx*CellW, dby*CellH, sbx, sby);
 							//println("draw "+CScreen.getTimer());
 						}
 						sbx = CMath.cycNum(sbx,+1,MapBW);
@@ -400,16 +400,16 @@ public class CCamera extends CUnit {
 			int w2 = WindowW - w1;
 			int h2 = WindowH - h1;
 			if (w1 > 0 && h1 > 0) {
-				CScreen.drawRegion(g, BackBuffer, vBufX, vBufY, w1, h1, WindowX + 0, WindowY + 0);
+				AScreen.drawRegion(g, BackBuffer, vBufX, vBufY, w1, h1, WindowX + 0, WindowY + 0);
 			}
 			if (w2 > 0 && h2 > 0) {
-				CScreen.drawRegion(g, BackBuffer, 0, 0, w2, h2, WindowX + w1, WindowY + h1);
+				AScreen.drawRegion(g, BackBuffer, 0, 0, w2, h2, WindowX + w1, WindowY + h1);
 			}
 			if (w1 > 0 && h2 > 0) {
-				CScreen.drawRegion(g, BackBuffer, vBufX, 0, w1, h2, WindowX + 0, WindowY + h1);
+				AScreen.drawRegion(g, BackBuffer, vBufX, 0, w1, h2, WindowX + 0, WindowY + h1);
 			}
 			if (w2 > 0 && h1 > 0) {
-				CScreen.drawRegion(g, BackBuffer, 0, vBufY, w2, h1, WindowX + w1, WindowY + 0);
+				AScreen.drawRegion(g, BackBuffer, 0, vBufY, w2, h1, WindowX + w1, WindowY + 0);
 			}
 		}else{
 			int cx = g.getClipX();
@@ -432,7 +432,7 @@ public class CCamera extends CUnit {
 							
 							);
 					Map.renderAnimateCell(g, 
-							CScreen.getTimer(),
+							AScreen.getTimer(),
 							WindowX+x*CellW-dx, 
 							WindowY+y*CellH-dy, 
 							CMath.cycNum(bx,x,MapBW), 
