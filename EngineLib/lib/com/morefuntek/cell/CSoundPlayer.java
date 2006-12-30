@@ -67,13 +67,9 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 
 	//	-------------------------------------------------------------------------------------------------------------------
 	final static public String TYPE_WAV = "audio/x-wav";
-
 	final static public String TYPE_AU = "audio/basic";
-
 	final static public String TYPE_MP3 = "audio/mpeg";
-
 	final static public String TYPE_MIDI = "audio/midi";
-
 	final static public String TYPE_TONE_SEQ = "audio/x-tone-seq";
 
 	//  -------------------------------------------------------------------------------------------------------------------

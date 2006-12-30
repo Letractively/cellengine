@@ -6,6 +6,10 @@ import javax.microedition.lcdui.Image;
 import com.nokia.mid.ui.DirectGraphics;
 import com.nokia.mid.ui.DirectUtils;
 
+/**
+ * @author yifeizhang
+ * IImages的Nokia实现
+ */
 public class CImagesNokia extends CObject implements IImages {
 	
 	/** TILE块的个数 */
@@ -14,7 +18,7 @@ public class CImagesNokia extends CObject implements IImages {
 
 	protected Image TileImage = null;
 	protected Image[] Tiles = null;
-
+	//由midp2.0转换的翻转表
 	static final private short[] TRANS_TABLE = {
 		0,//TRANS_NONE
 		0x4000, //TRANS_V
@@ -219,9 +223,10 @@ public class CImagesNokia extends CObject implements IImages {
 		}
 	}
 	
+
 	/**
-	 * 
-	 * @param images
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#addTile(javax.microedition.lcdui.Image[])
 	 */
 	final public void addTile(Image[] images) {
 		if (CurIndex < Count) {
@@ -234,6 +239,10 @@ public class CImagesNokia extends CObject implements IImages {
 		}
 	}
 
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int)
+	 */
 	final public void render(Graphics g, int Index, int PosX, int PosY) {//	不可选择对齐方式,不可旋转
 		
 			g.drawImage(//
@@ -245,14 +254,10 @@ public class CImagesNokia extends CObject implements IImages {
 		
 	}
 
+
 	/**
-	 * 绘制到指定的Graphics上。
-	 * 
-	 * @param g 指定的graphics
-	 * @param Index 序号
-	 * @param PosX X坐标
-	 * @param PosY Y坐标
-	 * @param Style 翻转方式，参考 CSSprite 里的翻转参数。
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int, int)
 	 */
 	final public void render(Graphics g, int Index, int PosX, int PosY, int Style) {
 		

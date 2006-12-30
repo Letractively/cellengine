@@ -9,7 +9,7 @@ import com.morefuntek.cell.CObject;
 
 
 /**
- * 游戏场景管理器。包含一个主地图，一个摄象机，N个精灵。
+ * 游戏场景管理器。包含一个主地图，一个摄象机，N个精灵，一系列路点。
  * @author yifeizhang
  * @since 2006-11-30 
  * @version 1.0

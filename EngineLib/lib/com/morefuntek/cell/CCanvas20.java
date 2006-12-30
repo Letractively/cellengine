@@ -52,6 +52,7 @@ public class CCanvas20 extends Canvas{
 	}
 	
 	//-------------------------------------------------------------------------------------
+	/**键映射方法，不同的设备映射到相同的数值*/
 	static final public int getKeyValue(int keyCode) {
 		switch (keyCode) {
 			case Canvas.KEY_NUM0 :

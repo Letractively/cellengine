@@ -9,7 +9,7 @@ import com.morefuntek.cell.CObject;
 
 /**
  * 子屏幕。</br>
- * 管理不同的游戏屏幕状态，比如：菜单界面、游戏界面、大厅界面、等等。每种界面只需要实现该类。
+ * 管理不同的游戏屏幕状态，比如：菜单界面、游戏界面、大厅界面、等等。每种界面只需要实现该类，而不需要去访问设备有关的Canvas。
  * @author yifeizhang
  * @since 2006-11-30 
  * @version 1.0
@@ -17,8 +17,11 @@ import com.morefuntek.cell.CObject;
 abstract public class AScreen extends CObject {
 //	-------------------------------------------------------------------------------------------------------
 //	game refer
+	
+	/**游戏结束标志*/
 	static public boolean ExitGame = false;
 	
+	/**当前的AScreen实例*/
 	static public AScreen CurSubScreen = null;
 	
 	/**屏幕宽*/
@@ -40,14 +43,9 @@ abstract public class AScreen extends CObject {
 	static public boolean RenderEnable = true;
 	/**是否允许切屏特效*/
 	static public boolean TransitionEnable = true;
-	// ------------------------------------------------------
-	static private int Timer = 1;
-	static private long CurTime = 0 ;
+
 	//	------------------------------------------------------------------------------------------------------	
 
-	
-
-	
 	/**
 	 * canvas notifyHide call back </br>
 	 * 游戏遇到系统暂停事件时回掉
@@ -60,18 +58,19 @@ abstract public class AScreen extends CObject {
 	abstract public void notifyResume();
 	/**
 	 * main game logic call back</br>
-	 * 游戏逻辑
+	 * 游戏逻辑,执行逻辑的回掉方法，每帧在渲染前被执行一次
 	 */
 	abstract public void notifyLogic();
 	/**
 	 * main render call back : canvas paint call back</br>
-	 * 游戏渲染
+	 * 游戏渲染,执行渲染的回掉方法，每帧被执行一次
 	 * @param g 
 	 */
 	abstract public void notifyRender(Graphics g);
 
 	//--------------------------------------------------------------------------------------------------------------------
 	
+	/**当前是否在进行屏幕切换*/
 	static public boolean 	Transition 			= false;
 	
 	static private int 		TransitionMaxTime 	= 0 ;
@@ -131,10 +130,10 @@ abstract public class AScreen extends CObject {
 	}
 	
 	/**
-	 * 功能描述
+	 * 渲染切换屏幕的特效
 	 * @param g
-	 * @param w
-	 * @param h 
+	 * @param w 最大宽度
+	 * @param h 最大高度
 	 */
 	static public void Transition(Graphics g,int w,int h){
 		TransitionTime++;
@@ -192,7 +191,7 @@ abstract public class AScreen extends CObject {
 	 * 切换到另一屏
 	 * @param screenClassName 你继承的CScreen类名字
 	 */
-	static public void ChangeSubSreen(String screenClassName) 
+	static public void ChangeSubScreen(String screenClassName) 
 	{
 		NextScreenClassName = screenClassName;
 		KeyEnable = false;
@@ -205,14 +204,14 @@ abstract public class AScreen extends CObject {
 	 * @param screenClassName 你继承的CScreen类名字
 	 * @param transitionText 想要在切屏时显示的文字
 	 */
-	static public void ChangeSubSreen(String screenClassName,String transitionText) 
+	static public void ChangeSubScreen(String screenClassName,String transitionText) 
 	{
 		TransitionText = transitionText;
-		ChangeSubSreen(screenClassName) ;
+		ChangeSubScreen(screenClassName) ;
 	}
 	
 	/**
-	 * 
+	 * 检测是否有屏幕切换事件，如果有的话则切换屏幕，完成数据加载。
 	 */
 	static public void TryChangeSubSreen() {
 	    if (NextScreenClassName!=null && isTransitionOut()){
@@ -240,21 +239,25 @@ abstract public class AScreen extends CObject {
 
 	
 	//-------------------------------------------------------------------------------------------------------------------------
+	static private int Timer = 1;
 	
 	/**
 	 * tick frame timer
+	 * 增加当前帧计数器
 	 */
 	static public void tickTimer() {
 		Timer++;
 	}
 	/**
 	 * reset frame timer
+	 * 帧计数器清0
 	 */
 	static public void resetTimer() {
 		Timer = 1;
 	}
 	/**
-	 * get current frame timer 
+	 * get current frame timer
+	 * 得到当前帧计数器值 
 	 * @return 
 	 */
 	static public int getTimer() {
@@ -292,7 +295,7 @@ abstract public class AScreen extends CObject {
 	static public int KeyDownState = 0;//按键按下状态
 	static public int KeyUpState = 0;//按键弹起状态
 
-	static public boolean PointerState = false;
+	static public boolean PointerState = false;//触摸屏状态
 	static public boolean PointerDragState = false;
 	static public boolean PointerDownState = false;
 	static public boolean PointerUpState = false;
@@ -301,13 +304,17 @@ abstract public class AScreen extends CObject {
 	static public int CurKeyDownState = 0;//按键按下状态快照
 	static public int CurKeyUpState = 0;//按键弹起状态快照
 	
-	static public boolean CurPointerState = false;
+	static public boolean CurPointerState = false;//触摸屏状态快照
 	static public boolean CurPointerDragState = false;
 	static public boolean CurPointerDownState = false;
 	static public boolean CurPointerUpState = false;
 	static public int PointerX;
 	static public int PointerY;
 
+	
+	/**
+	 * 清空键状态 
+	 */
 	static final public void clearKey(){
 		KeyState = 0;
 		KeyDownState = 0;
@@ -331,8 +338,10 @@ abstract public class AScreen extends CObject {
 		PointerY = 0;
 	}
 
-
 	
+	/**
+	 * 查询按键并更新键状态 
+	 */
 	static final public void queryKey(){
 		CurKeyState = KeyState;
 		CurKeyDownState = KeyDownState;
@@ -461,21 +470,24 @@ abstract public class AScreen extends CObject {
 	
 	/**
 	 * get current width with string
+	 * 得到当前字体的字符串宽度
 	 * @param str
 	 * @return 
 	 */
 	static public int getStringWidth(String str) {
 		return CurFont.stringWidth(str);
 	}
-/**
+	/**
 	 * get current font height
+	 * 得到当前字符高度
 	 * @return 
 	 */
 	static public int getStringHeight() {
 		return CurFont.getHeight();
 	}
-/**
+	/**
 	 * draw string at Graphics object with current font
+	 * 画字符串
 	 * @param g
 	 * @param str
 	 * @param x
@@ -488,8 +500,9 @@ abstract public class AScreen extends CObject {
 		g.setColor(Color);
 		g.drawString(str, x, y, 0);
 	}
-/**
+	/**
 	 * take midp 1.0 support midp 2.0 drawRegion (None Flip Rotated) method 
+	 * 无翻转的 drawRegion 
 	 * @param g
 	 * @param src
 	 * @param src_x
@@ -511,8 +524,9 @@ abstract public class AScreen extends CObject {
 		g.setClip(cx, cy, cw, ch);
 	}
 	
+	
 	/**
-	 * 功能描述
+	 * 显示FPS
 	 * @param g
 	 * @param x
 	 * @param y 
@@ -522,9 +536,10 @@ abstract public class AScreen extends CObject {
 		        g, ""
 				+ " TPF=" + FrameDelay
 				+ " FPS="
-				+ (1000 / ((System.currentTimeMillis() - CurTime) == 0 ? 1 : (System.currentTimeMillis() - CurTime))),
+				+ (1000 / ((System.currentTimeMillis() - CurRealTime) == 0 ? 1 : (System.currentTimeMillis() - CurRealTime))),
 				1,1, 
 				0xffffffff);
-		CurTime = System.currentTimeMillis();
+		CurRealTime = System.currentTimeMillis();
 	}
+	static private long CurRealTime = 0 ;
 }

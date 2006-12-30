@@ -3,14 +3,21 @@ package com.morefuntek.cell;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+/**
+ * @author yifeizhang
+ * IImages的MIDP2.0实现
+ */
 public class CImages20 extends CObject implements IImages {
 	
 
 	/** TILE块的个数 */
 	protected int Count = 0;
+	/**当前加入了多少张图片*/
 	protected int CurIndex = 0;
 
+	//原图
 	protected Image TileImage = null;
+	//图片组内容
 	protected Image[] Tiles = null;
 
 	
@@ -35,7 +42,7 @@ public class CImages20 extends CObject implements IImages {
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#gc()
 	 */
-	final public void gc() {
+	public void gc() {
 		TileImage = null;
 		System.gc();
 		try {
@@ -50,7 +57,7 @@ public class CImages20 extends CObject implements IImages {
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getImage(int)
 	 */
-	final public Image getImage(int index){
+	public Image getImage(int index){
 		return Tiles[index];
 	}
 
@@ -58,7 +65,7 @@ public class CImages20 extends CObject implements IImages {
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getWidth(int)
 	 */
-	final public int getWidth(int Index) {
+	public int getWidth(int Index) {
 		return Tiles[Index].getWidth();
 	}
 
@@ -66,11 +73,16 @@ public class CImages20 extends CObject implements IImages {
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getHeight(int)
 	 */
-	final public int getHeight(int Index) {
+	public int getHeight(int Index) {
 		return Tiles[Index].getHeight();
 	}
 
-	final public int getCount(){
+
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#getCount()
+	 */
+	public int getCount(){
 		return CurIndex;
 	}
 	/**
@@ -78,7 +90,7 @@ public class CImages20 extends CObject implements IImages {
 	 * 
 	 * @param NewTileImage
 	 */
-	final public void setTileImage(Image NewTileImage) {
+	public void setTileImage(Image NewTileImage) {
 		TileImage = NewTileImage;
 		System.gc();
 		try {
@@ -94,7 +106,7 @@ public class CImages20 extends CObject implements IImages {
 	 * 
 	 * @return 是否未装满
 	 */
-	final public boolean addTile() {
+	public boolean addTile() {
 		if (CurIndex < Count) {
 			if (TileImage == null) {
 				Tiles[CurIndex] = Image.createImage(1, 1);
@@ -124,7 +136,7 @@ public class CImages20 extends CObject implements IImages {
 	 *            切原图的高
 	 * @return false 是否未装满
 	 */
-	final public boolean addTile(int TileX, int TileY, int TileWidth,
+	public boolean addTile(int TileX, int TileY, int TileWidth,
 			int TileHeight) {
 		if (CurIndex < Count) {
 			if (TileWidth <= 0 || TileHeight <= 0) {
@@ -162,7 +174,7 @@ public class CImages20 extends CObject implements IImages {
 	 * @param TileHeight
 	 *            每块的高
 	 */
-	final public void addTile(int ClipX, int ClipY, int ClipWidth,
+	public void addTile(int ClipX, int ClipY, int ClipWidth,
 			int ClipHeight, int TileWidth, int TileHeight) {
 		if (CurIndex < Count) {
 			for (int j = 0; j < ClipHeight / TileHeight; j++) {
@@ -180,7 +192,7 @@ public class CImages20 extends CObject implements IImages {
 	 * 
 	 * @param pakfile
 	 */
-	final public void addTile(String pakfile) {
+	public void addTile(String pakfile) {
 		if (CurIndex < Count) {
 			String[] imglist = CIO.getPakFileNameList(pakfile);
 			for (int i = 0; i < imglist.length; i++) {
@@ -196,7 +208,7 @@ public class CImages20 extends CObject implements IImages {
 	 * 
 	 * @param images
 	 */
-	final public void addTile(Image[] images) {
+	public void addTile(Image[] images) {
 		if (CurIndex < Count) {
 			for (int i = 0; i < images.length; i++) {
 				setTileImage(images[i]);
@@ -207,19 +219,12 @@ public class CImages20 extends CObject implements IImages {
 		}
 	}
 
+
 	/**
-	 * 绘制到指定的Graphics上。
-	 * 
-	 * @param g
-	 *            指定的graphics
-	 * @param Index
-	 *            序号
-	 * @param PosX
-	 *            X坐标
-	 * @param PosY
-	 *            Y坐标
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int)
 	 */
-	final public void render(Graphics g, int Index, int PosX, int PosY) {//	不可选择对齐方式,不可旋转
+	public void render(Graphics g, int Index, int PosX, int PosY) {//	不可选择对齐方式,不可旋转
 		try {
 			g.drawImage(//
 					Tiles[Index], //
@@ -233,20 +238,10 @@ public class CImages20 extends CObject implements IImages {
 	}
 
 	/**
-	 * 绘制到指定的Graphics上。
-	 * 
-	 * @param g
-	 *            指定的graphics
-	 * @param Index
-	 *            序号
-	 * @param PosX
-	 *            X坐标
-	 * @param PosY
-	 *            Y坐标
-	 * @param Style
-	 *            翻转方式，参考 CSSprite 里的翻转参数。
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int, int)
 	 */
-	final public void render(Graphics g, int Index, int PosX, int PosY, int Style) {
+	public void render(Graphics g, int Index, int PosX, int PosY, int Style) {
 		try {
 			g.drawRegion(
 					Tiles[Index], //

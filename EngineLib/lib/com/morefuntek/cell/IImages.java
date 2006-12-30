@@ -33,9 +33,9 @@ public interface IImages {
 	//--------------------------------------------------------------------------------------------------------
 
 	/**
-	 * 功能描述
-	 * @param srcImage
-	 * @param count
+	 * 重新创建图片组
+	 * @param srcImage 原图片
+	 * @param count 数量
 	 * @return 
 	 */
 	public void buildImages(Image srcImage,int count);
@@ -69,7 +69,7 @@ public interface IImages {
 	public int getHeight(int Index);
 
 	/**
-	 * 功能描述
+	 * 得到图片组图片数量
 	 * @return 
 	 */
 	public int getCount();
@@ -108,13 +108,14 @@ public interface IImages {
 	public void addTile(int ClipX, int ClipY, int ClipWidth, int ClipHeight, int TileWidth, int TileHeight) ;
 
 	/**
-	 * 
+	 * 读入一个图片资源包，把包内图片添加到图片组。
+	 * 图片包由指定的图片打包器生成。
 	 * @param pakfile
 	 */
 	public void addTile(String pakfile) ;
 	
 	/**
-	 * 
+	 * 把图片数组添加到图片组。
 	 * @param images
 	 */
 	public void addTile(Image[] images) ;

@@ -19,10 +19,10 @@ public class CIO extends CObject{
 	//  ----------------------------------------------------------------------------------------------------------
 	//  文件处理 部分
 
-	private static byte resNum; //资源文件数
+	private static byte resNum; 	 //资源文件数
 	private static byte[][] resData; //资源文件数据
 	private static String[] resName; //资源文件名
-	private static String ImgPakName;
+	private static String ImgPakName;//
 	
 	
 	/**
