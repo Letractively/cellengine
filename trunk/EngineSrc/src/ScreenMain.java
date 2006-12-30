@@ -355,8 +355,8 @@ public class ScreenMain extends AScreen {
     public void notifyLogic() {
     	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
         if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
-    	if(isKeyDown(KEY_A)){ChangeSubSreen(this.getClass().getName());}
-    	if(isKeyDown(KEY_B)){ChangeSubSreen("ScreenLogo");}
+    	if(isKeyDown(KEY_A)){ChangeSubScreen(this.getClass().getName());}
+    	if(isKeyDown(KEY_B)){ChangeSubScreen("ScreenLogo");}
     	if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
     	
     	if(SpawnCount>0){

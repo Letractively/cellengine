@@ -44,7 +44,7 @@ final public class ScreenLogo extends AScreen {
 		}
 		if(isKeyDown(KEY_C)){
 			if(!isTransition()){
-				ChangeSubSreen(list[index]);
+				ChangeSubScreen(list[index]);
 			}
 		}
 		
