@@ -48,7 +48,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		Display.getDisplay(this).setCurrent(canvas);
 
 		//ÇÐ»»µ±Ç°ÆÁÄ»µ½ScreenSCWorld
-		AScreen.ChangeSubSreen("ScreenLogo");
+		AScreen.ChangeSubScreen("ScreenLogo");
 
 		(new Thread(this)).start();
 
