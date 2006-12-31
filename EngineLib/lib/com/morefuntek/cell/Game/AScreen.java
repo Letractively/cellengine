@@ -215,24 +215,22 @@ abstract public class AScreen extends CObject {
 	 */
 	static public void TryChangeSubSreen() {
 	    if (NextScreenClassName!=null && isTransitionOut()){
-	    	CurSubScreen = null;
-	    	
 	    	try {
-	    		System.gc();
+		    	CurSubScreen = null;
+		    	
+		    	System.gc();
 				Thread.sleep(1);
-			} catch (InterruptedException e) {
-			}
 			
-			try {
 				CurSubScreen = (AScreen)((Class.forName(NextScreenClassName)).newInstance());
-			} catch (Exception e) {
+			
+		    	KeyEnable = true;
+				LogicEnable = true;
+		    	setTransitionIn();
+		    	NextScreenClassName = null;
+	    	} catch (Exception e) {
+				e.printStackTrace();
 				ExitGame = true;
 			}
-			
-	    	KeyEnable = true;
-			LogicEnable = true;
-	    	setTransitionIn();
-	    	NextScreenClassName = null;
 		}
 	}
 
@@ -530,15 +528,15 @@ abstract public class AScreen extends CObject {
 	 * @param g
 	 * @param x
 	 * @param y 
+	 * @param color TODO
 	 */
-	static public void showFPS(Graphics g,int x,int y){
+	static public void showFPS(Graphics g,int x,int y, int color){
 		drawString(
-		        g, ""
-				+ " TPF=" + FrameDelay
+		        g, "DEMO"
 				+ " FPS="
 				+ (1000 / ((System.currentTimeMillis() - CurRealTime) == 0 ? 1 : (System.currentTimeMillis() - CurRealTime))),
-				1,1, 
-				0xffffffff);
+				x,y, 
+				color);
 		CurRealTime = System.currentTimeMillis();
 	}
 	static private long CurRealTime = 0 ;

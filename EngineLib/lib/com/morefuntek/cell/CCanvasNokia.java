@@ -162,13 +162,7 @@ public class CCanvasNokia extends FullCanvas{
 		
 		AScreen.Transition(g,getWidth(),getHeight());
 		
-//#ifdef _DEBUG		
-		final String d = new String(new byte[]{73,116,32,105,115,32,97,32,68,101,109,111});
-		AScreen.drawString(g,d, 
-				-AScreen.getStringWidth(d) + 
-				(Math.abs((int)System.currentTimeMillis()/20) % (AScreen.SCREEN_WIDTH+AScreen.getStringWidth(d)) ) , 
-				8, ((int)System.currentTimeMillis()&0xffffffff));
-//#endif
+
 	}
 
 	//-----------------------------------------------------------------------------------------------
