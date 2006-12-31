@@ -1002,6 +1002,98 @@ namespace CellGameEdit.PM
                 }
             }
         }
+        private void dstPasteSelectSubAll()
+        {
+            if (listView3.SelectedItems != null &&
+                listView3.SelectedItems.Count > 0 &&
+                framesGetCurFrame() != null)
+            {
+                foreach (ListViewItem item in listView3.SelectedItems)
+                {
+                    item.Selected = false;
+                    item.Focused = false;
+                }
+            }
+
+            for (int f = 0; f < animGetCurFrames().Count; f++)
+            {
+                Frame curFrame = (Frame)animGetCurFrames()[f];
+
+                if (curFrame != null && clipFrame != null)
+                {
+                    for (int i = 0; i < clipFrame.getSubCount(); i++)
+                    {
+                        ListViewItem item = new ListViewItem(
+                            new string[] {
+                            ((int)clipFrame.SubIndex[i]).ToString("d"),
+                            ((int)clipFrame.SubX[i]).ToString("d"),
+                            ((int)clipFrame.SubY[i]).ToString("d"),
+                            Frame.flipTextTable[(int)clipFrame.SubFlip[i]]}
+                       );
+
+                        curFrame.addSub(
+                            item,
+                            (int)clipFrame.SubIndex[i],
+                            (int)clipFrame.SubX[i],
+                            (int)clipFrame.SubY[i],
+                            (int)clipFrame.SubW[i],
+                            (int)clipFrame.SubH[i],
+                            (int)clipFrame.SubFlip[i]
+                            );
+                        item.Focused = true;
+                        item.Selected = true;
+                    }
+                }
+            }
+
+        }
+        private void dstPasteSelectCDAll()
+        {
+            if (listView4.SelectedItems != null &&
+                 listView4.SelectedItems.Count > 0 &&
+                 framesGetCurFrame() != null)
+            {
+                foreach (ListViewItem item in listView4.SelectedItems)
+                {
+                    item.Selected = false;
+                    item.Focused = false;
+                }
+            }
+
+            for (int f = 0; f < animGetCurFrames().Count; f++)
+            {
+                Frame curFrame = (Frame)animGetCurFrames()[f];
+
+                if (curFrame != null && clipFrame != null)
+                {
+                    for (int i = 0; i < clipFrame.getCDCount(); i++)
+                    {
+                        ListViewItem item = new ListViewItem(
+                            new string[] {
+                            ((int)clipFrame.CDMask[i]).ToString("x"),
+                            ((int)clipFrame.CDX[i]).ToString("d"),
+                            ((int)clipFrame.CDY[i]).ToString("d"),
+                            ((int)clipFrame.CDW[i]).ToString("d"),
+                            ((int)clipFrame.CDH[i]).ToString("d"),
+                            Frame.CDtypeTextTable[((int)clipFrame.CDType[i])]}
+                        );
+
+                        curFrame.addCD(
+                            item,
+                            (int)clipFrame.CDMask[i],
+                            (int)clipFrame.CDX[i],
+                            (int)clipFrame.CDY[i],
+                            (int)clipFrame.CDW[i],
+                            (int)clipFrame.CDH[i],
+                            (int)clipFrame.CDType[i]
+                            );
+                        item.Focused = true;
+                        item.Selected = true;
+                    }
+                }
+            }
+        }
+
 
         private void dstAddPart()
         {
@@ -1067,6 +1159,21 @@ namespace CellGameEdit.PM
             dstAddCD();
             dstRefersh();
         }
+        private void toolStripButton20_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (dstGetCurSubIndexes().Length == 1)
+                {
+                    framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = srcIndex;
+                    framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcRect.Width;
+                    framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcRect.Height;
+                    dstRefersh();
+                }
+            }
+            catch (Exception err) { }
+            dstRefersh();
+        }
 
         private void toolStripButton15_Click(object sender, EventArgs e)
         {
@@ -1096,18 +1203,19 @@ namespace CellGameEdit.PM
             //framesRefersh();
             dstRefersh();
         }
-        private void toolStripButton20_Click(object sender, EventArgs e)
+        private void toolStripButton21_Click(object sender, EventArgs e)
         {
-            try
+            //all
+            if (tabControl1.SelectedIndex == 0)
             {
-                if (dstGetCurSubIndexes().Length == 1)
-                {
-                    framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = srcIndex;
-                    framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcRect.Width;
-                    framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcRect.Height;
-                    dstRefersh();
-                }
-            }catch(Exception err){}
+                dstPasteSelectSubAll();
+                //Console.WriteLine("Paste Sub !");
+            }
+            if (tabControl1.SelectedIndex == 1)
+            {
+                dstPasteSelectCDAll();
+            }
+            framesRefersh();
             dstRefersh();
         }
         private void toolStripButton16_Click(object sender, EventArgs e)
@@ -1319,6 +1427,7 @@ namespace CellGameEdit.PM
 
         }
 
+
         // dst box
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
@@ -1328,6 +1437,14 @@ namespace CellGameEdit.PM
 
             //Graphics g = new Graphics(System.Drawing.Graphics.FromImage(pictureBox2.Image));
 
+
+            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
+            System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
+
+            e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
+            e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
+
+
             if (framesGetCurFrame() != null)
             {
                 framesGetCurFrame().render(
@@ -1336,19 +1453,16 @@ namespace CellGameEdit.PM
                   pictureBox2.Width / 2,
                   pictureBox2.Height / 2);
 
-                framesGetCurFrame().renderCD(
-                    g,
-                    pictureBox2.Width / 2,
-                    pictureBox2.Height / 2);
+                if (toolStripButton26.Checked)
+                {
+                    framesGetCurFrame().renderCD(
+                        g,
+                        pictureBox2.Width / 2,
+                        pictureBox2.Height / 2);
+                }
             }
 
             //e.Graphics.DrawImage(pictureBox2.Image,0,0);
-
-            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
-            System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
-
-            e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
-            e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
 
            
         }
@@ -1364,7 +1478,10 @@ namespace CellGameEdit.PM
                 pictureBox2.BackColor = MyDialog.Color;
             }
         }
-
+        private void toolStripButton26_Click(object sender, EventArgs e)
+        {
+            dstRefersh();
+        }
 
 // frames
         int ViewW = 64;
@@ -1742,6 +1859,12 @@ namespace CellGameEdit.PM
         
         
         }
+
+       
+
+
+
+
 
 
 
