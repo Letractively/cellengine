@@ -112,7 +112,7 @@ public class ScreenTD_Main extends AScreen {
 		
         world.render(g);
 
-        showFPS(g, 1, 1);
+        showFPS(g, 1, 1, 0xffffffff);
 
        
     }
