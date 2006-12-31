@@ -138,15 +138,11 @@ public class CWorld extends CObject {
 	 * 更新场景里所有的游戏单位的逻辑。
 	 */
 	public void update(){
-		try{
-			for(int i=0;i<Sprs.size();i++){
-				((CSprite)Sprs.elementAt(i)).updateStates();
-			}
-			Map.updateStates();
-			Camera.updateStates();
-		}catch(NullPointerException err){
-			println("World Update : null Point Unit !");
+		for(int i=0;i<Sprs.size();i++){
+			((CSprite)Sprs.elementAt(i)).updateStates();
 		}
+		Map.updateStates();
+		Camera.updateStates();
 	}
 	
 	/**
@@ -154,7 +150,7 @@ public class CWorld extends CObject {
 	 * @param g 
 	 */
 	public void render(Graphics g){
-		try{
+		
 			int cx = g.getClipX();
 			int cy = g.getClipY();
 			int cw = g.getClipWidth();
@@ -203,9 +199,7 @@ public class CWorld extends CObject {
 			}
 			
 			g.setClip(cx,cy,cw,ch);
-		}catch(NullPointerException err){
-			println("World Render: null Point Unit !");
-		}
+		
 	}
 	
 	
