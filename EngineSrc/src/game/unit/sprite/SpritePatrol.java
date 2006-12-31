@@ -64,21 +64,5 @@ public class SpritePatrol extends CSprite implements IState {
 		Y = VPos256/256;
 	}
 
-	/**
-	 * override 方法
-	 * @see com.morefuntek.cell.Game.IState#tryChangeState()
-	 */
-	public void tryChangeState() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	/**
-	 * override 方法
-	 * @see com.morefuntek.cell.Game.IState#onState()
-	 */
-	public void onState() {
-		// TODO Auto-generated method stub
-		
-	}
 }

@@ -434,7 +434,7 @@ public class ScreenMain extends AScreen {
         }
 
 		//		debug
-		showFPS(g, 1, 1);
+		showFPS(g, 1, 1, 0xffffffff);
     }
 
     public void notifyPause(){
