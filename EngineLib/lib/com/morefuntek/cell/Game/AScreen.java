@@ -236,31 +236,6 @@ abstract public class AScreen extends CObject {
 
 
 	
-	//-------------------------------------------------------------------------------------------------------------------------
-	static private int Timer = 1;
-	
-	/**
-	 * tick frame timer
-	 * 增加当前帧计数器
-	 */
-	static public void tickTimer() {
-		Timer++;
-	}
-	/**
-	 * reset frame timer
-	 * 帧计数器清0
-	 */
-	static public void resetTimer() {
-		Timer = 1;
-	}
-	/**
-	 * get current frame timer
-	 * 得到当前帧计数器值 
-	 * @return 
-	 */
-	static public int getTimer() {
-		return Timer;
-	}
 
 	//	-------------------------------------------------------------------------------------------------------
 //	key refer

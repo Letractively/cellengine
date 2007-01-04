@@ -4,6 +4,7 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
 
+import com.mascotcapsule.micro3d.v3.ActionTable;
 import com.morefuntek.cell.CObject;
 
 
@@ -179,23 +180,25 @@ public class CWorld extends CObject {
 //#endif
 
 			for(int i=0;i<Sprs.size();i++){
-				if(CCD.cdRect(
-						((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
-						((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
-						((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
-						((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_botton, 
-						Camera.X, 
-						Camera.Y, 
-						Camera.X + Camera.getWidth(), 
-						Camera.Y + Camera.getHeight()
-						)){
-					((CSprite)Sprs.elementAt(i)).OnScreen = true;
+					if(CCD.cdRect(
+							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
+							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
+							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
+							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_botton, 
+							Camera.X, 
+							Camera.Y, 
+							Camera.X + Camera.getWidth(), 
+							Camera.Y + Camera.getHeight()
+							)){
+						((CSprite)Sprs.elementAt(i)).OnScreen = true;
+					} else {
+						((CSprite)Sprs.elementAt(i)).OnScreen = false;
+					}
 					((CSprite)Sprs.elementAt(i)).render(g,
 							((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
 							((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
-				} else {
-					((CSprite)Sprs.elementAt(i)).OnScreen = false;
-				}
+					
+				
 			}
 			
 			g.setClip(cx,cy,cw,ch);
