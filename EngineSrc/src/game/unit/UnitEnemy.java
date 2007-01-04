@@ -7,7 +7,7 @@ import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWayPoint;
 import com.morefuntek.cell.Game.IState;
 
-public class UnitPatrol extends CObject implements IState  {
+public class UnitEnemy extends CSprite implements IState  {
 
 	final public int STATE_MOVE 	= 0;
 	final public int STATE_HOLD 	= 1;
@@ -17,39 +17,16 @@ public class UnitPatrol extends CObject implements IState  {
 	
 	//-------------------------------------------------------------------------------------------------
 	
-	public CSprite spr;
 	
-	public UnitPatrol(CSprite stuff, CWayPoint next){
-		spr = stuff;
+	public UnitEnemy(CSprite stuff, CWayPoint next){
+		super(stuff);
+		super.setState(this);
 		NextWayPoint = next;
-		spr.setState(this);
+		setState(this);
 	}
 	
 	
 	public void update() {
-//		switch(state){
-//		case STATE_MOVE : 
-//			if(isEndMove()){
-//				startHold();
-//			}else{
-//				onMove();
-//			}
-//			break;
-//		case STATE_HOLD : 
-//			if(isEndHold()){
-//				startSwing();
-//			}else{
-//				onHold();
-//			}
-//			break;
-//		case STATE_SWING : 
-//			if(isEndSwing()){
-//				startMove();
-//			}else{
-//				onSwing();
-//			}
-//			break;
-//		}
 		if(isEndMove()){
 			startMove();
 		}else{
@@ -62,7 +39,7 @@ public class UnitPatrol extends CObject implements IState  {
 	public int HoldTime = 100;
 	public void onHold(){
 		HoldTime--;
-		spr.setCurrentFrame(0, 0);
+		setCurrentFrame(0, 0);
 	}
 	public void startHold(){
 		HoldTime = Math.abs(Random.nextInt()%200);
@@ -79,30 +56,30 @@ public class UnitPatrol extends CObject implements IState  {
 	private CWayPoint PrewWayPoint;
 	public int MaxSpeed = 1/*+Math.abs(Random.nextInt()%4)*/;
 	public void onMove(){
-		spr.DirectX = NextWayPoint.X - spr.X;
-		spr.DirectY = NextWayPoint.Y - spr.Y;
+		DirectX = NextWayPoint.X - X;
+		DirectY = NextWayPoint.Y - Y;
 	
-		if(spr.DirectX == 0 && spr.DirectY == 0){
-			spr.setCurrentFrame(2, spr.getCurrentFrame());
-		}else if(spr.DirectY < 0 ){
-			spr.setCurrentFrame(0, spr.getCurrentFrame());
-		}else if(spr.DirectY > 0){
-			spr.setCurrentFrame(2, spr.getCurrentFrame());
-		}else if(spr.DirectX < 0){
-			spr.setCurrentFrame(3, spr.getCurrentFrame());
-		}else if(spr.DirectX > 0){
-			spr.setCurrentFrame(1, spr.getCurrentFrame());
+		if(DirectX == 0 && DirectY == 0){
+			setCurrentFrame(2, getCurrentFrame());
+		}else if(DirectY < 0 ){
+			setCurrentFrame(0, getCurrentFrame());
+		}else if(DirectY > 0){
+			setCurrentFrame(2, getCurrentFrame());
+		}else if(DirectX < 0){
+			setCurrentFrame(3, getCurrentFrame());
+		}else if(DirectX > 0){
+			setCurrentFrame(1, getCurrentFrame());
 		}
 		
-		spr.nextCycFrame();
+		nextCycFrame();
 		
-		int dx = (spr.DirectX==0 ? 0 : (spr.DirectX>0 ? MaxSpeed : -MaxSpeed));
-		int dy = (spr.DirectY==0 ? 0 : (spr.DirectY>0 ? MaxSpeed : -MaxSpeed));
+		int dx = (DirectX==0 ? 0 : (DirectX>0 ? MaxSpeed : -MaxSpeed));
+		int dy = (DirectY==0 ? 0 : (DirectY>0 ? MaxSpeed : -MaxSpeed));
 		
-		if(Math.abs(dx)>Math.abs(spr.DirectX))dx = spr.DirectX;
-		if(Math.abs(dy)>Math.abs(spr.DirectY))dy = spr.DirectY;
+		if(Math.abs(dx)>Math.abs(DirectX))dx = DirectX;
+		if(Math.abs(dy)>Math.abs(DirectY))dy = DirectY;
 		
-		spr.tryMove(dx, dy);
+		tryMove(dx, dy);
 
 	}
 	public void startMove(){
@@ -121,8 +98,8 @@ public class UnitPatrol extends CObject implements IState  {
 	}
 	public boolean isEndMove(){
 		return CCD.cdRect(
-				spr.X - MaxSpeed, spr.Y - MaxSpeed, 
-				spr.X + MaxSpeed, spr.Y + MaxSpeed, 
+				X - MaxSpeed, Y - MaxSpeed, 
+				X + MaxSpeed, Y + MaxSpeed, 
 				NextWayPoint.X , NextWayPoint.Y , 
 				NextWayPoint.X , NextWayPoint.Y );
 	}
@@ -134,7 +111,7 @@ public class UnitPatrol extends CObject implements IState  {
 
 	public void onSwing(){
 		SwingTime--;
-		spr.setCurrentFrame(AScreen.getTimer()%4, 0);
+		setCurrentFrame(AScreen.getTimer()%4, 0);
 		
 		
 	}
