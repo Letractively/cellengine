@@ -521,6 +521,165 @@ public class ResesScript {
 	}
 	
 
+	//--------------------------------------------------------------------------------------------------------------
+	// Images : GUI
+	final static public void buildClipImages_GUI(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/GUI.png"),2);
+		
+		 
+		stuff.addTile(0,0,18,18);//0
+		 
+		stuff.addTile(0,18,18,18);//1
+		
+		
+		stuff.gc();
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// Sprite : Point
+	final static public CSprite createSprite_Point(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(2,tiles);
+	    
+		animates.addPart(0,0,1,0);//0
+		
+		animates.addPart(0,0,0,0);//1
+		
+		
+	    animates.setFrame(new int[3][]);
+	    
+	    animates.setComboFrame(new int[]{0,0,},0);//0
+		
+	    animates.setComboFrame(new int[]{0,},1);//1
+		
+	    animates.setComboFrame(new int[]{1,},2);//2
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,1,1,1,2,2,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// Images : TowerTile
+	final static public void buildClipImages_TowerTile(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/TowerTile.png"),1);
+		
+		 
+		stuff.addTile(0,0,16,32);//0
+		
+		
+		stuff.gc();
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// Sprite : Tower
+	final static public CSprite createSprite_Tower(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(1,tiles);
+	    
+		animates.addPart(-8,-24,0,0);//0
+		
+		
+	    animates.setFrame(new int[1][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(1);
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, 0, -20, 1 , 1 );//rect//0
+	    if("rect"=="line")
+	    collides.addCDLine(65535, 0, -20, 1, -19);//rect//0
+	    
+	    
+	    collides.setFrame(new int[2][]);
+	    
+	    collides.setComboFrame(new int[]{0,},0);//0
+	    
+	    collides.setComboFrame(new int[]{},1);//1
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {1,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {1,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {1,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
 }
 
 //--------------------------------------------------------------------------------------------------------------
