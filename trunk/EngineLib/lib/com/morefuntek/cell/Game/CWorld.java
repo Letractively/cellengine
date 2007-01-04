@@ -4,7 +4,6 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.mascotcapsule.micro3d.v3.ActionTable;
 import com.morefuntek.cell.CObject;
 
 
