@@ -51,15 +51,17 @@ public class CParticleSystem {
 	/**
 	 * spawn particles
 	 * @param count
+	 * @param category TODO
 	 * @param x TODO
 	 * @param y TODO
 	 * @return 
 	 */
-	public int spawn(int count, int x, int y){
+	public int spawn(int count, int category, int x, int y){
 		int c = 0;
 		for(int i=0;i<Particles.length;i++){
 			if(c>=count)break;
 			if(Particles[i].isTerminate()==true){
+				Particles[i].Category = category;
 				Particles[i].X = x;
 				Particles[i].Y = y;
 				Launcher.particleEmitted(Particles[i],i);
