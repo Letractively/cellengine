@@ -361,19 +361,19 @@ public class ScreenMain extends AScreen {
     	
     	if(SpawnCount>0){
     		if(isPointerHold()){
-        	 	myParticleSystem.spawn(SpawnCount, 0, 0);
+        	 	myParticleSystem.spawn(SpawnCount, 0, 0, 0);
         	}
         	if(isKeyHold(KEY_5)){
-        	 	myParticleSystem.spawn(SpawnCount, 0, 0);
+        	 	myParticleSystem.spawn(SpawnCount, 0, 0, 0);
         	}
         	myParticleSystem.update();
         	switch(Weather){
         	case 1:
-        		rain.spawn(SpawnCount, 0, 0);
+        		rain.spawn(SpawnCount, 0, 0, 0);
             	rain.update();
             	break;
         	case 2:
-            	snow.spawn(SpawnCount, 0, 0);
+            	snow.spawn(SpawnCount, 0, 0, 0);
             	snow.update();
         		break;
         	}
