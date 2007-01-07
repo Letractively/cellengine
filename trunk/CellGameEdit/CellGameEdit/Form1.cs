@@ -151,11 +151,11 @@ namespace CellGameEdit
             {
                 if (prjForm != null && toolStripComboBox1.SelectedItem != null)
                 {
-                    String dir = System.IO.Directory.GetCurrentDirectory() + "\\script\\";
-                    prjForm.OutputCustom(dir + toolStripComboBox1.SelectedItem.ToString());
+                    String dir = Application.StartupPath + "\\script\\";
+                    prjForm.OutputCustom(dir + toolStripComboBox1.Text);
                 }
             }
-            catch (Exception err) { }
+            catch (Exception err) { Console.WriteLine(err.Message); }
         }
 
         private void toolStripComboBox1_DropDown(object sender, EventArgs e)

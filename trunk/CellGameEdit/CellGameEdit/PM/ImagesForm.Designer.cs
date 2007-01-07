@@ -282,7 +282,7 @@
             this.toolStripTextBox2.Name = "toolStripTextBox2";
             this.toolStripTextBox2.Size = new System.Drawing.Size(25, 25);
             this.toolStripTextBox2.Text = "16";
-            this.toolStripTextBox2.ModifiedChanged += new System.EventHandler(this.toolStripTextBox1_Leave);
+            this.toolStripTextBox2.ModifiedChanged += new System.EventHandler(this.toolStripTextBox2_Leave);
             this.toolStripTextBox2.Leave += new System.EventHandler(this.toolStripTextBox2_Leave);
             this.toolStripTextBox2.TextChanged += new System.EventHandler(this.toolStripTextBox2_Leave);
             // 

@@ -20,13 +20,17 @@ namespace CellGameEdit.PM
         public String id;
         Hashtable UnitList;
         ArrayList WayPoints;
-
+        int CellW = 16;
+        int CellH = 16;
 
         public WorldForm(String name)
         {
             InitializeComponent();
-            id = name;
+            toolStripTextBox1.Text = CellW.ToString();
+            toolStripTextBox2.Text = CellH.ToString();
 
+            id = name;
+            
             UnitList = new Hashtable();
             WayPoints = new ArrayList();
         }
@@ -34,6 +38,9 @@ namespace CellGameEdit.PM
         protected WorldForm(SerializationInfo info, StreamingContext context)
         {
             InitializeComponent();
+            toolStripTextBox1.Text = CellW.ToString();
+            toolStripTextBox2.Text = CellH.ToString();
+
             UnitList = new Hashtable();
 
             try
@@ -372,6 +379,12 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                 pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
                 pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
+
+                CellW = map.CellW;
+                CellH = map.CellH;
+
+                toolStripTextBox1.Text = CellW.ToString();
+                toolStripTextBox2.Text = CellH.ToString();
          
             }
             if ((SpriteForm)e.Data.GetData(typeof(SpriteForm)) != null)
@@ -404,6 +417,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
+
+
+
             toolStripStatusLabel1.Text = "";
 
             // draw units
@@ -415,17 +431,84 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     {
                         Unit unit = ((Unit)UnitList[item]);
 
-                        if (unit.type == "Map" && toolStripButton7.Checked ||
-                            unit.type == "Sprite" && toolStripButton8.Checked)
+                        if (unit.type == "Map" && toolStripButton7.Checked)
+                        {
+                            if (toolStripButton10.Checked)
+                            {
+                                for (int x = 0; x < pictureBox1.Width; x += unit.getWidth())
+                                {
+                                    for (int y = 0; y < pictureBox1.Height; y += unit.getHeight())
+                                    {
+                                        Rectangle rect = new Rectangle(
+                                            -pictureBox1.Location.X,
+                                            -pictureBox1.Location.Y,
+                                            panel1.Width,
+                                            panel1.Height
+                                            );
+                                        if (rect.IntersectsWith(
+                                             new System.Drawing.Rectangle(
+                                                x, y,
+                                                unit.getWidth(),
+                                                unit.getHeight())
+                                                )
+                                            )
+                                        {
+                                        }
+                                        {
+                                            int tx = unit.x;
+                                            int ty = unit.y;
+                                            unit.x = x;
+                                            unit.y = y;
+                                            unit.render(
+                                               g,
+                                               new System.Drawing.Rectangle(
+                                                    -pictureBox1.Location.X-x,
+                                                    -pictureBox1.Location.Y-y,
+                                                    panel1.Width,
+                                                    panel1.Height
+                                               ),
+                                               listView1.SelectedItems.Contains(item),
+                                               toolStripButton1.Checked,
+                                               toolStripButton2.Checked
+                                            );
+                                            unit.x = tx;
+                                            unit.y = ty;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                unit.render(
+                                   g,
+                                   new System.Drawing.Rectangle(
+                                        -pictureBox1.Location.X,
+                                        -pictureBox1.Location.Y,
+                                        panel1.Width,
+                                        panel1.Height
+                                   ),
+                                   listView1.SelectedItems.Contains(item),
+                                   toolStripButton1.Checked,
+                                   toolStripButton2.Checked
+                                );
+                            }
+                        }
+
+                        if (unit.type == "Sprite" && toolStripButton8.Checked)
                         {
                             unit.render(
                                    g,
+                                    new System.Drawing.Rectangle(
+                                        -pictureBox1.Location.X,
+                                        -pictureBox1.Location.Y,
+                                        splitContainer1.Panel2.Width,
+                                        splitContainer1.Panel2.Height
+                                   ),
                                    listView1.SelectedItems.Contains(item),
                                    toolStripButton1.Checked,
                                    toolStripButton2.Checked
                                 );
                         }
-
 
                         if (item.Selected)
                         {
@@ -497,7 +580,34 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                          );
                 }
             }
-           
+
+            if (toolStripButton12.Checked)
+            {
+                g.setColor(0x80, 0xff, 0xff, 0xff);
+
+
+                int sx = pictureBox1.Location.X / CellW;
+                int sy = pictureBox1.Location.Y / CellH;
+                int sw = panel1.Width / CellW;
+                int sh = panel1.Height / CellH;
+
+                for (int bx = sx; bx < sx + sw; bx++)
+                {
+                    g.drawLine(
+                       bx * CellW,
+                       sy * CellH,
+                       bx * CellW,
+                       sy * CellH + sh * CellH);
+                }
+                for (int by = sy; by < sy + sh; by++)
+                {
+                    g.drawLine(
+                        sx * CellW,
+                        by * CellH,
+                        sx * CellW + sw * CellW,
+                        by * CellH);
+                }
+            }
             
         }
 
@@ -513,11 +623,23 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                         if (unit.type == "Sprite")
                         {
-                            unit.x = e.X;
-                            unit.y = e.Y;
+                            if (!toolStripButton11.Checked)
+                            {
+                                unit.x = e.X;
+                                unit.y = e.Y;
 
-                            if (unit.x < 0) unit.x = 0;
-                            if (unit.y < 0) unit.y = 0;
+                                if (unit.x < 0) unit.x = 0;
+                                if (unit.y < 0) unit.y = 0;
+                            }
+                            else
+                            {
+                                unit.x = e.X - e.X % CellW + CellW / 2;
+                                unit.y = e.Y - e.Y % CellH + CellH / 2;
+
+                                if (unit.x < 0) unit.x = CellW / 2;
+                                if (unit.y < 0) unit.y = CellH / 2;
+                            }
+                           
 
                             pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
                             pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
@@ -529,11 +651,24 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 {
                     if (p != null && p.isCheck)
                     {
-                        p.rect.X = e.X;
-                        p.rect.Y = e.Y;
 
-                        if (p.rect.X < 0) p.rect.X = 0;
-                        if (p.rect.Y < 0) p.rect.Y = 0;
+                        if (!toolStripButton11.Checked)
+                        {
+                            p.rect.X = e.X;
+                            p.rect.Y = e.Y;
+
+                            if (p.rect.X < 0) p.rect.X = 0;
+                            if (p.rect.Y < 0) p.rect.Y = 0;
+                        }
+                        else
+                        {
+                            p.rect.X = e.X - e.X % CellW + CellW / 2 - p.rect.Width/2;
+                            p.rect.Y = e.Y - e.Y % CellH + CellH / 2 - p.rect.Height/2;
+
+                            if (p.rect.X < 0) p.rect.X = CellW / 2 - p.rect.Width/2;
+                            if (p.rect.Y < 0) p.rect.Y = CellH / 2 - p.rect.Height/2;
+                        }
+                      
 
                         pictureBox1.Width = Math.Max(p.rect.X + p.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(p.rect.Y + p.rect.Height, pictureBox1.Height);
@@ -821,8 +956,58 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             }catch(Exception err){}
         }
-    
 
+        // center map block
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Refresh();
+        }
+        // square show
+        private void toolStripButton10_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Refresh();
+        }
+        //show block line
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Refresh();
+        }
+        private void panel1_Scroll(object sender, ScrollEventArgs e)
+        {
+            //pictureBox1.Refresh();
+        }
+
+        private void toolStripTextBox1_Leave(object sender, EventArgs e)
+        {
+            if (Cell.Util.stringIsDigit(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= toolStripTextBox1.Text.Length &&
+                Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= 1)
+            {
+                CellW = Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length);
+                pictureBox1.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("只能输入大于0的数字！");
+                toolStripTextBox1.Focus();
+            }
+        }
+        private void toolStripTextBox2_Leave(object sender, EventArgs e)
+        {
+            if (Cell.Util.stringIsDigit(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= toolStripTextBox2.Text.Length &&
+              Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= 1)
+            {
+                CellH = Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length);
+                pictureBox1.Refresh();
+            }
+            else
+            {
+                MessageBox.Show("只能输入大于0的数字！");
+                toolStripTextBox2.Focus();
+            }
+
+        }
+
+       
     }
 
 
@@ -1096,6 +1281,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         public void render(
             javax.microedition.lcdui.Graphics g,
+            System.Drawing.Rectangle scope,
             Boolean selected,
             Boolean select,
             Boolean debug)
@@ -1123,9 +1309,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
             else if (map != null)
             {
-                x = 0;
-                y = 0;
-                map.Render(g, x, y, new Rectangle(0,0,map.getWidth(),map.getHeight()), false, debug, false, 0);
+                map.Render(g, x, y, scope, false, debug, false, 0);
             }
 
             

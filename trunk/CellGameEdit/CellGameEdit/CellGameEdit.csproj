@@ -354,6 +354,10 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image61.bmp" />
+    <None Include="Resources\Image62.bmp" />
+    <None Include="Resources\Image63.bmp" />
+    <None Include="Resources\Image64.bmp" />
+    <None Include="Resources\Image65.bmp" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

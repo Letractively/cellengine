@@ -22,8 +22,8 @@ namespace CellGameEdit.PM
 
         public ImagesForm super;
 
-        int CellW;
-        int CellH;
+        public int CellW;
+        public int CellH;
         
 
         int[][] MatrixTile;

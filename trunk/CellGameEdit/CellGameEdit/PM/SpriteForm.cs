@@ -1738,7 +1738,50 @@ namespace CellGameEdit.PM
             framesRefersh();
         }
 
-       
+
+
+        // all
+        private void framesMoveAll(int px,int py)
+        {
+            foreach (Frame frame in animGetCurFrames())
+            {
+                for (int i = 0; i < frame.getSubCount(); i++)
+                {
+                    frame.SubX[i] = ((int)(frame.SubX[i])) + px;
+                    frame.SubY[i] = ((int)(frame.SubY[i])) + py;
+                }
+
+                for (int i = 0; i < frame.getCDCount(); i++)
+                {
+                    frame.CDX[i] = ((int)(frame.CDX[i])) + px;
+                    frame.CDY[i] = ((int)(frame.CDY[i])) + py;
+                }
+            }
+        }
+        //left
+        private void toolStripButton22_Click(object sender, EventArgs e)
+        {
+            framesMoveAll(-1, 0);
+            framesRefersh();
+        }
+        //right
+        private void toolStripButton23_Click(object sender, EventArgs e)
+        {
+            framesMoveAll( 1, 0);
+            framesRefersh();
+        }
+        //up
+        private void toolStripButton24_Click(object sender, EventArgs e)
+        {
+            framesMoveAll(0, -1);
+            framesRefersh();
+        }
+        //down
+        private void toolStripButton25_Click(object sender, EventArgs e)
+        {
+            framesMoveAll(0,  1);
+            framesRefersh();
+        }
  // animate
         private void animAdd()
         {
@@ -1831,6 +1874,7 @@ namespace CellGameEdit.PM
             framesRefersh();
         }
 
+
 // timer
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -1859,8 +1903,6 @@ namespace CellGameEdit.PM
         
         
         }
-
-       
 
 
 

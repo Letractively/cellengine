@@ -466,6 +466,34 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Bitmap Image62 {
+            get {
+                object obj = ResourceManager.GetObject("Image62", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Image63 {
+            get {
+                object obj = ResourceManager.GetObject("Image63", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Image64 {
+            get {
+                object obj = ResourceManager.GetObject("Image64", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        internal static System.Drawing.Bitmap Image65 {
+            get {
+                object obj = ResourceManager.GetObject("Image65", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Image7 {
             get {
                 object obj = ResourceManager.GetObject("Image7", resourceCulture);
