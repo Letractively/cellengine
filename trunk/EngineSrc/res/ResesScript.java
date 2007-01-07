@@ -228,29 +228,29 @@ public class ResesScript {
 	    // tiles
 	    CAnimates animates = new CAnimates(12,tiles);
 	    
-		animates.addPart(-12,-16,0,0);//0
+		animates.addPart(-12,-28,0,0);//0
 		
-		animates.addPart(-12,-16,1,0);//1
+		animates.addPart(-12,-28,1,0);//1
 		
-		animates.addPart(-12,-16,2,0);//2
+		animates.addPart(-12,-28,2,0);//2
 		
-		animates.addPart(-12,-16,12,0);//3
+		animates.addPart(-12,-28,12,0);//3
 		
-		animates.addPart(-12,-16,13,0);//4
+		animates.addPart(-12,-28,13,0);//4
 		
-		animates.addPart(-12,-16,14,0);//5
+		animates.addPart(-12,-28,14,0);//5
 		
-		animates.addPart(-12,-16,24,0);//6
+		animates.addPart(-12,-28,24,0);//6
 		
-		animates.addPart(-12,-16,25,0);//7
+		animates.addPart(-12,-28,25,0);//7
 		
-		animates.addPart(-12,-16,26,0);//8
+		animates.addPart(-12,-28,26,0);//8
 		
-		animates.addPart(-12,-16,36,0);//9
+		animates.addPart(-12,-28,36,0);//9
 		
-		animates.addPart(-12,-16,37,0);//10
+		animates.addPart(-12,-28,37,0);//10
 		
-		animates.addPart(-12,-16,38,0);//11
+		animates.addPart(-12,-28,38,0);//11
 		
 		
 	    animates.setFrame(new int[12][]);
@@ -282,12 +282,19 @@ public class ResesScript {
 		
 		
 		// cds
-	    CCollides collides = new CCollides(0);
+	    CCollides collides = new CCollides(1);
 		
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, -5, -15, 10 , 15 );//rect//0
+	    if("rect"=="line")
+	    collides.addCDLine(65535, -5, -15, 5, 0);//rect//0
 	    
-	    collides.setFrame(new int[1][]);
 	    
-	    collides.setComboFrame(new int[]{},0);//0
+	    collides.setFrame(new int[2][]);
+	    
+	    collides.setComboFrame(new int[]{0,},0);//0
+	    
+	    collides.setComboFrame(new int[]{},1);//1
 	    
 	    
 	    
@@ -299,13 +306,13 @@ public class ResesScript {
 	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
 	    };
 	    int[][] frameCDAtk = new int[][]{
-	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	        {1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},
 	    };
 	    int[][] frameCDDef = new int[][]{
-	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	        {1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},
 	    };
 	    int[][] frameCDExt = new int[][]{
-	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	        {1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},{1,1,1,1,1,1,1,1,},
 	    };
 	
 	    CSprite ret = new CSprite(
@@ -522,10 +529,100 @@ public class ResesScript {
 	
 
 	//--------------------------------------------------------------------------------------------------------------
-	// Images : GUI
-	final static public void buildClipImages_GUI(IImages stuff){
+	// Map : unamed_Map
+	final static public CMap createMap_unamed_Map(IImages tiles,boolean isAnimate,boolean isCyc){
+		
+		//8 x 8
+		
+		// tiles
+	    CAnimates animates = new CAnimates(3,tiles);
+	    
+		animates.addPart(0,0,9,0);//0
+		
+		animates.addPart(0,0,26,0);//1
+		
+		animates.addPart(0,0,0,0);//2
+		
+		
+	    animates.setFrame(new int[3][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+		
+		short[][] tileMatrix = new short[][]{
+			{0,0,0,0,0,0,0,0,},{0,1,1,1,1,1,1,0,},{0,1,2,2,2,2,1,0,},{0,1,2,2,2,2,1,0,},{0,1,2,2,2,2,1,0,},{0,1,2,2,2,2,1,0,},{0,1,1,1,1,1,1,0,},{0,0,0,0,0,0,0,0,},
+		};
+		
+		// cds
+		CCollides collides = new CCollides(8);
+	    
+	    if("rect"=="rect")
+	    collides.addCDRect(0, 0, 0, 16 , 16 );//rect//0
+		if("rect"=="line")
+		collides.addCDLine(0, 0, 0, 16, 16);//rect//0
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(1, 0, 0, 16 , 16 );//rect//1
+		if("rect"=="line")
+		collides.addCDLine(1, 0, 0, 16, 16);//rect//1
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(2, 0, 0, 16 , 1 );//rect//2
+		if("rect"=="line")
+		collides.addCDLine(2, 0, 0, 16, 16);//rect//2
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(4, 0, 15, 16 , 1 );//rect//3
+		if("rect"=="line")
+		collides.addCDLine(4, 0, 15, 16, 16);//rect//3
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(8, 0, 0, 1 , 16 );//rect//4
+		if("rect"=="line")
+		collides.addCDLine(8, 0, 0, 16, 16);//rect//4
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(16, 15, 0, 1 , 16 );//rect//5
+		if("rect"=="line")
+		collides.addCDLine(16, 15, 0, 16, 16);//rect//5
+		
+	    if("line"=="rect")
+	    collides.addCDRect(32, 1, 1, 16 , 16 );//line//6
+		if("line"=="line")
+		collides.addCDLine(32, 1, 1, 15, 15);//line//6
+		
+	    if("line"=="rect")
+	    collides.addCDRect(64, 15, 1, 16 , 16 );//line//7
+		if("line"=="line")
+		collides.addCDLine(64, 15, 1, 1, 15);//line//7
+		
+
+		short[][] flagMatrix = new short[][]{
+			{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+		};
+		
+	    CMap ret = new CMap(
+	            animates, 
+	            collides, 
+	            16, 16, 
+	            tileMatrix, 
+	            flagMatrix, 
+	            isAnimate,isCyc 
+	            );
 	
-		stuff.buildImages(CIO.loadImage("/GUI.png"),2);
+	    return ret;
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// Images : GUITile
+	final static public void buildClipImages_GUITile(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/GUITile.png"),2);
 		
 		 
 		stuff.addTile(0,0,18,18);//0
@@ -544,9 +641,9 @@ public class ResesScript {
 	    // tiles
 	    CAnimates animates = new CAnimates(2,tiles);
 	    
-		animates.addPart(0,0,1,0);//0
+		animates.addPart(-9,-9,1,0);//0
 		
-		animates.addPart(0,0,0,0);//1
+		animates.addPart(-9,-9,0,0);//1
 		
 		
 	    animates.setFrame(new int[3][]);
@@ -680,6 +777,115 @@ public class ResesScript {
 	}
 	
 
+	//--------------------------------------------------------------------------------------------------------------
+	// Images : ShootTile
+	final static public void buildClipImages_ShootTile(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/ShootTile.png"),6);
+		
+		 
+		stuff.addTile(0,0,13,13);//0
+		 
+		stuff.addTile(0,13,11,11);//1
+		 
+		stuff.addTile(0,24,17,17);//2
+		 
+		stuff.addTile(17,23,8,8);//3
+		 
+		stuff.addTile(11,13,10,10);//4
+		 
+		stuff.addTile(13,0,13,13);//5
+		
+		
+		stuff.gc();
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// Sprite : Shoot
+	final static public CSprite createSprite_Shoot(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(6,tiles);
+	    
+		animates.addPart(-6,-6,0,0);//0
+		
+		animates.addPart(-5,-5,1,0);//1
+		
+		animates.addPart(-8,-8,2,0);//2
+		
+		animates.addPart(-6,-6,5,0);//3
+		
+		animates.addPart(-5,-5,4,0);//4
+		
+		animates.addPart(-4,-4,3,0);//5
+		
+		
+	    animates.setFrame(new int[6][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(1);
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, -5, -5, 11 , 11 );//rect//0
+	    if("rect"=="line")
+	    collides.addCDLine(65535, -5, -5, 6, 6);//rect//0
+	    
+	    
+	    collides.setFrame(new int[2][]);
+	    
+	    collides.setComboFrame(new int[]{0,},0);//0
+	    
+	    collides.setComboFrame(new int[]{},1);//1
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,1,},{2,3,4,5,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,},{1,1,1,1,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {1,1,},{1,1,1,1,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {1,1,},{1,1,1,1,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {1,1,},{1,1,1,1,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
 }
 
 //--------------------------------------------------------------------------------------------------------------
@@ -703,47 +909,47 @@ public class ResesScript {
 			WayPoints = new CWayPoint[21];
 			
 			 
-			 WayPoints[0] = new CWayPoint(38,2);
+			 WayPoints[0] = new CWayPoint(40,8);
 			 
-			 WayPoints[1] = new CWayPoint(41,471);
+			 WayPoints[1] = new CWayPoint(40,472);
 			 
-			 WayPoints[2] = new CWayPoint(470,470);
+			 WayPoints[2] = new CWayPoint(472,472);
 			 
-			 WayPoints[3] = new CWayPoint(471,40);
+			 WayPoints[3] = new CWayPoint(472,40);
 			 
-			 WayPoints[4] = new CWayPoint(90,38);
+			 WayPoints[4] = new CWayPoint(88,40);
 			 
-			 WayPoints[5] = new CWayPoint(87,424);
+			 WayPoints[5] = new CWayPoint(88,424);
 			 
-			 WayPoints[6] = new CWayPoint(424,423);
+			 WayPoints[6] = new CWayPoint(424,424);
 			 
-			 WayPoints[7] = new CWayPoint(422,87);
+			 WayPoints[7] = new CWayPoint(424,88);
 			 
-			 WayPoints[8] = new CWayPoint(140,89);
+			 WayPoints[8] = new CWayPoint(136,88);
 			 
-			 WayPoints[9] = new CWayPoint(135,375);
+			 WayPoints[9] = new CWayPoint(136,376);
 			 
-			 WayPoints[10] = new CWayPoint(373,373);
+			 WayPoints[10] = new CWayPoint(376,376);
 			 
-			 WayPoints[11] = new CWayPoint(372,134);
+			 WayPoints[11] = new CWayPoint(376,136);
 			 
-			 WayPoints[12] = new CWayPoint(182,134);
+			 WayPoints[12] = new CWayPoint(184,136);
 			 
-			 WayPoints[13] = new CWayPoint(182,323);
+			 WayPoints[13] = new CWayPoint(184,328);
 			 
-			 WayPoints[14] = new CWayPoint(324,325);
+			 WayPoints[14] = new CWayPoint(328,328);
 			 
-			 WayPoints[15] = new CWayPoint(326,185);
+			 WayPoints[15] = new CWayPoint(328,184);
 			 
-			 WayPoints[16] = new CWayPoint(232,185);
+			 WayPoints[16] = new CWayPoint(232,184);
 			 
-			 WayPoints[17] = new CWayPoint(230,278);
+			 WayPoints[17] = new CWayPoint(232,280);
 			 
-			 WayPoints[18] = new CWayPoint(280,281);
+			 WayPoints[18] = new CWayPoint(280,280);
 			 
-			 WayPoints[19] = new CWayPoint(280,229);
+			 WayPoints[19] = new CWayPoint(280,232);
 			 
-			 WayPoints[20] = new CWayPoint(256,220);
+			 WayPoints[20] = new CWayPoint(264,232);
 			
 		
 			
@@ -832,6 +1038,54 @@ public class ResesScript {
 		{
 			 
 			addMap(Map0000_Map00);
+			
+
+			
+		}
+
+	
+	
+	}
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	// World : unamed_Level
+	class world_unamed_Level extends CWorld{
+	
+		// map count : 1
+		 
+		public CMap Map0000_unamed_Map;//0 0 0
+		
+		
+		// sprite count : 0
+		
+		
+		public void initPath()
+		{
+			WayPoints = new CWayPoint[3];
+			
+			 
+			 WayPoints[0] = new CWayPoint(216,200);
+			 
+			 WayPoints[1] = new CWayPoint(72,248);
+			 
+			 WayPoints[2] = new CWayPoint(216,248);
+			
+		
+			
+			 WayPoints[0].link(WayPoints[1]);//0
+			
+			 WayPoints[0].link(WayPoints[2]);//1
+			
+			 WayPoints[1].link(WayPoints[0]);//2
+			
+			 WayPoints[2].link(WayPoints[0]);//3
+			
+		}
+		public void initUnit()
+		{
+			 
+			addMap(Map0000_unamed_Map);
 			
 
 			
