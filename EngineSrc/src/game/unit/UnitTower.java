@@ -1,6 +1,7 @@
 package game.unit;
 
 import com.morefuntek.cell.Game.CAnimates;
+import com.morefuntek.cell.Game.CCD;
 import com.morefuntek.cell.Game.CCollides;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.IState;
@@ -28,14 +29,14 @@ public class UnitTower extends CSprite implements IState {
 			if(!isEndAttack()){
 				onAttack();
 			}else{
-				onDefence();
+				startDefence();
 			}
 			break;
 		case STATE_DEFENCE:
 			if(!isEndDefence()){
 				onDefence();
 			}else{
-				onDefence();//end
+				startDefence();//end
 			}
 			break;
 		}
@@ -54,13 +55,9 @@ public class UnitTower extends CSprite implements IState {
 		state = STATE_BUILD;
 		Active = true;
 		Visible = true;
-		
-		int dx = sx - X;
-		int dy = sy - Y;
-		
-		tryMove(dx, dy);
-		
-	
+
+		tryMove(sx-X, sy-Y);
+
 	}
 	public boolean isEndBuild(){
 		return true;
@@ -71,21 +68,45 @@ public class UnitTower extends CSprite implements IState {
 //	----------------------------------------------------------------------------------------------------
 //	attack
 	final int STATE_ATTACK		= 1;
-	int AttackScope				= 128;
+	int AttackScope				= 100;
 	int AttackForzenTime 		= 100;
-	int AttackTime				= 100;
-	CSprite AttackTarget		= null;
-	public void startAttack(CSprite[] targets){
+	int AttackTime				= 1000;
+	public void startAttack(UnitEnemy[] enemys,UnitShoot[] shoots){
+		if(!isEndAttack())return;
 		state = STATE_ATTACK;
 		Active = true;
 		Visible = true;
+		AttackTime = 0;
 		
+		for(int i=0;i<shoots.length;i++){
+			if(shoots[i].Active==false){
+				int start = Math.abs(Random.nextInt()%enemys.length);
+				for(int j=0;j<enemys.length;j++){
+					int id = (j + start) % enemys.length;  
+					if( enemys[id].Active==true && 
+						CCD.cdRect(
+							X-AttackScope, Y-AttackScope, 
+							X+AttackScope, Y+AttackScope, 
+							enemys[id].X-AttackScope, enemys[id].Y-AttackScope, 
+							enemys[id].X+AttackScope, enemys[id].Y+AttackScope)
+							){
+						shoots[i].startMissile(
+								X+collides.getCD(0).X1,
+								Y+collides.getCD(0).Y1,
+								enemys[id]);
+						break;
+					}
+				}
+				break;
+			}
+		}
 		
 	}
 	public boolean isEndAttack(){
-		return true;
+		return AttackTime>=AttackForzenTime;
 	}
 	public void onAttack(){
+		AttackTime++;
 	}
 //	----------------------------------------------------------------------------------------------------
 //	defence

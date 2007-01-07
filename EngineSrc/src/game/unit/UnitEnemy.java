@@ -1,5 +1,6 @@
 package game.unit;
 
+import com.morefuntek.cell.CMath;
 import com.morefuntek.cell.CObject;
 import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CCD;
@@ -9,52 +10,97 @@ import com.morefuntek.cell.Game.IState;
 
 public class UnitEnemy extends CSprite implements IState  {
 
-	final public int STATE_MOVE 	= 0;
-	final public int STATE_HOLD 	= 1;
-	final public int STATE_SWING	= 2;
-
-	public int state = 0;
+	public int state = -1;
 	
-	//-------------------------------------------------------------------------------------------------
-	
-	
-	public UnitEnemy(CSprite stuff, CWayPoint next){
+	public UnitEnemy(CSprite stuff){
 		super(stuff);
 		super.setState(this);
-		NextWayPoint = next;
-		setState(this);
 	}
 	
 	
 	public void update() {
-		if(isEndMove()){
-			startMove();
-		}else{
-			onMove();
+		switch(state){
+		case STATE_HOLD:
+			if(!isEndHold()){
+				onHold();
+			}else{
+				startMove(NextWayPoint);
+			}
+			break;
+		case STATE_MOVE:
+			if(!isEndMove()){
+				onMove();
+			}else{
+				startMove(NextWayPoint);
+			}
+			break;
+		case STATE_SWING:
+			if(!isEndSwing()){
+				onSwing();
+			}else{
+				startMove(NextWayPoint);
+			}
+			break;
 		}
+		
 	}
 	
-//---------------------------------------------------------------------------------------
-	//hold
+//	---------------------------------------------------------------------------------------
+//	hold
+	final public int STATE_HOLD 	= 1;
 	public int HoldTime = 100;
-	public void onHold(){
-		HoldTime--;
-		setCurrentFrame(0, 0);
-	}
 	public void startHold(){
-		HoldTime = Math.abs(Random.nextInt()%200);
+		
 		state = STATE_HOLD;
+		Active = true;
+		Visible = true;
+		
+		HoldTime = Math.abs(Random.nextInt()%200);
 	}
 	public boolean isEndHold(){
 		return HoldTime<0;
 	}
-	
-//------------------------------------------------------------------------------------
+	public void onHold(){
+		HoldTime--;
+		setCurrentFrame(0, 0);
+	}
 
-	//patrol
+	
+//	------------------------------------------------------------------------------------
+//	patrol
+	final public int STATE_MOVE 	= 0;
 	public CWayPoint NextWayPoint;
 	private CWayPoint PrewWayPoint;
-	public int MaxSpeed = 1/*+Math.abs(Random.nextInt()%4)*/;
+	public int MaxSpeed = 4/*+Math.abs(Random.nextInt()%4)*/;
+	
+	public void startMove(CWayPoint next){
+			
+		state = STATE_MOVE;
+		Active = true;
+		Visible = true;
+		
+
+		NextWayPoint = next ;
+		if(NextWayPoint.getNextCount()>0){
+			int id = Math.abs(Random.nextInt()%NextWayPoint.getNextCount());
+			if(PrewWayPoint != NextWayPoint.getNextPoint(id)){
+				PrewWayPoint = NextWayPoint;
+				NextWayPoint = NextWayPoint.getNextPoint(id);
+			}else{
+				PrewWayPoint = NextWayPoint;
+				NextWayPoint = NextWayPoint.getNextPoint((id+1)%NextWayPoint.getNextCount());
+			}
+			
+		}
+	}
+	public boolean isEndMove(){
+		return CCD.cdRect(
+				X - MaxSpeed, Y - MaxSpeed, 
+				X + MaxSpeed, Y + MaxSpeed, 
+				NextWayPoint.X , NextWayPoint.Y , 
+				NextWayPoint.X , NextWayPoint.Y );
+	}
+	
 	public void onMove(){
 		DirectX = NextWayPoint.X - X;
 		DirectY = NextWayPoint.Y - Y;
@@ -82,44 +128,34 @@ public class UnitEnemy extends CSprite implements IState  {
 		tryMove(dx, dy);
 
 	}
-	public void startMove(){
-		if(NextWayPoint.getNextCount()>0){
-			int id = Math.abs(Random.nextInt()%NextWayPoint.getNextCount());
-			if(PrewWayPoint != NextWayPoint.getNextPoint(id)){
-				PrewWayPoint = NextWayPoint;
-				NextWayPoint = NextWayPoint.getNextPoint(id);
-			}else{
-				PrewWayPoint = NextWayPoint;
-				NextWayPoint = NextWayPoint.getNextPoint((id+1)%NextWayPoint.getNextCount());
-			}
-			
-		}
-		state = STATE_MOVE;
-	}
-	public boolean isEndMove(){
-		return CCD.cdRect(
-				X - MaxSpeed, Y - MaxSpeed, 
-				X + MaxSpeed, Y + MaxSpeed, 
-				NextWayPoint.X , NextWayPoint.Y , 
-				NextWayPoint.X , NextWayPoint.Y );
-	}
+	
 	
 //	------------------------------------------------------------------------------------
+//	swing
+	final public int STATE_SWING	= 2;
 
-	//patrol
 	public int SwingTime = 100;
-
-	public void onSwing(){
-		SwingTime--;
-		setCurrentFrame(AScreen.getTimer()%4, 0);
-		
-		
-	}
+	
 	public void startSwing(){
-		SwingTime = Math.abs(Random.nextInt()%200);
-		state = STATE_SWING;
+		if(state!=STATE_SWING){
+			SwingTime = 20;
+			HPos256 = X * 256 ; 
+			VPos256 = Y * 256 ; 
+			state = STATE_SWING;
+			Active = true;
+			Visible = true;
+		}
 	}
 	public boolean isEndSwing(){
 		return SwingTime<0;
 	}
+	public void onSwing(){
+		SwingTime--;
+	
+		HPos256 -= CMath.sinTimes256(SwingTime*90)*4;
+		VPos256 -= CMath.cosTimes256(SwingTime*90)*4;
+		X = HPos256 / 256 ;
+		Y = VPos256 / 256 ;
+	}
+
 }

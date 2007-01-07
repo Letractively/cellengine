@@ -41,10 +41,12 @@ public class ScreenTD_Main extends AScreen {
        	IImages sprTile = new CImages20();
        	IImages guiTile = new CImages20();
        	IImages towerTile = new CImages20();
+       	IImages shootTile = new CImages20();
        	ResesScript.buildClipImages_MapTile(mapTile);
        	ResesScript.buildClipImages_SprTile(sprTile);
-       	ResesScript.buildClipImages_GUI(guiTile);
+       	ResesScript.buildClipImages_GUITile(guiTile);
        	ResesScript.buildClipImages_TowerTile(towerTile);
+       	ResesScript.buildClipImages_ShootTile(shootTile);
        	
        	// map type
        	map = ResesScript.createMap_Map00(mapTile, false, false);
@@ -53,22 +55,24 @@ public class ScreenTD_Main extends AScreen {
         CSprite enemy = ResesScript.createSprite_Enemy00(sprTile);
         CSprite tower = ResesScript.createSprite_Tower(towerTile);
         CSprite point = ResesScript.createSprite_Point(guiTile);
-        
+        CSprite shoot = ResesScript.createSprite_Shoot(shootTile);
        	// camera 
        	cam = new CCamera(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,map,true,0);
        	
        	// world
        	world = new world_Level00();
     	((world_Level00)world).Map0000_Map00 = map;// setmap
-    	((world_Level00)world).addCamera(cam);//set camera
+    	((world_Level00)world).setCamera(cam);//set camera
        	((world_Level00)world).initPath();// init path
        	((world_Level00)world).initUnit();
        	world.isRPGView = true;
        	
        	
        	for(int i=0;i<enemys.length;i++){
-       		enemys[i] = new UnitEnemy(enemy,world.WayPoints[0]);
+       		enemys[i] = new UnitEnemy(enemy);
        		enemys[i].Y = -32 - i*32;
+       		enemys[i].Active = false;
+       		enemys[i].Visible = false;
        	}
        	for(int i=0;i<towers.length;i++){
        		towers[i] = new UnitTower(tower);
@@ -76,9 +80,10 @@ public class ScreenTD_Main extends AScreen {
        		towers[i].Visible = false;
        	}
        	for(int i=0;i<shoots.length;i++){
-       		shoots[i] = new UnitShoot(point);
+       		shoots[i] = new UnitShoot(shoot);
        		shoots[i].Active = false;
        		shoots[i].Visible = false;
+       		shoots[i].Priority = 1024;
        	}
        	
        	this.point = point;
@@ -100,7 +105,9 @@ public class ScreenTD_Main extends AScreen {
     	
     	
     	processPoint();
-		
+    	processEnemys();
+    	processTowers();
+    	processShoots();
 		
     	int cdx = point.X - (cam.getX() + cam.getWidth() /2);
     	int cdy = point.Y - (cam.getY() + cam.getHeight()/2);
@@ -144,37 +151,34 @@ public class ScreenTD_Main extends AScreen {
     					map.putFlag(bx, by, 1);
     					int dx = (bx * map.getCellW()) + map.getCellW()/2;
     					int dy = (by * map.getCellH()) + map.getCellH()/2;
-        				towers[i].startBuild(dx, dy);
+        				towers[i].startBuild(dx, dy-1);
     				}
     				break;
     			}
     		}
     	}
     	
+    	
+		
+		
     	holdTime--;
     	
+    	
+    	
     	if(isKeyDown(KEY_UP)){
-    		if(point.Y>0)
-    			point.tryMove(0, -map.getCellH());
     		holdTime=10;
     	} 
     	if(isKeyDown(KEY_DOWN)){
-    		if(point.Y<map.getHeight()-map.getCellH())
-    			point.tryMove(0,  map.getCellH());
     		holdTime=10;
     	}
     	if(isKeyDown(KEY_LEFT)){
-    		if(point.X>0)
-    			point.tryMove(-map.getCellW(), 0);
     		holdTime=10;
     	}
 		if(isKeyDown(KEY_RIGHT)){
-			if(point.X<map.getWidth()-map.getCellW())
-				point.tryMove( map.getCellW(), 0);
 			holdTime=10;
 		}
 		
-    	if(holdTime<0){
+    	if(holdTime<0 || holdTime==10){
 	    	if(isKeyHold(KEY_UP)){
 	    		if(point.Y>0)
 	    			point.tryMove(0, -map.getCellH());
@@ -193,9 +197,46 @@ public class ScreenTD_Main extends AScreen {
 			}
 		}
     	
+    	if(point.X%map.getCellW()!=map.getCellW()/2){
+    		int dx = point.X/map.getCellW() + map.getCellW()/2;
+    		point.tryMove(dx - point.X ,0);
+    	}
+		if(point.Y%map.getCellH()!=map.getCellH()/2){
+    		int dy = point.Y/map.getCellH() + map.getCellH()/2;
+    		point.tryMove(0, dy - point.Y);
+    	}
+		
     	point.nextCycFrame();
 	}
 	
+	public void processEnemys(){
+		if(getTimer()==1)
+		for(int i=0;i<enemys.length;i++){
+			if(!enemys[i].Active){
+				enemys[i].startMove(world.WayPoints[0]);
+			}else{
+				
+			}
+       	}
+       
+	}
+	
+	public void processTowers(){
+		for(int i=0;i<towers.length;i++){
+			if(!towers[i].Active){
+				
+			}else{
+				towers[i].startAttack(enemys,shoots);
+			}
+			
+       	}
+       	
+	}
+
+	public void processShoots(){
+//		for(int i=0;i<shoots.length;i++){
+//       	}
+	}
 }
 
 
