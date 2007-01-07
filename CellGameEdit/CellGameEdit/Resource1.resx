@@ -292,6 +292,18 @@
   <data name="Image61" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Image61.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Image62" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Image62.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image63" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Image63.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image64" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Image64.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Image65" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Image65.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Image7" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\image7.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

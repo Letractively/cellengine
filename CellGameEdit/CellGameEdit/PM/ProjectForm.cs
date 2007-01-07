@@ -113,8 +113,8 @@ namespace CellGameEdit.PM
                     StreamReader sr = new StreamReader(fileName, encoding);
                     String script = sr.ReadToEnd();
                     sr.Close();
-                    
-                    String ret = new string(new char[]{ '\r', '\n' });
+
+                    String ret = new string(new char[] { '\r', '\n' });
 
                     System.IO.StringWriter outRes = new StringWriter();
                     System.IO.StringWriter outLev = new StringWriter();
@@ -130,7 +130,7 @@ namespace CellGameEdit.PM
                     script = script.Insert(0, "/* Email : wazazhang@gmail.com */" + ret);
                     script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
                     script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
-                    
+
                     Console.WriteLine(script);
 
                     System.IO.File.WriteAllText(
@@ -138,6 +138,10 @@ namespace CellGameEdit.PM
                         script,
                         encoding
                         );
+                }
+                else
+                {
+                    Console.WriteLine("Error : " + fileName + " : 不存在!");
                 }
             }
             catch (Exception err) { Console.WriteLine(this.Name + " : " + err.Message); }
