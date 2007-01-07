@@ -36,7 +36,8 @@ public class CSprite extends CUnit {
 	public boolean haveMapBlock 	= false;
 	/**该精灵当前是否在摄象机内，只读*/
 	public boolean OnScreen 		= true;
-	
+	/**渲染优先级*/
+	public int Priority				= 0;
 //	----------------------------------------------------------------------------------------------
 //	动画相关
 	
@@ -554,21 +555,26 @@ public class CSprite extends CUnit {
 					d<world.Sprs.size() && d>=0 ){
 				
 				CSprite that = (CSprite)world.Sprs.elementAt(d);
+//				println(that.Y+" : "+this.Y);
 				
-				if(dy<0 && that.Y <= this.Y){
+				if(dy<0 && (that.Y + that.Priority) <= (this.Y + this.Priority)){
+//					println("dy<0 "+that.Y+"<="+this.Y+" break");
 					break;
 				} 
-				if(dy>0 && that.Y >= this.Y){
+				if(dy>0 && (that.Y + that.Priority) >= (this.Y + this.Priority)){
+//					println("dy>0 "+that.Y+">="+this.Y+" break");
 					break;
 				}
 				
 				world.Sprs.setElementAt(that, s);
 				world.Sprs.setElementAt(this, d);
 				
-//				println("exchange "+s+" to "+d);
+//				print( s + ">" + d + " : ");
+				
 				s = d ;
 				d = s + dy;
 			}
+//			println("");
 		}
 		
 		return adjustMap||adjustSpr;
@@ -590,7 +596,7 @@ public class CSprite extends CUnit {
 		animates.w_left 	= 0;
 		animates.w_top 		= 0;
 		animates.w_right 	= 0;
-		animates.w_botton 	= 0;
+		animates.w_bottom 	= 0;
 		for (int i = animates.SFlip.length-1; i >= 0 ; i-- ) {
 			animates.SFlip[i] = transFlipNext(animates.SFlip[i], next);
 			point1[0] = animates.SX[i];
@@ -613,7 +619,7 @@ public class CSprite extends CUnit {
 		collides.w_left 	= 0;
 		collides.w_top 		= 0;
 		collides.w_right 	= 0;
-		collides.w_botton 	= 0;
+		collides.w_bottom 	= 0;
 		for (int i = collides.cds.length-1; i >= 0 ; i-- ) {
 			point1[0] = collides.cds[i].X1;
 			point1[1] = collides.cds[i].Y1;
@@ -811,10 +817,42 @@ public class CSprite extends CUnit {
 //	------------------------------------------------------------------------------------------
 
 	public int getVisibleHeight(){
-		return animates.w_botton - animates.w_top;
+		return animates.w_bottom - animates.w_top;
 	}
 	public int getVisibleWidth(){
 		return animates.w_right - animates.w_left;
+	}
+	public int getCDHeight(){
+		return collides.w_bottom - collides.w_top;
+	}
+	public int getCDWidth(){
+		return collides.w_right - collides.w_left;
+	}
+	
+	public int getAnimTop(){
+		return animates.w_top;
+	}
+	public int getAnimBottom(){
+		return animates.w_bottom;
+	}
+	public int getAnimLeft(){
+		return animates.w_left;
+	}
+	public int getAnimRight(){
+		return animates.w_right;
+	}
+	
+	public int getCDTop(){
+		return collides.w_top;
+	}
+	public int getCDBottom(){
+		return collides.w_bottom;
+	}
+	public int getCDLeft(){
+		return collides.w_left;
+	}
+	public int getCDRight(){
+		return collides.w_right;
 	}
 	
 	/**
