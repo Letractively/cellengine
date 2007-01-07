@@ -16,13 +16,13 @@ import com.morefuntek.cell.CObject;
  */
 public class CWorld extends CObject {
 
-	public Vector Sprs = new Vector(3);
+	public Vector Sprs = new Vector(0);
 	public CMap Map;
 	public CCamera Camera;
 	
 	public CWayPoint[] WayPoints ;
 	
-	public boolean isRPGView = true;
+	public boolean isRPGView = false;
 	
 	/**
 	 * ¹¹Ôìº¯Êý 
@@ -60,7 +60,7 @@ public class CWorld extends CObject {
 		if(isRPGView){
 			int index = 0 ;
 			for(int i=0;i<Sprs.size();i++){
-				if(getSprite(i).Y > spr.Y){
+				if(getSprite(i).Y + getSprite(i).Priority > spr.Y + spr.Priority){
 					index = i;
 					break;
 				}
@@ -113,10 +113,6 @@ public class CWorld extends CObject {
 		return Sprs.indexOf(spr);
 	}
 	
-	// operate unit
-	public void exchangeSprs(CSprite spr1,CSprite spr2){
-		Sprs.removeElement(spr1);
-	}
 //------------------------------------------------------------------------------------------------------
 
 	public int toWorldPosX(int screenX){
@@ -183,7 +179,7 @@ public class CWorld extends CObject {
 							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
 							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
 							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
-							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_botton, 
+							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_bottom, 
 							Camera.X, 
 							Camera.Y, 
 							Camera.X + Camera.getWidth(), 

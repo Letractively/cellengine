@@ -507,9 +507,11 @@ abstract public class AScreen extends CObject {
 	 */
 	static public void showFPS(Graphics g,int x,int y, int color){
 		drawString(
-		        g, "DEMO"
+		        g, "" 
 				+ " FPS="
-				+ (1000 / ((System.currentTimeMillis() - CurRealTime) == 0 ? 1 : (System.currentTimeMillis() - CurRealTime))),
+				+ (1000 / ((System.currentTimeMillis() - CurRealTime) == 0 ? 1 : (System.currentTimeMillis() - CurRealTime)))
+				+ "/" + FrameDelay
+				,
 				x,y, 
 				color);
 		CurRealTime = System.currentTimeMillis();

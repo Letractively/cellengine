@@ -17,7 +17,7 @@ public class CGroup extends CObject {
 	
 	protected short w_left = 0;
 	protected short w_top = 0;
-	protected short w_botton = 1;
+	protected short w_bottom = 1;
 	protected short w_right = 1;
 	
 	
@@ -35,8 +35,8 @@ public class CGroup extends CObject {
 			w_top = (short) top;
 		if (right > w_right)
 			w_right = (short) right;
-		if (botton > w_botton)
-			w_botton = (short) botton;
+		if (botton > w_bottom)
+			w_bottom = (short) botton;
 	}
 	
 	/**
@@ -61,11 +61,11 @@ public class CGroup extends CObject {
 				x1 + c1.w_left,  
 				y1 + c1.w_top, 
 				x1 + c1.w_right,  
-				y1 + c1.w_botton, 
+				y1 + c1.w_bottom, 
 				x2 + c2.w_left, 
 				y2 + c2.w_top, 
 				x2 + c2.w_right, 
-				y2 + c2.w_botton)){
+				y2 + c2.w_bottom)){
 			return true;
 		}
 		return false;
