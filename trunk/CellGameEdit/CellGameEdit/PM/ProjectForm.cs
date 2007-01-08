@@ -94,6 +94,8 @@ namespace CellGameEdit.PM
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            RefreshNodeName();
+
            // info.AddValue("formGroup", formGroup);
             info.AddValue("nodeReses", nodeReses);
             info.AddValue("nodeLevels", nodeLevels);
@@ -106,6 +108,8 @@ namespace CellGameEdit.PM
         {
             try
             {
+                RefreshNodeName();
+
                 if (System.IO.File.Exists(fileName))
                 {
                     Encoding encoding = Util.GetEncoding(fileName);
@@ -184,6 +188,7 @@ namespace CellGameEdit.PM
 
         public void Output()
         {
+            RefreshNodeName();
 
             System.IO.StringWriter sw = new System.IO.StringWriter();
             sw.WriteLine("/* Cell Game Editor by WAZA Zhang */");
@@ -244,6 +249,51 @@ namespace CellGameEdit.PM
          
         }
 
+        public void RefreshNodeName()
+        {
+            RefreshNodeName(nodeReses);
+            RefreshNodeName(nodeLevels);
+        }
+
+        public void RefreshNodeName(TreeNode node)
+        {
+            if (formTable[node] != null)
+            {
+                //
+                if (formTable[node].GetType().Equals(typeof(ImagesForm)))
+                {
+                    ((ImagesForm)formTable[node]).Text = node.Text;
+                    ((ImagesForm)formTable[node]).id = node.Text;
+                }
+                if (formTable[node].GetType().Equals(typeof(MapForm)))
+                {
+                    ((MapForm)formTable[node]).Text = node.Text;
+                    ((MapForm)formTable[node]).id = node.Text;
+                }
+                if (formTable[node].GetType().Equals(typeof(SpriteForm)))
+                {
+                    ((SpriteForm)formTable[node]).Text = node.Text;
+                    ((SpriteForm)formTable[node]).id = node.Text;
+                }
+
+                //
+                if (formTable[node].GetType().Equals(typeof(WorldForm)))
+                {
+                    ((WorldForm)formTable[node]).Text = node.Text;
+                    ((WorldForm)formTable[node]).id = node.Text;
+                }
+            }
+
+            if (node.Nodes.Count >= 0)
+            {
+                foreach (TreeNode sub in node.Nodes)
+                {
+                    RefreshNodeName(sub);
+                }
+            }
+         
+        }
+
         private Form getForm(TreeNode key)
         {
             try
@@ -298,6 +348,8 @@ namespace CellGameEdit.PM
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
+           
+
             if (getForm(treeView1.SelectedNode) != null)
             {
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(ImagesForm)))
@@ -316,8 +368,10 @@ namespace CellGameEdit.PM
                 { 
                     ((WorldForm)getForm(treeView1.SelectedNode)).id = e.Label; 
                 }
-                
+
             }
+
+            RefreshNodeName();
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
