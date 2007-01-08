@@ -26,7 +26,7 @@ public class ScreenTD_Main extends AScreen {
 	
 	UnitEnemy 	enemys[]	= new UnitEnemy[32];
 	UnitTower	towers[]	= new UnitTower[32];
-	UnitShoot	shoots[]	= new UnitShoot[128];
+	UnitShoot	shoots[]	= new UnitShoot[32];
 	CSprite		point;
 	
 	public ScreenTD_Main(){
@@ -70,9 +70,9 @@ public class ScreenTD_Main extends AScreen {
        	
        	for(int i=0;i<enemys.length;i++){
        		enemys[i] = new UnitEnemy(enemy);
-       		enemys[i].Y = -32 - i*32;
        		enemys[i].Active = false;
        		enemys[i].Visible = false;
+       		enemys[i].Y = -32 - i*32;
        	}
        	for(int i=0;i<towers.length;i++){
        		towers[i] = new UnitTower(tower);
@@ -88,10 +88,10 @@ public class ScreenTD_Main extends AScreen {
        	
        	this.point = point;
     	
-       	world.addSprite(point);
+       	world.addSprites(shoots);
     	world.addSprites(enemys);
     	world.addSprites(towers);
-    	world.addSprites(shoots);
+    	world.addSprite(point);
 
        	resetTimer();
 	}
@@ -99,10 +99,18 @@ public class ScreenTD_Main extends AScreen {
 	public void notifyLogic() {
     	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
         if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
-    	if(isKeyDown(KEY_A)){ChangeSubScreen(this.getClass().getName());}
-    	if(isKeyDown(KEY_B)){ChangeSubScreen("ScreenLogo");}
-    	if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
+    	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenLogo");}
+    	if(isKeyDown(KEY_B)){AScreen.ExitGame = true;}
     	
+    	if(isKeyDown(KEY_0)){
+    		println("");
+    		for(int i=0;i<world.Sprs.size();i++){
+    			println(i + " : " + world.Sprs.elementAt(i).getClass().toString() 
+    					+ " : Y=" + world.getSprite(i).Y
+    					+ " : PRI=" + world.getSprite(i).Priority
+    					);
+    		}
+    	}
     	
     	processPoint();
     	processEnemys();
@@ -140,7 +148,9 @@ public class ScreenTD_Main extends AScreen {
 	
 	public void processPoint(){
 		
-		if(isPointerDown()){}
+		if(isPointerDown()){
+			
+		}
 		
     	if(isKeyDown(KEY_C)){
     		for(int i=0;i<towers.length;i++){
