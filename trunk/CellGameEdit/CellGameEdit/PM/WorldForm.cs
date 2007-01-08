@@ -586,10 +586,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 g.setColor(0x80, 0xff, 0xff, 0xff);
 
 
-                int sx = pictureBox1.Location.X / CellW;
-                int sy = pictureBox1.Location.Y / CellH;
-                int sw = panel1.Width / CellW;
-                int sh = panel1.Height / CellH;
+                int sx = -pictureBox1.Location.X / CellW;
+                int sy = -pictureBox1.Location.Y / CellH;
+                int sw = panel1.Width / CellW + 1;
+                int sh = panel1.Height / CellH + 1;
 
                 for (int bx = sx; bx < sx + sw; bx++)
                 {
