@@ -458,15 +458,16 @@ public class CSprite extends CUnit {
 		X+=x;
 		Y+=y;
 		
-		if(adjustSprID==null || adjustSprID.length < world.Sprs.size()){
-			adjustSprID = new int[world.Sprs.size()];
-		}
-		int p = 0;
-		
 		boolean adjustSpr = false;
 		boolean adjustMap = false;
 		
 		if(this.haveSprBlock){
+			
+			if(adjustSprID==null || adjustSprID.length < world.Sprs.size()){
+				adjustSprID = new int[world.Sprs.size()];
+			}
+			int p = 0;
+			
 			for(int i=world.Sprs.size()-1;i>=0;i--){
 				adjustSprID[world.Sprs.size()-1 - i] = -1 ;
 				if(!this.equals(((CSprite)world.Sprs.elementAt(i))) && 

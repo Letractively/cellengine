@@ -58,9 +58,9 @@ public class CWorld extends CObject {
 	}
 	public void addSprite(CSprite spr){
 		if(isRPGView){
-			int index = 0 ;
+			int index = Sprs.size() ;
 			for(int i=0;i<Sprs.size();i++){
-				if(getSprite(i).Y + getSprite(i).Priority > spr.Y + spr.Priority){
+				if(getSprite(i).Y + getSprite(i).Priority >= spr.Y + spr.Priority){
 					index = i;
 					break;
 				}
