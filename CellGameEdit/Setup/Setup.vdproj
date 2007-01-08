@@ -21,32 +21,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D162D4286BC4299BFBAAB5FB7302CBD"
+        "MsmKey" = "8:_A258F9CAC47D1AC1810E857A93EEEBF4"
+        "OwnerKey" = "8:_F08A738EE17B676A6EA0E7CECDB7A149"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A258F9CAC47D1AC1810E857A93EEEBF4"
         "OwnerKey" = "8:_1B1678A293E440B19799AF3B76F37DEC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D162D4286BC4299BFBAAB5FB7302CBD"
+        "MsmKey" = "8:_D65A1D05DC5D4C5896F2D534F816B7F1"
+        "OwnerKey" = "8:_1B1678A293E440B19799AF3B76F37DEC"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D65A1D05DC5D4C5896F2D534F816B7F1"
         "OwnerKey" = "8:_A258F9CAC47D1AC1810E857A93EEEBF4"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_7D162D4286BC4299BFBAAB5FB7302CBD"
+        "MsmKey" = "8:_D65A1D05DC5D4C5896F2D534F816B7F1"
         "OwnerKey" = "8:_F08A738EE17B676A6EA0E7CECDB7A149"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A258F9CAC47D1AC1810E857A93EEEBF4"
-        "OwnerKey" = "8:_F08A738EE17B676A6EA0E7CECDB7A149"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_A258F9CAC47D1AC1810E857A93EEEBF4"
-        "OwnerKey" = "8:_1B1678A293E440B19799AF3B76F37DEC"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -76,7 +76,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_7D162D4286BC4299BFBAAB5FB7302CBD"
+        "OwnerKey" = "8:_D65A1D05DC5D4C5896F2D534F816B7F1"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -101,7 +101,7 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:2"
+            "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
@@ -321,7 +321,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Setup"
         "ProductCode" = "8:{8BE03C86-19A4-4980-98D0-C6E3074C2615}"
-        "PackageCode" = "8:{F147B5FD-4B94-4C3F-B91B-0795BC9E826A}"
+        "PackageCode" = "8:{39A7D6DF-D127-454D-BAF3-F9E0240FA76B}"
         "UpgradeCode" = "8:{D6AE4ED0-7959-431F-A9F4-1B6997204528}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:FALSE"
@@ -850,7 +850,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_7D162D4286BC4299BFBAAB5FB7302CBD"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D65A1D05DC5D4C5896F2D534F816B7F1"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
