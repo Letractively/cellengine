@@ -34,13 +34,13 @@ public class UnitEnemy extends CSprite implements IState  {
 				startMove(NextWayPoint);
 			}
 			break;
-		case STATE_SWING:
-			if(!isEndSwing()){
-				onSwing();
-			}else{
-				startMove(NextWayPoint);
-			}
-			break;
+//		case STATE_SWING:
+//			if(!isEndSwing()){
+//				onSwing();
+//			}else{
+//				startMove(NextWayPoint);
+//			}
+//			break;
 		}
 		
 	}
@@ -71,7 +71,7 @@ public class UnitEnemy extends CSprite implements IState  {
 	final public int STATE_MOVE 	= 0;
 	public CWayPoint NextWayPoint;
 	private CWayPoint PrewWayPoint;
-	public int MaxSpeed = 4/*+Math.abs(Random.nextInt()%4)*/;
+	public int MaxSpeed = 5 + Math.abs(Random.nextInt()%4) ;
 	
 	public void startMove(CWayPoint next){
 			
@@ -138,12 +138,15 @@ public class UnitEnemy extends CSprite implements IState  {
 	
 	public void startSwing(){
 		if(state!=STATE_SWING){
-			SwingTime = 20;
-			HPos256 = X * 256 ; 
-			VPos256 = Y * 256 ; 
 			state = STATE_SWING;
 			Active = true;
 			Visible = true;
+			
+			SwingTime = 20;
+			HPos256 = X * 256 ; 
+			VPos256 = Y * 256 ; 
+			
+			
 		}
 	}
 	public boolean isEndSwing(){
@@ -156,6 +159,8 @@ public class UnitEnemy extends CSprite implements IState  {
 		VPos256 -= CMath.cosTimes256(SwingTime*90)*4;
 		X = HPos256 / 256 ;
 		Y = VPos256 / 256 ;
+		
+		
 	}
 
 }

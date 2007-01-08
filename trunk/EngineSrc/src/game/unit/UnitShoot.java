@@ -29,7 +29,7 @@ public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 	
 	public void render(Graphics g, int x, int y) {
 		super.render(g, x, y);
-		Effect.render(g);
+		if(OnScreen)Effect.render(g);
 	}
 	
 	public void update(){
