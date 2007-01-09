@@ -3,6 +3,7 @@ package com.morefuntek.cell.Game;
 import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 
 import com.morefuntek.cell.CObject;
 
@@ -45,6 +46,8 @@ public class CWorld extends CObject {
 			addSprite(sprs[i]);
 		}
 	}
+//	------------------------------------------------------------------------------------------------------
+
 
 	// add unit
 	
@@ -113,7 +116,10 @@ public class CWorld extends CObject {
 		return Sprs.indexOf(spr);
 	}
 	
-//------------------------------------------------------------------------------------------------------
+
+	
+//	------------------------------------------------------------------------------------------------------
+
 
 	public int toWorldPosX(int screenX){
 		return screenX + Camera.X - Camera.WindowX ;
@@ -129,6 +135,8 @@ public class CWorld extends CObject {
 		return worldY - Camera.Y + Camera.WindowY;
 	}
 	
+//	------------------------------------------------------------------------------------------------------
+
 	
 	/**
 	 * 更新场景里所有的游戏单位的逻辑。

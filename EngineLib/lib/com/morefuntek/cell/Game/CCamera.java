@@ -68,6 +68,7 @@ public class CCamera extends CUnit {
 	private int vnR;
 //	-----------------------------------------------------------------------------------
 
+//	-----------------------------------------------------------------------------------
 
 	/**
 	 * Construct a camera based in specify map.</br>
@@ -148,6 +149,8 @@ public class CCamera extends CUnit {
 					Map.renderCell(bg, x*CellW, y*CellH, x, y);
 				}
 			}
+			
+			
 		}
 
 

@@ -830,30 +830,12 @@ public class CSprite extends CUnit {
 		return collides.w_right - collides.w_left;
 	}
 	
-	public int getAnimTop(){
-		return animates.w_top;
-	}
-	public int getAnimBottom(){
-		return animates.w_bottom;
-	}
-	public int getAnimLeft(){
-		return animates.w_left;
-	}
-	public int getAnimRight(){
-		return animates.w_right;
+	public CAnimates getAnimates(){
+		return animates;
 	}
 	
-	public int getCDTop(){
-		return collides.w_top;
-	}
-	public int getCDBottom(){
-		return collides.w_bottom;
-	}
-	public int getCDLeft(){
-		return collides.w_left;
-	}
-	public int getCDRight(){
-		return collides.w_right;
+	public CCollides getCollides(){
+		return collides;
 	}
 	
 	/**
