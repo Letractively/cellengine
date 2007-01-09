@@ -1,20 +1,19 @@
 import game.unit.UnitEnemy;
 import game.unit.UnitShoot;
 import game.unit.UnitTower;
-import game.unit.sprite.SpriteDrift;
-import game.unit.sprite.SpritePatrol;
 
 
 import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.CImages20;
+import com.morefuntek.cell.CMath;
 import com.morefuntek.cell.IImages;
 import com.morefuntek.cell.Game.CCamera;
 import com.morefuntek.cell.Game.CMap;
 import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWorld;
-import com.morefuntek.cell.Game.CWayPoint;;
+import com.morefuntek.cell.Game.CWorldMini;
 
 //继承抽象类CScreen并实现其中的方法
 public class ScreenTD_Main extends AScreen {
@@ -28,6 +27,8 @@ public class ScreenTD_Main extends AScreen {
 	UnitTower	towers[]	= new UnitTower[32];
 	UnitShoot	shoots[]	= new UnitShoot[32];
 	CSprite		point;
+	
+	CWorldMini	worldMini;
 	
 	public ScreenTD_Main(){
 
@@ -93,6 +94,15 @@ public class ScreenTD_Main extends AScreen {
     	world.addSprites(towers);
     	world.addSprite(point);
 
+    	worldMini = new CWorldMini(
+       			world,
+       			world.getMap().getWCount(),
+       			world.getMap().getHCount(),
+       			1,
+       			1,
+       			8+8*16,
+       			0);
+    	
        	resetTimer();
 	}
 	
@@ -116,7 +126,8 @@ public class ScreenTD_Main extends AScreen {
     	processEnemys();
     	processTowers();
     	processShoots();
-		
+    	processMiniMap();
+    	
     	int cdx = point.X - (cam.getX() + cam.getWidth() /2);
     	int cdy = point.Y - (cam.getY() + cam.getHeight()/2);
     	cam.mov(cdx/4,cdy/4);
@@ -130,7 +141,8 @@ public class ScreenTD_Main extends AScreen {
         //clearScreenAndClip(g,0xff000000);
 
         world.render(g);
-
+        worldMini.render(g, 1, -1 + SCREEN_HEIGHT - worldMini.getHeight());
+        
         showFPS(g, 1, 1, 0xffffffff);
 
        
@@ -246,6 +258,41 @@ public class ScreenTD_Main extends AScreen {
 	public void processShoots(){
 //		for(int i=0;i<shoots.length;i++){
 //       	}
+	}
+	
+	int DColor = 0;
+	public void processMiniMap(){
+		
+		worldMini.X = point.X - worldMini.getWorldWidth()/2;
+		worldMini.Y = point.Y - worldMini.getWorldHeight()/2;
+		
+		for(int i=0;i<world.getSpriteCount();i++){
+			worldMini.SprColor[i] = 
+				0x7f000000
+				+(DColor<<16) 
+				+(DColor<<8) 
+				+(DColor<<0) 
+				;
+		}
+		
+		int ia = world.getSpriteIndex(point);
+		worldMini.SprColor[ia] = 
+			0x7f000000
+			+(DColor<<16) 
+			+(DColor<<8) 
+			+(DColor<<0) 
+			;
+		
+		worldMini.CameraColor = 
+			0x7f000000
+//			+(DColor<<16) 
+			+(DColor<<8) 
+//			+(DColor<<0) 
+			;
+		
+		DColor = CMath.sinTimes256(getTimer()*10%180);
+		if(DColor>0xff)DColor=0xff;
+		
 	}
 }
 
