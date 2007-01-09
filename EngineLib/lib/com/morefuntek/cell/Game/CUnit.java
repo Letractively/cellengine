@@ -24,6 +24,9 @@ public class CUnit extends CObject
 	/**精灵属于哪个世界*/
 	public CWorld world = null;
 
+	/**色块*/
+	public int BackColor = 0xff000000;
+	
 //	---------------------------------------------------------------------------------------------
 
 	protected IState onState = null;

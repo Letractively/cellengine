@@ -8,9 +8,6 @@ import com.morefuntek.cell.CObject;
 public class CWorldMini extends CObject {
 
 	public int[] MapColor;
-	public int[] SprColor;
-	public int BorderColor = 0xff000000;
-	public int CameraColor = 0xff00ff00;
 	
 	public boolean ShowSpr = true;
 	public boolean ShowMap = true;
@@ -19,8 +16,9 @@ public class CWorldMini extends CObject {
 	public int X = 0;
 	public int Y = 0;
 	
+	public int SprPriority = 0;
+	
 	CWorld World;
-
 	
 	int W;
 	int H;
@@ -41,23 +39,19 @@ public class CWorldMini extends CObject {
 			int colorKeySprPos){
 		
 		int[] c = new int[1];
-		
-		int[] sprColor = new int[world.getSpriteCount()];
-		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
-		
-       	for(int i=0;i<sprColor.length;i++){
+		for(int i=0;i<world.getSpriteCount();i++){
        		try {
 				Image k = world.getSprite(i).getAnimates().getFrameImage(0, 0);
 				k.getRGB(c, 0, 1, 
 						colorKeySprPos%k.getWidth(), 
 						colorKeySprPos/k.getWidth(), 
 						1, 1);
-				sprColor[i] = c[0];
+				world.getSprite(i).BackColor = c[0];
 			} catch (RuntimeException e){
-				sprColor[i] = 0xffffffff;
+				world.getSprite(i).BackColor = 0xffffffff;
 			}
        	}
-       	
+		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
     	for(int i=0;i<mapColor.length;i++){
     		try {
 				Image k = world.getMap().getAnimates().getFrameImage(i, 0);
@@ -70,6 +64,7 @@ public class CWorldMini extends CObject {
 				mapColor[i] = 0xff00ff00;
 			}
        	}
+    	MapColor = mapColor;
     	
 		World = world;
 		W = width;
@@ -79,41 +74,6 @@ public class CWorldMini extends CObject {
 		WW = W*World.getMap().getCellW()/CW;
 		WH = H*World.getMap().getCellH()/CH;
 		
-		MapColor = mapColor;
-		SprColor = sprColor;
-		
-		Buffer = Image.createImage(
-					world.Map.getWCount()*CW, 
-					world.Map.getHCount()*CH);
-		bg = Buffer.getGraphics();
-		
-		for (int by = 0; by < world.getMap().getHCount(); by++) {
-			for (int bx = 0; bx < world.getMap().getWCount(); bx++) {
-				bg.setColor(MapColor[World.Map.getTile(bx, by)]);
-				bg.fillRect(bx*CW, by*CH, CW, CH);
-			}
-		}
-		
-	}
-	
-	public CWorldMini(
-			CWorld world,
-			int width,int height,
-			int cellW,int cellH,
-			int[] mapColor,
-			int[] sprColor){
-
-		World = world;
-		W = width;
-		H = height;
-		CW = cellW;
-		CH = cellH;
-		WW = W*World.getMap().getCellW()/CW;
-		WH = H*World.getMap().getCellH()/CH;
-		
-		MapColor = mapColor;
-		SprColor = sprColor;
-		
 		Buffer = Image.createImage(
 					world.Map.getWCount()*CW, 
 					world.Map.getHCount()*CH);
@@ -128,8 +88,6 @@ public class CWorldMini extends CObject {
 		
 	}
 
-	
-	
 	public int getWidth(){
 		return W;
 	}
@@ -165,8 +123,10 @@ public class CWorldMini extends CObject {
 			}
 			if(ShowSpr){
 				for(int i=0;i<World.getSpriteCount();i++){
-					if(World.getSprite(i).OnScreen && World.getSprite(i).Visible){
-						g.setColor(SprColor[i]);
+					if( World.getSprite(i).Visible &&
+						World.getSprite(i).Priority == SprPriority
+						){
+						g.setColor(World.getSprite(i).BackColor);
 						g.fillRect(
 								x -CW/2 + (World.getSprite(i).X-X)*CW/World.getMap().CellW, 
 								y -CH/2 + (World.getSprite(i).Y-Y)*CH/World.getMap().CellH, 
@@ -176,16 +136,13 @@ public class CWorldMini extends CObject {
 				}
 			}
 			if(ShowCam){
-				g.setColor(CameraColor);
+				g.setColor(World.getCamera().BackColor);
 				g.drawRect(
 						x -CW/2 + (World.getCamera().getX()-X)*CW/World.getMap().CellW, 
 						y -CH/2 + (World.getCamera().getY()-Y)*CH/World.getMap().CellH, 
 						World.getCamera().getWidth() *CW/World.getMap().CellW, 
 						World.getCamera().getHeight()*CH/World.getMap().CellH);
 			}
-			
-			g.setColor(BorderColor);
-			g.drawRect(x, y, W-1, H-1);
 			
 			g.setClip(cx,cy,cw,ch);
 			
