@@ -25,6 +25,9 @@ public class CMap extends CUnit {
 
 	protected boolean IsCyc ;
 	protected boolean IsAnimate ;
+	
+	protected int Width;
+	protected int Height;
 	//	----------------------------------------------------------------------------------------------
 
 	/**
@@ -58,6 +61,8 @@ public class CMap extends CUnit {
 		CellW = cellw;
 		CellH = cellh;
 		
+		Width = MatrixTile[0].length * CellW;
+		Height = MatrixTile.length * CellH;
 	}
 	
 	/**
@@ -83,14 +88,14 @@ public class CMap extends CUnit {
 	 * @return 
 	 */
 	final public int getWidth() {
-		return MatrixTile[0].length * CellW;
+		return Width;
 	}
 	/**
 	 * 得到整个地图的高
 	 * @return 
 	 */
 	final public int getHeight() {
-		return MatrixTile.length * CellH;
+		return Height;
 	}
 	/**
 	 * 得到横向格子数量
@@ -142,6 +147,14 @@ public class CMap extends CUnit {
 	}
 	public void putTile(int bx,int by,int data){
 		MatrixTile[by][bx] = (short)data;
+	}
+	
+	public CAnimates getAnimates(){
+		return Tiles;
+	}
+	
+	public CCollides getCollides(){
+		return Collides;
 	}
 	
 	/**

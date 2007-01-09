@@ -381,5 +381,27 @@ public class CCD extends CObject{
 		return true;
 	}
 
-	
+	/**
+	 * 判断2个矩形是否相撞</br>
+	 * 第一个矩形</br>
+	 * @param sx1 
+	 * @param sy1
+	 * @param sx2
+	 * @param sy2
+	 * 第二个矩形</br>
+	 * @param dx1 
+	 * @param dy1
+	 * @param dx2
+	 * @param dy2
+	 * @return false:true 是否相撞
+	 */
+	final static public boolean cdRectPoint(
+			int sx1, int sy1, int sx2, int sy2, 
+			int dx, int dy) {
+		if (sx2 <= dx)		return false;
+		if (sx1 >= dx)		return false;
+		if (sy2 <= dy)		return false;
+		if (sy1 >= dy)		return false;
+		return true;
+	}
 }
