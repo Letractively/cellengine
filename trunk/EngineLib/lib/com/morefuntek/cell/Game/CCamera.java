@@ -35,8 +35,6 @@ public class CCamera extends CUnit {
 	protected Image BackBuffer;
 	protected Graphics bg;
 	
-	protected int BackColor;
-	
 	protected boolean IsBackBuffer;
 
 	protected int CellW;
