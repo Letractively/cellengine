@@ -58,7 +58,10 @@ public class ScreenTD_Main extends AScreen {
         CSprite point = ResesScript.createSprite_Point(guiTile);
         CSprite shoot = ResesScript.createSprite_Shoot(shootTile);
        	// camera 
-       	cam = new CCamera(0,0,SCREEN_WIDTH,SCREEN_HEIGHT,map,true,0);
+       	cam = new CCamera(0,0,
+       			SCREEN_WIDTH,
+       			SCREEN_WIDTH,
+       			map,true,0);
        	
        	// world
        	world = new world_Level00();
@@ -96,10 +99,9 @@ public class ScreenTD_Main extends AScreen {
 
     	worldMini = new CWorldMini(
        			world,
-       			world.getMap().getWCount(),
-       			world.getMap().getHCount(),
-       			1,
-       			1,
+       			cam.getWidth()/2,
+       			cam.getHeight()/4,
+       			2,2,
        			8+8*16,
        			0);
     	
@@ -112,15 +114,15 @@ public class ScreenTD_Main extends AScreen {
     	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenLogo");}
     	if(isKeyDown(KEY_B)){AScreen.ExitGame = true;}
     	
-    	if(isKeyDown(KEY_0)){
-    		println("");
-    		for(int i=0;i<world.Sprs.size();i++){
-    			println(i + " : " + world.Sprs.elementAt(i).getClass().toString() 
-    					+ " : Y=" + world.getSprite(i).Y
-    					+ " : PRI=" + world.getSprite(i).Priority
-    					);
-    		}
-    	}
+//    	if(isKeyDown(KEY_0)){
+//    		println("");
+//    		for(int i=0;i<world.Sprs.size();i++){
+//    			println(i + " : " + world.Sprs.elementAt(i).getClass().toString() 
+//    					+ " : Y=" + world.getSprite(i).Y
+//    					+ " : PRI=" + world.getSprite(i).Priority
+//    					);
+//    		}
+//    	}
     	
     	processPoint();
     	processEnemys();
@@ -266,24 +268,19 @@ public class ScreenTD_Main extends AScreen {
 		worldMini.X = point.X - worldMini.getWorldWidth()/2;
 		worldMini.Y = point.Y - worldMini.getWorldHeight()/2;
 		
-		for(int i=0;i<world.getSpriteCount();i++){
-			worldMini.SprColor[i] = 
-				0x7f000000
-				+(DColor<<16) 
-				+(DColor<<8) 
-				+(DColor<<0) 
-				;
-		}
+//		for(int i=0;i<world.getSpriteCount();i++){
+//		
+//		}
 		
-		int ia = world.getSpriteIndex(point);
-		worldMini.SprColor[ia] = 
+		
+		point.BackColor = 
 			0x7f000000
 			+(DColor<<16) 
 			+(DColor<<8) 
 			+(DColor<<0) 
 			;
 		
-		worldMini.CameraColor = 
+		cam.BackColor = 
 			0x7f000000
 //			+(DColor<<16) 
 			+(DColor<<8) 
