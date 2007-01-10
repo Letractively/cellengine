@@ -69,7 +69,7 @@ public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 	
 	public void particleEmitted(CParticle particle, int id) {
 		
-		particle.Timer = 0;
+		particle.Timer = 10;
 		particle.X *= 256 ;
 		particle.Y *= 256 ;
 		particle.SpeedX = 0;
@@ -81,7 +81,7 @@ public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 
 		switch(particle.Category){
 		case PARTICLE_EXP:
-			particle.TerminateTime = 10;
+//			particle.TerminateTime = 10;
 			particle.Color = 0xffff0000;
 			particle.SpeedX = CMath.sinTimes256(id*10 + angle)*4;
 			particle.SpeedY = CMath.cosTimes256(id*10 + angle)*4;
@@ -89,11 +89,11 @@ public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 			particle.AccY = -CMath.cosTimes256(id*10 + angle)/8;
 			break;
 		case PARTICLE_SMOKE:
-			particle.TerminateTime = 10;
+//			particle.TerminateTime = 10;
 			particle.Color = 0xffffffff;
 			break;
 		case PARTICLE_CONTRACT:
-			particle.TerminateTime = 64;
+//			particle.TerminateTime = 64;
 			particle.Color = Random.nextInt();
 			particle.X += CMath.sinTimes256(id*10 + angle)*64;
 			particle.Y += CMath.cosTimes256(id*10 + angle)*64;
@@ -144,10 +144,10 @@ public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 					0, 360);
 			break;
 		case PARTICLE_CONTRACT:
-			if(particle.Timer<particle.TerminateTime/2){
+			if(particle.Timer<10/2){
 				size = (particle.Timer) / 4;
 			}else{
-				size = (particle.TerminateTime-particle.Timer) / 4;
+				size = (10-particle.Timer) / 4;
 			}
 			g.setColor(particle.Color);
 			g.fillArc(

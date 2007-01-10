@@ -221,8 +221,8 @@ public class SpriteDrift extends CSprite implements IState , IParticleLauncher {
 	}
 	
 	public void particleEmitted(CParticle particle, int id) {
-		particle.TerminateTime = 16;
-		particle.Timer = 0;
+//		particle.TerminateTime = 16;
+		particle.Timer = 16;
 		
 		particle.Color = 0;
 	}

@@ -50,9 +50,9 @@ class MyParticleLauncher implements IParticleLauncher {
 	}
 	
 	public void particleEmitted(CParticle particle, int id) {
-		particle.TerminateTime = 32;
+//		particle.TerminateTime = 32;
 		particle.Color = 255;
-		particle.Timer = 0;
+		particle.Timer = 32;
 		
 		if(AScreen.isKeyDown(AScreen.KEY_ANY)){
 			particle.X = AScreen.SCREEN_HCENTER * Div;
@@ -113,7 +113,7 @@ class MyParticleLauncher implements IParticleLauncher {
 	}
 
 	public void particleAffected(CParticle particle, int id) {
-		particle.Color -= 255 / particle.TerminateTime;
+		particle.Color -= 255 / 32;
 		if(particle.Color<0)particle.Color = 0;
 		particle.SpeedX += particle.AccX;
 		particle.SpeedY += particle.AccY;
@@ -166,9 +166,9 @@ class ParticleLauncherRain implements IParticleLauncher {
 	}
 	
 	public void particleEmitted(CParticle particle, int id) {
-		particle.TerminateTime = 32;
+//		particle.TerminateTime = 32;
 		particle.Color = 255;
-		particle.Timer = 0;
+		particle.Timer = 32;
 		
 		particle.Category = Math.abs(random.nextInt()%3);
 		
@@ -193,7 +193,7 @@ class ParticleLauncherRain implements IParticleLauncher {
 	}
 
 	public void particleAffected(CParticle particle, int id) {
-		particle.Color -= 255 / particle.TerminateTime;
+		particle.Color -= 255 / 32;
 		if(particle.Color<0)particle.Color = 0;
 		
 		switch(particle.Category){
@@ -258,9 +258,9 @@ class ParticleLauncherSnow implements IParticleLauncher  {
 	}
 	
 	public void particleEmitted(CParticle particle, int id) {
-		particle.TerminateTime = 32;
+//		particle.TerminateTime = 32;
 		particle.Color = 255;
-		particle.Timer = 0;
+		particle.Timer = 32;
 		
 		particle.Category = Math.abs(random.nextInt()%3);
 		
@@ -275,7 +275,7 @@ class ParticleLauncherSnow implements IParticleLauncher  {
 	}
 
 	public void particleAffected(CParticle particle, int id) {
-		particle.Color -= 255 / particle.TerminateTime;
+		particle.Color -= 255 / 32;
 		if(particle.Color<0)particle.Color = 0;
 		
 		particle.Y += particle.SpeedY;
