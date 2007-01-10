@@ -47,28 +47,64 @@ public class Graphics
 	public Graphics(System.Drawing.Graphics sdg)
 	{
 		dg = sdg;
+		dg.set_CompositingQuality( System.Drawing.Drawing2D.CompositingQuality.HighSpeed);
+		dg.set_SmoothingMode(System.Drawing.Drawing2D.SmoothingMode.None);
+		dg.set_InterpolationMode( System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor);
 	}
 
 
-	public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
-	{
-		dg.DrawArc(pen,x,y,width,height,startAngle,arcAngle);
-	}
 	public void drawImage(javax.microedition.lcdui.Image img, int x, int y, int anchor)
 	{
 		dg.DrawImage(img.dimg,
-			new System.Drawing.Rectangle(x, y, img.getWidth(), img.getHeight()),
-			new System.Drawing.Rectangle(0, 0, img.getWidth(), img.getHeight()),
+			new System.Drawing.RectangleF(x , y , img.getWidth() , img.getHeight() ),
+			new System.Drawing.RectangleF(0, 0, img.getWidth() , img.getHeight() ),
 			System.Drawing.GraphicsUnit.Pixel
 			);
 	}
-	public void drawLine(int x1, int y1, int x2, int y2)
+	
+
+	public void drawImage(
+		javax.microedition.lcdui.Image img,
+		float x, float y,
+		System.Drawing.RotateFlipType transform,
+		int anchor,
+		float scale)
 	{
-		dg.DrawLine(pen, x1, y1, x2, y2);
-	}
-	public void drawRect(int x, int y, int width, int height)
-	{
-		dg.DrawRectangle(pen, x, y, width, height);
+		img.dimg.RotateFlip(transform);
+		dg.DrawImage(img.dimg,
+			new System.Drawing.RectangleF(x, y, img.getWidth() * scale, img.getHeight() * scale),
+			new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
+			System.Drawing.GraphicsUnit.Pixel
+			);
+
+		
+
+
+		switch (transform)
+		{
+			case System.Drawing.RotateFlipType.RotateNoneFlipX://4
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipX);
+				break;
+			case System.Drawing.RotateFlipType.RotateNoneFlipY://6
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipY);
+				break;
+			//case TRANS_180:
+			case System.Drawing.RotateFlipType.RotateNoneFlipXY://2
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.RotateNoneFlipXY);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipNone://1
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipNone://3
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipNone);
+				break;
+			case System.Drawing.RotateFlipType.Rotate90FlipX://5
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate90FlipX);
+				break;
+			case System.Drawing.RotateFlipType.Rotate270FlipX://7
+				img.dimg.RotateFlip(System.Drawing.RotateFlipType.Rotate270FlipX);
+				break;
+		}
 	}
 
 	public void drawImage(
@@ -78,11 +114,12 @@ public class Graphics
 		int anchor)
 	{
 		img.dimg.RotateFlip(transform);
-		dg.DrawImage(img.dimg, 
-			new System.Drawing.Rectangle(x, y, img.getWidth(), img.getHeight()),
-			new System.Drawing.Rectangle(0, 0, img.getWidth(), img.getHeight()),
+		dg.DrawImage(img.dimg,
+			new System.Drawing.RectangleF(x , y , img.getWidth() , img.getHeight() ),
+			new System.Drawing.RectangleF(0, 0, img.getWidth() , img.getHeight() ),
 			System.Drawing.GraphicsUnit.Pixel
 			);
+
 		switch (transform)
 		{
 			case System.Drawing.RotateFlipType.RotateNoneFlipX://4
@@ -147,8 +184,8 @@ public class Graphics
 		default:
 		}
 		dg.DrawImage(src.dimg,
-			new System.Drawing.Rectangle(0, 0, width, height),
-			new System.Drawing.Rectangle(x_src, y_src, width, height),
+			new System.Drawing.RectangleF(0, 0, width , height ),
+			new System.Drawing.RectangleF(x_src , y_src , width , height ),
 			System.Drawing.GraphicsUnit.Pixel);
 		switch (rt)
 		{
@@ -183,19 +220,55 @@ public class Graphics
 
 	public void drawString(String str, int x, int y, int anchor)
 	{
-		
-		dg.DrawString(str, font, brush, x, y);
+
+		dg.DrawString(str, font, brush, x , y );
 	}
 
+	public void drawLine(int x1, int y1, int x2, int y2)
+	{
+		dg.DrawLine(pen, x1, y1, x2, y2);
+	}
+
+	public void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle)
+	{
+		dg.DrawArc(pen, x, y, width, height, startAngle, arcAngle);
+	}
+	
+	public void drawRect(int x, int y, int width, int height)
+	{
+		dg.DrawRectangle(pen, x, y, width, height);
+	}
 	public void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle)
 	{
-		dg.FillPie(brush, x, y, width, height, startAngle, arcAngle);
+		dg.FillPie(brush, x , y , width , height , startAngle, arcAngle);
 	}
 	public void fillRect(int x, int y, int width, int height)
 	{
+		dg.FillRectangle(brush, x , y , width , height );
+	}
+	// float
+	public void drawLine(float x1, float y1, float x2, float y2)
+	{
+		dg.DrawLine(pen, x1, y1, x2, y2);
+	}
+
+	public void drawArc(float x, float y, float width, float height, float startAngle, float arcAngle)
+	{
+		dg.DrawArc(pen, x, y, width, height, startAngle, arcAngle);
+	}
+
+	public void drawRect(float x, float y, float width, float height)
+	{
+		dg.DrawRectangle(pen, x, y, width, height);
+	}
+	public void fillArc(float x, float y, float width, float height, float startAngle, float arcAngle)
+	{
+		dg.FillPie(brush, x, y, width, height, startAngle, arcAngle);
+	}
+	public void fillRect(float x, float y, float width, float height)
+	{
 		dg.FillRectangle(brush, x, y, width, height);
 	}
-	
 	
 	public int getClipHeight()
 	{
@@ -216,7 +289,7 @@ public class Graphics
 
 	public void setClip(int x, int y, int width, int height)
 	{
-		dg.SetClip(new System.Drawing.Rectangle(x, y, width, height));
+		dg.SetClip(new System.Drawing.RectangleF(x , y , width , height ));
 	}
 	public void setColor(int RGB)
 	{

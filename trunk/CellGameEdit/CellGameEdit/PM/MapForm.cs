@@ -1116,7 +1116,7 @@ namespace CellGameEdit.PM
         {
             renderDst(g, x, y, screen, grid, tag, anim,timer);
         }
-      
+
         // src
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
@@ -1596,8 +1596,16 @@ namespace CellGameEdit.PM
             }
             pictureBox2.Refresh();
         }
+        //minimap
+        private void toolStripButton23_Click(object sender, EventArgs e)
+        {
+            System.Drawing.Image image = new System.Drawing.Bitmap(getWidth(),getHeight());
+            System.Drawing.Graphics dg = System.Drawing.Graphics.FromImage(image);
+            Render(new Graphics(dg), 0, 0, new System.Drawing.Rectangle(0, 0, getWidth(), getHeight()), false, false, false, 0);
 
-
+            MapMini mini = new MapMini(image);
+            mini.Show();
+        }
 
         //animate
         private void toolStripButton15_Click(object sender, EventArgs e)
@@ -1826,6 +1834,8 @@ namespace CellGameEdit.PM
                 }
             }
         }
+
+  
 
 
 
