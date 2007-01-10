@@ -85,7 +85,7 @@ public class CParticleSystem {
 				}else{
 					Launcher.particleTerminated(Particles[i],i);
 				}
-				Particles[i].Timer++;
+				Particles[i].Timer--;
 	       	}
 		}
 	}
