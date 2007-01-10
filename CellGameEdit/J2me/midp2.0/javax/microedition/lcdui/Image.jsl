@@ -3,6 +3,8 @@ import java.io.IOException;
 
 public class Image
 {
+	
+
 	protected System.Drawing.Image dimg;
 	private boolean mutable = true;
 

@@ -34,6 +34,8 @@ namespace CellGameEdit.PM
         Image srcImage;
         System.Drawing.Rectangle srcRect;
 
+        float masterScale = 1;
+
         static public int[] flipTableJ2me = new int[]{
             Cell.Game.CImages.TRANS_NONE,
             Cell.Game.CImages.TRANS_90,
@@ -54,7 +56,6 @@ namespace CellGameEdit.PM
         public SpriteForm(String name,ImagesForm images)
         {
             InitializeComponent();
-            pictureBox2.Image = new System.Drawing.Bitmap(pictureBox2.Width, pictureBox2.Height);
 
             id = name;
             super = images;
@@ -88,7 +89,6 @@ namespace CellGameEdit.PM
         protected SpriteForm(SerializationInfo info, StreamingContext context)
         {
             InitializeComponent();
-            pictureBox2.Image = new System.Drawing.Bitmap(pictureBox2.Width, pictureBox2.Height);
 
             try
             {
@@ -573,8 +573,14 @@ namespace CellGameEdit.PM
             pictureBox1.Height = 1;
             pictureBox2.Width = 1024;
             pictureBox2.Height = 1024;
-            panel2.HorizontalScroll.Value = panel2.HorizontalScroll.Maximum / 2 - panel2.Width/2;
-            panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum / 2 - panel2.Height/2;
+            pictureBox2.Image = new System.Drawing.Bitmap(256, 256);
+            try
+            {
+                panel2.HorizontalScroll.Value = panel2.HorizontalScroll.Maximum / 2 - panel2.Width / 2;
+                panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum / 2 - panel2.Height / 2;
+
+            }
+            catch (Exception err) { }
             dstRefersh();
             timer1.Start();
 
@@ -602,18 +608,15 @@ namespace CellGameEdit.PM
 
                 if (curFrame != null)
                 {
-                    curFrame.render(
-                      g,
-                      srcTiles,
-                      x,
-                      y);
+                    curFrame.render(g, srcTiles, x, y, 1);
 
                     if (tag)
                     {
                         curFrame.renderCD(
                             g,
                             x,
-                            y);
+                            y,
+                            1);
                     }
                 }
 
@@ -1237,6 +1240,21 @@ namespace CellGameEdit.PM
         {
             framesRefersh();
         }
+        //scale
+        private void toolStripButton27_Click(object sender, EventArgs e)
+        {
+            masterScale += 1;
+            if (masterScale > 8) masterScale = 8;
+            dstRefersh();
+
+        }
+        private void toolStripButton28_Click(object sender, EventArgs e)
+        {
+            masterScale -= 1;
+            if (masterScale < 1) masterScale = 1;
+            dstRefersh();
+        }
+
         //sub
         private void button1_Click(object sender, EventArgs e)
         {
@@ -1435,14 +1453,10 @@ namespace CellGameEdit.PM
 
             Graphics g = new Graphics(e.Graphics);
 
-            //Graphics g = new Graphics(System.Drawing.Graphics.FromImage(pictureBox2.Image));
-
-
-            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
-            System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
-
-            e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
-            e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
+            //System.Drawing.Graphics dg = System.Drawing.Graphics.FromImage(pictureBox2.Image);
+            //dg.SetClip(e.Graphics);
+            //dg.Clear(pictureBox2.BackColor);
+            //Graphics g = new Graphics(dg);
 
 
             if (framesGetCurFrame() != null)
@@ -1451,20 +1465,26 @@ namespace CellGameEdit.PM
                   g,
                   srcTiles,
                   pictureBox2.Width / 2,
-                  pictureBox2.Height / 2);
+                  pictureBox2.Height / 2,
+                  masterScale);
 
                 if (toolStripButton26.Checked)
                 {
                     framesGetCurFrame().renderCD(
                         g,
                         pictureBox2.Width / 2,
-                        pictureBox2.Height / 2);
+                        pictureBox2.Height / 2, 
+                        masterScale);
                 }
             }
 
             //e.Graphics.DrawImage(pictureBox2.Image,0,0);
 
-           
+            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
+            System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
+
+            e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
+            e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
         }
 
         private void toolStripButton12_Click(object sender, EventArgs e)
@@ -1608,12 +1628,14 @@ namespace CellGameEdit.PM
                               g,
                               srcTiles,
                               ViewW * i + ViewW / 2,
-                              ViewH / 2);
+                              ViewH / 2,
+                              1);
 
                         frame.renderCD(
                               g,
                               ViewW * i + ViewW / 2,
-                              ViewH / 2);
+                              ViewH / 2,
+                              1);
 
                         if (trackBar1.Value == i)
                         {
@@ -1908,21 +1930,6 @@ namespace CellGameEdit.PM
 
 
 
-
-
-       
-
-       
-
-
-
-
-
-
-
-
-
-
     }
 
     [Serializable]
@@ -2133,6 +2140,7 @@ namespace CellGameEdit.PM
             SubFlip.Add(flip);
 
             SubSelected.Add(true);
+
         }
         public void delSub(int index)
         {
@@ -2181,6 +2189,8 @@ namespace CellGameEdit.PM
             ((ListViewItem)SubTable[dst]).Selected = true;
             ((ListViewItem)SubTable[dst]).Focused = true;
 
+            
+
         }
         public void flipSub(int index,int flip)
         {
@@ -2213,6 +2223,7 @@ namespace CellGameEdit.PM
             CDType.Add(type);
 
             CDSelected.Add(true);
+
         }
         public void delCD(int index)
         {
@@ -2226,46 +2237,48 @@ namespace CellGameEdit.PM
             CDTable.RemoveAt(index);
 
             CDSelected.RemoveAt(index);
+
+           
         }
 
+        public float Scale = 1;
 
-
-
-        public void render(Graphics g,ArrayList tile,int x,int y)
+        public void render(Graphics g,ArrayList tile,int x,int y,float scale)
         {
             for (int i = SubIndex.Count - 1; i >=0 ;i-- )
             {
                 if (((Image)tile[(int)SubIndex[i]]) != null)
                 {
+                   
                     g.drawImage(
                        ((Image)tile[(int)SubIndex[i]]),
-                       ((int)SubX[i]) + x,
-                       ((int)SubY[i]) + y,
+                       (((int)SubX[i]) * scale + x),
+                       (((int)SubY[i]) * scale + y),
                        flipTable[(int)SubFlip[i]],
-                       0
+                       0,scale
                        );
                 }
                 if ( (Boolean)(SubSelected[i]) )
                 { 
                     g.setColor(0xff, 0xff, 0xff, 0xff);
                     g.drawRect(
-                        ((int)SubX[i]) + x,
-                        ((int)SubY[i]) + y,
-                        ((int)SubW[i]) - 1,
-                        ((int)SubH[i]) - 1
+                        (((int)SubX[i]) * scale + x),
+                        (((int)SubY[i]) * scale + y),
+                        (((int)SubW[i]) * scale - 1),
+                        (((int)SubH[i]) * scale - 1)
                         );
-                    g.setColor(0x80, 0xff, 0xff, 0xff);
+                    g.setColor(0x20, 0xff, 0xff, 0xff);
                     g.fillRect(
-                        ((int)SubX[i]) + x,
-                        ((int)SubY[i]) + y,
-                        ((int)SubW[i]) ,
-                        ((int)SubH[i]) 
+                        (((int)SubX[i]) * scale + x),
+                        (((int)SubY[i]) * scale + y),
+                        (((int)SubW[i]) * scale),
+                        (((int)SubH[i]) * scale) 
                         );
                 }
             }
             
         }
-        public void renderCD(Graphics g,int x,int y)
+        public void renderCD(Graphics g,int x,int y,float scale)
         {
             for (int i = 0; i < CDMask.Count; i++)
             {
@@ -2285,19 +2298,19 @@ namespace CellGameEdit.PM
                         break;
                 }
                 g.drawRect(
-                    ((int)CDX[i]) + x,
-                    ((int)CDY[i]) + y,
-                    ((int)CDW[i]) - 1,
-                    ((int)CDH[i]) - 1);
+                    ((int)CDX[i]) * scale + x,
+                    ((int)CDY[i]) * scale + y,
+                    ((int)CDW[i]) * scale - 1,
+                    ((int)CDH[i]) * scale - 1);
 
                 if ((Boolean)(CDSelected[i]))
                 {
                     g.setColor(0x80, 0xff, 0xff, 0xff);
                     g.fillRect(
-                        ((int)CDX[i]) + x,
-                        ((int)CDY[i]) + y,
-                        ((int)CDW[i]),
-                        ((int)CDH[i])
+                        ((int)CDX[i] * scale) + x,
+                        ((int)CDY[i] * scale) + y,
+                        ((int)CDW[i] * scale),
+                        ((int)CDH[i] * scale)
                         );
                 }
 

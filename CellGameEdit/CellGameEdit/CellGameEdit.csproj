@@ -51,6 +51,12 @@
     <Compile Include="Output.Designer.cs">
       <DependentUpon>Output.cs</DependentUpon>
     </Compile>
+    <Compile Include="PM\MapMini.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\MapMini.Designer.cs">
+      <DependentUpon>MapMini.cs</DependentUpon>
+    </Compile>
     <Compile Include="PM\SpriteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +108,10 @@
     <EmbeddedResource Include="Output.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Output.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\MapMini.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MapMini.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PM\SpriteForm.resx">
       <SubType>Designer</SubType>
