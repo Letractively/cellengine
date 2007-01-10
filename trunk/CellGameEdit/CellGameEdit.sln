@@ -8,6 +8,10 @@ EndProject
 Project("{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}") = "CellLib", "CellLib\CellLib.vjsproj", "{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}"
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{58727948-DF93-4FB0-B94E-42A86B8298A6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{FD2F9C5E-1581-47B2-B3CD-75683F91394C} = {FD2F9C5E-1581-47B2-B3CD-75683F91394C}
+		{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01} = {1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

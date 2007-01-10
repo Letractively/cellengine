@@ -89,6 +89,8 @@ namespace CellGameEdit.PM
             treeView1.Nodes.Add(nodeLevels);
 
             treeView1.ExpandAll();
+
+            
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -331,6 +333,7 @@ namespace CellGameEdit.PM
 
         private void ProjectForm_Shown(object sender, EventArgs e)
         {
+            RefreshNodeName();
         }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
