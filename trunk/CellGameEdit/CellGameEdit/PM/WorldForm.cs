@@ -1006,6 +1006,60 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
 
         }
+        //minimap
+        private void toolStripButton13_Click(object sender, EventArgs e)
+        {
+            System.Drawing.Image image = new System.Drawing.Bitmap(pictureBox1.Width, pictureBox1.Height);
+            System.Drawing.Graphics dg = System.Drawing.Graphics.FromImage(image);
+            javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(dg);
+
+            // draw units
+            foreach (ListViewItem item in listView1.Items)
+            {
+                try
+                {
+                    Unit unit = ((Unit)UnitList[item]);
+
+                    if (unit.type == "Map")
+                    {
+                        unit.render(
+                           g,
+                           new System.Drawing.Rectangle(
+                                -pictureBox1.Location.X,
+                                -pictureBox1.Location.Y,
+                                panel1.Width,
+                                panel1.Height
+                           ),
+                           listView1.SelectedItems.Contains(item),
+                           toolStripButton1.Checked,
+                           toolStripButton2.Checked
+                        );
+                    }
+
+                    if (unit.type == "Sprite")
+                    {
+                        unit.render(
+                               g,
+                                new System.Drawing.Rectangle(
+                                    -pictureBox1.Location.X,
+                                    -pictureBox1.Location.Y,
+                                    splitContainer1.Panel2.Width,
+                                    splitContainer1.Panel2.Height
+                               ),
+                               listView1.SelectedItems.Contains(item),
+                               false,false
+                            );
+                    }
+
+                }
+                catch (Exception err)
+                {
+                }
+            }
+                
+            MapMini mini = new MapMini(image);
+            mini.Show();
+        }
 
        
     }
