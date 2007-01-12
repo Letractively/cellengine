@@ -32,6 +32,7 @@ public interface IImages {
 
 	//--------------------------------------------------------------------------------------------------------
 
+	
 	/**
 	 * 重新创建图片组
 	 * @param srcImage 原图片
@@ -39,6 +40,7 @@ public interface IImages {
 	 * @return 
 	 */
 	public void buildImages(Image srcImage,int count);
+	
 	
 	
 	/**
@@ -53,6 +55,8 @@ public interface IImages {
 	 * @return 
 	 */
 	public Image getImage(int index);
+	
+	public int getRGBFormPixcel(int index, int offset);
 	
 	/**
 	 * 得到子图的宽度

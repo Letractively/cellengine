@@ -229,4 +229,18 @@ public class CCollides extends CGroup{
 		}
 //#endif
 	}
+	
+	/**
+	 * draw a collides block
+	 * @param g
+	 * @param index frame id
+	 * @param x
+	 * @param y
+	 * @param color 
+	 */
+	public void renderSub(Graphics g,int index,int sub,int x,int y,int color){
+//#ifdef _DEBUG
+		cds[Frames[index][sub]].render(g, x, y, color);
+//#endif
+	}
 }

@@ -4,6 +4,7 @@ import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
 import com.morefuntek.cell.CObject;
+import com.morefuntek.cell.IImages;
 
 public class CWorldMini extends CObject {
 
@@ -38,15 +39,11 @@ public class CWorldMini extends CObject {
 			int colorKeyMapPos,
 			int colorKeySprPos){
 		
-		int[] c = new int[1];
 		for(int i=0;i<world.getSpriteCount();i++){
        		try {
-				Image k = world.getSprite(i).getAnimates().getFrameImage(0, 0);
-				k.getRGB(c, 0, 1, 
-						colorKeySprPos%k.getWidth(), 
-						colorKeySprPos/k.getWidth(), 
-						1, 1);
-				world.getSprite(i).BackColor = c[0];
+				world.getSprite(i).BackColor = world.getSprite(i).getAnimates().images.getRGBFormPixcel(
+						world.getSprite(i).getAnimates().STileID[world.getSprite(i).getAnimates().Frames[world.getSprite(i).CurAnimate][world.getSprite(i).CurFrame]], 
+						colorKeySprPos);
 			} catch (RuntimeException e){
 				world.getSprite(i).BackColor = 0xffffffff;
 			}
@@ -54,12 +51,9 @@ public class CWorldMini extends CObject {
 		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
     	for(int i=0;i<mapColor.length;i++){
     		try {
-				Image k = world.getMap().getAnimates().getFrameImage(i, 0);
-				k.getRGB(c, 0, 1, 
-						colorKeyMapPos%k.getWidth(), 
-						colorKeyMapPos/k.getWidth(), 
-						1, 1);
-				mapColor[i] = c[0];
+    			mapColor[i] = world.getMap().getAnimates().images.getRGBFormPixcel(
+    					world.getMap().getAnimates().STileID[world.getMap().getAnimates().Frames[i][0]], 
+						colorKeyMapPos);
 			} catch (RuntimeException e){
 				mapColor[i] = 0xff00ff00;
 			}
@@ -113,6 +107,8 @@ public class CWorldMini extends CObject {
 	    	if(X+WW>World.getMap().getWidth())X=World.getMap().getWidth()-WW;
 	    	if(Y<0)Y=0;
 	    	if(Y+WH>World.getMap().getHeight())Y=World.getMap().getHeight()-WH;
+	    	
+	    	
 	    	
 			if(ShowMap){
 				AScreen.drawRegion(g, Buffer, 

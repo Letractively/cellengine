@@ -2,6 +2,9 @@ package com.morefuntek.cell.Game;
 
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
+
+import com.morefuntek.cell.IImages;
 
 
 /**
@@ -19,7 +22,7 @@ public class CMap extends CUnit {
 	
 	protected CAnimates		Tiles;
 	protected CCollides 	Collides;
-
+	
 	protected short[][] MatrixTile; //图块TILE号表
 	protected short[][] MatrixFlag; //图块碰撞块索引表
 
@@ -81,7 +84,46 @@ public class CMap extends CUnit {
 		CellW = map.CellW;
 		CellH = map.CellH;
 		
+		Width = MatrixTile[0].length * CellW;
+		Height = MatrixTile.length * CellH;
 	}
+
+	
+
+//	public CMap createMiniMap(int cellW,int cellH,int colorKeyMapPos){
+//		CMap ret = new CMap(
+//				this.Tiles,
+//				this.Collides,
+//				cellW,
+//				cellH,
+//				this.MatrixTile,
+//				this.MatrixFlag,
+//				this.IsAnimate,
+//				this.IsCyc
+//		);
+//		
+//		int[] mapColor = new int[Tiles.getCount()];
+//    	for(int i=0;i<mapColor.length;i++){
+//    		try {
+//    			mapColor[i] = Tiles.images.getRGBFormPixcel(
+//    					Tiles.STileID[Tiles.Frames[i][0]], 
+//    					colorKeyMapPos
+//    					);
+//			} catch (RuntimeException e){
+//				mapColor[i] = 0xff00ff00;
+//			}
+//       	}
+//    	ret.TilesColor = mapColor;
+//		
+//		return ret;
+//	}
+	
+	
+//	----------------------------------------------------------------------------------------------------------------
+	
+//	final public boolean isMiniMap(){
+//		return TilesColor!=null;
+//	}
 	
 	/**
 	 * 得到整个地图的宽
@@ -191,7 +233,6 @@ public class CMap extends CUnit {
 		}else if(!IsAnimate){
 			Tiles.renderSingleSub(g, MatrixTile[cellY][cellX], 0, x, y);
 		}
-			
 //#ifdef _DEBUG
 		if(IsDebug && MatrixFlag[cellY][cellX]>0){
 			Collides.render(g, MatrixFlag[cellY][cellX], x, y, 0xff00ff00);
@@ -209,31 +250,19 @@ public class CMap extends CUnit {
 	 * @param cellY 
 	 */
 	protected void renderAnimateCell(Graphics g, int index, int x, int y, int cellX, int cellY){
-		if(MatrixTile[cellY][cellX]<0){
-			Tiles.renderSingleSub(g, 
-					-MatrixTile[cellY][cellX],
-					index%Tiles.Frames[-MatrixTile[cellY][cellX]].length,
-					x, y);
-		}
 		
-//#ifdef _DEBUG
-		if(IsDebug && MatrixFlag[cellY][cellX]>0){
-			Collides.render(g, MatrixFlag[cellY][cellX], x, y, 0xff00ff00);
-		}
-//#endif
+			if(MatrixTile[cellY][cellX]<0){
+				Tiles.renderSingleSub(g, 
+						-MatrixTile[cellY][cellX],
+						index%Tiles.Frames[-MatrixTile[cellY][cellX]].length,
+						x, y);
+			}
+//	#ifdef _DEBUG
+			if(IsDebug && MatrixFlag[cellY][cellX]>0){
+				Collides.getCD(MatrixFlag[cellY][cellX]).render(g, x, y, 0xff00ff00);
+			}
+//	#endif
+		
 	}
 
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }
