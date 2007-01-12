@@ -103,8 +103,6 @@ namespace CellGameEdit.PM
                 info.AddValue("Units", Units );
                 info.AddValue("UnitList", UnitList );
 
-                
-
                 info.AddValue("Width",pictureBox1.Width);
                 info.AddValue("Height", pictureBox1.Height);
 
@@ -416,8 +414,6 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
-
-
 
 
             toolStripStatusLabel1.Text = "";
@@ -1014,46 +1010,51 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(dg);
 
             // draw units
-            foreach (ListViewItem item in listView1.Items)
+            // draw units
+            if (toolStripButton7.Checked || toolStripButton8.Checked)
             {
-                try
+                foreach (ListViewItem item in listView1.Items)
                 {
-                    Unit unit = ((Unit)UnitList[item]);
-
-                    if (unit.type == "Map")
+                    try
                     {
+                        Unit unit = ((Unit)UnitList[item]);
+
                         unit.render(
                            g,
-                           new System.Drawing.Rectangle(
-                                -pictureBox1.Location.X,
-                                -pictureBox1.Location.Y,
-                                panel1.Width,
-                                panel1.Height
-                           ),
+                           new System.Drawing.Rectangle( 0, 0, image.Width, image.Height),
                            listView1.SelectedItems.Contains(item),
-                           toolStripButton1.Checked,
-                           toolStripButton2.Checked
-                        );
-                    }
+                           false, false
+                       );
 
-                    if (unit.type == "Sprite")
-                    {
-                        unit.render(
-                               g,
-                                new System.Drawing.Rectangle(
-                                    -pictureBox1.Location.X,
-                                    -pictureBox1.Location.Y,
-                                    splitContainer1.Panel2.Width,
-                                    splitContainer1.Panel2.Height
-                               ),
-                               listView1.SelectedItems.Contains(item),
-                               false,false
-                            );
                     }
-
+                    catch (Exception err){}
                 }
-                catch (Exception err)
+            }
+
+            if (toolStripButton12.Checked)
+            {
+                g.setColor(0x80, 0xff, 0xff, 0xff);
+
+                int sx = 0;
+                int sy = 0;
+                int sw = image.Width / CellW + 1;
+                int sh = image.Height / CellH + 1;
+
+                for (int bx = sx; bx < sx + sw; bx++)
                 {
+                    g.drawLine(
+                       bx * CellW,
+                       sy * CellH,
+                       bx * CellW,
+                       sy * CellH + sh * CellH);
+                }
+                for (int by = sy; by < sy + sh; by++)
+                {
+                    g.drawLine(
+                        sx * CellW,
+                        by * CellH,
+                        sx * CellW + sw * CellW,
+                        by * CellH);
                 }
             }
                 
@@ -1265,7 +1266,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 id = (String)info.GetValue("id", typeof(String));
                 x = (int)info.GetValue("x", typeof(int));
                 y = (int)info.GetValue("y", typeof(int));
-                
+
                 if ((MapForm)info.GetValue("map", typeof(MapForm)) != null)
                 {
                     map = (MapForm)info.GetValue("map", typeof(MapForm));
@@ -1292,10 +1293,18 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 info.AddValue("id", id);
                 info.AddValue("x", x);
                 info.AddValue("y", y);
-                info.AddValue("map", map );
-                info.AddValue("spr", spr );
+                try
+                {
+                    info.AddValue("map", map);
+                }
+                catch (Exception err) { }
+                try
+                {
+                    info.AddValue("spr", spr);
+                }
+                catch (Exception err) { }
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 Console.WriteLine("Unit:" + err.Message);
             }

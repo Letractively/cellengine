@@ -42,7 +42,9 @@ namespace CellGameEdit
             if (prjForm == null || prjForm.Visible == false)
             {
                 FolderBrowserDialog dir = new FolderBrowserDialog();
-       
+                dir.ShowNewFolderButton = true;
+                dir.Description = "新建工程文件夹";
+
                 if (dir.ShowDialog() == DialogResult.OK)
                 {
                     if (System.IO.File.Exists(dir.SelectedPath + "\\Project.xml"))
@@ -75,6 +77,9 @@ namespace CellGameEdit
             if (prjForm == null || prjForm.Visible == false)
             {
                 FolderBrowserDialog dir = new FolderBrowserDialog();
+                dir.ShowNewFolderButton = false;
+                dir.Description = "打开包含(project.xml)的工程文件夹";
+
                 if (dir.ShowDialog() == DialogResult.OK)
                 {
                     try
@@ -162,30 +167,28 @@ namespace CellGameEdit
         {
             toolStripComboBox1.Items.Clear();
 
-            if (prjForm != null)
+            try
             {
-                try
+
+                String dir = Application.StartupPath + "\\script\\";
+
+                if (System.IO.Directory.Exists(dir))
                 {
+                    String[] scriptFiles = System.IO.Directory.GetFiles(dir);
 
-                    String dir = Application.StartupPath + "\\script\\";
-                    //String dir = ProjectForm.workSpace + "\\script\\";
-
-                    if (System.IO.Directory.Exists(dir))
+                    for (int i = 0; i < scriptFiles.Length; i++)
                     {
-                        String[] scriptFiles = System.IO.Directory.GetFiles(dir);
-
-                        for (int i = 0; i < scriptFiles.Length; i++)
-                        {
-                            scriptFiles[i] = System.IO.Path.GetFileName(scriptFiles[i]);
-                        }
-
-                        toolStripComboBox1.Items.AddRange(scriptFiles);
+                        scriptFiles[i] = System.IO.Path.GetFileName(scriptFiles[i]);
                     }
-                }
-                catch (Exception err)
-                {
+
+                    toolStripComboBox1.Items.AddRange(scriptFiles);
                 }
             }
+            catch (Exception err)
+            {
+            }
+           
+            
         }
 
         private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -212,6 +215,62 @@ namespace CellGameEdit
         private void 文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
 
+        }
+
+        //input script
+        private void 脚本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.Title = "选择脚本文件";
+                openFileDialog1.Filter = "Txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog1.RestoreDirectory = true;
+                openFileDialog1.Multiselect = false;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    String name = System.IO.Path.GetFileName(openFileDialog1.FileName);
+                    String src = System.IO.Path.GetDirectoryName(openFileDialog1.FileName)+"\\";
+                    String dst = Application.StartupPath + "\\script\\";
+                    
+                    System.IO.File.Copy(src+name,dst+name,true);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("脚本导入错误："+err.Message);
+            }
+        }
+        // del script
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String name = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
+
+                if (File.Exists(name))
+                {
+                    if (MessageBox.Show(
+                        "确认删除\""+toolStripComboBox1.Text+"\"？", 
+                        "Wanning", 
+                        MessageBoxButtons.OKCancel, 
+                        MessageBoxIcon.Warning, 
+                        MessageBoxDefaultButton.Button2
+                        ) == DialogResult.OK)
+                    {
+                        System.IO.File.Delete(name);
+                        toolStripComboBox1.Text = "";
+                        toolStripComboBox1.Items.Clear();
+                    }
+                }
+
+               
+            }
+            catch (Exception err) {
+                MessageBox.Show("脚本删除错误：" + err.Message);
+            }
         }
 
      

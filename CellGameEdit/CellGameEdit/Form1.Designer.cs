@@ -41,13 +41,16 @@
             this.退出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.javaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.二进制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.自定义脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示输出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.导入脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,8 +58,9 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.文件ToolStripMenuItem,
-            this.toolStripMenuItem4,
+            this.导入脚本ToolStripMenuItem,
             this.toolStripComboBox1,
+            this.toolStripMenuItem4,
             this.帮助ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -133,9 +137,9 @@
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.自定义脚本ToolStripMenuItem,
             this.javaToolStripMenuItem,
-            this.二进制ToolStripMenuItem,
-            this.自定义脚本ToolStripMenuItem});
+            this.toolStripMenuItem5});
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
             this.toolStripMenuItem4.Size = new System.Drawing.Size(41, 20);
             this.toolStripMenuItem4.Text = "导出";
@@ -147,18 +151,11 @@
             this.javaToolStripMenuItem.Text = "Java代码";
             this.javaToolStripMenuItem.Click += new System.EventHandler(this.javaToolStripMenuItem_Click);
             // 
-            // 二进制ToolStripMenuItem
-            // 
-            this.二进制ToolStripMenuItem.Enabled = false;
-            this.二进制ToolStripMenuItem.Name = "二进制ToolStripMenuItem";
-            this.二进制ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.二进制ToolStripMenuItem.Text = "二进制";
-            // 
             // 自定义脚本ToolStripMenuItem
             // 
             this.自定义脚本ToolStripMenuItem.Name = "自定义脚本ToolStripMenuItem";
             this.自定义脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.自定义脚本ToolStripMenuItem.Text = "自定义脚本";
+            this.自定义脚本ToolStripMenuItem.Text = "当前脚本";
             this.自定义脚本ToolStripMenuItem.Click += new System.EventHandler(this.自定义脚本ToolStripMenuItem_Click);
             // 
             // toolStripComboBox1
@@ -193,6 +190,34 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // 导入脚本ToolStripMenuItem
+            // 
+            this.导入脚本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.脚本ToolStripMenuItem,
+            this.删除ToolStripMenuItem});
+            this.导入脚本ToolStripMenuItem.Name = "导入脚本ToolStripMenuItem";
+            this.导入脚本ToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.导入脚本ToolStripMenuItem.Text = "脚本";
+            // 
+            // 脚本ToolStripMenuItem
+            // 
+            this.脚本ToolStripMenuItem.Name = "脚本ToolStripMenuItem";
+            this.脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.脚本ToolStripMenuItem.Text = "添加";
+            this.脚本ToolStripMenuItem.Click += new System.EventHandler(this.脚本ToolStripMenuItem_Click);
+            // 
+            // 删除ToolStripMenuItem
+            // 
+            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.删除ToolStripMenuItem.Text = "删除";
+            this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
+            // 
+            // toolStripMenuItem5
+            // 
+            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(149, 6);
             // 
             // Form1
             // 
@@ -230,11 +255,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
         private System.Windows.Forms.ToolStripMenuItem javaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 二进制ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 自定义脚本ToolStripMenuItem;
         private System.Windows.Forms.ToolStripComboBox toolStripComboBox1;
         private System.Windows.Forms.ToolStripMenuItem 显示输出ToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ToolStripMenuItem 导入脚本ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 脚本ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripMenuItem5;
     }
 }
 
