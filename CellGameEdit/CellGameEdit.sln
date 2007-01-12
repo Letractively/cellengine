@@ -7,11 +7,7 @@ Project("{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}") = "J2me", "J2me\J2me.vjsproj",
 EndProject
 Project("{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}") = "CellLib", "CellLib\CellLib.vjsproj", "{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup", "Setup\Setup.vdproj", "{58727948-DF93-4FB0-B94E-42A86B8298A6}"
-	ProjectSection(ProjectDependencies) = postProject
-		{FD2F9C5E-1581-47B2-B3CD-75683F91394C} = {FD2F9C5E-1581-47B2-B3CD-75683F91394C}
-		{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01} = {1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}
-	EndProjectSection
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CellGameEditor Setup", "CellGameEditor Setup\CellGameEditor Setup.vdproj", "{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,12 +49,12 @@ Global
 		{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}.Release|Mixed Platforms.Build.0 = Release|x86
 		{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}.Release|x86.ActiveCfg = Release|x86
 		{1A3D7BAA-17EB-4EAC-AA5C-B97B984C4F01}.Release|x86.Build.0 = Release|x86
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Debug|Any CPU.ActiveCfg = Debug
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Debug|x86.ActiveCfg = Debug
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Release|Any CPU.ActiveCfg = Release
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Release|Mixed Platforms.ActiveCfg = Release
-		{58727948-DF93-4FB0-B94E-42A86B8298A6}.Release|x86.ActiveCfg = Release
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Debug|Any CPU.ActiveCfg = Debug
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Debug|x86.ActiveCfg = Debug
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|Any CPU.ActiveCfg = Release
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|Mixed Platforms.ActiveCfg = Release
+		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,6 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>CellGameEdit</RootNamespace>
     <AssemblyName>CellGameEdit</AssemblyName>
+    <ApplicationIcon>Resources\Icon_1.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -370,6 +371,10 @@
     <None Include="Resources\Image65.bmp" />
     <None Include="Resources\Image66.bmp" />
     <None Include="Resources\Image67.bmp" />
+    <None Include="Resources\Icon1.ico" />
+    <Content Include="Resources\Icon_1.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
