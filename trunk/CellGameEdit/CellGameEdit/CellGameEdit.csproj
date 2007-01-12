@@ -368,10 +368,14 @@
     <None Include="Resources\Image63.bmp" />
     <None Include="Resources\Image64.bmp" />
     <None Include="Resources\Image65.bmp" />
+    <None Include="Resources\Image66.bmp" />
+    <None Include="Resources\Image67.bmp" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="script\ResesScriptSK.txt" />
+    <Content Include="script\ResesScriptSK.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
