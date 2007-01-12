@@ -17,13 +17,15 @@ import com.morefuntek.cell.CObject;
  */
 public class CWorld extends CObject {
 
-	public Vector Sprs = new Vector(0);
-	public CMap Map;
-	public CCamera Camera;
+	public Vector 		Sprs = new Vector(0);
+	public CMap 		Map;
+	public CCamera 		Camera;
+	public CWayPoint[] 	WayPoints ;
+	public boolean 		isRPGView = false;
 	
-	public CWayPoint[] WayPoints ;
 	
-	public boolean isRPGView = false;
+//	public Vector Maps = new Vector(0);
+//	public Vector Cams = new Vector(0);
 	
 	/**
 	 * 构造函数 
@@ -38,27 +40,16 @@ public class CWorld extends CObject {
 	 * @param sprs 精灵
 	 */
 	public CWorld(CMap map,CCamera camera,CSprite[] sprs) {
-
-		setMap(map);
-		setCamera(camera);
-
+		Map = map;
+		Camera = camera;
 		for(int i=0;i<sprs.length;i++){
 			addSprite(sprs[i]);
 		}
 	}
-//	------------------------------------------------------------------------------------------------------
-
-
-	// add unit
 	
-	public void addMap(CMap map){
-		this.Map = map;
-		map.world = this;
-	}
-	public void addCamera(CCamera camera){
-		this.Camera = camera;
-		camera.world = this;
-	}
+//	------------------------------------------------------------------------------------------------------
+//	sprite
+	
 	public void addSprite(CSprite spr){
 		if(isRPGView){
 			int index = Sprs.size() ;
@@ -82,30 +73,6 @@ public class CWorld extends CObject {
 	public boolean removeSprite(CSprite spr){
 		return this.Sprs.removeElement(spr);
 	}
-	
-	// set unit
-	public void setMap(CMap map){
-		this.Map = map;
-		map.world = this;
-	}
-	public void setCamera(CCamera camera){
-		this.Camera = camera;
-		camera.world = this;
-	}
-	public void setSprites(Vector sprs){
-		this.Sprs = sprs;
-		for(int i=0;i<Sprs.size();i++){
-			((CSprite)Sprs.elementAt(i)).world = this;
-		}
-	}
-	
-	// get unit
-	public CMap getMap(){
-		return this.Map;
-	}
-	public CCamera getCamera(){
-		return this.Camera;
-	}
 	public CSprite getSprite(int index){
 		return (CSprite)Sprs.elementAt(index);
 	}
@@ -116,7 +83,33 @@ public class CWorld extends CObject {
 		return Sprs.indexOf(spr);
 	}
 	
+//	------------------------------------------------------------------------------------------------------
+//	map
 
+	public void addMap(CMap map){
+		setMap(map);
+	}
+	public void setMap(CMap map){
+		Map = map;
+		Map.world = this;
+	}
+	public CMap getMap(){
+		return Map;
+	}
+	
+//	------------------------------------------------------------------------------------------------------
+//	camera
+	
+	public void addCamera(CCamera camera){
+		setCamera(camera);
+	}
+	public void setCamera(CCamera camera){
+		Camera = camera;
+		Camera.world = this;
+	}
+	public CCamera getCamera(){
+		return Camera;
+	}
 	
 //	------------------------------------------------------------------------------------------------------
 
@@ -183,25 +176,23 @@ public class CWorld extends CObject {
 //#endif
 
 			for(int i=0;i<Sprs.size();i++){
-					if(CCD.cdRect(
-							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
-							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
-							((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
-							((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_bottom, 
-							Camera.X, 
-							Camera.Y, 
-							Camera.X + Camera.getWidth(), 
-							Camera.Y + Camera.getHeight()
-							)){
-						((CSprite)Sprs.elementAt(i)).OnScreen = true;
-					} else {
-						((CSprite)Sprs.elementAt(i)).OnScreen = false;
-					}
+				if(CCD.cdRect(
+					((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
+					((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
+					((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
+					((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_bottom, 
+					Camera.X, 
+					Camera.Y, 
+					Camera.X + Camera.getWidth(), 
+					Camera.Y + Camera.getHeight()
+					)){
+					((CSprite)Sprs.elementAt(i)).OnScreen = true;
 					((CSprite)Sprs.elementAt(i)).render(g,
 							((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
 							((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
-					
-				
+				}else{
+					((CSprite)Sprs.elementAt(i)).OnScreen = false;
+				}
 			}
 			
 			g.setClip(cx,cy,cw,ch);

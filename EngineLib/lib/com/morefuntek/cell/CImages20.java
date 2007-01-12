@@ -9,7 +9,6 @@ import javax.microedition.lcdui.Image;
  */
 public class CImages20 extends CObject implements IImages {
 	
-
 	/** TILE块的个数 */
 	protected int Count = 0;
 	/**当前加入了多少张图片*/
@@ -60,7 +59,22 @@ public class CImages20 extends CObject implements IImages {
 	public Image getImage(int index){
 		return Tiles[index];
 	}
-
+	
+	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#getKeyColor(int, int)
+	 */
+	public int getRGBFormPixcel(int index, int offset){
+		int[] c = new int[1];
+		Image k = getImage(index);
+		k.getRGB(c, 
+				0, 1, 
+				offset%k.getWidth(), 
+				offset/k.getWidth(), 
+				1, 1);
+		return c[0];
+	}
+	
 	/**
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getWidth(int)

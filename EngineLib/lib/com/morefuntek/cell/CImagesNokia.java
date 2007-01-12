@@ -72,6 +72,21 @@ public class CImagesNokia extends CObject implements IImages {
 	}
 	
 	/**
+	 * override 方法
+	 * @see com.morefuntek.cell.IImages#getRGBFormPixcel(int, int)
+	 */
+	public int getRGBFormPixcel(int index, int offset){
+		int[] c = new int[1];
+//		Image k = getImage(index);
+//		k.getRGB(c, 
+//				0, 1, 
+//				offset%k.getWidth(), 
+//				offset/k.getWidth(), 
+//				1, 1);
+		return c[0];
+	}
+	
+	/**
 	 * 得到子图的宽度
 	 * 
 	 * @param Index
