@@ -60,6 +60,13 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Icon Icon_1 {
+            get {
+                object obj = ResourceManager.GetObject("Icon_1", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Image1 {
             get {
                 object obj = ResourceManager.GetObject("Image1", resourceCulture);

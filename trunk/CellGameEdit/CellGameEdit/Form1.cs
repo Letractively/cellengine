@@ -23,14 +23,38 @@ namespace CellGameEdit
         public Form1()
         {
             InitializeComponent();
+        }
 
-            
+        public Form1(string file)
+        {
+            string name = System.IO.Path.GetFileName(file);
+            string dir = System.IO.Path.GetDirectoryName(file);
+
+            ProjectForm.workSpace = dir;
+
+            SoapFormatter formatter = new SoapFormatter();
+            Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
+            prjForm = (ProjectForm)formatter.Deserialize(stream);
+            stream.Close();
+
+            InitializeComponent();
+
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
             timer1.Start();
         }
+
+        private void Form1_Shown(object sender, EventArgs e)
+        {
+            if (prjForm != null)
+            {
+                prjForm.MdiParent = this;
+                prjForm.Show();
+            }
+        }
+
 
         private void 文件ToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
@@ -78,17 +102,16 @@ namespace CellGameEdit
             {
                 FolderBrowserDialog dir = new FolderBrowserDialog();
                 dir.ShowNewFolderButton = false;
-                dir.Description = "打开包含(project.xml)的工程文件夹";
+                dir.Description = "打开包含(Project.cpj)的工程文件夹";
 
                 if (dir.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-
                         ProjectForm.workSpace = dir.SelectedPath;
 
                         SoapFormatter formatter = new SoapFormatter();
-                        Stream stream = new FileStream(dir.SelectedPath + "\\Project.xml", FileMode.Open, FileAccess.Read, FileShare.Read);
+                        Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
                         prjForm = (ProjectForm)formatter.Deserialize(stream);
                         stream.Close();
                         prjForm.MdiParent = this;
@@ -96,7 +119,7 @@ namespace CellGameEdit
                     }
                     catch (Exception err)
                     {
-                        MessageBox.Show("找不到工程文件 Project.xml " + err.Message);
+                        MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
                     }
                    
                 }
@@ -115,7 +138,7 @@ namespace CellGameEdit
             {
                 try {
                     SoapFormatter formatter = new SoapFormatter();
-                    Stream stream = new FileStream(ProjectForm.workSpace + "\\Project.xml", FileMode.Create, FileAccess.Write, FileShare.None);
+                    Stream stream = new FileStream(ProjectForm.workSpace + "\\Project.cpj", FileMode.Create, FileAccess.Write, FileShare.None);
                     formatter.Serialize(stream, prjForm);
                     stream.Close(); 
 
@@ -272,6 +295,8 @@ namespace CellGameEdit
                 MessageBox.Show("脚本删除错误：" + err.Message);
             }
         }
+
+      
 
      
 
