@@ -53,17 +53,18 @@
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripLabel1 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBox2 = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.menuPath = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.双向连接ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
@@ -219,15 +220,15 @@
             this.toolStripButton7,
             this.toolStripButton8,
             this.toolStripButton9,
-            this.toolStripSeparator2,
-            this.toolStripButton5,
             this.toolStripSeparator3,
-            this.toolStripButton11,
             this.toolStripButton12,
+            this.toolStripButton11,
             this.toolStripLabel1,
             this.toolStripTextBox1,
             this.toolStripLabel2,
             this.toolStripTextBox2,
+            this.toolStripSeparator2,
+            this.toolStripButton5,
             this.toolStripButton13});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
@@ -263,7 +264,7 @@
             // 
             this.toolStripButton10.CheckOnClick = true;
             this.toolStripButton10.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton10.Image = global::CellGameEdit.Resource1.Image10;
+            this.toolStripButton10.Image = global::CellGameEdit.Resource1.Image68;
             this.toolStripButton10.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton10.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton10.Name = "toolStripButton10";
@@ -351,6 +352,18 @@
             this.toolStripButton11.Text = "按格对齐";
             this.toolStripButton11.Click += new System.EventHandler(this.toolStripButton11_Click);
             // 
+            // toolStripButton12
+            // 
+            this.toolStripButton12.CheckOnClick = true;
+            this.toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton12.Image = global::CellGameEdit.Resource1.Image25;
+            this.toolStripButton12.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton12.Name = "toolStripButton12";
+            this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton12.Text = "显示格子";
+            this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
+            // 
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
@@ -381,34 +394,40 @@
             this.toolStripTextBox2.Leave += new System.EventHandler(this.toolStripTextBox2_Leave);
             this.toolStripTextBox2.TextChanged += new System.EventHandler(this.toolStripTextBox2_Leave);
             // 
-            // toolStripButton12
+            // toolStripButton13
             // 
-            this.toolStripButton12.CheckOnClick = true;
-            this.toolStripButton12.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton12.Image = global::CellGameEdit.Resource1.Image25;
-            this.toolStripButton12.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.toolStripButton12.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton12.Name = "toolStripButton12";
-            this.toolStripButton12.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton12.Text = "显示格子";
-            this.toolStripButton12.Click += new System.EventHandler(this.toolStripButton12_Click);
+            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton13.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton13.Image")));
+            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton13.Name = "toolStripButton13";
+            this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton13.Text = "显示小地图";
+            this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
             // 
             // menuPath
             // 
             this.menuPath.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem3,
+            this.双向连接ToolStripMenuItem,
             this.toolStripMenuItem4,
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuPath.Name = "menuPath";
-            this.menuPath.Size = new System.Drawing.Size(123, 92);
+            this.menuPath.Size = new System.Drawing.Size(123, 114);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
             this.toolStripMenuItem3.Size = new System.Drawing.Size(122, 22);
-            this.toolStripMenuItem3.Text = "连接";
+            this.toolStripMenuItem3.Text = "单向连接";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
+            // 
+            // 双向连接ToolStripMenuItem
+            // 
+            this.双向连接ToolStripMenuItem.Name = "双向连接ToolStripMenuItem";
+            this.双向连接ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.双向连接ToolStripMenuItem.Text = "双向连接";
+            this.双向连接ToolStripMenuItem.Click += new System.EventHandler(this.双向连接ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
@@ -430,16 +449,6 @@
             this.toolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItem2.Text = "删除路点";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
-            // 
-            // toolStripButton13
-            // 
-            this.toolStripButton13.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton13.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton13.Image")));
-            this.toolStripButton13.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton13.Name = "toolStripButton13";
-            this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton13.Text = "显示小地图";
-            this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
             // 
             // WorldForm
             // 
@@ -508,5 +517,6 @@
         private System.Windows.Forms.ToolStripTextBox toolStripTextBox2;
         private System.Windows.Forms.ToolStripButton toolStripButton12;
         private System.Windows.Forms.ToolStripButton toolStripButton13;
+        private System.Windows.Forms.ToolStripMenuItem 双向连接ToolStripMenuItem;
     }
 }

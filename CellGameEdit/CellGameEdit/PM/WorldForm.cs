@@ -761,15 +761,17 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 {
                     menuPath.Items[0].Enabled = false;
                     menuPath.Items[1].Enabled = false;
-                    menuPath.Items[2].Enabled = true;
-                    menuPath.Items[3].Enabled = false;
+                    menuPath.Items[2].Enabled = false;
+                    menuPath.Items[3].Enabled = true;
+                    menuPath.Items[4].Enabled = false;
                 }
                 else
                 {
                     menuPath.Items[0].Enabled = true;
                     menuPath.Items[1].Enabled = true;
-                    menuPath.Items[2].Enabled = false;
-                    menuPath.Items[3].Enabled = true;
+                    menuPath.Items[2].Enabled = true;
+                    menuPath.Items[3].Enabled = false;
+                    menuPath.Items[4].Enabled = true;
                 }
 
                 menuPath.Opacity = 0.5;
@@ -899,6 +901,15 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             if (popedWayPoint == null) return;
 
             selectedWayPoint.Link(popedWayPoint);
+
+            pictureBox1.Refresh();
+        }
+        private void 双向连接ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (selectedWayPoint == null) return;
+            if (popedWayPoint == null) return;
+
+            selectedWayPoint.Link2(popedWayPoint);
 
             pictureBox1.Refresh();
         }
@@ -1063,6 +1074,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         }
 
        
+
+       
     }
 
 
@@ -1112,7 +1125,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
         }
 
-        public bool Link(WayPoint point)
+        public bool Link2(WayPoint point)
         {
             if (point == null) return false;
             if (point == this) return false;
@@ -1129,6 +1142,19 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             return true;
         }
 
+        public bool Link(WayPoint point)
+        {
+            if (point == null) return false;
+            if (point == this) return false;
+
+            if (!this.link.Contains(point))
+            {
+                this.link.Add(point);
+            }
+           
+            return true;
+        }
+
         public bool DisLink(WayPoint point)
         {
             if (point == null) return false;
@@ -1137,11 +1163,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 this.link.Remove(point);
             }
-            if (point.link.Contains(this))
-            {
-                point.link.Remove(this);
-            }
-
+          
             return true;
         }
 
@@ -1169,54 +1191,77 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             try
             {
+                int sx = rect.X + rect.Width / 2;
+                int sy = rect.Y + rect.Height / 2;
+
+                if (isCheck)
+                {
+                    g.setColor(0xff, 0xff, 0xff, 0xff);
+                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                }
+                else
+                {
+                    g.setColor(0xff, 0, 0, 0xff);
+                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                }
+
                 foreach (WayPoint p in link)
                 {
                     if (p != null)
                     {
+                        int dx = p.rect.X + p.rect.Width / 2;
+                        int dy = p.rect.Y + p.rect.Height / 2;
+
+                        float[] px = new float[3];
+                        float[] py = new float[3];
+
+                        float angle = (float)Math.Atan2(dy - sy, dx - sx);
+
+                        px[0] = dx;
+                        py[0] = dy;
+
+                        px[1] = dx - (float)Math.Cos(angle - Math.PI / 12) * 10;
+                        py[1] = dy - (float)Math.Sin(angle - Math.PI / 12) * 10;
+
+                        px[2] = dx - (float)Math.Cos(angle + Math.PI / 12) * 10;
+                        py[2] = dy - (float)Math.Sin(angle + Math.PI / 12) * 10;
+
+                       
+
                         if (isCheck)
                         {
-                            g.setColor(0xff, 0, 0xff, 0);
-                            g.drawLine(
-                                rect.X + 1 + rect.Width / 2,
-                                rect.Y + 1 + rect.Width / 2,
-                                p.rect.X + 1 + rect.Width / 2,
-                                p.rect.Y + 1 + rect.Width / 2);
-                            g.drawLine(
-                                rect.X - 1 + rect.Width / 2,
-                                rect.Y - 1 + rect.Width / 2,
-                                p.rect.X - 1 + rect.Width / 2,
-                                p.rect.Y - 1 + rect.Width / 2);
-                            g.drawLine(
-                                rect.X + 1 + rect.Width / 2,
-                                rect.Y - 1 + rect.Width / 2,
-                                p.rect.X + 1 + rect.Width / 2,
-                                p.rect.Y - 1 + rect.Width / 2);
-                            g.drawLine(
-                                rect.X - 1 + rect.Width / 2,
-                                rect.Y + 1 + rect.Width / 2,
-                                p.rect.X - 1 + rect.Width / 2,
-                                p.rect.Y + 1 + rect.Width / 2);
+                            g.setColor(0xff, 0xff, 0xff, 0xff);
+                            g.drawLine(sx, sy, dx, dy);
+                            g.dg.FillPolygon(g.brush,
+                                new PointF[] { 
+                                new PointF(px[0],py[0]),
+                                new PointF(px[1],py[1]),
+                                new PointF(px[2],py[2]),
+                            }
+                            );
                         }
-                      
-                        g.setColor(0x80, 0x80, 0x80, 0xff);
-                        g.drawLine(
-                                rect.X + rect.Width / 2,
-                                rect.Y + rect.Height / 2,
-                                p.rect.X + p.rect.Width / 2,
-                                p.rect.Y + p.rect.Height / 2);
+                        else
+                        {
+                            g.setColor(0x80, 0x00, 0x00, 0xff);
+                            g.drawLine(sx, sy, dx, dy);
+                            g.dg.FillPolygon(g.brush,
+                                new PointF[] { 
+                                new PointF(px[0],py[0]),
+                                new PointF(px[1],py[1]),
+                                new PointF(px[2],py[2]),
+                            }
+                            );
+                        }
 
                         //float degree = Math.Atan();
                         
                     }
                 }
 
-                if (isCheck)
-                {
-                    g.setColor(0x80, 0, 0, 0x80);
-                    g.fillRect(rect.X, rect.Y, rect.Width, rect.Height);
-                }
-                g.setColor(0xff, 0, 0, 0xff);
-                g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+
+
+               
+                
             }
             catch (Exception err)
             {
