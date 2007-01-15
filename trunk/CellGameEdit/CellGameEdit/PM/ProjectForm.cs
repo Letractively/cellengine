@@ -105,11 +105,133 @@ namespace CellGameEdit.PM
             
           
         }
+        ArrayList FormsImages = new ArrayList();
+        ArrayList FormsMap = new ArrayList();
+        ArrayList FormsSprite = new ArrayList();
+        ArrayList FormsWorld = new ArrayList();
+
+        public void initForms()
+        {
+            initForms(nodeReses);
+            initForms(nodeLevels);
+        }
+        public void initForms(TreeNode node)
+        {
+            if (formTable[node] != null)
+            {
+                //
+                if (formTable[node].GetType().Equals(typeof(ImagesForm)))
+                {
+                    FormsImages.Add(((ImagesForm)formTable[node]));
+                }
+                if (formTable[node].GetType().Equals(typeof(MapForm)))
+                {
+                    FormsMap.Add(((MapForm)formTable[node]));
+                }
+                if (formTable[node].GetType().Equals(typeof(SpriteForm)))
+                {
+                    FormsSprite.Add(((SpriteForm)formTable[node]));
+                }
+
+                //
+                if (formTable[node].GetType().Equals(typeof(WorldForm)))
+                {
+                    FormsWorld.Add(((WorldForm)formTable[node]));
+                }
+            }
+
+            if (node.Nodes.Count >= 0)
+            {
+                foreach (TreeNode sub in node.Nodes)
+                {
+                    initForms(sub);
+                }
+            }
+         
+        }
+        
+        ArrayList ScriptsImages     = new ArrayList();
+        ArrayList ScriptsMap        = new ArrayList();
+        ArrayList ScriptsSprite     = new ArrayList();
+        ArrayList ScriptsWorld      = new ArrayList();
+
+        public string fillScriptNode(string src)
+        {
+            //ScriptsImages.Clear();
+            //ScriptsMap.Clear();
+            //ScriptsSprite.Clear();
+            //ScriptsWorld.Clear();
+
+            //// build resource trunk
+            //string resource = Util.getFullTrunkScript(script, "#<RESOURCE>", "#<END RESOURCE>");
+
+            //string images = Util.getFullTrunkScript(script, "#<IMAGES>", "#<END IMAGES>");
+            //for (int i = 0; i < FormsImages.Count; i++)
+            //{
+            //    StringWriter output = new StringWriter();
+            //    ((ImagesForm)FormsImages[i]).OutputCustom(resource, output);
+            //    ScriptsImages.Add(output.ToString());
+            //}
+            //resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
+
+
+            //resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
+            //resource = Util.replaceSubTrunksScript(resource, "#<MAP>", "#<END MAP>", (string[])ScriptsMap.ToArray(typeof(string)));
+            //resource = Util.replaceSubTrunksScript(resource, "#<SPRITE>", "#<END SPRITE>", (string[])ScriptsSprite.ToArray(typeof(string)));
+
+            //resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
+            //// Console.WriteLine(resource);
+            //script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
+            //// Console.WriteLine(script);
+            //// build world trunk
+            //string level = Util.getFullTrunkScript(script, "#<LEVEL>", "#<END LEVEL>");
+            //OutputCustom(nodeLevels, level);
+
+            //level = Util.replaceSubTrunksScript(level, "#<WORLD>", "#<END WORLD>", (string[])ScriptsWorld.ToArray(typeof(string)));
+
+            //level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
+            //script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
+
+            string script = src.Substring(0,src.Length);
+
+            ScriptsImages.Clear();
+            ScriptsMap.Clear();
+            ScriptsSprite.Clear();
+            ScriptsWorld.Clear();
+
+            // build resource trunk
+            string resource = Util.getFullTrunkScript(script, "#<RESOURCE>", "#<END RESOURCE>");
+
+            OutputCustom(nodeReses, resource);
+
+
+
+            resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
+            resource = Util.replaceSubTrunksScript(resource, "#<MAP>", "#<END MAP>", (string[])ScriptsMap.ToArray(typeof(string)));
+            resource = Util.replaceSubTrunksScript(resource, "#<SPRITE>", "#<END SPRITE>", (string[])ScriptsSprite.ToArray(typeof(string)));
+
+            resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
+            // Console.WriteLine(resource);
+            script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
+            // Console.WriteLine(script);
+            // build world trunk
+            string level = Util.getFullTrunkScript(script, "#<LEVEL>", "#<END LEVEL>");
+            OutputCustom(nodeLevels, level);
+
+            level = Util.replaceSubTrunksScript(level, "#<WORLD>", "#<END WORLD>", (string[])ScriptsWorld.ToArray(typeof(string)));
+
+            level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
+            script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
+
+
+            return script;
+        }
 
         public void OutputCustom(String fileName)
         {
             try
             {
+                initForms();
                 RefreshNodeName();
 
                 if (System.IO.File.Exists(fileName))
@@ -117,25 +239,24 @@ namespace CellGameEdit.PM
                     Encoding encoding = Util.GetEncoding(fileName);
 
                     StreamReader sr = new StreamReader(fileName, encoding);
-                    String script = sr.ReadToEnd();
+                    string script = sr.ReadToEnd();
                     sr.Close();
 
-                    String ret = new string(new char[] { '\r', '\n' });
 
-                    System.IO.StringWriter outRes = new StringWriter();
-                    System.IO.StringWriter outLev = new StringWriter();
+                    string ret = new string(new char[] { '\r', '\n' });
 
-                    String OutputName = Util.getCommandScript(script, "<OUTPUT>");
+                    // build command
+                    string OutputName = Util.getCommandScript(script, "<OUTPUT>");
 
-                    OutputCustom(nodeReses, script, outRes);
-                    script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { outRes.ToString() });
 
-                    OutputCustom(nodeLevels, script, outLev);
-                    script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { outLev.ToString() });
+                    script = fillScriptNode(script);
+
 
                     script = script.Insert(0, "/* Email : wazazhang@gmail.com */" + ret);
                     script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
                     script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
+
+
 
                     Console.WriteLine(script);
 
@@ -154,28 +275,36 @@ namespace CellGameEdit.PM
 
         }
 
-        public void OutputCustom(TreeNode node, String script, System.IO.StringWriter output)
+        public void OutputCustom(TreeNode node, String script)
         {
             if (formTable[node] != null)
             {
                 //
                 if (formTable[node].GetType().Equals(typeof(ImagesForm)))
                 {
+                    StringWriter output = new StringWriter();
                     ((ImagesForm)formTable[node]).OutputCustom(script,output);
+                    ScriptsImages.Add(output.ToString());
                 }
                 if (formTable[node].GetType().Equals(typeof(MapForm)))
                 {
+                    StringWriter output = new StringWriter();
                     ((MapForm)formTable[node]).OutputCustom(script, output);
+                    ScriptsMap.Add(output.ToString());
                 }
                 if (formTable[node].GetType().Equals(typeof(SpriteForm)))
                 {
+                    StringWriter output = new StringWriter();
                     ((SpriteForm)formTable[node]).OutputCustom(script, output);
+                    ScriptsSprite.Add(output.ToString());
                 }
 
                 //
                 if (formTable[node].GetType().Equals(typeof(WorldForm)))
                 {
+                    StringWriter output = new StringWriter();
                     ((WorldForm)formTable[node]).OutputCustom(script, output);
+                    ScriptsWorld.Add(output.ToString());
                 }
             }
 
@@ -183,7 +312,7 @@ namespace CellGameEdit.PM
             {
                 foreach (TreeNode sub in node.Nodes)
                 {
-                    OutputCustom(sub, script, output); 
+                    OutputCustom(sub, script); 
                 }
             }
         }

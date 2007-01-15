@@ -175,7 +175,7 @@ namespace CellGameEdit.PM
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
-        public static String getCommandScript(string script , string command)
+        public static string getCommandScript(string script , string command)
         {
             try
             {
@@ -199,7 +199,7 @@ namespace CellGameEdit.PM
             return "";
         }
 
-        public static String removeTrunkScript(string script, string start, string end)
+        public static string removeTrunkScript(string script, string start, string end)
         {
             try
             {
@@ -211,11 +211,11 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* ERROR " + start + "->" + end + " */ ");
+                return script.Insert(0, "/* remove trunk ERROR " + start + "->" + end + ": " + err.Message + " */ ");
             }
         }
 
-        public static String getFullTrunkScript(string script, string start, string end)
+        public static string getFullTrunkScript(string script, string start, string end)
         {
             try
             {
@@ -227,11 +227,12 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* ERROR " + start + "->" + end + " */ ");
+                return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.Message + " */ ");
             }
         }
+      
 
-        public static String replaceKeywordsScript(string script, string start, string end, string[] src,string[] dst)
+        public static string replaceKeywordsScript(string script, string start, string end, string[] src,string[] dst)
         {
             try
             {
@@ -251,25 +252,25 @@ namespace CellGameEdit.PM
             }
             catch (Exception err) 
             {
-                return script.Insert(0, "/* ERROR " + start + "->" + end + " */ ");
+                return script.Insert(0, "/* replace keywords ERROR " + start + "->" + end + ": " + err.Message + " */ ");
             }
         }
 
-        public static String replaceSubTrunksScript(string script, string start, string end, string[] dst)
+        public static string replaceSubTrunksScript(string script, string start, string end, string[] dst)
         {
             try
             {
                 int first = script.IndexOf(start);
                 int last = script.IndexOf(end) + end.Length;
                 string ret = script.Substring(0, script.Length);
-
-                if (first < 0 || last < 0) return null;
+                if (first < 0 || last-end.Length < 0) return null;
 
                 if (dst != null)
                 {
-                    for (int i = dst.Length - 1; i >= 0; i--)
+                    for (int i = 0; i<dst.Length; i++)
                     {
                         ret = ret.Insert(first, dst[i]);
+                        //Console.WriteLine(dst[i]);
                     }
                 }
 
@@ -279,11 +280,27 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine( "/* ERROR " + start + "->" + end + " */ ");
+                Console.WriteLine( "/* replace sub trunks ERROR " + start + "->" + end + " : "+err.Message+" */ ");
                 return null; 
             }
         }
-   
-    
+
+        public static string getTrunk(string script, string start, string end)
+        {
+            try
+            {
+                int first = script.IndexOf(start);
+                int last = script.IndexOf(end) + end.Length;
+                if (first < 0 || last - end.Length < 0) return null;
+                string ret = script.Substring(first, last - first);
+
+                return ret;
+            }
+            catch (Exception err)
+            {
+                return null;
+            }
+        }
+
     }
 }
