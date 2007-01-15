@@ -1,0 +1,360 @@
+//--------------------------------------------------------------------------------------------------------------
+// 指令说明
+//--------------------------------------------------------------------------------------------------------------
+// 格式： 
+// 所有指令名称由一对<>尖括号包围，#代表数据块，
+// 该脚本是对最后生成数据格式的一种约定。
+//   例如：
+//     有如下约定
+//     #<DATA>
+//          data[<INDEX>] = <DATAS>;
+//     #<END DATA>
+//     并且程序里和<DATA>相同类型的有3个对象，每个对象内容为，3,5,7 那么最后生成的数据是。
+//     data[0] = 3;
+//     data[1] = 5;
+//     data[2] = 7;
+//     其实可以直接理解为程序根据约定，把数据填写到指定的位置。相当于程序在做填空题。
+//     
+//--------------------------------------------------------------------------------------------------------------     
+// 指令列表：
+// OUTPUT               /* 后面跟输出的文件名 */
+//
+// # RESOURCE           /* 资源数据 */ 
+//
+//     # IMAGES         /* 图片组数据 */
+//         NAME  	/* 该图片组的名称 */
+//         COUNT        /* 该图片组包含的图块数量 */
+//	   # CLIP       /* 每一个图片块的数据，每一个定义了每个图块在原图中的范围 */ 
+//             INDEX    /* 当前是第几块 */
+//             X        /* 当前Clip位置的 X */ 
+//             Y        /* 当前Clip位置的 Y */ 
+//             W        /* 当前Clip的 宽 */ 
+//             H        /* 当前Clip的 高 */ 
+//         # END CLIP   /* 图片切块数据块结束 */
+//     # END IMAGES>    /* 图片组数据块  结束 */
+//
+//     # MAP 
+//         NAME 
+//         X COUNT 
+//         Y COUNT 
+//         CELL W 
+//         CELL H 
+//
+//         SCENE PART COUNT 
+//         # SCENE PART
+//             INDEX
+//             TILE
+//             TRANS 
+//         # END SCENE PART 
+//
+//         SCENE FRAME COUNT
+//         # SCENE FRAME 
+//             INDEX 
+//             DATA
+//         # END SCENE FRAME
+//
+//         CD PART COUNT
+//         # CD PART
+//             INDEX
+//             TYPE
+//             MASK
+//             X1 
+//             Y1
+//             X2 
+//             Y2
+//             W
+//             H 
+//         # END CD PART 
+//
+//         TILE MATRIX
+//         FLAG MATRIX
+//
+//     # END MAP 
+//	
+//     # SPRITE 
+//         NAME 
+//         SCENE PART COUNT
+//	   # SCENE PART 
+//             INDEX 
+//             TILE
+//             X 
+//             Y 
+//             TRANS
+//	   # END SCENE PART 
+//		
+//         SCENE FRAME COUNT  
+//	   # SCENE FRAME 
+//             INDEX 
+//	       DATA 
+//	   # END SCENE FRAME 
+//
+//         CD PART COUNT 
+//	   # CD PART 
+//             INDEX
+//	       TYPE 
+//	       MASK 
+//             X1
+//             Y1 
+//             X2 
+//             Y2 
+//             W 
+//             H 
+//	   # END CD PART 
+//
+//         CD FRAME COUNT
+//         # CD FRAME 
+//             INDEX 
+//	       DATA 
+//	   # END CD FRAME 
+//	    
+//	   FRAME ANIMATE
+//	   FRAME CD MAP
+//	   FRAME CD ATK
+//	   FRAME CD DEF
+//         FRAME CD EXT
+//        
+//     # END SPRITE 
+//	
+// # END RESOURCE 
+//  
+//
+// # LEVEL 
+//	
+//     # WORLD 
+//         NAME
+//  
+//	   UNIT MAP COUNT 
+//	   # UNIT MAP  
+//             INDEX   
+//             IDENTIFY  
+//             X 
+//             Y 
+//         # END UNIT MAP 
+//		
+//         UNIT SPRITE COUNT 
+//         # UNIT SPRITE 
+//             INDEX
+//             IDENTIFY  
+//             X 
+//             Y 
+//         # END UNIT SPRITE 
+//		
+//         WAYPOINT COUNT 
+//         # WAYPOINT  
+//             INDEX 
+//             X 
+//             Y 
+//         # END WAYPOINT 
+//		
+//         # WAYPOINT LINK 
+//             INDEX 
+//             START
+//             END 
+//         # END WAYPOINT LINK 
+//	 
+//     # END WORLD 
+//     
+// # END LEVEL 
+//--------------------------------------------------------------------------------------------------------------
+
+
+//
+// Cell game edit 导出脚本范例
+// 
+// <OUTPUT>     ..\res\ResesScript.java
+// 
+
+import com.morefuntek.cell.*;
+import com.morefuntek.cell.Game.*;
+
+//--------------------------------------------------------------------------------------------------------------
+// resource trunk
+//--------------------------------------------------------------------------------------------------------------
+public class ResesScript {
+#<RESOURCE>
+
+	//--------------------------------------------------------------------------------------------------------------
+	#<IMAGES> /* 图片组数据块开始，定义图片组数据输出方式，若干图片组数据将按照以下方式输出 */
+	// Images : <NAME> /*该图片组的名称*/
+	final static public void buildClipImages_<NAME>(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/<NAME>.png"),<COUNT>);
+		
+		#<CLIP> /* 图片切块数据块开始，定义了一个图片组的一块TILE的生成方式 */ 
+		stuff.addTile(<X>,<Y>,<W>,<H>);//<INDEX> /* 这里就是一块TILE在原图中的区域，INDEX就是表示第多少块 */ 
+		#<END CLIP>/* 图片切块数据块结束 */
+		
+		stuff.gc();
+	}
+	#<END IMAGES> /* 图片组数据块  结束 */
+
+	//--------------------------------------------------------------------------------------------------------------
+	#<MAP>
+	// Map : <NAME>
+	final static public CMap createMap_<NAME>(IImages tiles,boolean isAnimate,boolean isCyc){
+		
+		//<X COUNT> x <Y COUNT>
+		
+		// tiles
+	    CAnimates animates = new CAnimates(<SCENE PART COUNT>,tiles);
+	    #<SCENE PART>
+		animates.addPart(0,0,<TILE>,<TRANS>);//<INDEX>
+		#<END SCENE PART>
+		
+	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    #<SCENE FRAME>
+	    animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+		#<END SCENE FRAME>
+		
+		short[][] tileMatrix = new short[][]{
+			<TILE MATRIX>
+		};
+		
+		// cds
+		CCollides collides = new CCollides(<CD PART COUNT>);
+	    #<CD PART>
+	    if("<TYPE>"=="rect")
+	    collides.addCDRect(<MASK>, <X1>, <Y1>, <W> , <H> );//<TYPE>//<INDEX>
+		if("<TYPE>"=="line")
+		collides.addCDLine(<MASK>, <X1>, <Y1>, <X2>, <Y2>);//<TYPE>//<INDEX>
+		#<END CD PART>
+
+		short[][] flagMatrix = new short[][]{
+			<FLAG MATRIX>
+		};
+		
+	    CMap ret = new CMap(
+	            animates, 
+	            collides, 
+	            <CELL W>, <CELL H>, 
+	            tileMatrix, 
+	            flagMatrix, 
+	            isAnimate,isCyc 
+	            );
+	
+	    return ret;
+	}
+	#<END MAP>
+	
+	//--------------------------------------------------------------------------------------------------------------
+	#<SPRITE>
+	// Sprite : <NAME>
+	final static public CSprite createSprite_<NAME>(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(<SCENE PART COUNT>,tiles);
+	    #<SCENE PART>
+		animates.addPart(<X>,<Y>,<TILE>,<TRANS>);//<INDEX>
+		#<END SCENE PART>
+		
+	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    #<SCENE FRAME>
+	    animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+		#<END SCENE FRAME>
+		
+		
+		// cds
+	    CCollides collides = new CCollides(<CD PART COUNT>);
+		#<CD PART>
+	    if("<TYPE>"=="rect")
+	    collides.addCDRect(<MASK>, <X1>, <Y1>, <W> , <H> );//<TYPE>//<INDEX>
+	    if("<TYPE>"=="line")
+	    collides.addCDLine(<MASK>, <X1>, <Y1>, <X2>, <Y2>);//<TYPE>//<INDEX>
+	    #<END CD PART>
+	    
+	    collides.setFrame(new int[<CD FRAME COUNT>][]);
+	    #<CD FRAME>
+	    collides.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+	    #<END CD FRAME>
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        <FRAME ANIMATE>
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        <FRAME CD MAP>
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        <FRAME CD ATK>
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        <FRAME CD DEF>
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        <FRAME CD EXT>
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	#<END SPRITE>
+	
+#<END RESOURCE>
+}
+
+//--------------------------------------------------------------------------------------------------------------
+// level trunk
+//--------------------------------------------------------------------------------------------------------------
+#<LEVEL>
+	
+	#<WORLD>
+	//--------------------------------------------------------------------------------------------------------------
+	// World : <NAME>
+	class world_<NAME> extends CWorld{
+	
+		// map count : <UNIT MAP COUNT>
+		#<UNIT MAP> 
+		public CMap <IDENTIFY>;//<INDEX> <X> <Y>
+		#<END UNIT MAP>
+		
+		// sprite count : <UNIT SPRITE COUNT>
+		#<UNIT SPRITE>
+		public CSprite <IDENTIFY>;//<INDEX> <X> <Y>
+		#<END UNIT SPRITE>
+		
+		public void initPath()
+		{
+			WayPoints = new CWayPoint[<WAYPOINT COUNT>];
+			
+			#<WAYPOINT> 
+			 WayPoints[<INDEX>] = new CWayPoint(<X>,<Y>);
+			#<END WAYPOINT>
+		
+			#<WAYPOINT LINK>
+			 WayPoints[<START>].link(WayPoints[<END>]);//<INDEX>
+			#<END WAYPOINT LINK>
+		}
+		public void initUnit()
+		{
+			#<UNIT MAP> 
+			addMap(<IDENTIFY>);
+			#<END UNIT MAP>
+
+			#<UNIT SPRITE>
+			addSprite(<IDENTIFY>);//<INDEX>
+			<IDENTIFY>.X = <X>;
+			<IDENTIFY>.Y = <Y>;
+			#<END UNIT SPRITE>
+		}
+
+	
+	
+	}
+	#<END WORLD>
+	
+#<END LEVEL>
+
+
+
+
