@@ -71,16 +71,15 @@ namespace CellGameEdit
 
                 if (dir.ShowDialog() == DialogResult.OK)
                 {
-                    if (System.IO.File.Exists(dir.SelectedPath + "\\Project.xml"))
+                    if (System.IO.File.Exists(dir.SelectedPath + "\\Project.cpj"))
                     {
-                        MessageBox.Show("已经存在一个工程文件 Project.xml");
+                        MessageBox.Show("已经存在一个工程文件 Project.cpj");
                     }
                     else
                     {
 
-
-                        //System.IO.Directory.CreateDirectory(dir.SelectedPath);
-                        //System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
+                        System.IO.Directory.CreateDirectory(dir.SelectedPath);
+                        System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
                         
                         ProjectForm.workSpace = dir.SelectedPath;
 
@@ -167,7 +166,7 @@ namespace CellGameEdit
 
         private void javaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (prjForm != null)
+            if (prjForm != null && prjForm.Visible)
             {
                 prjForm.Output();
             }
@@ -177,10 +176,10 @@ namespace CellGameEdit
         {
             try
             {
-                if (prjForm != null && toolStripComboBox1.SelectedItem != null)
+                if (prjForm != null && prjForm.Visible && toolStripComboBox1.SelectedItem != null)
                 {
-                    String dir = Application.StartupPath + "\\script\\";
-                    prjForm.OutputCustom(dir + toolStripComboBox1.Text);
+                    String dir = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
+                    prjForm.OutputCustom(dir);
                 }
             }
             catch (Exception err) { Console.WriteLine(err.Message); }
@@ -197,12 +196,16 @@ namespace CellGameEdit
 
                 if (System.IO.Directory.Exists(dir))
                 {
-                    String[] scriptFiles = System.IO.Directory.GetFiles(dir);
+                    String[] scriptFiles ;
 
+                    scriptFiles = System.IO.Directory.GetFiles(dir);
                     for (int i = 0; i < scriptFiles.Length; i++)
                     {
                         scriptFiles[i] = System.IO.Path.GetFileName(scriptFiles[i]);
                     }
+
+
+
 
                     toolStripComboBox1.Items.AddRange(scriptFiles);
                 }
@@ -294,6 +297,55 @@ namespace CellGameEdit
             catch (Exception err) {
                 MessageBox.Show("脚本删除错误：" + err.Message);
             }
+        }
+
+        private void 当前工程脚本ToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            try
+            {
+                当前工程脚本ToolStripMenuItem.DropDownItems.Clear();
+                当前工程脚本ToolStripMenuItem.Enabled = false;
+
+                if (prjForm != null && prjForm.Visible)
+                {
+
+                    String dir = ProjectForm.workSpace + "\\script\\";
+
+                    if (System.IO.Directory.Exists(dir))
+                    {
+                        String[] scriptFiles = System.IO.Directory.GetFiles(dir);
+                        ToolStripItem[] items = new ToolStripItem[scriptFiles.Length];
+                        for (int i = 0; i < scriptFiles.Length; i++)
+                        {
+                            scriptFiles[i] = System.IO.Path.GetFileName(scriptFiles[i]);
+                            items[i] = new ToolStripMenuItem();
+                            items[i].Text = scriptFiles[i];
+                            items[i].AutoSize = true;
+                            items[i].Click += new EventHandler(outputLocalProjectScript);
+
+                            当前工程脚本ToolStripMenuItem.Enabled = true;
+                        }
+
+                        当前工程脚本ToolStripMenuItem.DropDownItems.AddRange(items);
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+            }
+        }
+
+        private void outputLocalProjectScript(object sender, EventArgs e)
+        {
+            try
+            {
+                if (prjForm != null && prjForm.Visible)
+                {
+                    String dir = ProjectForm.workSpace + "\\script\\" + ((ToolStripMenuItem)sender).Text;
+                    prjForm.OutputCustom(dir);
+                }
+            }
+            catch (Exception err) { Console.WriteLine(err.Message); }
         }
 
       
