@@ -105,38 +105,56 @@ namespace CellGameEdit.PM
             
           
         }
-        ArrayList FormsImages = new ArrayList();
-        ArrayList FormsMap = new ArrayList();
-        ArrayList FormsSprite = new ArrayList();
-        ArrayList FormsWorld = new ArrayList();
-
-        public void initForms()
+        public void Output()
         {
-            initForms(nodeReses);
-            initForms(nodeLevels);
+            RefreshNodeName();
+
+            System.IO.StringWriter sw = new System.IO.StringWriter();
+            sw.WriteLine("/* Cell Game Editor by WAZA Zhang */");
+            sw.WriteLine("/* Email : wazazhang@gmail.com */");
+
+            sw.WriteLine("import com.morefuntek.cell.*;");
+            sw.WriteLine("import com.morefuntek.cell.Game.*;");
+            sw.WriteLine();
+
+            sw.WriteLine("public class Reses {");
+            Output(nodeReses, sw);
+            sw.WriteLine("}");
+
+            Output(nodeLevels, sw);
+
+            Console.WriteLine(sw.ToString());
+
+            System.IO.File.WriteAllText(
+                ProjectForm.workSpace + "\\Reses.java",
+                sw.ToString());
+
+            //
+
         }
-        public void initForms(TreeNode node)
+
+        public void Output(TreeNode node, System.IO.StringWriter sw)
         {
             if (formTable[node] != null)
             {
                 //
                 if (formTable[node].GetType().Equals(typeof(ImagesForm)))
                 {
-                    FormsImages.Add(((ImagesForm)formTable[node]));
+                    ((ImagesForm)formTable[node]).Output(sw);
                 }
                 if (formTable[node].GetType().Equals(typeof(MapForm)))
                 {
-                    FormsMap.Add(((MapForm)formTable[node]));
+                    ((MapForm)formTable[node]).Output(sw);
                 }
                 if (formTable[node].GetType().Equals(typeof(SpriteForm)))
                 {
-                    FormsSprite.Add(((SpriteForm)formTable[node]));
+                    ((SpriteForm)formTable[node]).Output(sw);
                 }
 
                 //
                 if (formTable[node].GetType().Equals(typeof(WorldForm)))
                 {
-                    FormsWorld.Add(((WorldForm)formTable[node]));
+                    ((WorldForm)formTable[node]).Output(sw);
                 }
             }
 
@@ -144,87 +162,10 @@ namespace CellGameEdit.PM
             {
                 foreach (TreeNode sub in node.Nodes)
                 {
-                    initForms(sub);
+                    Output(sub, sw);
                 }
             }
-         
-        }
-        
-        ArrayList ScriptsImages     = new ArrayList();
-        ArrayList ScriptsMap        = new ArrayList();
-        ArrayList ScriptsSprite     = new ArrayList();
-        ArrayList ScriptsWorld      = new ArrayList();
 
-        public string fillScriptNode(string src)
-        {
-            //ScriptsImages.Clear();
-            //ScriptsMap.Clear();
-            //ScriptsSprite.Clear();
-            //ScriptsWorld.Clear();
-
-            //// build resource trunk
-            //string resource = Util.getFullTrunkScript(script, "#<RESOURCE>", "#<END RESOURCE>");
-
-            //string images = Util.getFullTrunkScript(script, "#<IMAGES>", "#<END IMAGES>");
-            //for (int i = 0; i < FormsImages.Count; i++)
-            //{
-            //    StringWriter output = new StringWriter();
-            //    ((ImagesForm)FormsImages[i]).OutputCustom(resource, output);
-            //    ScriptsImages.Add(output.ToString());
-            //}
-            //resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
-
-
-            //resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
-            //resource = Util.replaceSubTrunksScript(resource, "#<MAP>", "#<END MAP>", (string[])ScriptsMap.ToArray(typeof(string)));
-            //resource = Util.replaceSubTrunksScript(resource, "#<SPRITE>", "#<END SPRITE>", (string[])ScriptsSprite.ToArray(typeof(string)));
-
-            //resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
-            //// Console.WriteLine(resource);
-            //script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
-            //// Console.WriteLine(script);
-            //// build world trunk
-            //string level = Util.getFullTrunkScript(script, "#<LEVEL>", "#<END LEVEL>");
-            //OutputCustom(nodeLevels, level);
-
-            //level = Util.replaceSubTrunksScript(level, "#<WORLD>", "#<END WORLD>", (string[])ScriptsWorld.ToArray(typeof(string)));
-
-            //level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
-            //script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
-
-            string script = src.Substring(0,src.Length);
-
-            ScriptsImages.Clear();
-            ScriptsMap.Clear();
-            ScriptsSprite.Clear();
-            ScriptsWorld.Clear();
-
-            // build resource trunk
-            string resource = Util.getFullTrunkScript(script, "#<RESOURCE>", "#<END RESOURCE>");
-
-            OutputCustom(nodeReses, resource);
-
-
-
-            resource = Util.replaceSubTrunksScript(resource, "#<IMAGES>", "#<END IMAGES>", (string[])ScriptsImages.ToArray(typeof(string)));
-            resource = Util.replaceSubTrunksScript(resource, "#<MAP>", "#<END MAP>", (string[])ScriptsMap.ToArray(typeof(string)));
-            resource = Util.replaceSubTrunksScript(resource, "#<SPRITE>", "#<END SPRITE>", (string[])ScriptsSprite.ToArray(typeof(string)));
-
-            resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
-            // Console.WriteLine(resource);
-            script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
-            // Console.WriteLine(script);
-            // build world trunk
-            string level = Util.getFullTrunkScript(script, "#<LEVEL>", "#<END LEVEL>");
-            OutputCustom(nodeLevels, level);
-
-            level = Util.replaceSubTrunksScript(level, "#<WORLD>", "#<END WORLD>", (string[])ScriptsWorld.ToArray(typeof(string)));
-
-            level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
-            script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
-
-
-            return script;
         }
 
         public void OutputCustom(String fileName)
@@ -275,36 +216,127 @@ namespace CellGameEdit.PM
 
         }
 
-        public void OutputCustom(TreeNode node, String script)
+
+        ArrayList ScriptsImages = new ArrayList();
+        ArrayList ScriptsMap = new ArrayList();
+        ArrayList ScriptsSprite = new ArrayList();
+        ArrayList ScriptsWorld = new ArrayList();
+
+        public string fillScriptSub(string src, string start, string end, ArrayList forms)
+        {
+            string script = src.Substring(0, src.Length);
+            string sub = Util.getTrunk(script, start, end);
+            if (sub == null) return null;
+
+            ArrayList scripts = new ArrayList();
+
+            for (int i = 0; i < forms.Count; i++)
+            {
+                StringWriter output = new StringWriter();
+                //
+                if (forms[i].GetType().Equals(typeof(ImagesForm)))
+                {
+                    ((ImagesForm)forms[i]).OutputCustom(sub, output);
+                }
+                if (forms[i].GetType().Equals(typeof(MapForm)))
+                {
+                    ((MapForm)forms[i]).OutputCustom(sub, output);
+                }
+                if (forms[i].GetType().Equals(typeof(SpriteForm)))
+                {
+                    ((SpriteForm)forms[i]).OutputCustom(sub, output);
+                }
+                if (forms[i].GetType().Equals(typeof(WorldForm)))
+                {
+                    ((WorldForm)forms[i]).OutputCustom(sub, output);
+                }
+                //
+                scripts.Add(output.ToString());
+            }
+            script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
+
+            return script;
+        }
+
+        public string fillScriptNode(string src)
+        {
+            string script = src.Substring(0, src.Length);
+
+            // build resource trunk
+            string resource = Util.getTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
+            if (resource != null)
+            {
+                bool fix = false;
+                do
+                {
+                    fix = false;
+                    string images = fillScriptSub(resource, "#<IMAGES>", "#<END IMAGES>", FormsImages);
+                    if (images != null) { resource = images; fix = true; }
+
+                    string map = fillScriptSub(resource, "#<MAP>", "#<END MAP>", FormsMap);
+                    if (map != null) { resource = map; fix = true; }
+
+                    string sprite = fillScriptSub(resource, "#<SPRITE>", "#<END SPRITE>", FormsSprite);
+                    if (sprite != null) { resource = sprite; fix = true; }
+
+                } while (fix);
+            }
+            resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
+            script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
+
+            //build world trunk
+            string level = Util.getTrunk(script, "#<LEVEL>", "#<END LEVEL>");
+            if (level != null)
+            {
+                bool fix = false;
+                do
+                {
+                    fix = false;
+                    string world = fillScriptSub(level, "#<WORLD>", "#<END WORLD>", FormsWorld);
+                    if (world != null) { level = world; fix = true; }
+
+                } while (fix);
+            }
+            level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
+            script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
+
+
+            return script;
+        }
+
+
+        ArrayList FormsImages = new ArrayList();
+        ArrayList FormsMap = new ArrayList();
+        ArrayList FormsSprite = new ArrayList();
+        ArrayList FormsWorld = new ArrayList();
+
+        public void initForms()
+        {
+            initForms(nodeReses);
+            initForms(nodeLevels);
+        }
+        public void initForms(TreeNode node)
         {
             if (formTable[node] != null)
             {
                 //
                 if (formTable[node].GetType().Equals(typeof(ImagesForm)))
                 {
-                    StringWriter output = new StringWriter();
-                    ((ImagesForm)formTable[node]).OutputCustom(script,output);
-                    ScriptsImages.Add(output.ToString());
+                    FormsImages.Add(((ImagesForm)formTable[node]));
                 }
                 if (formTable[node].GetType().Equals(typeof(MapForm)))
                 {
-                    StringWriter output = new StringWriter();
-                    ((MapForm)formTable[node]).OutputCustom(script, output);
-                    ScriptsMap.Add(output.ToString());
+                    FormsMap.Add(((MapForm)formTable[node]));
                 }
                 if (formTable[node].GetType().Equals(typeof(SpriteForm)))
                 {
-                    StringWriter output = new StringWriter();
-                    ((SpriteForm)formTable[node]).OutputCustom(script, output);
-                    ScriptsSprite.Add(output.ToString());
+                    FormsSprite.Add(((SpriteForm)formTable[node]));
                 }
 
                 //
                 if (formTable[node].GetType().Equals(typeof(WorldForm)))
                 {
-                    StringWriter output = new StringWriter();
-                    ((WorldForm)formTable[node]).OutputCustom(script, output);
-                    ScriptsWorld.Add(output.ToString());
+                    FormsWorld.Add(((WorldForm)formTable[node]));
                 }
             }
 
@@ -312,73 +344,12 @@ namespace CellGameEdit.PM
             {
                 foreach (TreeNode sub in node.Nodes)
                 {
-                    OutputCustom(sub, script); 
-                }
-            }
-        }
-
-        public void Output()
-        {
-            RefreshNodeName();
-
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            sw.WriteLine("/* Cell Game Editor by WAZA Zhang */");
-            sw.WriteLine("/* Email : wazazhang@gmail.com */");
-
-            sw.WriteLine("import com.morefuntek.cell.*;");
-            sw.WriteLine("import com.morefuntek.cell.Game.*;");
-            sw.WriteLine();
-
-            sw.WriteLine("public class Reses {");
-            Output(nodeReses, sw);
-            sw.WriteLine("}");
-
-            Output(nodeLevels, sw);
-
-            Console.WriteLine(sw.ToString());
-
-            System.IO.File.WriteAllText(
-                ProjectForm.workSpace + "\\Reses.java", 
-                sw.ToString());
-
-            //
-
-        }
-
-        public void Output(TreeNode node, System.IO.StringWriter sw)
-        {
-            if (formTable[node] != null)
-            {
-                //
-                if (formTable[node].GetType().Equals(typeof(ImagesForm)))
-                {
-                    ((ImagesForm)formTable[node]).Output(sw);
-                }
-                if (formTable[node].GetType().Equals(typeof(MapForm)))
-                {
-                    ((MapForm)formTable[node]).Output(sw);
-                }
-                if (formTable[node].GetType().Equals(typeof(SpriteForm)))
-                {
-                    ((SpriteForm)formTable[node]).Output(sw);
-                }
-
-                //
-                if (formTable[node].GetType().Equals(typeof(WorldForm)))
-                {
-                    ((WorldForm)formTable[node]).Output(sw);
+                    initForms(sub);
                 }
             }
 
-            if (node.Nodes.Count >= 0)
-            {
-                foreach (TreeNode sub in node.Nodes)
-                {
-                    Output(sub,sw);
-                }
-            }
-         
         }
+
 
         public void RefreshNodeName()
         {
