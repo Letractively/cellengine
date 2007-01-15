@@ -242,7 +242,7 @@ namespace CellGameEdit.PM
 
                 if (src != null && dst != null)
                 {
-                    for (int i = 0; i < src.Length; i++)
+                    for (int i = src.Length-1; i >= 0 ; i--)
                     {
                         ret = ret.Replace(src[i], dst[i]);
                     }
