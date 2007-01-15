@@ -11,6 +11,7 @@ class MapNode {
 	
 	public short X;
 	public short Y;
+	public short Z;
 	
 	public MapNode sFather;
 	public int sG = 0;
