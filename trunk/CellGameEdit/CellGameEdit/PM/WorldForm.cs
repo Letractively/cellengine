@@ -1032,6 +1032,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(dg);
 
             // draw units
+
             // draw units
             if (toolStripButton7.Checked || toolStripButton8.Checked)
             {
@@ -1041,45 +1042,114 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     {
                         Unit unit = ((Unit)UnitList[item]);
 
-                        unit.render(
-                           g,
-                           new System.Drawing.Rectangle( 0, 0, image.Width, image.Height),
-                           listView1.SelectedItems.Contains(item),
-                           false, false
-                       );
+                        if (unit.type == "Map" && toolStripButton7.Checked)
+                        {
+                            if (toolStripButton10.Checked)
+                            {
+                                for (int x = 0; x < pictureBox1.Width; x += unit.getWidth())
+                                {
+                                    for (int y = 0; y < pictureBox1.Height; y += unit.getHeight())
+                                    {
+                                        Rectangle rect = new Rectangle(
+                                            0,
+                                            0,
+                                            image.Width,
+                                            image.Height
+                                            );
+                                        if (rect.IntersectsWith(
+                                             new System.Drawing.Rectangle(
+                                                x, y,
+                                                unit.getWidth(),
+                                                unit.getHeight())
+                                                )
+                                            )
+                                        {
+                                        }
+                                        {
+                                            int tx = unit.x;
+                                            int ty = unit.y;
+                                            unit.x = x;
+                                            unit.y = y;
+                                            unit.render(
+                                               g,
+                                               new System.Drawing.Rectangle(
+                                                    0,
+                                                    0,
+                                                    image.Width,
+                                                    image.Height
+                                               ),
+                                               listView1.SelectedItems.Contains(item),
+                                               toolStripButton1.Checked,
+                                               toolStripButton2.Checked
+                                            );
+                                            unit.x = tx;
+                                            unit.y = ty;
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                unit.render(
+                                   g,
+                                   new System.Drawing.Rectangle(
+                                        0,
+                                            0,
+                                            image.Width,
+                                            image.Height
+                                   ),
+                                   listView1.SelectedItems.Contains(item),
+                                   toolStripButton1.Checked,
+                                   toolStripButton2.Checked
+                                );
+                            }
+                        }
+
+                        if (unit.type == "Sprite" && toolStripButton8.Checked)
+                        {
+                            unit.render(
+                                   g,
+                                    new System.Drawing.Rectangle(
+                                         0,
+                                            0,
+                                            image.Width,
+                                            image.Height
+                                   ),
+                                   listView1.SelectedItems.Contains(item),
+                                   toolStripButton1.Checked,
+                                   toolStripButton2.Checked
+                                );
+                        }
 
                     }
-                    catch (Exception err){}
+                    catch (Exception err)
+                    {
+                    }
                 }
             }
-
-            if (toolStripButton12.Checked)
+            // draw way points
+            if (toolStripButton9.Checked)
             {
-                g.setColor(0x80, 0xff, 0xff, 0xff);
-
-                int sx = 0;
-                int sy = 0;
-                int sw = image.Width / CellW + 1;
-                int sh = image.Height / CellH + 1;
-
-                for (int bx = sx; bx < sx + sw; bx++)
+                foreach (WayPoint p in WayPoints)
                 {
-                    g.drawLine(
-                       bx * CellW,
-                       sy * CellH,
-                       bx * CellW,
-                       sy * CellH + sh * CellH);
+                    if (p != null)
+                    {
+                        p.Render(g);
+                        g.setColor(0xff, 0, 0, 0);
+                        dg.DrawString(
+                            WayPoints.IndexOf(p).ToString(),
+                            this.Font,
+                            System.Drawing.Brushes.Black,
+                            p.rect.X + p.rect.Width + 1,
+                            p.rect.Y - p.rect.Height / 2);
+
+                        //g.drawString(WayPoints.IndexOf(p).ToString(), p.rect.X + p.rect.Width + 1, p.rect.Y - p.rect.Height / 2, 0);
+                    }
                 }
-                for (int by = sy; by < sy + sh; by++)
-                {
-                    g.drawLine(
-                        sx * CellW,
-                        by * CellH,
-                        sx * CellW + sw * CellW,
-                        by * CellH);
-                }
+
             }
-                
+
+           
             MapMini mini = new MapMini(image);
             mini.Show();
         }
