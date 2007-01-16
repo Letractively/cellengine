@@ -786,8 +786,7 @@ namespace CellGameEdit.PM
                 framesGetCurFrame() != null 
                 )
             {
-                
-
+               
                 foreach(ListViewItem item in listView3.SelectedItems)
                 {
                     if (framesGetCurFrame().SubTable.Contains(item))
@@ -1487,6 +1486,85 @@ namespace CellGameEdit.PM
             e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
         }
 
+        float px;
+        float py;
+        bool isDown =false;
+        private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
+        {
+            isDown = true;
+            int x = e.X - pictureBox2.Width / 2;
+            int y = e.Y - pictureBox2.Height / 2;
+
+            if(tabControl1.SelectedIndex == 0){
+                listView3.SelectedItems.Clear();
+                foreach (ListViewItem item in listView3.Items)
+                {
+                    System.Drawing.RectangleF rect = new System.Drawing.RectangleF(
+                        Int32.Parse(item.SubItems[1].Text) * masterScale,
+                        Int32.Parse(item.SubItems[2].Text) * masterScale,
+                        srcGetImage(Int32.Parse(item.SubItems[0].Text)).getWidth() * masterScale,
+                        srcGetImage(Int32.Parse(item.SubItems[0].Text)).getHeight() * masterScale
+                        );
+                    if (rect.Contains(x,y))
+                    {
+                        px = x - rect.X;
+                        py = y - rect.Y;
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }
+            if (tabControl1.SelectedIndex == 1)
+            {
+                listView4.SelectedItems.Clear();
+                foreach (ListViewItem item in listView4.Items)
+                {
+                    System.Drawing.RectangleF rect = new System.Drawing.RectangleF(
+                        Int32.Parse(item.SubItems[1].Text) * masterScale,
+                        Int32.Parse(item.SubItems[2].Text) * masterScale,
+                        Int32.Parse(item.SubItems[3].Text) * masterScale,
+                        Int32.Parse(item.SubItems[4].Text) * masterScale
+                        );
+                    if (rect.Contains(x, y))
+                    {
+                        px = x - rect.X;
+                        py = y - rect.Y;
+                        item.Selected = true;
+                        break;
+                    }
+                }
+            }
+
+        }
+
+        private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
+        {
+            isDown = false;
+        }
+
+        private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDown)
+            {
+                try
+                {
+                    if (tabControl1.SelectedIndex == 0)
+                    {
+                        framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] = (int)((e.X - pictureBox2.Width / 2 - px) / masterScale);
+                        framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] = (int)((e.Y - pictureBox2.Height / 2 - py) / masterScale);
+                    }
+                    if (tabControl1.SelectedIndex == 1)
+                    {
+                        framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)((e.X - pictureBox2.Width / 2 - px) / masterScale);
+                        framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)((e.Y - pictureBox2.Height / 2 - py) / masterScale);
+                    }
+                }
+                catch (Exception err) { }
+                dstRefersh();
+            }
+
+        }
+
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
             ColorDialog MyDialog = new ColorDialog();
@@ -1502,6 +1580,8 @@ namespace CellGameEdit.PM
         {
             dstRefersh();
         }
+
+        
 
 // frames
         int ViewW = 64;
@@ -1631,11 +1711,14 @@ namespace CellGameEdit.PM
                               ViewH / 2,
                               1);
 
-                        frame.renderCD(
-                              g,
-                              ViewW * i + ViewW / 2,
-                              ViewH / 2,
-                              1);
+                        if (toolStripButton26.Checked)
+                        {
+                            frame.renderCD(
+                                  g,
+                                  ViewW * i + ViewW / 2,
+                                  ViewH / 2,
+                                  1);
+                        }
 
                         if (trackBar1.Value == i)
                         {
@@ -1925,6 +2008,8 @@ namespace CellGameEdit.PM
         
         
         }
+
+        
 
 
 
