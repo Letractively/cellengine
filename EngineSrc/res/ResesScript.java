@@ -583,24 +583,721 @@ public class ResesScript {
 	}
 	
 
+	// Sprite : Enemy01
+	final static public CSprite createSprite_Enemy01(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,3,0);//0
+		
+		animates.addPart(-12,-28,4,0);//1
+		
+		animates.addPart(-12,-28,5,0);//2
+		
+		animates.addPart(-12,-28,15,0);//3
+		
+		animates.addPart(-12,-28,16,0);//4
+		
+		animates.addPart(-12,-28,17,0);//5
+		
+		animates.addPart(-12,-28,27,0);//6
+		
+		animates.addPart(-12,-28,28,0);//7
+		
+		animates.addPart(-12,-28,29,0);//8
+		
+		animates.addPart(-12,-28,39,0);//9
+		
+		animates.addPart(-12,-28,40,0);//10
+		
+		animates.addPart(-12,-28,41,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy02
+	final static public CSprite createSprite_Enemy02(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,6,0);//0
+		
+		animates.addPart(-12,-28,7,0);//1
+		
+		animates.addPart(-12,-28,8,0);//2
+		
+		animates.addPart(-12,-28,18,0);//3
+		
+		animates.addPart(-12,-28,19,0);//4
+		
+		animates.addPart(-12,-28,20,0);//5
+		
+		animates.addPart(-12,-28,30,0);//6
+		
+		animates.addPart(-12,-28,31,0);//7
+		
+		animates.addPart(-12,-28,32,0);//8
+		
+		animates.addPart(-12,-28,42,0);//9
+		
+		animates.addPart(-12,-28,43,0);//10
+		
+		animates.addPart(-12,-28,44,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy03
+	final static public CSprite createSprite_Enemy03(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,9,0);//0
+		
+		animates.addPart(-12,-28,10,0);//1
+		
+		animates.addPart(-12,-28,11,0);//2
+		
+		animates.addPart(-12,-28,21,0);//3
+		
+		animates.addPart(-12,-28,22,0);//4
+		
+		animates.addPart(-12,-28,23,0);//5
+		
+		animates.addPart(-12,-28,33,0);//6
+		
+		animates.addPart(-12,-28,34,0);//7
+		
+		animates.addPart(-12,-28,35,0);//8
+		
+		animates.addPart(-12,-28,45,0);//9
+		
+		animates.addPart(-12,-28,46,0);//10
+		
+		animates.addPart(-12,-28,47,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy04
+	final static public CSprite createSprite_Enemy04(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,48,0);//0
+		
+		animates.addPart(-12,-28,49,0);//1
+		
+		animates.addPart(-12,-28,50,0);//2
+		
+		animates.addPart(-12,-28,60,0);//3
+		
+		animates.addPart(-12,-28,61,0);//4
+		
+		animates.addPart(-12,-28,62,0);//5
+		
+		animates.addPart(-12,-28,72,0);//6
+		
+		animates.addPart(-12,-28,73,0);//7
+		
+		animates.addPart(-12,-28,74,0);//8
+		
+		animates.addPart(-12,-28,84,0);//9
+		
+		animates.addPart(-12,-28,85,0);//10
+		
+		animates.addPart(-12,-28,86,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy05
+	final static public CSprite createSprite_Enemy05(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(9,tiles);
+	    
+		animates.addPart(-12,-28,51,0);//0
+		
+		animates.addPart(-12,-28,52,0);//1
+		
+		animates.addPart(-12,-28,53,0);//2
+		
+		animates.addPart(-12,-28,63,0);//3
+		
+		animates.addPart(-12,-28,64,0);//4
+		
+		animates.addPart(-12,-28,65,0);//5
+		
+		animates.addPart(-12,-28,75,0);//6
+		
+		animates.addPart(-12,-28,76,0);//7
+		
+		animates.addPart(-12,-28,77,0);//8
+		
+		
+	    animates.setFrame(new int[9][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy06
+	final static public CSprite createSprite_Enemy06(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,54,0);//0
+		
+		animates.addPart(-12,-28,55,0);//1
+		
+		animates.addPart(-12,-28,56,0);//2
+		
+		animates.addPart(-12,-28,66,0);//3
+		
+		animates.addPart(-12,-28,67,0);//4
+		
+		animates.addPart(-12,-28,68,0);//5
+		
+		animates.addPart(-12,-28,78,0);//6
+		
+		animates.addPart(-12,-28,79,0);//7
+		
+		animates.addPart(-12,-28,80,0);//8
+		
+		animates.addPart(-12,-28,90,0);//9
+		
+		animates.addPart(-12,-28,91,0);//10
+		
+		animates.addPart(-12,-28,92,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	// Sprite : Enemy07
+	final static public CSprite createSprite_Enemy07(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(12,tiles);
+	    
+		animates.addPart(-12,-28,57,0);//0
+		
+		animates.addPart(-12,-28,58,0);//1
+		
+		animates.addPart(-12,-28,59,0);//2
+		
+		animates.addPart(-12,-28,69,0);//3
+		
+		animates.addPart(-12,-28,70,0);//4
+		
+		animates.addPart(-12,-28,71,0);//5
+		
+		animates.addPart(-12,-28,81,0);//6
+		
+		animates.addPart(-12,-28,82,0);//7
+		
+		animates.addPart(-12,-28,83,0);//8
+		
+		animates.addPart(-12,-28,93,0);//9
+		
+		animates.addPart(-12,-28,94,0);//10
+		
+		animates.addPart(-12,-28,95,0);//11
+		
+		
+	    animates.setFrame(new int[12][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+	    animates.setComboFrame(new int[]{9,},9);//9
+		
+	    animates.setComboFrame(new int[]{10,},10);//10
+		
+	    animates.setComboFrame(new int[]{11,},11);//11
+		
+		
+		
+		// cds
+	    CCollides collides = new CCollides(0);
+		
+	    
+	    collides.setFrame(new int[1][]);
+	    
+	    collides.setComboFrame(new int[]{},0);//0
+	    
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        {0,0,1,1,2,2,1,1,},{3,3,4,4,5,5,4,4,},{6,6,7,7,8,8,7,7,},{9,9,10,10,11,11,10,10,},
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},{0,0,0,0,0,0,0,0,},
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
 	// Sprite : Point
 	final static public CSprite createSprite_Point(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(2,tiles);
+	    CAnimates animates = new CAnimates(3,tiles);
 	    
-		animates.addPart(-9,-9,1,0);//0
+		animates.addPart(-8,-8,1,0);//0
 		
-		animates.addPart(-9,-9,0,0);//1
+		animates.addPart(-9,-9,1,0);//1
+		
+		animates.addPart(-9,-9,0,0);//2
 		
 		
 	    animates.setFrame(new int[3][]);
 	    
-	    animates.setComboFrame(new int[]{0,0,},0);//0
+	    animates.setComboFrame(new int[]{0,},0);//0
 		
-	    animates.setComboFrame(new int[]{0,},1);//1
+	    animates.setComboFrame(new int[]{1,},1);//1
 		
-	    animates.setComboFrame(new int[]{1,},2);//2
+	    animates.setComboFrame(new int[]{2,},2);//2
 		
 		
 		
@@ -818,7 +1515,7 @@ public class ResesScript {
 		
 		public void initPath()
 		{
-			WayPoints = new CWayPoint[21];
+			WayPoints = new CWayPoint[36];
 			
 			 
 			 WayPoints[0] = new CWayPoint(40,8);
@@ -862,6 +1559,36 @@ public class ResesScript {
 			 WayPoints[19] = new CWayPoint(280,232);
 			 
 			 WayPoints[20] = new CWayPoint(264,232);
+			 
+			 WayPoints[21] = new CWayPoint(584,104);
+			 
+			 WayPoints[22] = new CWayPoint(648,24);
+			 
+			 WayPoints[23] = new CWayPoint(712,104);
+			 
+			 WayPoints[24] = new CWayPoint(552,200);
+			 
+			 WayPoints[25] = new CWayPoint(616,200);
+			 
+			 WayPoints[26] = new CWayPoint(680,200);
+			 
+			 WayPoints[27] = new CWayPoint(744,200);
+			 
+			 WayPoints[28] = new CWayPoint(536,296);
+			 
+			 WayPoints[29] = new CWayPoint(568,296);
+			 
+			 WayPoints[30] = new CWayPoint(600,296);
+			 
+			 WayPoints[31] = new CWayPoint(632,296);
+			 
+			 WayPoints[32] = new CWayPoint(664,296);
+			 
+			 WayPoints[33] = new CWayPoint(696,296);
+			 
+			 WayPoints[34] = new CWayPoint(728,296);
+			 
+			 WayPoints[35] = new CWayPoint(760,296);
 			
 		
 			
@@ -944,6 +1671,34 @@ public class ResesScript {
 			 WayPoints[19].link(WayPoints[20]);//38
 			
 			 WayPoints[20].link(WayPoints[19]);//39
+			
+			 WayPoints[21].link(WayPoints[24]);//40
+			
+			 WayPoints[21].link(WayPoints[25]);//41
+			
+			 WayPoints[22].link(WayPoints[21]);//42
+			
+			 WayPoints[22].link(WayPoints[23]);//43
+			
+			 WayPoints[23].link(WayPoints[26]);//44
+			
+			 WayPoints[23].link(WayPoints[27]);//45
+			
+			 WayPoints[24].link(WayPoints[28]);//46
+			
+			 WayPoints[24].link(WayPoints[29]);//47
+			
+			 WayPoints[25].link(WayPoints[30]);//48
+			
+			 WayPoints[25].link(WayPoints[31]);//49
+			
+			 WayPoints[26].link(WayPoints[32]);//50
+			
+			 WayPoints[26].link(WayPoints[33]);//51
+			
+			 WayPoints[27].link(WayPoints[34]);//52
+			
+			 WayPoints[27].link(WayPoints[35]);//53
 			
 		}
 		public void initUnit()

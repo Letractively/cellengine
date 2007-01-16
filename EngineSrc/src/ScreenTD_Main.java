@@ -53,7 +53,19 @@ public class ScreenTD_Main extends AScreen {
        	map = ResesScript.createMap_Map00(mapTile, false, false);
        	
        	// spr type
-        CSprite enemy = ResesScript.createSprite_Enemy00(sprTile);
+       	CSprite enemy ;
+       	switch(Math.abs(Random.nextInt()%8)){
+       	case 0: enemy = ResesScript.createSprite_Enemy00(sprTile);break;
+       	case 1: enemy = ResesScript.createSprite_Enemy01(sprTile);break;
+       	case 2: enemy = ResesScript.createSprite_Enemy02(sprTile);break;
+       	case 3: enemy = ResesScript.createSprite_Enemy03(sprTile);break;
+       	case 4: enemy = ResesScript.createSprite_Enemy04(sprTile);break;
+       	case 5: enemy = ResesScript.createSprite_Enemy05(sprTile);break;
+       	case 6: enemy = ResesScript.createSprite_Enemy06(sprTile);break;
+       	case 7: enemy = ResesScript.createSprite_Enemy07(sprTile);break;
+       	default: enemy = ResesScript.createSprite_Enemy00(sprTile);break;
+       	}
+       	
         CSprite tower = ResesScript.createSprite_Tower(towerTile);
         CSprite point = ResesScript.createSprite_Point(guiTile);
         CSprite shoot = ResesScript.createSprite_Shoot(shootTile);
