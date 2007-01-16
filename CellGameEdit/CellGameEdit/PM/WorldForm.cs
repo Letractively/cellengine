@@ -360,7 +360,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         }
 
-
+        private void WorldForm_Shown(object sender, EventArgs e)
+        {
+            toolStripTextBox3.Text = pictureBox1.Width.ToString();
+            toolStripTextBox4.Text = pictureBox1.Height.ToString();
+        }
 
         // list view1 map list
         private void listView1_DragDrop(object sender, DragEventArgs e)
@@ -369,7 +373,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 MapForm map = ((MapForm)e.Data.GetData(typeof(MapForm)));
 
-                Unit unit = new Unit(map, "Map" + (listView1.Items.Count).ToString("d4")+"_");
+                Unit unit = new Unit(map, "M" + (listView1.Items.Count).ToString("d3")+"_");
                 ListViewItem item = new ListViewItem(unit.id);
 
                 listView1.Items.Add(item);
@@ -389,7 +393,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 SpriteForm spr = ((SpriteForm)e.Data.GetData(typeof(SpriteForm)));
 
-                Unit unit = new Unit(spr, "Spr" + (listView1.Items.Count).ToString("d4")+"_");
+                Unit unit = new Unit(spr, "S" + (listView1.Items.Count).ToString("d3")+"_");
                 ListViewItem item = new ListViewItem(unit.id);
 
                 listView1.Items.Add(item);
@@ -415,6 +419,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
+            
 
             toolStripStatusLabel1.Text = "";
 
@@ -639,6 +644,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                             pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
                             pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
+                            toolStripTextBox3.Text = pictureBox1.Width.ToString();
+                            toolStripTextBox4.Text = pictureBox1.Height.ToString();
                         }
                     }
 
@@ -668,6 +675,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                         pictureBox1.Width = Math.Max(p.rect.X + p.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(p.rect.Y + p.rect.Height, pictureBox1.Height);
+                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
+                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
                     }
                    
                 }
@@ -695,17 +704,19 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 popedWayPoint = null;
                 selectedWayPoint = null;
 
-                foreach (WayPoint p in WayPoints)
-                {
-                    if (p != null)
+                
+                    foreach (WayPoint p in WayPoints)
                     {
-                        p.isCheck = false;
+                        if (p != null)
+                        {
+                            p.isCheck = false;
+                        }
                     }
-                }
+                    
 
                 bool isChecked = false;
 
-                if (isChecked == false)
+                if (isChecked == false && toolStripButton8.Checked)
                 {
                     for (int i = listView1.Items.Count - 1; i >= 0; i--)
                     {
@@ -720,7 +731,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     }
                 }
 
-                if (isChecked == false)
+                if (isChecked == false && toolStripButton9.Checked)
                 {
                     foreach (WayPoint p in WayPoints)
                     {
@@ -740,7 +751,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             }
 
-            if (e.Button == MouseButtons.Right)
+            if (e.Button == MouseButtons.Right && toolStripButton9.Checked)
             {
                 popedWayPoint = null;
 
@@ -1072,6 +1083,41 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             MapMini mini = new MapMini(image);
             mini.Show();
         }
+
+        //fix world size
+        private void toolStripButton15_Click(object sender, EventArgs e)
+        {
+            string x = toolStripTextBox3.Text;
+            if (Cell.Util.stringIsDigit(x, 0, x.Length) >= x.Length &&
+               Cell.Util.stringDigitToInt(x, 0, x.Length) >= 1)
+            {
+                pictureBox1.Width = Cell.Util.stringDigitToInt(x, 0, x.Length);
+                
+            }
+            else
+            {
+                MessageBox.Show("只能输入大于0的数字！");
+                toolStripTextBox3.Focus();
+                return;
+            }
+
+            string y = toolStripTextBox4.Text;
+            if (Cell.Util.stringIsDigit(y, 0, y.Length) >= y.Length &&
+                Cell.Util.stringDigitToInt(y, 0, y.Length) >= 1)
+            {
+                pictureBox1.Height =  Cell.Util.stringDigitToInt(y, 0, y.Length);
+            }
+            else
+            {
+                MessageBox.Show("只能输入大于0的数字！");
+                toolStripTextBox4.Focus();
+                return;
+            }
+
+          
+        }
+
+       
 
        
 
@@ -1405,15 +1451,26 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     g.drawRect(x - w / 2, y - h / 2, w, h);
                     g.setColor(0x80, 0x80, 0x80, 0x80);
                     g.fillRect(x - w / 2, y - h / 2, w, h);
-                }
-                if (select)
-                {
-                    g.setColor(0xff, 0xff, 0xff, 0xff);
-                    g.drawRect(x - w / 2, y - h / 2, w, h);
 
-                    g.drawLine(x, y - h, x, y + h);
-                    g.drawLine(x + w, y, x - w, y);
+                    if (select)
+                    {
+                        g.setColor(0xff, 0xff, 0xff, 0xff);
+                        g.drawRect(x - w / 2, y - h / 2, w, h);
+                        g.drawLine(x, y - h, x, y + h);
+                        g.drawLine(x + w, y, x - w, y);
+                    }
                 }
+                else
+                {
+                    if (select)
+                    {
+                        g.setColor(0xff, 0xff, 0xff, 0xff);
+                        g.drawRect(x - w / 2, y - h / 2, w, h);
+                    }
+                }
+
+                
+               
             }
             else if (map != null)
             {
