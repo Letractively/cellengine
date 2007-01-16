@@ -387,7 +387,6 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                 toolStripTextBox1.Text = CellW.ToString();
                 toolStripTextBox2.Text = CellH.ToString();
-         
             }
             if ((SpriteForm)e.Data.GetData(typeof(SpriteForm)) != null)
             {
@@ -399,6 +398,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 listView1.Items.Add(item);
                 UnitList.Add(item, unit);
 
+                unit.x = -pictureBox1.Location.X + panel1.Width / 2;
+                unit.y = -pictureBox1.Location.Y + panel1.Height / 2;
             }
 
             pictureBox1.Refresh();
@@ -685,6 +686,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             
         }
 
+        Unit selectedUnit;
         int dx = 0;
         int dy = 0;
         WayPoint selectedWayPoint;
@@ -694,102 +696,139 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             dx = e.X;
             dy = e.Y;
 
-            if (e.Button == MouseButtons.Left)
+            try
             {
-                for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                if (e.Button == MouseButtons.Left)
                 {
-                    listView1.Items[i].Selected = false;
-                }
-
-                popedWayPoint = null;
-                selectedWayPoint = null;
-
-                
-                    foreach (WayPoint p in WayPoints)
+                    // dis select
+                    if (toolStripButton14.Checked == false)
                     {
-                        if (p != null)
+                        selectedUnit = null;
+                        for (int i = listView1.Items.Count - 1; i >= 0; i--)
                         {
-                            p.isCheck = false;
+                            listView1.Items[i].Selected = false;
+                        }
+
+                        popedWayPoint = null;
+                        selectedWayPoint = null;
+
+                        foreach (WayPoint p in WayPoints)
+                        {
+                            if (p != null)
+                            {
+                                p.isCheck = false;
+                            }
+                        }
+
+
+                        bool isChecked = false;
+
+                        //select unit
+                        if (isChecked == false && toolStripButton8.Checked)
+                        {
+                            for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                            {
+                                Unit unit = ((Unit)UnitList[listView1.Items[i]]);
+                                if (new Rectangle(unit.x - unit.w / 2, unit.y - unit.h / 2, unit.w, unit.h).Contains(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    listView1.Items[i].Selected = true;
+                                    selectedUnit = unit;
+                                    pictureBox1.Refresh();
+                                    break;
+                                }
+                            }
+                        }
+                        //select way point
+                        if (isChecked == false && toolStripButton9.Checked)
+                        {
+                            foreach (WayPoint p in WayPoints)
+                            {
+                                if (p != null)
+                                {
+                                    if (p.rect.Contains(e.X, e.Y))
+                                    {
+                                        isChecked = true;
+                                        p.isCheck = true;
+                                        selectedWayPoint = p;
+                                        pictureBox1.Refresh();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    else
+                    {
+                        //select unit
+                        if (toolStripButton8.Checked)
+                        {
+                            if (listView1.SelectedItems.Count > 0)
+                            {
+                                Unit unit = ((Unit)UnitList[listView1.SelectedItems[0]]);
+                                if (listView1.SelectedItems[0].Checked)
+                                {
+                                    unit.x = e.X;
+                                    unit.y = e.Y;
+                                }
+                            }
+                        }
+                        //select way point
+                        if (toolStripButton9.Checked)
+                        {
+                            if (selectedWayPoint != null)
+                            {
+                                selectedWayPoint.rect.X = e.X - selectedWayPoint.rect.Width / 2;
+                                selectedWayPoint.rect.Y = e.Y - selectedWayPoint.rect.Height / 2;
+                            }
                         }
                     }
+
                     
-
-                bool isChecked = false;
-
-                if (isChecked == false && toolStripButton8.Checked)
-                {
-                    for (int i = listView1.Items.Count - 1; i >= 0; i--)
-                    {
-                        Unit unit = ((Unit)UnitList[listView1.Items[i]]);
-                        if (new Rectangle(unit.x - unit.w / 2, unit.y - unit.h / 2, unit.w, unit.h).Contains(e.X, e.Y))
-                        {
-                            isChecked = true;
-                            listView1.Items[i].Selected = true;
-                            pictureBox1.Refresh();
-                            break;
-                        }
-                    }
                 }
 
-                if (isChecked == false && toolStripButton9.Checked)
+                if (e.Button == MouseButtons.Right && toolStripButton9.Checked)
                 {
+                    popedWayPoint = null;
+
                     foreach (WayPoint p in WayPoints)
                     {
                         if (p != null)
                         {
                             if (p.rect.Contains(e.X, e.Y))
                             {
-                                isChecked = true;
-                                p.isCheck = true;
-                                selectedWayPoint = p;
-                                pictureBox1.Refresh();
+                                popedWayPoint = p;
+
                                 break;
                             }
                         }
                     }
-                }
 
-            }
-
-            if (e.Button == MouseButtons.Right && toolStripButton9.Checked)
-            {
-                popedWayPoint = null;
-
-                foreach (WayPoint p in WayPoints)
-                {
-                    if (p != null)
+                    if (popedWayPoint == null)
                     {
-                        if (p.rect.Contains(e.X, e.Y))
-                        {
-                            popedWayPoint = p;
-                            
-                            break;
-                        }
+                        menuPath.Items[0].Enabled = false;
+                        menuPath.Items[1].Enabled = false;
+                        menuPath.Items[2].Enabled = false;
+                        menuPath.Items[3].Enabled = true;
+                        menuPath.Items[4].Enabled = false;
                     }
-                }
+                    else
+                    {
+                        menuPath.Items[0].Enabled = true;
+                        menuPath.Items[1].Enabled = true;
+                        menuPath.Items[2].Enabled = true;
+                        menuPath.Items[3].Enabled = false;
+                        menuPath.Items[4].Enabled = true;
+                    }
 
-                if (popedWayPoint == null)
-                {
-                    menuPath.Items[0].Enabled = false;
-                    menuPath.Items[1].Enabled = false;
-                    menuPath.Items[2].Enabled = false;
-                    menuPath.Items[3].Enabled = true;
-                    menuPath.Items[4].Enabled = false;
-                }
-                else
-                {
-                    menuPath.Items[0].Enabled = true;
-                    menuPath.Items[1].Enabled = true;
-                    menuPath.Items[2].Enabled = true;
-                    menuPath.Items[3].Enabled = false;
-                    menuPath.Items[4].Enabled = true;
-                }
+                    menuPath.Opacity = 0.5;
+                    menuPath.Show(pictureBox1, e.Location);
 
-                menuPath.Opacity = 0.5;
-                menuPath.Show(pictureBox1,e.Location);
+                }
+            }catch(Exception err){}
+            pictureBox1.Refresh();
 
-                pictureBox1.Refresh();
-            }
         }
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {

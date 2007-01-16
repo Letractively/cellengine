@@ -376,6 +376,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\Image68.bmp" />
+    <None Include="Resources\Image69.bmp" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
