@@ -946,6 +946,7 @@ namespace CellGameEdit.PM
                             ((int)clipFrame.SubY[i]).ToString("d"),
                             Frame.flipTextTable[(int)clipFrame.SubFlip[i]]}
                    );
+                    item.Checked = true;
                     listView3.Items.Add(item);
 
                     framesGetCurFrame().addSub(
@@ -988,6 +989,7 @@ namespace CellGameEdit.PM
                             ((int)clipFrame.CDH[i]).ToString("d"),
                             Frame.CDtypeTextTable[((int)clipFrame.CDType[i])]}
                     );
+                    item.Checked = true;
                     listView4.Items.Add(item);
 
                     framesGetCurFrame().addCD(
@@ -1032,7 +1034,7 @@ namespace CellGameEdit.PM
                             ((int)clipFrame.SubY[i]).ToString("d"),
                             Frame.flipTextTable[(int)clipFrame.SubFlip[i]]}
                        );
-
+                        item.Checked = true;
                         curFrame.addSub(
                             item,
                             (int)clipFrame.SubIndex[i],
@@ -1079,7 +1081,7 @@ namespace CellGameEdit.PM
                             ((int)clipFrame.CDH[i]).ToString("d"),
                             Frame.CDtypeTextTable[((int)clipFrame.CDType[i])]}
                         );
-
+                        item.Checked = true;
                         curFrame.addCD(
                             item,
                             (int)clipFrame.CDMask[i],
@@ -1107,6 +1109,7 @@ namespace CellGameEdit.PM
                     ((int)(-srcImage.getHeight()/2)).ToString("d"),
                     Frame.flipTextTable[0] }
                     );
+                item.Checked = true;
                 listView3.Items.Add(item);
 
                 framesGetCurFrame().addSub(
@@ -1134,6 +1137,7 @@ namespace CellGameEdit.PM
                     srcImage.getHeight().ToString("d"),
                     Frame.CDtypeTextTable[Frame.CD_TYPE_MAP]}
                     );
+                item.Checked = true;
                 listView4.Items.Add(item);
 
                 framesGetCurFrame().addCD(
@@ -1499,6 +1503,8 @@ namespace CellGameEdit.PM
                 listView3.SelectedItems.Clear();
                 foreach (ListViewItem item in listView3.Items)
                 {
+                    if (item.Checked == false) continue;
+
                     System.Drawing.RectangleF rect = new System.Drawing.RectangleF(
                         Int32.Parse(item.SubItems[1].Text) * masterScale,
                         Int32.Parse(item.SubItems[2].Text) * masterScale,
@@ -1519,6 +1525,8 @@ namespace CellGameEdit.PM
                 listView4.SelectedItems.Clear();
                 foreach (ListViewItem item in listView4.Items)
                 {
+                    if (item.Checked == false) continue;
+
                     System.Drawing.RectangleF rect = new System.Drawing.RectangleF(
                         Int32.Parse(item.SubItems[1].Text) * masterScale,
                         Int32.Parse(item.SubItems[2].Text) * masterScale,
@@ -2139,6 +2147,7 @@ namespace CellGameEdit.PM
                     ((int)SubY[i]).ToString("d"),
                     Frame.flipTextTable[(int)SubFlip[i]] }
                     );
+                item.Checked = true;
                 SubTable.Add(item);
                 SubSelected.Add(false);
             }
@@ -2154,6 +2163,7 @@ namespace CellGameEdit.PM
                     ((int)CDH[i]).ToString("d"),
                      Frame.CDtypeTextTable[(int)CDType[i]]}
                     );
+                item.Checked = true;
                 CDTable.Add(item);
                 CDSelected.Add(false);
             }
