@@ -604,7 +604,8 @@ namespace CellGameEdit.PM
 
             try
             {
-                Frame curFrame = (Frame)((ArrayList)AnimTable[listView2.Items[anim]])[frame];
+
+                Frame curFrame = (Frame)((ArrayList)AnimTable[listView2.Items[anim]])[frame % GetFrameCount(anim)];
 
                 if (curFrame != null)
                 {
@@ -612,21 +613,36 @@ namespace CellGameEdit.PM
 
                     if (tag)
                     {
-                        curFrame.renderCD(
-                            g,
-                            x,
-                            y,
-                            1);
+                        curFrame.renderCD(g,x,y,1);
                     }
                 }
 
             }catch(Exception err){
             }
-            
-           
 
         }
-
+        public int GetFrameCount(int animID)
+        {
+            try
+            {
+                return ((ArrayList)AnimTable[listView2.Items[animID]]).Count;
+            }
+            catch (Exception err)
+            {
+                return -1;
+            }
+        }
+        public int GetAnimateCount()
+        {
+            try
+            {
+                return listView2.Items.Count;
+            }
+            catch (Exception err)
+            {
+                return -1;
+            }
+        }
 // src tile
         private Image srcGetImage(int index)
         {
@@ -1506,12 +1522,23 @@ namespace CellGameEdit.PM
                     if (item.Checked == false) continue;
 
                     System.Drawing.RectangleF rect = new System.Drawing.RectangleF(
-                        Int32.Parse(item.SubItems[1].Text) * masterScale,
-                        Int32.Parse(item.SubItems[2].Text) * masterScale,
-                        srcGetImage(Int32.Parse(item.SubItems[0].Text)).getWidth() * masterScale,
-                        srcGetImage(Int32.Parse(item.SubItems[0].Text)).getHeight() * masterScale
-                        );
-                    if (rect.Contains(x,y))
+                           Int32.Parse(item.SubItems[1].Text) * masterScale,
+                           Int32.Parse(item.SubItems[2].Text) * masterScale,
+                           srcGetImage(Int32.Parse(item.SubItems[0].Text)).getWidth() * masterScale,
+                           srcGetImage(Int32.Parse(item.SubItems[0].Text)).getHeight() * masterScale
+                           );
+
+                    if (item.SubItems[3].Text == Frame.flipTextTable[1] ||
+                        item.SubItems[3].Text == Frame.flipTextTable[3] ||
+                        item.SubItems[3].Text == Frame.flipTextTable[5] ||
+                        item.SubItems[3].Text == Frame.flipTextTable[7] )
+                    {
+                        float temp = rect.Width;
+                        rect.Width = rect.Height;
+                        rect.Height = temp;
+                    }
+
+                    if (rect.Contains(x, y))
                     {
                         px = x - rect.X;
                         py = y - rect.Y;
@@ -2218,6 +2245,11 @@ namespace CellGameEdit.PM
                 }
             }
             return -1;
+        }
+
+        public int indexOfKey(ListViewItem key)
+        {
+            return SubTable.IndexOf(key);
         }
 
         public int getSubCount()
