@@ -363,7 +363,7 @@ public class CSprite extends CUnit {
 	 * @return 
 	 */
 	static public boolean touch_Spr_Map(CSprite spr,int type,CMap map){
-		if(spr.haveMapBlock){
+		
 			switch(type){
 			case CD_TYPE_MAP:
 				for(int sub=0;sub<spr.collides.Frames[spr.FrameCDMap[spr.CurAnimate][spr.CurFrame]].length;sub++){
@@ -382,7 +382,7 @@ public class CSprite extends CUnit {
 					if(touch_SprSub_Map(spr,type,sub,map))return true;
 				}
 			}
-		}
+		
 		return false;
 	}
 	/**
@@ -394,7 +394,7 @@ public class CSprite extends CUnit {
 	 * @return 
 	 */
 	static public boolean touch_SprSub_Map(CSprite spr,int type,int sub,CMap map){
-		if(spr.haveMapBlock){
+		
 			int mbx = (spr.X+spr.getCurrentCD(type,sub).X1)/map.CellW-((spr.X+spr.getCurrentCD(type,sub).X1)<0?1:0);//
 			int mby = (spr.Y+spr.getCurrentCD(type,sub).Y1)/map.CellH-((spr.Y+spr.getCurrentCD(type,sub).Y1)<0?1:0);//
 			int mbw = (spr.X+spr.getCurrentCD(type,sub).X2)/map.CellW-((spr.X+spr.getCurrentCD(type,sub).X2)<0?1:0);//
@@ -432,7 +432,7 @@ public class CSprite extends CUnit {
 					}
 				}
 			}
-		}
+		
 		return false;
 	}
 	

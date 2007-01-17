@@ -230,8 +230,8 @@ public class CMap extends CUnit {
 	protected void renderCell(Graphics g, int x, int y, int cellX, int cellY) {
 		if(MatrixTile[cellY][cellX]>=0){
 			Tiles.renderSingle(g, MatrixTile[cellY][cellX], x, y);
-		}else if(!IsAnimate){
-			Tiles.renderSingleSub(g, MatrixTile[cellY][cellX], 0, x, y);
+		}else{
+			Tiles.renderSingleSub(g, -MatrixTile[cellY][cellX], 0, x, y);
 		}
 //#ifdef _DEBUG
 		if(IsDebug && MatrixFlag[cellY][cellX]>0){
@@ -250,7 +250,6 @@ public class CMap extends CUnit {
 	 * @param cellY 
 	 */
 	protected void renderAnimateCell(Graphics g, int index, int x, int y, int cellX, int cellY){
-		
 			if(MatrixTile[cellY][cellX]<0){
 				Tiles.renderSingleSub(g, 
 						-MatrixTile[cellY][cellX],
