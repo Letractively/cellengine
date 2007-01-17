@@ -34,7 +34,8 @@ namespace CellGameEdit.PM
         Image srcImage;
         System.Drawing.Rectangle srcRect;
 
-        float masterScale = 1;
+        int masterScale = 1;
+        int srcScale = 1;
 
         static public int[] flipTableJ2me = new int[]{
             Cell.Game.CImages.TRANS_NONE,
@@ -524,15 +525,15 @@ namespace CellGameEdit.PM
 
 
                 for (int i = 0; i < frameAnimate.Length; i++)
-                    outFrameAnimate += "{" + Util.toTextArray(frameAnimate[i]) + "},";
+                    outFrameAnimate += "{" + Util.toTextArray(frameAnimate[i]) + "},\r\n";
                 for (int i = 0; i < frameCDMap.Length; i++)
-                    outFrameCDMap += "{" + Util.toTextArray(frameCDMap[i]) + "},";
+                    outFrameCDMap += "{" + Util.toTextArray(frameCDMap[i]) + "},\r\n";
                 for (int i = 0; i < frameCDAtk.Length; i++)
-                    outFrameCDAtk += "{" + Util.toTextArray(frameCDAtk[i]) + "},";
+                    outFrameCDAtk += "{" + Util.toTextArray(frameCDAtk[i]) + "},\r\n";
                 for (int i = 0; i < frameCDDef.Length; i++)
-                    outFrameCDDef += "{" + Util.toTextArray(frameCDDef[i]) + "},";
+                    outFrameCDDef += "{" + Util.toTextArray(frameCDDef[i]) + "},\r\n";
                 for (int i = 0; i < frameCDExt.Length; i++)
-                    outFrameCDExt += "{" + Util.toTextArray(frameCDExt[i]) + "},";
+                    outFrameCDExt += "{" + Util.toTextArray(frameCDExt[i]) + "},\r\n";
                
                 sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
                     new string[] { 
@@ -656,7 +657,7 @@ namespace CellGameEdit.PM
         {
             if (srcGetImage(index) != null && flip < Frame.flipTable.Length)
             {
-                g.drawImage(srcGetImage(index), x, y, Frame.flipTable[flip], 0);
+                g.drawImage(srcGetImage(index), x, y, Frame.flipTable[flip], 0, srcScale);
             }
 
         }
@@ -666,13 +667,13 @@ namespace CellGameEdit.PM
             {
                 if (srcGetImage(i) != null &&
                     screen.IntersectsWith(new System.Drawing.Rectangle(
-                        x + srcGetImage(i).x,
-                        y + srcGetImage(i).y,
-                        srcGetImage(i).getWidth() + 1,
-                        srcGetImage(i).getHeight() + 1)
+                        x + srcGetImage(i).x * srcScale,
+                        y + srcGetImage(i).y * srcScale,
+                        srcGetImage(i).getWidth() * srcScale,
+                        srcGetImage(i).getHeight() * srcScale)
                     ))
                 {
-                    srcRender(g, i, 0, x + srcGetImage(i).x, y + srcGetImage(i).y);
+                    srcRender(g, i, 0, x + srcGetImage(i).x * srcScale, y + srcGetImage(i).y * srcScale);
                 }
             }
             
@@ -687,10 +688,10 @@ namespace CellGameEdit.PM
                 {
                     if (srcGetImage(i) != null)
                     {
-                        dst.X = srcGetImage(i).x;
-                        dst.Y = srcGetImage(i).y;
-                        dst.Width = srcGetImage(i).getWidth();
-                        dst.Height = srcGetImage(i).getHeight();
+                        dst.X = srcGetImage(i).x * srcScale;
+                        dst.Y = srcGetImage(i).y * srcScale;
+                        dst.Width = srcGetImage(i).getWidth() * srcScale;
+                        dst.Height = srcGetImage(i).getHeight() * srcScale;
 
                         if (dst.Contains(e.X, e.Y))
                         {
@@ -720,11 +721,11 @@ namespace CellGameEdit.PM
                 {
                     pictureBox1.Width = Math.Max(
                         pictureBox1.Width,
-                        srcGetImage(i).x + srcGetImage(i).getWidth()
+                        (srcGetImage(i).x + srcGetImage(i).getWidth()) * srcScale
                         );
                     pictureBox1.Height = Math.Max(
                         pictureBox1.Height,
-                        srcGetImage(i).y + srcGetImage(i).getHeight()
+                        (srcGetImage(i).y + srcGetImage(i).getHeight()) * srcScale
                         );
                     //break;
                 }
@@ -738,8 +739,8 @@ namespace CellGameEdit.PM
                 new System.Drawing.Rectangle(
                     -pictureBox1.Location.X,
                     -pictureBox1.Location.Y,
-                    panel1.Width,
-                    panel1.Height
+                    (int)(panel1.Width * srcScale),
+                    (int)(panel1.Height * srcScale)
                 )
             );
 
@@ -747,8 +748,24 @@ namespace CellGameEdit.PM
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
 
             e.Graphics.FillRectangle(brush, srcRect);
-            e.Graphics.DrawRectangle(pen, srcRect.X, srcRect.Y, srcRect.Width - 1, srcRect.Height - 1);
+            e.Graphics.DrawRectangle(pen, srcRect.X, srcRect.Y, srcRect.Width - 1, srcRect.Height );
         }
+
+        // +
+        private void toolStripButton31_Click(object sender, EventArgs e)
+        {
+            srcScale += 1;
+            if (srcScale > 8) srcScale = 8;
+            pictureBox1.Refresh();
+        }
+        // -
+        private void toolStripButton32_Click(object sender, EventArgs e)
+        {
+            srcScale -= 1;
+            if (srcScale < 1) srcScale = 1;
+            pictureBox1.Refresh();
+        }
+
 // dst part
 
         Boolean dstRefreshEnable = true;
@@ -1972,6 +1989,8 @@ namespace CellGameEdit.PM
             }
         }
 
+
+
         private ArrayList animGetCurFrames()
         {
             if (listView2.Items.Count > 0 &&
@@ -2014,7 +2033,67 @@ namespace CellGameEdit.PM
             framesRefersh();
         }
 
+        // up
+        private void toolStripButton29_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listView2.Items.Count > 0 &&
+                   listView2.SelectedItems != null &&
+                   listView2.SelectedItems.Count > 0)
+                {
+                    int index = listView2.Items.IndexOf(listView2.SelectedItems[0]);
+                    if (index > 0)
+                    {
+                        ListViewItem src = listView2.Items[index - 1];
+                        ListViewItem dst = listView2.Items[index];
 
+                        listView2.Items.RemoveAt(index - 1);
+                        listView2.Items.RemoveAt(index - 1);
+
+                        listView2.Items.Insert(index - 1, src);
+                        listView2.Items.Insert(index - 1, dst);
+
+                        dst.Selected = true;
+                        dst.Focused = true;
+                    }
+
+                }
+                framesRefersh();
+            }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            
+        }
+        // down
+        private void toolStripButton30_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listView2.Items.Count > 0 &&
+                   listView2.SelectedItems != null &&
+                   listView2.SelectedItems.Count > 0)
+                {
+                    int index = listView2.Items.IndexOf(listView2.SelectedItems[0]);
+                    if (index >= 0 && index < listView2.Items.Count - 1)
+                    {
+                        ListViewItem src = listView2.Items[index + 1];
+                        ListViewItem dst = listView2.Items[index];
+
+                        listView2.Items.RemoveAt(index);
+                        listView2.Items.RemoveAt(index);
+
+                        listView2.Items.Insert(index, dst);
+                        listView2.Items.Insert(index, src);
+
+                        dst.Selected = true;
+                        dst.Focused = true;
+                    }
+
+                }
+                framesRefersh();
+            }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+        }
 // timer
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -2043,6 +2122,10 @@ namespace CellGameEdit.PM
         
         
         }
+
+
+
+      
 
         
 
