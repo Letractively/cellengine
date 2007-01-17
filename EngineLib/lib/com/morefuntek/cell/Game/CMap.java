@@ -182,7 +182,7 @@ public class CMap extends CUnit {
 		return MatrixFlag[by][bx];
 	}
 	public int getTile(int bx,int by){
-		return MatrixTile[by][bx];
+		return Math.abs(MatrixTile[by][bx]);
 	}
 	public void putFlag(int bx,int by,int data){
 		MatrixFlag[by][bx] = (short)data;
