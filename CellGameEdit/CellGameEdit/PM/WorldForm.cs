@@ -55,7 +55,7 @@ namespace CellGameEdit.PM
                     try
                     {
                         Unit unit = ((Unit)Units[i]);
-                        ListViewItem item = new ListViewItem(unit.id);
+                        ListViewItem item = new ListViewItem(new String[] { unit.id , unit.animID.ToString()});
                         listView1.Items.Add(item);
                         UnitList.Add(item, unit);
                         pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
@@ -214,8 +214,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string X = ((Unit)maps[i]).x.ToString();
                         string Y = ((Unit)maps[i]).y.ToString();
                         string ID = ((Unit)maps[i]).id;
+                       
                         map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", },
+                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" },
                                new string[] { ID, i.ToString(), X, Y, });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
@@ -240,9 +241,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string X = ((Unit)sprs[i]).x.ToString();
                         string Y = ((Unit)sprs[i]).y.ToString();
                         string ID = ((Unit)sprs[i]).id;
+                        string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", },
-                               new string[] { ID, i.ToString(), X, Y, });
+                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>" },
+                               new string[] { ID, i.ToString(), X, Y, ANIM_ID});
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
                     if (temp == null)
@@ -329,12 +331,16 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
                     new string[] { 
                         "<NAME>", 
+                        "<WIDTH>",
+                        "<HEIGHT>",
                         "<UNIT MAP COUNT>" ,
                         "<UNIT SPRITE COUNT>",
                         "<WAYPOINT COUNT>"
                     },
                     new string[] { 
                         this.id, 
+                        pictureBox1.Width.ToString(),
+                        pictureBox1.Height.ToString(),
                         maps.Count.ToString(),
                         sprs.Count.ToString(),
                         WayPoints.Count.ToString()
@@ -374,7 +380,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 MapForm map = ((MapForm)e.Data.GetData(typeof(MapForm)));
 
                 Unit unit = new Unit(map, "M" + (listView1.Items.Count).ToString("d3")+"_");
-                ListViewItem item = new ListViewItem(unit.id);
+                ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
 
                 listView1.Items.Add(item);
                 UnitList.Add(item, unit);
@@ -393,7 +399,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 SpriteForm spr = ((SpriteForm)e.Data.GetData(typeof(SpriteForm)));
 
                 Unit unit = new Unit(spr, "S" + (listView1.Items.Count).ToString("d3")+"_");
-                ListViewItem item = new ListViewItem(unit.id);
+                ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
 
                 listView1.Items.Add(item);
                 UnitList.Add(item, unit);
@@ -420,9 +426,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
+            toolStripStatusLabel1.Text = "当前坐标:X=" + (-pictureBox1.Location.X) + ",Y=" + (-pictureBox1.Location.Y);
             
-
-            toolStripStatusLabel1.Text = "";
 
             // draw units
             if (toolStripButton7.Checked || toolStripButton8.Checked)
@@ -635,11 +640,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                             }
                             else
                             {
-                                unit.x = e.X - e.X % CellW + CellW / 2;
-                                unit.y = e.Y - e.Y % CellH + CellH / 2;
+                                unit.x = e.X - e.X % CellW ;
+                                unit.y = e.Y - e.Y % CellH ;
 
-                                if (unit.x < 0) unit.x = CellW / 2;
-                                if (unit.y < 0) unit.y = CellH / 2;
+                                if (unit.x < 0) unit.x = 0;
+                                if (unit.y < 0) unit.y = 0;
                             }
                            
 
@@ -666,11 +671,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         }
                         else
                         {
-                            p.rect.X = e.X - e.X % CellW + CellW / 2 - p.rect.Width/2;
-                            p.rect.Y = e.Y - e.Y % CellH + CellH / 2 - p.rect.Height/2;
+                            p.rect.X = e.X - e.X % CellW ;
+                            p.rect.Y = e.Y - e.Y % CellH ;
 
-                            if (p.rect.X < 0) p.rect.X = CellW / 2 - p.rect.Width/2;
-                            if (p.rect.Y < 0) p.rect.Y = CellH / 2 - p.rect.Height/2;
+                            if (p.rect.X < 0) p.rect.X = 0;
+                            if (p.rect.Y < 0) p.rect.Y = 0;
                         }
                       
 
@@ -1008,9 +1013,72 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             try
             {
-                Unit unit = ((Unit)UnitList[listView1.Items[e.Item]]);
-                unit.id = e.Label;
+                if (!e.CancelEdit)
+                {
+                    Unit unit = ((Unit)UnitList[listView1.Items[e.Item]]);
+                    unit.id = e.Label;
 
+                    //listView1.Items[e.Item].SubItems[1].
+                }
+                
+            }catch(Exception err){
+                Console.WriteLine(this.id + " Unit Lable Error : "+err.Message);
+            }
+        }
+
+        // change sprite id
+        private void toolStripDropDownButton1_DropDownOpening(object sender, EventArgs e)
+        {
+            try
+            {
+                toolStripDropDownButton1.DropDownItems.Clear();
+
+                foreach (ListViewItem item in listView1.SelectedItems)
+                {
+                    Unit unit = ((Unit)UnitList[item]);
+
+                    if (unit.type == "Sprite")
+                    {
+                        for (int i = 0; i < unit.spr.GetAnimateCount(); i++)
+                        {
+                            System.Drawing.Image icon = new System.Drawing.Bitmap(64, 64);
+                            System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(icon);
+                            unit.spr.Render(
+                                new javax.microedition.lcdui.Graphics(g),
+                                32, 32, false, i, 0);
+
+                            ToolStripMenuItem pop = new ToolStripMenuItem();
+                            pop.Text = "Anim " + i.ToString();
+                            pop.Image = icon;
+                            pop.ImageScaling = ToolStripItemImageScaling.None;
+
+                            toolStripDropDownButton1.DropDownItems.Add(pop);
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (Exception err) { }
+
+        }
+
+        private void toolStripDropDownButton1_DropDownItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            try
+            {
+                int index = toolStripDropDownButton1.DropDownItems.IndexOf(e.ClickedItem);
+                foreach (ListViewItem item in listView1.SelectedItems)
+                {
+                    Unit unit = ((Unit)UnitList[item]);
+
+                    if (unit.type == "Sprite")
+                    {
+                        item.SubItems[1].Text = index.ToString();
+                        unit.animID = index;
+                        break;
+                    }
+                }
+                pictureBox1.Refresh();
             }catch(Exception err){}
         }
 
@@ -1068,6 +1136,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             System.Drawing.Image image = new System.Drawing.Bitmap(pictureBox1.Width, pictureBox1.Height);
             System.Drawing.Graphics dg = System.Drawing.Graphics.FromImage(image);
+            dg.Clear(pictureBox1.BackColor);
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(dg);
 
             // draw units
@@ -1225,6 +1294,18 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
           
         }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (toolStripButton16.Checked)
+            {
+                pictureBox1.Refresh();
+                Unit.frameID++;
+            }
+        }
+
+       
+
 
        
 
@@ -1430,32 +1511,42 @@ foreach (WayPoint l in p.link){try{if (l != null){//
     [Serializable]
     public partial class Unit : ISerializable
     {
+        static public int frameID = 0;
+
         public String id = "null";
         public String type = "null";
 
-        SpriteForm spr = null;
-        MapForm map = null;
+        public SpriteForm spr = null;
+        public MapForm map = null;
 
+        public int animID = 0;
+        
         public int x=0;
         public int y=0;
         public int w=8;
         public int h=8;
         //public 
 
+
         public Unit(SpriteForm spr,String no)
         {
-            this.id = no+spr.id;
+            this.id = no + spr.id;
             this.spr = spr;
-            this.w = 8;
-            this.h = 8;
+            this.animID = 0;
+
+            this.w = 10;
+            this.h = 10;
+
             this.type = "Sprite";
+
+            
         }
         public Unit(MapForm map,String no)
         {
-            this.id = no+map.id;
+            this.id = no + map.id;
             this.map = map;
-            this.w = 8;
-            this.h = 8;
+            this.w = 10;
+            this.h = 10;
             this.type = "Map";
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -1466,7 +1557,14 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 id = (String)info.GetValue("id", typeof(String));
                 x = (int)info.GetValue("x", typeof(int));
                 y = (int)info.GetValue("y", typeof(int));
-
+                try
+                {
+                    animID = (int)info.GetValue("animID", typeof(int));
+                }
+                catch (Exception err)
+                {
+                    animID = 0;
+                }
                 if ((MapForm)info.GetValue("map", typeof(MapForm)) != null)
                 {
                     map = (MapForm)info.GetValue("map", typeof(MapForm));
@@ -1493,6 +1591,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 info.AddValue("id", id);
                 info.AddValue("x", x);
                 info.AddValue("y", y);
+                info.AddValue("animID",animID);
                 try
                 {
                     info.AddValue("map", map);
@@ -1552,14 +1651,15 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             if (spr != null )
             {
-                spr.Render(g,x,y,debug,0,0);
+               
+                spr.Render(g, x, y, debug, animID, frameID);
 
                 if (selected)
                 {
                     g.setColor(0xff, 0xff, 0xff, 0xff);
                     g.drawRect(x - w / 2, y - h / 2, w, h);
-                    g.setColor(0x80, 0x80, 0x80, 0x80);
-                    g.fillRect(x - w / 2, y - h / 2, w, h);
+                    g.drawLine(x, y - h, x, y + h);
+                    g.drawLine(x + w, y, x - w, y);
 
                     if (select)
                     {
@@ -1583,7 +1683,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
             else if (map != null)
             {
-                map.Render(g, x, y, scope, false, debug, false, 0);
+                map.Render(g, x, y, scope, false, debug, true, frameID);
             }
 
             
