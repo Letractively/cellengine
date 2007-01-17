@@ -17,6 +17,9 @@ import com.morefuntek.cell.CObject;
  */
 public class CWorld extends CObject {
 
+	public int Width;
+	public int Height;
+	
 	public Vector 		Sprs = new Vector(0);
 	public CMap 		Map;
 	public CCamera 		Camera;
