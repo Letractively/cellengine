@@ -575,13 +575,13 @@ namespace CellGameEdit.PM
                 // tile matrix
                 String senceMatrix = "";
                 for (int i = 0; i < YCount; i++)
-                    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},";
+                    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
 
 
                 // cd matrix
                 String cdMatrix = "";
                 for (int i = 0; i < YCount; i++)
-                    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},";
+                    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
 
 
                 map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",

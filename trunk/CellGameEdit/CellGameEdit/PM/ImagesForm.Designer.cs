@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImagesForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -95,7 +94,7 @@
             this.splitContainer2.Panel2.AutoScroll = true;
             this.splitContainer2.Panel2.Controls.Add(this.panel5);
             this.splitContainer2.Size = new System.Drawing.Size(704, 424);
-            this.splitContainer2.SplitterDistance = 270;
+            this.splitContainer2.SplitterDistance = 394;
             this.splitContainer2.TabIndex = 2;
             // 
             // splitContainer3
@@ -113,7 +112,7 @@
             // 
             this.splitContainer3.Panel2.AutoScroll = true;
             this.splitContainer3.Panel2.Controls.Add(this.panel2);
-            this.splitContainer3.Size = new System.Drawing.Size(704, 270);
+            this.splitContainer3.Size = new System.Drawing.Size(704, 394);
             this.splitContainer3.SplitterDistance = 395;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -126,7 +125,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(395, 270);
+            this.panel1.Size = new System.Drawing.Size(395, 394);
             this.panel1.TabIndex = 1;
             // 
             // panel4
@@ -137,7 +136,7 @@
             this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel4.Location = new System.Drawing.Point(0, 25);
             this.panel4.Name = "panel4";
-            this.panel4.Size = new System.Drawing.Size(395, 223);
+            this.panel4.Size = new System.Drawing.Size(395, 347);
             this.panel4.TabIndex = 2;
             // 
             // pictureBox1
@@ -210,21 +209,23 @@
             // toolStripButton7
             // 
             this.toolStripButton7.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton7.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton7.Image")));
+            this.toolStripButton7.Image = global::CellGameEdit.Resource1.Image66;
+            this.toolStripButton7.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton7.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton7.Name = "toolStripButton7";
             this.toolStripButton7.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton7.Text = "toolStripButton7";
+            this.toolStripButton7.Text = "放大";
             this.toolStripButton7.Click += new System.EventHandler(this.toolStripButton7_Click);
             // 
             // toolStripButton8
             // 
             this.toolStripButton8.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.toolStripButton8.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton8.Image")));
+            this.toolStripButton8.Image = global::CellGameEdit.Resource1.Image67;
+            this.toolStripButton8.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton8.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton8.Name = "toolStripButton8";
             this.toolStripButton8.Size = new System.Drawing.Size(23, 22);
-            this.toolStripButton8.Text = "toolStripButton8";
+            this.toolStripButton8.Text = "缩小";
             this.toolStripButton8.Click += new System.EventHandler(this.toolStripButton8_Click);
             // 
             // toolStripSeparator4
@@ -311,7 +312,7 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel3});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 248);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 372);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(395, 22);
             this.statusStrip1.TabIndex = 1;
@@ -332,7 +333,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(305, 270);
+            this.panel2.Size = new System.Drawing.Size(305, 394);
             this.panel2.TabIndex = 1;
             // 
             // panel3
@@ -344,7 +345,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 25);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(305, 223);
+            this.panel3.Size = new System.Drawing.Size(305, 347);
             this.panel3.TabIndex = 2;
             // 
             // pictureBox2
@@ -364,7 +365,7 @@
             // 
             this.statusStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip2.Location = new System.Drawing.Point(0, 248);
+            this.statusStrip2.Location = new System.Drawing.Point(0, 372);
             this.statusStrip2.Name = "statusStrip2";
             this.statusStrip2.Size = new System.Drawing.Size(305, 22);
             this.statusStrip2.TabIndex = 3;
@@ -415,7 +416,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel5.Location = new System.Drawing.Point(0, 0);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(704, 150);
+            this.panel5.Size = new System.Drawing.Size(704, 26);
             this.panel5.TabIndex = 0;
             // 
             // ImagesForm

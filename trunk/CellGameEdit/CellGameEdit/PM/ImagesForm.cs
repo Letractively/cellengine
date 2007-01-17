@@ -352,15 +352,15 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
                 srcImage = Image.createImage(openFileDialog1.FileName);
 
-                pictureBox1.Width = srcImage.getWidth();
-                pictureBox1.Height = srcImage.getHeight();
+                pictureBox1.Width = srcImage.getWidth() * srcSize;
+                pictureBox1.Height = srcImage.getHeight() * srcSize;
 
                 toolStripButton2.Checked = false;
                 toolStripButton3.Checked = false;
 
                 toolStripStatusLabel3.Text =
-                  " : 图片宽=" + pictureBox1.Width +
-                  " : 图片高=" + pictureBox1.Height
+                  " : 图片宽=" + srcImage.getWidth() +
+                  " : 图片高=" + srcImage.getHeight()
                 ;
             }
          
@@ -619,7 +619,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         public void renderSrcImage(Graphics g, int x, int y)
         {
             if (srcImage == null) return;
-            g.drawImage(srcImage, x, y,0);
+            g.drawImage(srcImage, x, y, 0, 0, srcSize);
         }
 
         public void renderDstImage(Graphics g, int x, int y)
@@ -733,28 +733,28 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0x80, 0x80, 0x80)).Brush;
 
 
-            dg.DrawLine(pen, srcQX, 0, srcQX, pictureBox1.Height);
-            dg.DrawLine(pen, 0, srcQY, pictureBox1.Width, srcQY);
+            dg.DrawLine(pen, srcQX * srcSize, 0, srcQX * srcSize, pictureBox1.Height);
+            dg.DrawLine(pen, 0, srcQY * srcSize, pictureBox1.Width, srcQY * srcSize);
 
             pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xFF, 0, 0, 0));
 
             if (toolStripButton2.Checked)
             {
-                dg.FillRectangle(brush, srcRect);
-                dg.DrawRectangle(pen, srcRect.X, srcRect.Y, srcRect.Width - 1, srcRect.Height - 1);
+                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
+                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
             }
             else if (toolStripButton3.Checked)
             {
-                dg.FillRectangle(brush, srcRect);
+                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
                 for (int x = srcRect.X; x < srcRect.X + srcRect.Width; x += CellW)
                 {
-                    dg.DrawLine(System.Drawing.Pens.White, x, srcRect.Y, x, srcRect.Y + srcRect.Height - 1);
+                    dg.DrawLine(System.Drawing.Pens.White, x * srcSize, srcRect.Y * srcSize, x * srcSize, srcRect.Y * srcSize + (srcRect.Height-1) * srcSize );
                 }
                 for (int y = srcRect.Y; y < srcRect.Y + srcRect.Height; y += CellH)
                 {
-                    dg.DrawLine(System.Drawing.Pens.White, srcRect.X, y, srcRect.X + srcRect.Width - 1, y);
+                    dg.DrawLine(System.Drawing.Pens.White, srcRect.X * srcSize, y * srcSize, srcRect.X * srcSize + (srcRect.Width -1) * srcSize, y * srcSize);
                 }
-                dg.DrawRectangle(pen, srcRect.X, srcRect.Y, srcRect.Width - 1, srcRect.Height - 1);
+                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
             }
         }
 
@@ -766,20 +766,18 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             toolStripStatusLabel3.Text =
-                        " : X=" + e.X +
-                        " : Y=" + e.Y +
-                        " : 图片宽=" + pictureBox1.Width +
-                        " : 图片高=" + pictureBox1.Height
+                        " : X=" + e.X / srcSize +
+                        " : Y=" + e.Y / srcSize +
+                        " : 图片宽=" + pictureBox1.Width / srcSize +
+                        " : 图片高=" + pictureBox1.Height / srcSize 
                     ;
-            srcQX = e.X < 0 ? 0 : (e.X > pictureBox1.Width ? pictureBox1.Width : e.X);
-            srcQY = e.Y < 0 ? 0 : (e.Y > pictureBox1.Height ? pictureBox1.Height : e.Y);
+            srcQX = (e.X < 0 ? 0 : (e.X > pictureBox1.Width ? pictureBox1.Width : e.X)) / srcSize;
+            srcQY = (e.Y < 0 ? 0 : (e.Y > pictureBox1.Height ? pictureBox1.Height : e.Y)) / srcSize;
 
             if (toolStripButton2.Checked || toolStripButton3.Checked)
             {
                 if (srcRectIsDown)
                 {
-                   
-
                     srcRect.X = Math.Min(srcPX, srcQX);
                     srcRect.Width = Math.Abs(srcPX - srcQX);
                     srcRect.Y = Math.Min(srcPY, srcQY);
@@ -805,10 +803,10 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         }
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            srcPX = e.X;
-            srcPY = e.Y;
-            srcQX = e.X;
-            srcQY = e.Y;
+            srcPX = e.X / srcSize;
+            srcPY = e.Y / srcSize;
+            srcQX = e.X / srcSize;
+            srcQY = e.Y / srcSize;
 
             if (toolStripButton2.Checked || toolStripButton3.Checked)
             {
@@ -827,8 +825,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         private void pictureBox1_MouseUp(object sender, MouseEventArgs e)
         {
 
-            srcQX = e.X;
-            srcQY = e.Y;
+            srcQX = e.X / srcSize;
+            srcQY = e.Y / srcSize;
 
             srcRectIsDown = false;
             pictureBox1.Refresh();
@@ -836,13 +834,36 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            //pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            //pictureBox1.Width *= 2;
-            //pictureBox1.Height *= 2;
+            srcSize += 1;
+            if (srcSize > 8) srcSize = 8;
+
+            try
+            {
+                if (getSrcImage() != null)
+                {
+                    pictureBox1.Width = getSrcImage().getWidth() * srcSize;
+                    pictureBox1.Height = getSrcImage().getHeight() * srcSize;
+                    pictureBox1.Refresh();
+                }
+            }catch(Exception err){}
+
         }
         private void toolStripButton8_Click(object sender, EventArgs e)
         {
 
+            srcSize -= 1;
+            if (srcSize < 1) srcSize = 1;
+
+            try
+            {
+                if (getSrcImage() != null)
+                {
+                    pictureBox1.Width = getSrcImage().getWidth() * srcSize;
+                    pictureBox1.Height = getSrcImage().getHeight() * srcSize;
+                    pictureBox1.Refresh();
+                }
+            }
+            catch (Exception err) { }
         }
         // dst edit
 
