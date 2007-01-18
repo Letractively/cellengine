@@ -95,6 +95,8 @@ public class CCamera extends CUnit {
 		
 		WindowX = windowX;
 		WindowY = windowY;
+		WindowW = windowW;
+		WindowH = windowH;
 		
 		Map = map;
 		
@@ -106,18 +108,27 @@ public class CCamera extends CUnit {
 		MapW = Map.getWidth();
 		MapH = Map.getHeight();
 		
-		WindowW = windowW-windowW%CellW;
-		WindowH = windowH-windowH%CellH;
-		if(WindowW + CellW > MapW)WindowW = MapW - CellW;
-		if(WindowH + CellH > MapH)WindowH = MapH - CellH;
-		WindowBW = WindowW / CellW;
-		WindowBH = WindowH / CellH;
-		
-		
 		IsBackBuffer = isBackBuffer;
 		BackColor = backColor;
 		
-		if (IsBackBuffer){
+		if (!IsBackBuffer){
+			
+			WindowW = windowW-windowW%CellW;
+			WindowH = windowH-windowH%CellH;
+			if(WindowW > MapW)WindowW = MapW;
+			if(WindowH > MapH)WindowH = MapH;
+			WindowBW = WindowW / CellW + 1;
+			WindowBH = WindowH / CellH + 1;
+			
+		}else{
+			
+			WindowW = windowW-windowW%CellW;
+			WindowH = windowH-windowH%CellH;
+			if(WindowW + CellW > MapW)WindowW = MapW - CellW;
+			if(WindowH + CellH > MapH)WindowH = MapH - CellH;
+			WindowBW = WindowW / CellW;
+			WindowBH = WindowH / CellH;
+			
 			BufBW = WindowBW + 1;
 			BufBH = WindowBH + 1;
 			BufW = BufBW*CellW;
@@ -341,7 +352,6 @@ public class CCamera extends CUnit {
 						CMath.cycNum(vBufBY, ny, BufBH)*CellH, 
 						CMath.cycNum(vMapBX,nx,MapBW), 
 						CMath.cycNum(vMapBY,ny,MapBH)
-						
 						);
 			}
 		}
@@ -425,23 +435,24 @@ public class CCamera extends CUnit {
 			int by = CMath.cycNum(Y,0,MapH)/CellH;
 			int dx = CMath.cycNum(X,0,MapW)%CellW;
 			int dy = CMath.cycNum(Y,0,MapH)%CellH;
-			for(int y=0;y<WindowBH+1;y++){
-				for(int x=0;x<WindowBW+1;x++){
-					Map.renderCell(g, 
-							WindowX+x*CellW-dx, 
-							WindowY+y*CellH-dy, 
-							CMath.cycNum(bx,x,MapBW), 
-							CMath.cycNum(by,y,MapBH)
-							
-							);
-					Map.renderAnimateCell(g, 
-							AScreen.getTimer(),
-							WindowX+x*CellW-dx, 
-							WindowY+y*CellH-dy, 
-							CMath.cycNum(bx,x,MapBW), 
-							CMath.cycNum(by,y,MapBH)
-							
-							);
+			for(int y=0;y<WindowBH;y++){
+				for(int x=0;x<WindowBW;x++){
+					if(Map.IsAnimate){
+						Map.renderAnimateCell(g, 
+								AScreen.getTimer(),
+								WindowX+x*CellW-dx, 
+								WindowY+y*CellH-dy, 
+								CMath.cycNum(bx,x,MapBW), 
+								CMath.cycNum(by,y,MapBH)
+								);
+					}else{
+						Map.renderCell(g, 
+								WindowX+x*CellW-dx, 
+								WindowY+y*CellH-dy, 
+								CMath.cycNum(bx,x,MapBW), 
+								CMath.cycNum(by,y,MapBH)
+								);
+					}
 				}
 			}
 			g.setClip(cx,cy,cw,ch);
