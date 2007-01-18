@@ -210,6 +210,12 @@ namespace CellGameEdit.PM
             }
         }
 
+        public void DelAllImages()
+        {
+           
+        }
+
+
         public void SaveAllImages()
         {
             try
@@ -1034,16 +1040,16 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 MessageBox.Show("Tile容量不能为0！");
                 return null;
             }
-            for (int i = 0; i < dstImages.Count; i++)
-            {
-                if (((Image)dstImages[i]) == null) continue;
-                if (((Image)dstImages[i]).getWidth() != CellW ||
-                    ((Image)dstImages[i]).getHeight() != CellH )
-                {
-                    MessageBox.Show("地图的Tile大小必须相等！");
-                    return null;
-                }
-            }
+            //for (int i = 0; i < dstImages.Count; i++)
+            //{
+            //    if (((Image)dstImages[i]) == null) continue;
+            //    if (((Image)dstImages[i]).getWidth() != CellW ||
+            //        ((Image)dstImages[i]).getHeight() != CellH )
+            //    {
+            //        MessageBox.Show("地图的Tile大小必须相等！");
+            //        return null;
+            //    }
+            //}
 
             MapForm ret = new MapForm(name,CellW, CellH, this);
             return ret;

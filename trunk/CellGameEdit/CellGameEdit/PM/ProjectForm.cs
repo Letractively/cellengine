@@ -696,6 +696,7 @@ namespace CellGameEdit.PM
         {
             if (getForm(treeView1.SelectedNode) != null)
             {
+
                 getForm(treeView1.SelectedNode).Enabled = false;
                 getForm(treeView1.SelectedNode).Dispose();
                
