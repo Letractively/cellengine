@@ -255,6 +255,8 @@ public class CMap extends CUnit {
 						-MatrixTile[cellY][cellX],
 						index%Tiles.Frames[-MatrixTile[cellY][cellX]].length,
 						x, y);
+			}else{
+				Tiles.renderSingle(g, MatrixTile[cellY][cellX], x, y);
 			}
 //	#ifdef _DEBUG
 			if(IsDebug && MatrixFlag[cellY][cellX]>0){
