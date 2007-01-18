@@ -141,8 +141,6 @@ public class CWorld extends CObject {
 		for(int i=0;i<Sprs.size();i++){
 			((CSprite)Sprs.elementAt(i)).updateStates();
 		}
-		Map.updateStates();
-		Camera.updateStates();
 	}
 	
 	/**
