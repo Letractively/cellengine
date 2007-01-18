@@ -427,7 +427,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
-            toolStripStatusLabel1.Text = "当前坐标:X=" + (-pictureBox1.Location.X) + ",Y=" + (-pictureBox1.Location.Y);
+            toolStripStatusLabel1.Text = "当前坐标:X=" + (-pictureBox1.Location.X) + ",Y=" + (-pictureBox1.Location.Y)+" ";
             
 
             // draw units
@@ -521,9 +521,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         if (item.Selected)
                         {
                             toolStripStatusLabel1.Text +=
-                                "Unit : " +
-                                " X=" + unit.x +
-                                " Y=" + unit.y
+                                "Unit:" +
+                                "X=" + unit.x +
+                                ",Y=" + unit.y
                             ;
                         }
                     }
@@ -551,9 +551,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         if (p.isCheck)
                         {
                             toolStripStatusLabel1.Text +=
-                                "Point : " +
-                                " X=" + (p.rect.X + p.rect.Width / 2) +
-                                " Y=" + (p.rect.Y + p.rect.Height / 2)
+                                "Point:" +
+                                "X=" + (p.rect.X + p.rect.Width / 2) +
+                                ",Y=" + (p.rect.Y + p.rect.Height / 2)
                             ;
                         }
                         //g.drawString(WayPoints.IndexOf(p).ToString(), p.rect.X + p.rect.Width + 1, p.rect.Y - p.rect.Height / 2, 0);

@@ -217,10 +217,10 @@ namespace CellGameEdit.PM
         }
 
 
-        ArrayList ScriptsImages = new ArrayList();
-        ArrayList ScriptsMap = new ArrayList();
-        ArrayList ScriptsSprite = new ArrayList();
-        ArrayList ScriptsWorld = new ArrayList();
+        //ArrayList ScriptsImages = new ArrayList();
+        //ArrayList ScriptsMap = new ArrayList();
+        //ArrayList ScriptsSprite = new ArrayList();
+        //ArrayList ScriptsWorld = new ArrayList();
 
         public string fillScriptSub(string src, string start, string end, ArrayList forms)
         {
@@ -312,6 +312,11 @@ namespace CellGameEdit.PM
 
         public void initForms()
         {
+            FormsImages.Clear();
+            FormsMap.Clear();
+            FormsSprite.Clear();
+            FormsWorld.Clear();
+
             initForms(nodeReses);
             initForms(nodeLevels);
         }
