@@ -20,6 +20,8 @@ public class CWorldMini extends CObject {
 	
 	public int SprPriority = 0;
 	
+	public Image Buffer;
+	
 	CWorld World;
 	
 	int W;
@@ -33,7 +35,7 @@ public class CWorldMini extends CObject {
 	int WTW;
 	int WTH;
 	
-	Image Buffer;
+	
 	Graphics bg;
 	
 	public CWorldMini(
