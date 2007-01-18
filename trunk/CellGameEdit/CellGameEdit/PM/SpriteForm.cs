@@ -1204,9 +1204,20 @@ namespace CellGameEdit.PM
             {
                 if (dstGetCurSubIndexes().Length == 1)
                 {
+                    int flip = (int)framesGetCurFrame().SubFlip[dstGetCurSubIndexes()[0]];
+
                     framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = srcIndex;
-                    framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcRect.Width;
-                    framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcRect.Height;
+
+                    if (flip % 2 == 0)
+                    {
+                        framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
+                        framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
+                    }
+                    else
+                    {
+                        framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
+                        framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
+                    }
                     dstRefersh();
                 }
             }

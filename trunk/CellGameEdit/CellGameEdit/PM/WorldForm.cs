@@ -213,11 +213,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     {
                         string X = ((Unit)maps[i]).x.ToString();
                         string Y = ((Unit)maps[i]).y.ToString();
-                        string ID = ((Unit)maps[i]).id;
-                       
+                        string ID = ((Unit)maps[i]).map.id;
+                        string NAME = ((Unit)maps[i]).id;
                         map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" },
-                               new string[] { ID, i.ToString(), X, Y, });
+                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
                     if (temp == null)
@@ -240,11 +240,12 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     {
                         string X = ((Unit)sprs[i]).x.ToString();
                         string Y = ((Unit)sprs[i]).y.ToString();
-                        string ID = ((Unit)sprs[i]).id;
+                        string ID = ((Unit)sprs[i]).spr.id;
+                        string NAME = ((Unit)sprs[i]).id;
                         string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>" },
-                               new string[] { ID, i.ToString(), X, Y, ANIM_ID});
+                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
                     if (temp == null)
