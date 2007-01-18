@@ -37,8 +37,8 @@ namespace CellGameEdit.PM
         int srcQX;
         int srcQY;
         int srcSize = 1;
+
         
-    
 
 
         
@@ -489,8 +489,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             getDstImage(index).x += dx;
             getDstImage(index).y += dy;
 
-            if (pictureBox2.Width  < getDstImage(index).x + getDstImage(index).getWidth() ) pictureBox2.Width  += dx;
-            if (pictureBox2.Height < getDstImage(index).y + getDstImage(index).getHeight()) pictureBox2.Height += dy;
+            if (pictureBox2.Width < getDstImage(index).x * dstSize + getDstImage(index).getWidth() * dstSize) pictureBox2.Width += dx * dstSize;
+            if (pictureBox2.Height < getDstImage(index).y * dstSize + getDstImage(index).getHeight() * dstSize) pictureBox2.Height += dy * dstSize;
 
             System.Drawing.Rectangle src = new System.Drawing.Rectangle(
                 getDstImage(index).x,
@@ -629,17 +629,12 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             {
                 if (getDstImage(i) != null)
                 {
-                    g.drawImage(getDstImage(i), x+getDstImage(i).x, y+getDstImage(i).y, 0);
+                    g.drawImage(getDstImage(i), x + getDstImage(i).x * dstSize, y + getDstImage(i).y * dstSize, 0, 0, dstSize);
                 }
             }
         }
 
 
-
-
-
-        //-------------------------------------------------------------------------------------------------------------------------------------
-        
         // src edit
         private void toolStripTextBox1_Leave(object sender, EventArgs e)
         {
@@ -875,7 +870,62 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         int dstPX;
         int dstPY;
 
-       
+        int dstSize = 1;
+
+        private void toolStripButton5_Click(object sender, EventArgs e)
+        {
+            dstSize += 1;
+            if (dstSize > 8) dstSize = 8;
+
+            try
+            {
+                int outW = 0;
+                int outH = 0;
+                for (int i = 0; i < getDstImageCount(); i++)
+                {
+                    if (getDstImage(i) != null)
+                    {
+                        outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
+                        outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
+                    }
+                }
+
+                pictureBox2.Width = outW * dstSize;
+                pictureBox2.Height = outH * dstSize;
+                pictureBox2.Refresh();
+            }
+            catch (Exception err)
+            {
+            }
+
+        }
+        private void toolStripButton11_Click(object sender, EventArgs e)
+        {
+
+            dstSize -= 1;
+            if (dstSize < 1) dstSize = 1;
+
+            try
+            {
+                int outW = 0;
+                int outH = 0;
+                for (int i = 0; i < getDstImageCount(); i++)
+                {
+                    if (getDstImage(i) != null)
+                    {
+                        outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
+                        outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
+                    }
+                }
+
+                pictureBox2.Width = outW * dstSize;
+                pictureBox2.Height = outH * dstSize;
+                pictureBox2.Refresh();
+            }
+            catch (Exception err)
+            {
+            }
+        }
 
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
@@ -885,12 +935,9 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
 
-           
-            e.Graphics.FillRectangle(brush, dstRect);
-            e.Graphics.DrawRectangle(pen, dstRect.X, dstRect.Y, dstRect.Width - 1, dstRect.Height - 1);
-            
+            e.Graphics.FillRectangle(brush, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width - 1) * dstSize, (dstRect.Height - 1) * dstSize);
+            e.Graphics.DrawRectangle(pen, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width - 1) * dstSize, (dstRect.Height - 1) * dstSize);
         }
-
 
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
@@ -912,11 +959,11 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         dst.Width = getDstImage(i).getWidth();
                         dst.Height = getDstImage(i).getHeight();
 
-                        if (dst.Contains(e.X, e.Y))
+                        if (dst.Contains(e.X / dstSize, e.Y / dstSize))
                         {
                             dstDown = true;
-                            dstPX = e.X;
-                            dstPY = e.Y;
+                            dstPX = e.X / dstSize;
+                            dstPY = e.Y / dstSize;
 
                             dstSelected = getDstImage(i);
                             dstSelectIndex = i;
@@ -943,8 +990,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
         {
             dstDown = false;
-            dstPX = e.X;
-            dstPY = e.Y;
+            dstPX = e.X / dstSize;
+            dstPY = e.Y / dstSize;
             pictureBox2.Refresh();
         }
 
@@ -952,10 +999,10 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         {
             if (dstDown)
             {
-                int px = (e.X - dstPX) ;
-                int py = (e.Y - dstPY) ;
-                dstPX = e.X;
-                dstPY = e.Y;
+                int px = (e.X / dstSize - dstPX);
+                int py = (e.Y / dstSize - dstPY);
+                dstPX = e.X / dstSize;
+                dstPY = e.Y / dstSize;
 
                 if (moveDstImage(dstSelectIndex, px, py))
                 {
@@ -1036,6 +1083,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 pictureBox2.BackColor = MyDialog.Color;
             }
         }
+
+
 
 
 
