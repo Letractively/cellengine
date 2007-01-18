@@ -883,14 +883,15 @@ public class CSprite extends CUnit {
 
 	/**
 	 * 播放到下一帧
-	 * @return 是否是最后一帧
+	 * @return 是否超出最后一帧
 	 */
 	public boolean nextFrame() {
-		if (CurFrame < FrameAnimate[CurAnimate].length - 1) {
-			CurFrame++;
-			return false;
-		} else {
+		CurFrame++;
+		if (CurFrame >= FrameAnimate[CurAnimate].length ) {
+			CurFrame = FrameAnimate[CurAnimate].length - 1;
 			return true;
+		} else {
+			return false;
 		}
 	}
 
