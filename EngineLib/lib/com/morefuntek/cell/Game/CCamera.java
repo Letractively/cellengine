@@ -386,6 +386,7 @@ public class CCamera extends CUnit {
 	 * @param g graphics surface
 	 */
 	public void render(Graphics g) {
+		if (!Visible)return;
 		if (IsBackBuffer){
 			if(Map.IsAnimate){
 				int sbx = vMapX/CellW;
@@ -395,8 +396,8 @@ public class CCamera extends CUnit {
 				
 				for(int y=0;y<BufBH;y++){
 					for(int x=0;x<BufBW;x++){
-						if(!Map.testSameAnimateTile(AScreen.getTimer()-1, AScreen.getTimer(), sbx, sby)){
-							Map.renderAnimateCell(bg, AScreen.getTimer(), dbx*CellW, dby*CellH, sbx, sby);
+						if(!Map.testSameAnimateTile(getTimer()-1, getTimer(), sbx, sby)){
+							Map.renderAnimateCell(bg, getTimer(), dbx*CellW, dby*CellH, sbx, sby);
 							//println("draw "+CScreen.getTimer());
 						}
 						sbx = CMath.cycNum(sbx,+1,MapBW);
@@ -437,22 +438,13 @@ public class CCamera extends CUnit {
 			int dy = CMath.cycNum(Y,0,MapH)%CellH;
 			for(int y=0;y<WindowBH;y++){
 				for(int x=0;x<WindowBW;x++){
-					if(Map.IsAnimate){
-						Map.renderAnimateCell(g, 
-								AScreen.getTimer(),
-								WindowX+x*CellW-dx, 
-								WindowY+y*CellH-dy, 
-								CMath.cycNum(bx,x,MapBW), 
-								CMath.cycNum(by,y,MapBH)
-								);
-					}else{
-						Map.renderCell(g, 
-								WindowX+x*CellW-dx, 
-								WindowY+y*CellH-dy, 
-								CMath.cycNum(bx,x,MapBW), 
-								CMath.cycNum(by,y,MapBH)
-								);
-					}
+					Map.renderDirectCell(g, 
+							getTimer(),
+							WindowX+x*CellW-dx, 
+							WindowY+y*CellH-dy, 
+							CMath.cycNum(bx,x,MapBW), 
+							CMath.cycNum(by,y,MapBH)
+							);
 				}
 			}
 			g.setClip(cx,cy,cw,ch);

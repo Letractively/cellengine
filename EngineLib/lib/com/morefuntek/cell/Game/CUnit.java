@@ -24,6 +24,12 @@ public class CUnit extends CObject
 	/**精灵属于哪个世界*/
 	public CWorld world = null;
 
+	/** 是否显示 */
+	public boolean Visible 			= true;
+	
+	/** 是否活动 */
+	public boolean Active 			= true; 
+	
 	/**色块*/
 	public int BackColor = 0xff000000;
 	

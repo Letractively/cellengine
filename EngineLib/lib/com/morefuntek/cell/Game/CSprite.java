@@ -26,10 +26,7 @@ public class CSprite extends CUnit {
 	
 //	----------------------------------------------------------------------------------------------
 //	逻辑相关
-	/** 是否显示 */
-	public boolean Visible 			= true;
-	/** 是否活动 */
-	public boolean Active 			= true; 
+
 	/** 是否和精灵有阻挡 */
 	public boolean haveSprBlock 	= false;
 	/** 是否和地图有阻挡 */

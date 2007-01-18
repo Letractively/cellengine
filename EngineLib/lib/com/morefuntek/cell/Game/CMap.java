@@ -255,6 +255,31 @@ public class CMap extends CUnit {
 						-MatrixTile[cellY][cellX],
 						index%Tiles.Frames[-MatrixTile[cellY][cellX]].length,
 						x, y);
+			}
+//	#ifdef _DEBUG
+			if(IsDebug && MatrixFlag[cellY][cellX]>0){
+				Collides.getCD(MatrixFlag[cellY][cellX]).render(g, x, y, 0xff00ff00);
+			}
+//	#endif
+		
+	}
+
+	
+	/**
+	 * π¶ƒ‹√Ë ˆ
+	 * @param g
+	 * @param index
+	 * @param x
+	 * @param y
+	 * @param cellX
+	 * @param cellY 
+	 */
+	protected void renderDirectCell(Graphics g, int index, int x, int y, int cellX, int cellY){
+			if(MatrixTile[cellY][cellX]<0){
+				Tiles.renderSingleSub(g, 
+						-MatrixTile[cellY][cellX],
+						index%Tiles.Frames[-MatrixTile[cellY][cellX]].length,
+						x, y);
 			}else{
 				Tiles.renderSingle(g, MatrixTile[cellY][cellX], x, y);
 			}
@@ -265,5 +290,4 @@ public class CMap extends CUnit {
 //	#endif
 		
 	}
-
 }
