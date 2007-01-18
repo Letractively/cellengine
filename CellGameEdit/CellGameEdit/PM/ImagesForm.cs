@@ -380,11 +380,11 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     {
                         Image img = Image.createImage(openFileDialog1.FileNames[i]);
                         img.x = 0;
-                        img.y = pictureBox2.Height - 1;
+                        img.y = pictureBox2.Height / dstSize - 1;
                         dstImages.Add(img);
 
-                        pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth());
-                        pictureBox2.Height += (img.getHeight() );
+                        pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
+                        pictureBox2.Height += (img.getHeight() * dstSize);
                     }catch(Exception err){
                         Console.WriteLine(err.Message);
                     }
@@ -410,11 +410,11 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         srcRect.Height,
                         0);
                     img.x = 0;
-                    img.y = pictureBox2.Height - 1;
+                    img.y = pictureBox2.Height/dstSize - 1;
                     dstImages.Add(img);
 
-                    pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth());
-                    pictureBox2.Height += (img.getHeight() );
+                    pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
+                    pictureBox2.Height += (img.getHeight() * dstSize);
                 }
             }
         }
@@ -444,14 +444,14 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                                     CellH,
                                     0);
                                 img.x = x * (CellW);
-                                img.y = y * (CellH) + pictureBox2.Height - 1;
+                                img.y = y * (CellH) + pictureBox2.Height/dstSize - 1;
                                 dstImages.Add(img);
                             }
 
                         }
                     }
-                    pictureBox2.Width = Math.Max(pictureBox2.Width, (srcRect.Width / CellW * CellW) );
-                    pictureBox2.Height += ((srcRect.Height / CellH * CellH));
+                    pictureBox2.Width = Math.Max(pictureBox2.Width, (srcRect.Width / CellW * CellW) ) * dstSize;
+                    pictureBox2.Height += ((srcRect.Height / CellH * CellH)) * dstSize;
 
                 }
             }
@@ -588,13 +588,13 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     }
                     else
                     {
-                        changed.x = pictureBox2.Width;
+                        changed.x = pictureBox2.Width / dstSize;
                         changed.y = oy;
                     }
-                    
 
-                    pictureBox2.Width += changed.getWidth();
-                    pictureBox2.Height = Math.Max(pictureBox2.Height,changed.getHeight());
+
+                    pictureBox2.Width += changed.getWidth() * dstSize;
+                    pictureBox2.Height = Math.Max(pictureBox2.Height, changed.getHeight() * dstSize);
 
                     // save to src pic
                     String dir = "\\" + this.id;
