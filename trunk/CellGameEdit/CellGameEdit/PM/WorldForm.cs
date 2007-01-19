@@ -1298,6 +1298,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (!this.Visible) return;
+
             if (toolStripButton16.Checked)
             {
                 pictureBox1.Refresh();

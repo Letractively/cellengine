@@ -2108,6 +2108,8 @@ namespace CellGameEdit.PM
 // timer
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (!this.Visible) return;
+
             timer1.Interval = (int)numericUpDown2.Value;
             toolStripStatusLabel1.Text = "";
 

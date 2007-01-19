@@ -168,6 +168,9 @@ namespace CellGameEdit.PM
 
         }
 
+        string OutputName ;
+        string OutputDir ;
+
         public void OutputCustom(String fileName)
         {
             try
@@ -187,8 +190,13 @@ namespace CellGameEdit.PM
                     string ret = new string(new char[] { '\r', '\n' });
 
                     // build command
-                    string OutputName = Util.getCommandScript(script, "<OUTPUT>");
+                    OutputName = workSpace + "\\" + Util.getCommandScript(script, "<OUTPUT>");
+                    OutputDir = System.IO.Path.GetDirectoryName(OutputName);
 
+                    if (!System.IO.Directory.Exists(OutputDir))
+                    {
+                        System.IO.Directory.CreateDirectory(OutputDir);
+                    }
 
                     script = fillScriptNode(script);
 
@@ -197,22 +205,23 @@ namespace CellGameEdit.PM
                     script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
                     script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
 
-
-
                     Console.WriteLine(script);
 
                     System.IO.File.WriteAllText(
-                        workSpace + "\\" + OutputName,
+                        OutputName,
                         script,
                         encoding
                         );
+
+                    Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");   
+                    
                 }
                 else
                 {
                     Console.WriteLine("Error : " + fileName + " : 不存在!");
                 }
             }
-            catch (Exception err) { Console.WriteLine(this.Name + " : " + err.Message); }
+            catch (Exception err) { MessageBox.Show(err.Message); }
 
         }
 
@@ -229,32 +238,39 @@ namespace CellGameEdit.PM
             if (sub == null) return null;
 
             ArrayList scripts = new ArrayList();
-
-            for (int i = 0; i < forms.Count; i++)
+            try
             {
-                StringWriter output = new StringWriter();
-                //
-                if (forms[i].GetType().Equals(typeof(ImagesForm)))
+                for (int i = 0; i < forms.Count; i++)
                 {
-                    ((ImagesForm)forms[i]).OutputCustom(sub, output);
-                }
-                if (forms[i].GetType().Equals(typeof(MapForm)))
-                {
-                    ((MapForm)forms[i]).OutputCustom(sub, output);
-                }
-                if (forms[i].GetType().Equals(typeof(SpriteForm)))
-                {
-                    ((SpriteForm)forms[i]).OutputCustom(sub, output);
-                }
-                if (forms[i].GetType().Equals(typeof(WorldForm)))
-                {
-                    ((WorldForm)forms[i]).OutputCustom(sub, output);
-                }
-                //
-                scripts.Add(output.ToString());
-            }
-            script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
 
+                    StringWriter output = new StringWriter();
+                    //
+                    if (forms[i].GetType().Equals(typeof(ImagesForm)))
+                    {
+                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDir);
+
+                    }
+                    if (forms[i].GetType().Equals(typeof(MapForm)))
+                    {
+                        ((MapForm)forms[i]).OutputCustom(sub, output);
+                    }
+                    if (forms[i].GetType().Equals(typeof(SpriteForm)))
+                    {
+                        ((SpriteForm)forms[i]).OutputCustom(sub, output);
+                    }
+                    if (forms[i].GetType().Equals(typeof(WorldForm)))
+                    {
+                        ((WorldForm)forms[i]).OutputCustom(sub, output);
+                    }
+                    //
+                    scripts.Add(output.ToString());
+
+                }
+            }
+            catch (Exception err) { MessageBox.Show(err.Message); }
+
+            script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
+                
             return script;
         }
 

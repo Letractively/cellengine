@@ -1619,6 +1619,7 @@ namespace CellGameEdit.PM
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            if (!this.Visible) return;
 
             if (toolStripButton5.Checked)
             {
