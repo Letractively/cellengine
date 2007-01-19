@@ -216,7 +216,7 @@ namespace CellGameEdit.PM
         }
 
 
-        public void SaveAllImages()
+        public void SaveAllImages(String dir)
         {
             try
             {
@@ -240,7 +240,7 @@ namespace CellGameEdit.PM
                         g.drawImage(getDstImage(i), getDstImage(i).x, getDstImage(i).y, 0);
                     }
                 }
-                outputImage.getDImage().Save(ProjectForm.workSpace + "\\" + this.id + ".png", System.Drawing.Imaging.ImageFormat.Png);
+                outputImage.getDImage().Save(dir + "\\" + this.id + ".png", System.Drawing.Imaging.ImageFormat.Png);
 
             }
             catch (Exception err)
@@ -273,12 +273,12 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             sw.WriteLine("    stuff.gc();");
             sw.WriteLine("}");
 
-            SaveAllImages();
+            SaveAllImages(ProjectForm.workSpace);
 
         }
 
 
-        public void OutputCustom(String script, System.IO.StringWriter output)
+        public void OutputCustom(String script, System.IO.StringWriter output, String outDir)
         {
             try
             {
@@ -325,7 +325,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
                 output.WriteLine(images);
 
-                SaveAllImages();
+                SaveAllImages(outDir);
+               
             }
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
         }
