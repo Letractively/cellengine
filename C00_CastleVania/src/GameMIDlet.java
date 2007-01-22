@@ -79,7 +79,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 				if (UsedTime < AScreen.FrameDelay) {
 					Thread.sleep(AScreen.FrameDelay - UsedTime);
 				}else{
-				    //Thread.sleep(1);
+				    Thread.sleep(1);
 				}
 			}
 		}catch(Exception err){
