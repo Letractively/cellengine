@@ -78,8 +78,10 @@ public class CMath extends CObject{
 	 * @param angle 范围0~360
 	 * @return 256倍数
 	 */
-	final public static int tangentTimes256(int angle) {
-		return sinTimes256(angle) * 256 / cosTimes256(angle);
+	final public static int tanTimes256(int angle) {
+		int dx = cosTimes256(angle);
+		if(dx==0)return Integer.MAX_VALUE;
+		return sinTimes256(angle) * 256 / dx;
 	}
 
 	/**
@@ -88,9 +90,61 @@ public class CMath extends CObject{
 	 * @param angle 范围0~360
 	 * @return 256倍数
 	 */
-	final public static int cotangentTimes256(int angle) {
-		return cosTimes256(angle) * 256 / sinTimes256(angle);
+	final public static int cotTimes256(int angle) {
+		int dy = sinTimes256(angle);
+		if(dy==0)return Integer.MAX_VALUE;
+		return cosTimes256(angle) * 256 / dy;
 	}
+
+	
+	
+//	--------------------------------------------------------------------------------------------------------
+	// 精度为10度的atan表 array[angle/10] = x/y * 256
+	private static final short[] AtanDivTable = new short[]{
+		0,45,93,147,214,305,443,703,1451,Short.MAX_VALUE
+	};
+
+	final private static int div(int i, int j) {
+		int tmp = ((int)i<<8) / j;
+		if(tmp > Short.MAX_VALUE){
+			return Short.MAX_VALUE;
+		}
+		if(tmp < Short.MIN_VALUE){
+			return Short.MIN_VALUE;
+		}
+		return (int)(tmp);
+	}
+	
+	final private static int atan(int n){
+		boolean flag = n < 0;
+		if(flag) {
+			n = -n;
+		}
+		int f1 = 0, f2 = AtanDivTable.length - 1,ft = 0;
+		while(f1 + 1 != f2) {
+			ft = f1 + f2 >> 1;
+			if(n < AtanDivTable[ft]) {
+				f2 = ft;
+			}else {
+				f1 = ft;
+			}
+		}
+		return (flag? -f1: f1) * 10 ;// 10 倍
+	}
+	
+	final public static int atan2(int dy,int dx){
+		if (dx > 0) {
+			return atan(div(dy, dx)) ;
+		} else if (dx < 0) {
+			return (180) + atan(div(dy, dx)) ;
+		} else {
+//			if (dy == 0) {
+//				println("反正切参数错误：dy = 0, dx = 0");
+//			}
+			return (dy > 0 ? 90 : -90 );
+		}
+	}
+	
 	
 // 	--------------------------------------------------------------------------------------------------------
 	
