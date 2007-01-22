@@ -19,9 +19,7 @@ final public class ScreenLogo extends AScreen {
     int index = 0 ;
     
     private String[] list = new String[]{
-    		"ScreenMain",
-    		"ScreenMain2",
-    		"ScreenTD_Main",
+    		"ScreenLevel",
     };
     
 	public ScreenLogo() {

@@ -300,10 +300,222 @@ public class ResesScript {
 		stuff.gc();
 	}
 	
+
+	// Images : MapTile00 
+	final static public void buildClipImages_MapTile00(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/MapTile00.png"),24);
+		
+		 
+		stuff.addTile(0,0,16,16);//0 
+		 
+		stuff.addTile(16,0,16,16);//1 
+		 
+		stuff.addTile(32,0,16,16);//2 
+		 
+		stuff.addTile(48,0,16,16);//3 
+		 
+		stuff.addTile(0,16,16,16);//4 
+		 
+		stuff.addTile(16,16,16,16);//5 
+		 
+		stuff.addTile(32,16,16,16);//6 
+		 
+		stuff.addTile(48,16,16,16);//7 
+		 
+		stuff.addTile(0,32,16,16);//8 
+		 
+		stuff.addTile(16,32,16,16);//9 
+		 
+		stuff.addTile(32,32,16,16);//10 
+		 
+		stuff.addTile(48,32,16,16);//11 
+		 
+		stuff.addTile(0,48,16,16);//12 
+		 
+		stuff.addTile(16,48,16,16);//13 
+		 
+		stuff.addTile(32,48,16,16);//14 
+		 
+		stuff.addTile(48,48,16,16);//15 
+		 
+		stuff.addTile(64,48,16,16);//16 
+		 
+		stuff.addTile(80,48,16,16);//17 
+		 
+		stuff.addTile(0,64,16,16);//18 
+		 
+		stuff.addTile(16,64,16,16);//19 
+		 
+		stuff.addTile(32,64,16,16);//20 
+		 
+		stuff.addTile(48,64,16,16);//21 
+		 
+		stuff.addTile(64,64,16,16);//22 
+		 
+		stuff.addTile(80,64,16,16);//23 
+		
+		
+		stuff.gc();
+	}
+	
  
 
 	//--------------------------------------------------------------------------------------------------------------
 	
+	// Map : Level_00
+	final static public CMap createMap_Level_00(IImages tiles,boolean isAnimate,boolean isCyc){
+		
+		//20 x 20
+		
+		// tiles
+	    CAnimates animates = new CAnimates(9,tiles);
+	    
+		animates.addPart(0,0,20,0);//0
+		
+		animates.addPart(0,0,13,0);//1
+		
+		animates.addPart(0,0,1,0);//2
+		
+		animates.addPart(0,0,0,0);//3
+		
+		animates.addPart(0,0,12,0);//4
+		
+		animates.addPart(0,0,2,0);//5
+		
+		animates.addPart(0,0,14,0);//6
+		
+		animates.addPart(0,0,6,0);//7
+		
+		animates.addPart(0,0,7,0);//8
+		
+		
+	    animates.setFrame(new int[9][]);
+	    
+	    animates.setComboFrame(new int[]{0,},0);//0
+		
+	    animates.setComboFrame(new int[]{1,},1);//1
+		
+	    animates.setComboFrame(new int[]{2,},2);//2
+		
+	    animates.setComboFrame(new int[]{3,},3);//3
+		
+	    animates.setComboFrame(new int[]{4,},4);//4
+		
+	    animates.setComboFrame(new int[]{5,},5);//5
+		
+	    animates.setComboFrame(new int[]{6,},6);//6
+		
+	    animates.setComboFrame(new int[]{7,},7);//7
+		
+	    animates.setComboFrame(new int[]{8,},8);//8
+		
+		
+		short[][] tileMatrix = new short[][]{
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+{1,2,2,2,2,2,2,2,2,3,2,3,2,2,3,3,2,2,3,4,},
+{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,4,},
+{1,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,4,},
+{1,2,2,3,2,2,2,2,3,3,2,2,2,3,2,2,2,2,3,4,},
+{1,2,2,2,2,5,2,2,5,3,3,5,2,2,5,2,3,5,2,4,},
+{1,2,2,2,2,3,2,2,2,3,2,3,2,3,3,2,2,2,3,4,},
+{1,3,2,2,2,2,2,2,2,2,2,2,2,3,2,3,2,2,2,4,},
+{1,2,2,2,2,4,6,6,6,6,6,6,6,6,6,6,6,6,6,6,},
+{1,2,2,2,2,2,3,2,2,2,2,2,2,3,2,2,2,2,2,4,},
+{1,3,2,2,2,2,2,2,2,2,2,2,2,3,3,2,2,3,2,4,},
+{1,2,2,7,8,2,2,2,2,2,2,3,2,2,2,2,2,2,2,4,},
+{1,2,3,2,2,2,2,2,3,3,2,3,2,3,3,2,3,2,2,4,},
+{1,2,2,3,3,2,7,8,2,2,3,2,2,2,2,2,2,2,2,4,},
+{1,3,3,2,3,2,2,2,2,2,2,2,2,3,2,2,2,2,2,4,},
+{2,2,3,7,8,2,2,2,2,7,8,2,2,2,2,3,3,3,2,4,},
+{3,2,2,2,2,2,2,3,2,2,2,2,3,2,2,7,8,2,2,3,},
+{3,2,2,2,2,2,2,2,3,2,2,2,2,2,2,3,2,3,3,3,},
+{6,6,6,6,6,6,6,6,1,3,3,2,2,2,2,2,2,3,3,3,},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,},
+
+		};
+		
+		// cds
+		CCollides collides = new CCollides(8);
+	    
+	    if("rect"=="rect")
+	    collides.addCDRect(0, 0, 0, 16 , 16 );//rect//0
+		if("rect"=="line")
+		collides.addCDLine(0, 0, 0, 16, 16);//rect//0
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(1, 0, 0, 16 , 16 );//rect//1
+		if("rect"=="line")
+		collides.addCDLine(1, 0, 0, 16, 16);//rect//1
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(2, 0, 0, 16 , 1 );//rect//2
+		if("rect"=="line")
+		collides.addCDLine(2, 0, 0, 16, 16);//rect//2
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(4, 0, 15, 16 , 1 );//rect//3
+		if("rect"=="line")
+		collides.addCDLine(4, 0, 15, 16, 16);//rect//3
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(8, 0, 0, 1 , 16 );//rect//4
+		if("rect"=="line")
+		collides.addCDLine(8, 0, 0, 16, 16);//rect//4
+		
+	    if("rect"=="rect")
+	    collides.addCDRect(16, 15, 0, 1 , 16 );//rect//5
+		if("rect"=="line")
+		collides.addCDLine(16, 15, 0, 16, 16);//rect//5
+		
+	    if("line"=="rect")
+	    collides.addCDRect(32, 1, 1, 16 , 16 );//line//6
+		if("line"=="line")
+		collides.addCDLine(32, 1, 1, 15, 15);//line//6
+		
+	    if("line"=="rect")
+	    collides.addCDRect(64, 15, 1, 16 , 16 );//line//7
+		if("line"=="line")
+		collides.addCDLine(64, 15, 1, 1, 15);//line//7
+		
+
+		short[][] flagMatrix = new short[][]{
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{4,0,0,2,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,1,},
+{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,5,},
+{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,},
+{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,5,},
+{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,},
+
+		};
+		
+	    CMap ret = new CMap(
+	            animates, 
+	            collides, 
+	            16, 16, 
+	            tileMatrix, 
+	            flagMatrix, 
+	            isAnimate,isCyc 
+	            );
+	
+	    return ret;
+	}
+	
+
 	
 	//--------------------------------------------------------------------------------------------------------------
 	
@@ -311,15 +523,15 @@ public class ResesScript {
 	final static public CSprite createSprite_Actor00(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(71,tiles);
+	    CAnimates animates = new CAnimates(72,tiles);
 	    
-		animates.addPart(-20,-36,3,0);//0
+		animates.addPart(-17,-36,3,0);//0
 		
-		animates.addPart(-20,-36,0,0);//1
+		animates.addPart(-17,-36,0,0);//1
 		
-		animates.addPart(-20,-36,1,0);//2
+		animates.addPart(-17,-36,1,0);//2
 		
-		animates.addPart(-20,-36,2,0);//3
+		animates.addPart(-17,-36,2,0);//3
 		
 		animates.addPart(-20,-35,4,0);//4
 		
@@ -365,98 +577,100 @@ public class ResesScript {
 		
 		animates.addPart(-20,-36,8,0);//25
 		
-		animates.addPart(-20,-31,48,0);//26
+		animates.addPart(-20,-35,124,0);//26
 		
-		animates.addPart(-20,-31,37,0);//27
+		animates.addPart(-20,-35,125,0);//27
 		
-		animates.addPart(-20,-31,38,0);//28
+		animates.addPart(-20,-31,48,0);//28
 		
-		animates.addPart(-20,-31,45,0);//29
+		animates.addPart(-20,-31,37,0);//29
 		
-		animates.addPart(-20,-30,46,0);//30
+		animates.addPart(-20,-31,38,0);//30
 		
-		animates.addPart(-20,-29,47,0);//31
+		animates.addPart(-20,-31,45,0);//31
 		
-		animates.addPart(-20,-30,37,0);//32
+		animates.addPart(-20,-30,46,0);//32
 		
-		animates.addPart(-18,-31,38,0);//33
+		animates.addPart(-20,-29,47,0);//33
 		
-		animates.addPart(-20,-29,37,0);//34
+		animates.addPart(-20,-30,37,0);//34
 		
-		animates.addPart(-20,-29,39,0);//35
+		animates.addPart(-18,-31,38,0);//35
 		
-		animates.addPart(-20,-29,40,0);//36
+		animates.addPart(-20,-29,37,0);//36
 		
-		animates.addPart(-16,-29,41,0);//37
+		animates.addPart(-20,-29,39,0);//37
 		
-		animates.addPart(-20,-29,42,0);//38
+		animates.addPart(-20,-29,40,0);//38
 		
-		animates.addPart(-20,-29,43,0);//39
+		animates.addPart(-16,-29,41,0);//39
 		
-		animates.addPart(-20,-29,44,0);//40
+		animates.addPart(-20,-29,42,0);//40
 		
-		animates.addPart(-20,-36,83,0);//41
+		animates.addPart(-20,-29,43,0);//41
 		
-		animates.addPart(-20,-36,84,0);//42
+		animates.addPart(-20,-29,44,0);//42
 		
-		animates.addPart(-17,-35,71,0);//43
+		animates.addPart(-20,-36,83,0);//43
 		
-		animates.addPart(-17,-35,72,0);//44
+		animates.addPart(-20,-36,84,0);//44
 		
-		animates.addPart(-17,-35,73,0);//45
+		animates.addPart(-17,-35,71,0);//45
 		
-		animates.addPart(-20,-35,73,0);//46
+		animates.addPart(-17,-35,72,0);//46
 		
-		animates.addPart(-20,-35,77,0);//47
+		animates.addPart(-17,-35,73,0);//47
 		
-		animates.addPart(-20,-35,78,0);//48
+		animates.addPart(-20,-35,73,0);//48
 		
-		animates.addPart(-20,-35,79,0);//49
+		animates.addPart(-20,-35,77,0);//49
 		
-		animates.addPart(-20,-35,80,0);//50
+		animates.addPart(-20,-35,78,0);//50
 		
-		animates.addPart(-20,-35,7,0);//51
+		animates.addPart(-20,-35,79,0);//51
 		
-		animates.addPart(-20,-35,92,0);//52
+		animates.addPart(-20,-35,80,0);//52
 		
-		animates.addPart(-20,-35,93,0);//53
+		animates.addPart(-20,-35,7,0);//53
 		
-		animates.addPart(-20,-35,109,0);//54
+		animates.addPart(-20,-35,92,0);//54
 		
-		animates.addPart(-20,-35,94,0);//55
+		animates.addPart(-20,-35,93,0);//55
 		
-		animates.addPart(-20,-35,11,0);//56
+		animates.addPart(-20,-35,109,0);//56
 		
-		animates.addPart(-20,-35,88,0);//57
+		animates.addPart(-20,-35,94,0);//57
 		
-		animates.addPart(-20,-35,89,0);//58
+		animates.addPart(-20,-35,11,0);//58
 		
-		animates.addPart(-20,-35,90,0);//59
+		animates.addPart(-20,-35,88,0);//59
 		
-		animates.addPart(-17,-35,74,0);//60
+		animates.addPart(-20,-35,89,0);//60
 		
-		animates.addPart(-17,-35,68,0);//61
+		animates.addPart(-20,-35,90,0);//61
 		
-		animates.addPart(-17,-35,69,0);//62
+		animates.addPart(-17,-35,74,0);//62
 		
-		animates.addPart(-17,-35,70,0);//63
+		animates.addPart(-17,-35,68,0);//63
 		
-		animates.addPart(-20,-35,122,0);//64
+		animates.addPart(-17,-35,69,0);//64
 		
-		animates.addPart(-20,-35,123,0);//65
+		animates.addPart(-17,-35,70,0);//65
 		
-		animates.addPart(-20,-35,124,0);//66
+		animates.addPart(-20,-35,122,0);//66
 		
-		animates.addPart(-20,-35,115,0);//67
+		animates.addPart(-20,-35,123,0);//67
 		
-		animates.addPart(-20,-29,119,0);//68
+		animates.addPart(-20,-35,115,0);//68
 		
-		animates.addPart(-20,-29,120,0);//69
+		animates.addPart(-20,-29,119,0);//69
 		
-		animates.addPart(-20,-29,38,0);//70
+		animates.addPart(-20,-29,120,0);//70
+		
+		animates.addPart(-20,-29,38,0);//71
 		
 		
-	    animates.setFrame(new int[71][]);
+	    animates.setFrame(new int[72][]);
 	    
 	    animates.setComboFrame(new int[]{0,},0);//0
 		
@@ -600,15 +814,36 @@ public class ResesScript {
 		
 	    animates.setComboFrame(new int[]{70,},70);//70
 		
+	    animates.setComboFrame(new int[]{71,},71);//71
+		
 		
 		
 		// cds
-	    CCollides collides = new CCollides(0);
+	    CCollides collides = new CCollides(3);
 		
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, -4, -32, 8 , 33 );//rect//0
+	    if("rect"=="line")
+	    collides.addCDLine(65535, -4, -32, 4, 1);//rect//0
 	    
-	    collides.setFrame(new int[1][]);
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, -4, 0, 8 , 1 );//rect//1
+	    if("rect"=="line")
+	    collides.addCDLine(65535, -4, 0, 4, 1);//rect//1
 	    
-	    collides.setComboFrame(new int[]{},0);//0
+	    if("rect"=="rect")
+	    collides.addCDRect(65535, -4, 1, 8 , 1 );//rect//2
+	    if("rect"=="line")
+	    collides.addCDLine(65535, -4, 1, 4, 2);//rect//2
+	    
+	    
+	    collides.setFrame(new int[3][]);
+	    
+	    collides.setComboFrame(new int[]{0,1,},0);//0
+	    
+	    collides.setComboFrame(new int[]{},1);//1
+	    
+	    collides.setComboFrame(new int[]{2,},2);//2
 	    
 	    
 	    
@@ -619,108 +854,113 @@ public class ResesScript {
 {8,9,10,11,12,13,14,15,16,17,},
 {18,19,20,},
 {21,22,23,24,21,25,},
-{18,26,27,28,},
-{29,30,31,32,33,},
-{34,},
-{35,36,37,38,39,40,},
-{37,38,39,},
-{41,42,},
-{43,44,44,45,46,46,47,48,49,50,},
-{4,5,6,51,52,52,53,54,55,56,},
-{57,58,58,59,44,45,60,},
-{61,62,63,},
-{64,65,66,},
-{67,},
-{68,69,70,},
-{6,51,},
+{26,27,},
+{18,28,29,30,},
+{31,32,33,34,35,},
+{36,},
+{37,38,39,40,41,42,},
+{39,40,41,},
+{43,44,},
+{45,46,46,47,48,48,49,50,51,52,},
+{4,5,6,53,54,54,55,56,57,58,},
+{59,60,60,61,46,47,62,},
+{63,64,65,},
+{66,67,26,},
+{68,},
+{69,70,71,},
+{6,53,},
 
 	    };
 	    int[][] frameCDMap = new int[][]{
-	        {0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,},
-{0,},
-{0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,},
-{0,},
-{0,0,0,},
-{0,0,},
+	        {0,1,1,1,1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,},
+{1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,},
+{1,},
+{1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,},
 
 	    };
 	    int[][] frameCDAtk = new int[][]{
-	        {0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,},
-{0,},
-{0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,},
-{0,},
-{0,0,0,},
-{0,0,},
+	        {1,1,1,1,1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,},
+{1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,},
+{1,},
+{1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,},
 
 	    };
 	    int[][] frameCDDef = new int[][]{
-	        {0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,},
-{0,},
-{0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,},
-{0,},
-{0,0,0,},
-{0,0,},
+	        {1,1,1,1,1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,},
+{1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,},
+{1,},
+{1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,},
 
 	    };
 	    int[][] frameCDExt = new int[][]{
-	        {0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,0,0,0,},
-{0,0,0,0,},
-{0,0,0,0,0,},
-{0,},
-{0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,0,0,0,},
-{0,0,0,0,0,0,0,},
-{0,0,0,},
-{0,0,0,},
-{0,},
-{0,0,0,},
-{0,0,},
+	        {2,1,1,1,1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,},
+{1,1,},
+{1,1,1,1,},
+{1,1,1,1,1,},
+{1,},
+{1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,},
 
 	    };
 	
@@ -750,6 +990,44 @@ public class ResesScript {
 
 	
 	
+	//--------------------------------------------------------------------------------------------------------------
+	// World : Level_00
+	class world_Level_00 extends CWorld{
+	
+		// map count : 1
+		 
+		public CMap Level_00;//0 0 0
+		
+		
+		// sprite count : 1
+		
+		public CSprite Actor00;//0 15 287
+		
+		
+		public void initPath()
+		{
+			WayPoints = new CWayPoint[0];
+			
+			
+		
+			
+		}
+		public void initUnit()
+		{
+			 
+			addMap(Level_00);
+			
+
+			
+			addSprite(Actor00);//0
+			Actor00.X = 15;
+			Actor00.Y = 287;
+			
+		}
+
+	}
+	
+
 	
 
 
