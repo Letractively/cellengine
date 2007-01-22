@@ -578,6 +578,8 @@ public class CSprite extends CUnit {
 		return adjustMap||adjustSpr;
 
 	}
+	
+	
 
 	
 //	------------------------------------------------------------------------------------------
