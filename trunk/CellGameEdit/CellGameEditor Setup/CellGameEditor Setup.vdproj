@@ -15,13 +15,19 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
-        "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
+        "MsmKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
+        "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
+        "MsmKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
+        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -33,26 +39,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E8E7467D7E22416DAF000CC52A119E49"
+        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E8E7467D7E22416DAF000CC52A119E49"
-        "OwnerKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
+        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
+        "OwnerKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_E8E7467D7E22416DAF000CC52A119E49"
-        "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
-        "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
+        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
+        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,19 +64,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
+        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
+        "OwnerKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E8E7467D7E22416DAF000CC52A119E49"
+        "OwnerKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -120,10 +120,10 @@
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:Release\\CellGameEditor Setup.msi"
-        "PackageFilesAs" = "3:2"
+        "PackageFilesAs" = "3:4"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
-        "Compression" = "3:2"
+        "Compression" = "3:3"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
@@ -169,20 +169,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_56FAD1FEE5B3D866A623C539F8985721"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_042C6DE3220BCDB68BDEC546DF10742A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:J2me, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:CellLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_56FAD1FEE5B3D866A623C539F8985721"
+                    "_042C6DE3220BCDB68BDEC546DF10742A"
                     {
-                    "Name" = "8:J2me.dll"
+                    "Name" = "8:CellLib.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:J2me.dll"
+            "SourcePath" = "8:CellLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
@@ -200,20 +200,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ECC05CED057BBCF223CD7D1E5CD1BF88"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_56698983494A9A52D7CD91B5184FF16B"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CellLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:J2me, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_ECC05CED057BBCF223CD7D1E5CD1BF88"
+                    "_56698983494A9A52D7CD91B5184FF16B"
                     {
-                    "Name" = "8:CellLib.dll"
+                    "Name" = "8:J2me.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:CellLib.dll"
+            "SourcePath" = "8:J2me.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
@@ -339,7 +339,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CellGameEditor"
         "ProductCode" = "8:{156EC386-9110-4F01-9ADB-4ACF900BF51A}"
-        "PackageCode" = "8:{3349BA71-0E37-4470-893E-B16DB8A4F81C}"
+        "PackageCode" = "8:{76259DD6-CAAA-48C0-B25F-D0BF92A8F973}"
         "UpgradeCode" = "8:{EE5A5160-9D62-4264-A9C2-994FD8B014B4}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -882,7 +882,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E8E7467D7E22416DAF000CC52A119E49"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_78B7FE36AE2D47C492BA5012BCF80ED5"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -901,7 +901,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_70BA54391A194B2385F85D2824EEFD9F"
             {
-            "SourcePath" = "8:..\\CellGameEdit\\obj\\Debug\\CellGameEdit.exe"
+            "SourcePath" = "8:..\\CellGameEdit\\obj\\Release\\CellGameEdit.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
