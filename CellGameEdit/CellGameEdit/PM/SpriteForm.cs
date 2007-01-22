@@ -38,15 +38,15 @@ namespace CellGameEdit.PM
         int srcScale = 1;
 
         static public int[] flipTableJ2me = new int[]{
-            Cell.Game.CImages.TRANS_NONE,
-            Cell.Game.CImages.TRANS_90,
-            Cell.Game.CImages.TRANS_180,
-            Cell.Game.CImages.TRANS_270,
+            (int)Cell.Game.CImages.TRANS_NONE,
+            (int)Cell.Game.CImages.TRANS_90,
+            (int)Cell.Game.CImages.TRANS_180,
+            (int)Cell.Game.CImages.TRANS_270,
 
-            Cell.Game.CImages.TRANS_H,
-            Cell.Game.CImages.TRANS_H90,
-            Cell.Game.CImages.TRANS_V,
-            Cell.Game.CImages.TRANS_V90,
+            (int)Cell.Game.CImages.TRANS_H,
+            (int)Cell.Game.CImages.TRANS_H90,
+            (int)Cell.Game.CImages.TRANS_V,
+            (int)Cell.Game.CImages.TRANS_V90,
 
         };
 
@@ -205,6 +205,7 @@ namespace CellGameEdit.PM
             for (int animID = 0; animID < listView2.Items.Count; animID++)//anim
             {
                 int FrameCount = ((ArrayList)AnimTable[listView2.Items[animID]]).Count;
+
                 frameAnimate[animID] = new int[FrameCount];
                 frameCDMap[animID] = new int[FrameCount];
                 frameCDAtk[animID] = new int[FrameCount];
@@ -213,20 +214,29 @@ namespace CellGameEdit.PM
 
                 for (int frameID = 0; frameID < FrameCount; frameID++)// frame
                 {
-                    Frame frame = (Frame)(((ArrayList)AnimTable[listView2.Items[animID]])[frameID]);
-
+                    Frame frame = (Frame)(
+                        ((ArrayList)(
+                            AnimTable[listView2.Items[animID]]
+                            ))
+                            [frameID]
+                        );
+                   
                     // sub
                     ArrayList fAnimate = new ArrayList();
 
                     for (int subID = 0; subID < frame.getSubCount(); subID++)
                     {
+                        //Console.WriteLine(this.id + " + trans=" + (int)frame.SubFlip[subID]);
+
                         int indexSub = AllFrame.indexOfSub(
                             (int)frame.SubIndex[subID],
                             (int)frame.SubX[subID],
                             (int)frame.SubY[subID],
                             (int)frame.SubW[subID],
                             (int)frame.SubH[subID],
-                            (int)frame.SubFlip[subID]);
+                            (int)frame.SubFlip[subID]
+                            );
+
                         if (indexSub < 0)
                         {
                             AllFrame.addSub(null,
@@ -236,6 +246,7 @@ namespace CellGameEdit.PM
                                 (int)frame.SubW[subID],
                                 (int)frame.SubH[subID],
                                 (int)frame.SubFlip[subID]);
+                           
                             indexSub = AllFrame.getSubCount() - 1;
                         }
                         fAnimate.Add(indexSub);
