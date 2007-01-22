@@ -17,23 +17,23 @@ public class CImages extends CObject{
 	 * 翻转参数
 	 */
 	/** 不翻转 */
-	final public static byte TRANS_NONE = 0;
+	final public static int TRANS_NONE = 0;
 	/** 水平翻转 */
-	final public static byte TRANS_H = 2;
+	final public static int TRANS_H = 2;
 	/** 垂直翻转 */
-	final public static byte TRANS_V = 1;
+	final public static int TRANS_V = 1;
 	/** 180度翻转 */
-	final public static byte TRANS_HV = 3;
+	final public static int TRANS_HV = 3;
 	/** 逆时针90度翻转 */
-	final public static byte TRANS_90 = 6;
+	final public static int TRANS_90 = 6;
 	/** 逆时针270度翻转 */
-	final public static byte TRANS_270 = 5;
+	final public static int TRANS_270 = 5;
 	/** 先逆时针90度翻转，然后在水平翻转 */
-	final public static byte TRANS_H90 = 4;
+	final public static int TRANS_H90 = 4;
 	/** 先逆时针90度翻转，然后在垂直翻转 */
-	final public static byte TRANS_V90 = 7;
+	final public static int TRANS_V90 = 7;
 	/** 180度翻转 */
-	final public static byte TRANS_180 = 3; // 180 = HV
+	final public static int TRANS_180 = 3; // 180 = HV
 	//    public static Graphics g;
 
 	/** TILE块的个数 */

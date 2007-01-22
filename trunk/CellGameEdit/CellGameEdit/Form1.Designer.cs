@@ -46,14 +46,14 @@
             this.toolStripComboBox1 = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
             this.自定义脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.javaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.当前工程脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripSeparator();
+            this.javaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.帮助ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.关于ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.显示输出ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.当前工程脚本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem6 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -149,14 +149,14 @@
             // 脚本ToolStripMenuItem
             // 
             this.脚本ToolStripMenuItem.Name = "脚本ToolStripMenuItem";
-            this.脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.脚本ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.脚本ToolStripMenuItem.Text = "添加";
             this.脚本ToolStripMenuItem.Click += new System.EventHandler(this.脚本ToolStripMenuItem_Click);
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(94, 22);
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
@@ -186,19 +186,30 @@
             this.自定义脚本ToolStripMenuItem.Text = "当前公共脚本";
             this.自定义脚本ToolStripMenuItem.Click += new System.EventHandler(this.自定义脚本ToolStripMenuItem_Click);
             // 
-            // javaToolStripMenuItem
+            // 当前工程脚本ToolStripMenuItem
             // 
-            this.javaToolStripMenuItem.Enabled = false;
-            this.javaToolStripMenuItem.Name = "javaToolStripMenuItem";
-            this.javaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.javaToolStripMenuItem.Text = "Java代码";
-            this.javaToolStripMenuItem.Visible = false;
-            this.javaToolStripMenuItem.Click += new System.EventHandler(this.javaToolStripMenuItem_Click);
+            this.当前工程脚本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem6});
+            this.当前工程脚本ToolStripMenuItem.Name = "当前工程脚本ToolStripMenuItem";
+            this.当前工程脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.当前工程脚本ToolStripMenuItem.Text = "当前工程脚本";
+            // 
+            // toolStripMenuItem6
+            // 
+            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
+            this.toolStripMenuItem6.Size = new System.Drawing.Size(57, 6);
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
             this.toolStripMenuItem5.Size = new System.Drawing.Size(149, 6);
+            // 
+            // javaToolStripMenuItem
+            // 
+            this.javaToolStripMenuItem.Name = "javaToolStripMenuItem";
+            this.javaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.javaToolStripMenuItem.Text = "Java代码";
+            this.javaToolStripMenuItem.Click += new System.EventHandler(this.javaToolStripMenuItem_Click);
             // 
             // 帮助ToolStripMenuItem
             // 
@@ -212,13 +223,13 @@
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.关于ToolStripMenuItem.Text = "关于";
             // 
             // 显示输出ToolStripMenuItem
             // 
             this.显示输出ToolStripMenuItem.Name = "显示输出ToolStripMenuItem";
-            this.显示输出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.显示输出ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
             this.显示输出ToolStripMenuItem.Text = "显示输出";
             this.显示输出ToolStripMenuItem.Click += new System.EventHandler(this.显示输出ToolStripMenuItem_Click);
             // 
@@ -226,19 +237,6 @@
             // 
             this.timer1.Enabled = true;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // 当前工程脚本ToolStripMenuItem
-            // 
-            this.当前工程脚本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem6});
-            this.当前工程脚本ToolStripMenuItem.Name = "当前工程脚本ToolStripMenuItem";
-            this.当前工程脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.当前工程脚本ToolStripMenuItem.Text = "当前工程脚本";
-            // 
-            // toolStripMenuItem6
-            // 
-            this.toolStripMenuItem6.Name = "toolStripMenuItem6";
-            this.toolStripMenuItem6.Size = new System.Drawing.Size(149, 6);
             // 
             // Form1
             // 
