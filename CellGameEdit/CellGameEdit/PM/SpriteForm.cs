@@ -15,8 +15,6 @@ using javax.microedition.lcdui;
 namespace CellGameEdit.PM
 {
 
-
-
     [Serializable]
     public partial class SpriteForm : Form, ISerializable 
     {
@@ -220,14 +218,14 @@ namespace CellGameEdit.PM
                             ))
                             [frameID]
                         );
-                   
+
+                    
+
                     // sub
                     ArrayList fAnimate = new ArrayList();
 
                     for (int subID = 0; subID < frame.getSubCount(); subID++)
                     {
-                        //Console.WriteLine(this.id + " + trans=" + (int)frame.SubFlip[subID]);
-
                         int indexSub = AllFrame.indexOfSub(
                             (int)frame.SubIndex[subID],
                             (int)frame.SubX[subID],
@@ -236,6 +234,15 @@ namespace CellGameEdit.PM
                             (int)frame.SubH[subID],
                             (int)frame.SubFlip[subID]
                             );
+
+                        //Console.WriteLine(this.id +
+                        //      " x=" + (int)frame.SubX[subID] +
+                        //      " y=" + (int)frame.SubY[subID] +
+                        //      " w=" + (int)frame.SubW[subID] +
+                        //      " h=" + (int)frame.SubH[subID] +
+                        //      " trans=" + (int)frame.SubFlip[subID]
+                        //      );
+
 
                         if (indexSub < 0)
                         {
@@ -248,6 +255,8 @@ namespace CellGameEdit.PM
                                 (int)frame.SubFlip[subID]);
                            
                             indexSub = AllFrame.getSubCount() - 1;
+
+                           
                         }
                         fAnimate.Add(indexSub);
                     }
