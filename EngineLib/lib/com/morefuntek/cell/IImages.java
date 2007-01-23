@@ -13,22 +13,24 @@ import javax.microedition.lcdui.Image;
 public interface IImages {
 	/** 不翻转 */
 	final public static byte TRANS_NONE = 0;
+	/** 顺时针90度翻转 */
+	final public static byte TRANS_90 = 5;
+	/** 顺时针180度翻转 */
+	final public static byte TRANS_180 = 3; // 180 = HV
+	/** 顺时针270度翻转 */
+	final public static byte TRANS_270 = 6;
+	
 	/** 水平翻转 */
 	final public static byte TRANS_H = 2;
 	/** 垂直翻转 */
 	final public static byte TRANS_V = 1;
-	/** 180度翻转 */
-	final public static byte TRANS_HV = 3;
-	/** 逆时针90度翻转 */
-	final public static byte TRANS_90 = 6;
-	/** 逆时针270度翻转 */
-	final public static byte TRANS_270 = 5;
 	/** 先逆时针90度翻转，然后在水平翻转 */
 	final public static byte TRANS_H90 = 4;
 	/** 先逆时针90度翻转，然后在垂直翻转 */
 	final public static byte TRANS_V90 = 7;
-	/** 180度翻转 */
-	final public static byte TRANS_180 = 3; // 180 = HV
+	
+	
+	final public static byte TRANS_HV = TRANS_180;
 
 	//--------------------------------------------------------------------------------------------------------
 

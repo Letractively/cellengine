@@ -93,6 +93,9 @@ public class CAnimates extends CGroup{
 			STileID[SubIndex] = (short) tileid;
 			SW[SubIndex] = (short) images.getWidth(tileid);
 			SH[SubIndex] = (short) images.getHeight(tileid);
+			SX[SubIndex] = (short) px;
+			SY[SubIndex] = (short) py;
+			SFlip[SubIndex] = (byte) trans;
 			switch(trans){
 			case IImages.TRANS_NONE:
 			case IImages.TRANS_H:
@@ -109,9 +112,6 @@ public class CAnimates extends CGroup{
 				SH[SubIndex] = (short) images.getWidth(tileid);
 				break;
 			}
-			SX[SubIndex] = (short) px;
-			SY[SubIndex] = (short) py;
-			SFlip[SubIndex] = (byte) trans;
 			
 			fixArea(SX[SubIndex], SY[SubIndex], 
 					SX[SubIndex] + SW[SubIndex],
