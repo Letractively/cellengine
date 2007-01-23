@@ -73,6 +73,11 @@ public class CWorld extends CObject {
 			addSprite(sprs[i]);
 		}
 	}
+	public void addSprites(Vector sprs){
+		for(int i=0;i<sprs.size();i++){
+			addSprite((CSprite)(sprs.elementAt(i)));
+		}
+	}
 	public boolean removeSprite(CSprite spr){
 		return this.Sprs.removeElement(spr);
 	}
