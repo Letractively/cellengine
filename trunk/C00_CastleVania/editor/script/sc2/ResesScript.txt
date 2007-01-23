@@ -3,7 +3,7 @@
 // SkyCity Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     .\[out]\ResesScript.java
+// <OUTPUT>     .\res\ResesScript.java
 // 
 
 import com.morefuntek.cell.*;
