@@ -19,7 +19,17 @@ public class CImages20 extends CObject implements IImages {
 	//Í¼Æ¬×éÄÚÈÝ
 	protected Image[] Tiles = null;
 
-	
+	static final private short[] TRANS_TABLE = {
+		0,//TRANS_NONE
+		1,//TRANS_V
+		2,//TRANS_H
+		3,//TRANS_HV
+		4,//TRANS_H90
+		5,//TRANS_270
+		6,//TRANS_90
+		7 //TRANS_V90
+	};
+
 	//--------------------------------------------------------------------------------------------------------
 
 	/**
@@ -262,7 +272,7 @@ public class CImages20 extends CObject implements IImages {
 					0, 0, //
 					Tiles[Index].getWidth(), //
 					Tiles[Index].getHeight(), //
-					Style, //
+					TRANS_TABLE[Style], //
 					PosX, PosY,//
 					Graphics.TOP | Graphics.LEFT//
 			);
