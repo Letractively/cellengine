@@ -6,7 +6,7 @@
 // SkyCity Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     ..\res\ResesScript.java
+// <OUTPUT>     .\[out]\ResesScript.java
 // 
 
 import com.morefuntek.cell.*;
@@ -331,87 +331,83 @@ public class ResesScript {
 	final static public CSprite createSprite_Actor00(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(77,tiles);
+	    CAnimates animates = new CAnimates(73,tiles);
 	     animates.addPart(-17,-36,3,0);//0
 		 animates.addPart(-17,-36,0,0);//1
 		 animates.addPart(-17,-36,1,0);//2
 		 animates.addPart(-17,-36,2,0);//3
 		 animates.addPart(-18,-36,83,0);//4
 		 animates.addPart(-18,-36,84,0);//5
-		 animates.addPart(-21,-35,68,0);//6
-		 animates.addPart(-22,-35,69,0);//7
-		 animates.addPart(-21,-35,70,0);//8
-		 animates.addPart(-21,-36,74,0);//9
-		 animates.addPart(-21,-35,71,0);//10
+		 animates.addPart(-20,-35,68,0);//6
+		 animates.addPart(-21,-35,69,0);//7
+		 animates.addPart(-20,-35,70,0);//8
+		 animates.addPart(-21,-35,71,0);//9
+		 animates.addPart(-21,-35,72,0);//10
 		 animates.addPart(-22,-35,73,0);//11
-		 animates.addPart(-21,-36,72,0);//12
-		 animates.addPart(-22,-36,75,0);//13
-		 animates.addPart(-21,-36,76,0);//14
-		 animates.addPart(-22,-34,77,0);//15
-		 animates.addPart(-20,-35,78,0);//16
-		 animates.addPart(-19,-35,79,0);//17
-		 animates.addPart(-18,-36,80,0);//18
-		 animates.addPart(-21,-35,16,0);//19
-		 animates.addPart(-21,-35,18,0);//20
-		 animates.addPart(-22,-35,19,0);//21
-		 animates.addPart(-21,-35,26,0);//22
-		 animates.addPart(-18,-35,20,0);//23
-		 animates.addPart(-19,-35,28,0);//24
-		 animates.addPart(-19,-35,22,0);//25
-		 animates.addPart(-20,-35,23,0);//26
-		 animates.addPart(-19,-35,32,0);//27
-		 animates.addPart(-20,-35,24,0);//28
-		 animates.addPart(-17,-36,9,0);//29
-		 animates.addPart(-16,-36,14,0);//30
-		 animates.addPart(-16,-36,15,0);//31
-		 animates.addPart(-15,-36,10,0);//32
-		 animates.addPart(-13,-34,101,0);//33
-		 animates.addPart(-10,-34,102,0);//34
-		 animates.addPart(-13,-35,103,0);//35
-		 animates.addPart(-17,-36,8,0);//36
-		 animates.addPart(-20,-35,4,0);//37
-		 animates.addPart(-20,-35,5,0);//38
-		 animates.addPart(-20,-35,6,0);//39
-		 animates.addPart(-19,-35,7,0);//40
-		 animates.addPart(-20,-35,124,0);//41
-		 animates.addPart(-20,-35,125,0);//42
-		 animates.addPart(-20,-36,9,0);//43
-		 animates.addPart(-20,-31,48,0);//44
-		 animates.addPart(-20,-31,37,0);//45
-		 animates.addPart(-20,-31,38,0);//46
-		 animates.addPart(-20,-31,45,0);//47
-		 animates.addPart(-20,-30,46,0);//48
-		 animates.addPart(-20,-29,47,0);//49
-		 animates.addPart(-20,-30,37,0);//50
-		 animates.addPart(-18,-31,38,0);//51
-		 animates.addPart(-20,-29,37,0);//52
-		 animates.addPart(-20,-29,39,0);//53
-		 animates.addPart(-20,-29,40,0);//54
-		 animates.addPart(-16,-29,41,0);//55
-		 animates.addPart(-20,-29,42,0);//56
-		 animates.addPart(-20,-29,43,0);//57
-		 animates.addPart(-20,-29,44,0);//58
-		 animates.addPart(-20,-35,7,0);//59
-		 animates.addPart(-20,-35,92,0);//60
-		 animates.addPart(-20,-35,93,0);//61
-		 animates.addPart(-20,-35,109,0);//62
-		 animates.addPart(-20,-35,94,0);//63
-		 animates.addPart(-20,-35,11,0);//64
-		 animates.addPart(-20,-35,88,0);//65
-		 animates.addPart(-20,-35,89,0);//66
-		 animates.addPart(-20,-35,90,0);//67
-		 animates.addPart(-17,-35,72,0);//68
-		 animates.addPart(-17,-35,73,0);//69
-		 animates.addPart(-17,-35,74,0);//70
-		 animates.addPart(-20,-35,122,0);//71
-		 animates.addPart(-20,-35,123,0);//72
-		 animates.addPart(-20,-35,115,0);//73
-		 animates.addPart(-20,-29,119,0);//74
-		 animates.addPart(-20,-29,120,0);//75
-		 animates.addPart(-20,-29,38,0);//76
+		 animates.addPart(-23,-35,77,0);//12
+		 animates.addPart(-22,-35,78,0);//13
+		 animates.addPart(-18,-35,79,0);//14
+		 animates.addPart(-18,-36,80,0);//15
+		 animates.addPart(-20,-35,4,0);//16
+		 animates.addPart(-20,-35,5,0);//17
+		 animates.addPart(-20,-35,6,0);//18
+		 animates.addPart(-19,-35,7,0);//19
+		 animates.addPart(-20,-35,16,0);//20
+		 animates.addPart(-20,-35,18,0);//21
+		 animates.addPart(-20,-35,19,0);//22
+		 animates.addPart(-20,-35,26,0);//23
+		 animates.addPart(-20,-35,20,0);//24
+		 animates.addPart(-20,-35,28,0);//25
+		 animates.addPart(-20,-35,22,0);//26
+		 animates.addPart(-20,-35,23,0);//27
+		 animates.addPart(-20,-35,32,0);//28
+		 animates.addPart(-20,-35,24,0);//29
+		 animates.addPart(-20,-36,9,0);//30
+		 animates.addPart(-20,-36,14,0);//31
+		 animates.addPart(-20,-36,15,0);//32
+		 animates.addPart(-20,-36,10,0);//33
+		 animates.addPart(-20,-36,102,0);//34
+		 animates.addPart(-20,-36,103,0);//35
+		 animates.addPart(-20,-36,101,0);//36
+		 animates.addPart(-20,-36,8,0);//37
+		 animates.addPart(-20,-35,124,0);//38
+		 animates.addPart(-20,-35,125,0);//39
+		 animates.addPart(-20,-31,48,0);//40
+		 animates.addPart(-20,-31,37,0);//41
+		 animates.addPart(-20,-31,38,0);//42
+		 animates.addPart(-20,-31,45,0);//43
+		 animates.addPart(-20,-30,46,0);//44
+		 animates.addPart(-20,-29,47,0);//45
+		 animates.addPart(-20,-30,37,0);//46
+		 animates.addPart(-18,-31,38,0);//47
+		 animates.addPart(-20,-29,37,0);//48
+		 animates.addPart(-20,-29,39,0);//49
+		 animates.addPart(-20,-29,40,0);//50
+		 animates.addPart(-16,-29,41,0);//51
+		 animates.addPart(-20,-29,42,0);//52
+		 animates.addPart(-20,-29,43,0);//53
+		 animates.addPart(-20,-29,44,0);//54
+		 animates.addPart(-20,-35,7,0);//55
+		 animates.addPart(-20,-35,92,0);//56
+		 animates.addPart(-20,-35,93,0);//57
+		 animates.addPart(-20,-35,109,0);//58
+		 animates.addPart(-20,-35,94,0);//59
+		 animates.addPart(-20,-35,11,0);//60
+		 animates.addPart(-20,-35,88,0);//61
+		 animates.addPart(-20,-35,89,0);//62
+		 animates.addPart(-20,-35,90,0);//63
+		 animates.addPart(-17,-35,72,0);//64
+		 animates.addPart(-17,-35,73,0);//65
+		 animates.addPart(-17,-35,74,0);//66
+		 animates.addPart(-20,-35,122,0);//67
+		 animates.addPart(-20,-35,123,0);//68
+		 animates.addPart(-20,-35,115,0);//69
+		 animates.addPart(-20,-29,119,0);//70
+		 animates.addPart(-20,-29,120,0);//71
+		 animates.addPart(-20,-29,38,0);//72
 		
 		
-	    animates.setFrame(new int[77][]);
+	    animates.setFrame(new int[73][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -485,10 +481,6 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{70,},70);//70
 		 animates.setComboFrame(new int[]{71,},71);//71
 		 animates.setComboFrame(new int[]{72,},72);//72
-		 animates.setComboFrame(new int[]{73,},73);//73
-		 animates.setComboFrame(new int[]{74,},74);//74
-		 animates.setComboFrame(new int[]{75,},75);//75
-		 animates.setComboFrame(new int[]{76,},76);//76
 		
 		
 		// cds
@@ -509,37 +501,35 @@ public class ResesScript {
 	    int[][] frameAnimate = new int[][]{
 	        {0,1,2,3,2,1,},
 {4,5,},
-{6,7,},
-{8,9,10,11,12,13,14,},
-{15,16,17,18,},
-{19,20,21,22,23,24,25,26,27,28,},
-{29,30,31,},
-{32,33,34,35,32,36,},
-{37,38,39,40,},
-{41,42,},
-{43,44,45,46,},
-{47,48,49,50,51,},
-{52,},
-{53,54,55,56,57,58,},
-{55,56,57,},
-{37,38,39,59,60,60,61,62,63,64,},
-{65,66,66,67,68,69,70,},
-{71,72,41,},
-{73,},
-{74,75,76,},
-{39,59,},
+{6,7,8,},
+{9,10,10,11,11,11,12,13,14,15,},
+{16,17,18,19,},
+{20,21,22,23,24,25,26,27,28,29,},
+{30,31,32,},
+{33,34,35,36,33,37,},
+{38,39,},
+{30,40,41,42,},
+{43,44,45,46,47,},
+{48,},
+{49,50,51,52,53,54,},
+{51,52,53,},
+{16,17,18,55,56,56,57,58,59,60,},
+{61,62,62,63,64,65,66,},
+{67,68,38,},
+{69,},
+{70,71,72,},
+{18,55,},
 
 	    };
 	    int[][] frameCDMap = new int[][]{
 	        {0,1,1,1,1,1,},
 {1,1,},
-{1,1,},
-{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
 {1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,},
@@ -557,13 +547,12 @@ public class ResesScript {
 	    int[][] frameCDAtk = new int[][]{
 	        {1,1,1,1,1,1,},
 {1,1,},
-{1,1,},
-{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
 {1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,},
@@ -581,13 +570,12 @@ public class ResesScript {
 	    int[][] frameCDDef = new int[][]{
 	        {1,1,1,1,1,1,},
 {1,1,},
-{1,1,},
-{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
 {1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,},
@@ -605,13 +593,12 @@ public class ResesScript {
 	    int[][] frameCDExt = new int[][]{
 	        {2,1,1,1,1,1,},
 {1,1,},
-{1,1,},
-{1,1,1,1,1,1,1,},
+{1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
 {1,1,},
 {1,1,1,1,},
 {1,1,1,1,1,},

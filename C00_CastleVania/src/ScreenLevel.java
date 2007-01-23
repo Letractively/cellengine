@@ -30,7 +30,7 @@ public class ScreenLevel extends AScreen {
 	public ScreenLevel(){
 
 		
-       	IsDebug = false;
+       	IsDebug = true;
     
        	FrameDelay = 25;
        	
@@ -43,7 +43,7 @@ public class ScreenLevel extends AScreen {
        	
        	// spr type
        	CSprite act = ResesScript.createSprite_Actor00(actTile);
- 
+
        	actor = new UnitActor(act);
        	actor.X = 32;
     	actor.Y = 64;
@@ -80,8 +80,8 @@ public class ScreenLevel extends AScreen {
 	}
 	
 	public void notifyLogic() {
-    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
-        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
+    	if(isKeyHold(KEY_STAR)) {FrameDelay -= 10;}
+        if(isKeyHold(KEY_SHARP)){FrameDelay += 10;}
     	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenLogo");}
     	if(isKeyDown(KEY_B)){AScreen.ExitGame = true;}
 
