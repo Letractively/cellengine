@@ -59,15 +59,15 @@ namespace CellGameEdit.PM
         };
 
         static public int[] flipTableJ2me = new int[]{
-            Cell.Game.CImages.TRANS_NONE,
-            Cell.Game.CImages.TRANS_90,
-            Cell.Game.CImages.TRANS_180,
+           Cell.Game.CImages.TRANS_NONE,
             Cell.Game.CImages.TRANS_270,
+            Cell.Game.CImages.TRANS_180,
+            Cell.Game.CImages.TRANS_90,
 
             Cell.Game.CImages.TRANS_H,
-            Cell.Game.CImages.TRANS_H90,
-            Cell.Game.CImages.TRANS_V,
             Cell.Game.CImages.TRANS_V90,
+            Cell.Game.CImages.TRANS_V,
+            Cell.Game.CImages.TRANS_H90,
 
         };
 
