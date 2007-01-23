@@ -91,7 +91,10 @@ namespace CellGameEdit.PM
                 {
                     try
                     {
-                        Units.Add((Unit)UnitList[listView1.Items[i]]);
+                        Unit unit = (Unit)UnitList[listView1.Items[i]];
+                        unit.id = listView1.Items[i].Text;
+
+                        Units.Add(unit);
 
                         //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
                     }
@@ -200,6 +203,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         Unit unit = ((Unit)UnitList[item]);
                         if(unit.type == "Map") maps.Add(unit);
                         if (unit.type == "Sprite") sprs.Add(unit);
+                        unit.id = item.Text;
+
                     }catch (Exception err) { }
                 }
 
@@ -678,7 +683,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                             if (p.rect.X < 0) p.rect.X = 0;
                             if (p.rect.Y < 0) p.rect.Y = 0;
                         }
-                      
+
+                        p.rect.X -= p.rect.Width / 2;
+                        p.rect.Y -= p.rect.Height / 2;
 
                         pictureBox1.Width = Math.Max(p.rect.X + p.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(p.rect.Y + p.rect.Height, pictureBox1.Height);
@@ -1007,13 +1014,29 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         private void listView1_BeforeLabelEdit(object sender, LabelEditEventArgs e)
         {
+            try
+            {
 
+                if (!e.CancelEdit)
+                {
+                    Unit unit = ((Unit)UnitList[listView1.Items[e.Item]]);
+                    unit.id = e.Label;
+
+                    //listView1.Items[e.Item].SubItems[1].
+                }
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " Unit Lable Error : " + err.Message);
+            }
         }
 
         private void listView1_AfterLabelEdit(object sender, LabelEditEventArgs e)
         {
             try
             {
+
                 if (!e.CancelEdit)
                 {
                     Unit unit = ((Unit)UnitList[listView1.Items[e.Item]]);
