@@ -3,7 +3,7 @@
 // SkyCity Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     .\res\ResesScript.java
+// <OUTPUT>     .\[out]\ResesScript.java
 // 
 
 import com.morefuntek.cell.*;
@@ -174,12 +174,26 @@ public class ResesScript {
 		return null;
 	}
 
+	final static public String getWorldMapType(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			String[] MapType = new String[<UNIT MAP COUNT>];
+			#<UNIT MAP> MapType[<INDEX>] = "<IDENTIFY>";// <X> <Y>
+			#<END UNIT MAP>
+			
+			return MapType[0];
+		}
+	#<END WORLD>
+		return null;
+	}
+
 	final static public String getWorldMapName(String Name){
 	#<WORLD>
 		// World : <NAME>
 		if(Name=="<NAME>"){
 			String[] MapName = new String[<UNIT MAP COUNT>];
-			#<UNIT MAP> MapName[<INDEX>] = "<IDENTIFY>";// <X> <Y>
+			#<UNIT MAP> MapName[<INDEX>] = "<NAME>";// <X> <Y>
 			#<END UNIT MAP>
 			
 			return MapName[0];
