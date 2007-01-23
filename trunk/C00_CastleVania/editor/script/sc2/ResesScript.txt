@@ -1,0 +1,273 @@
+
+//
+// SkyCity Script v0.0.0
+// 
+// 指定文件输出
+// <OUTPUT>     .\[out]\ResesScript.java
+// 
+
+import com.morefuntek.cell.*;
+import com.morefuntek.cell.Game.*;
+
+public class ResesScript {
+
+//--------------------------------------------------------------------------------------------------------------
+// resource trunk
+//--------------------------------------------------------------------------------------------------------------
+#<RESOURCE>
+
+	//--------------------------------------------------------------------------------------------------------------
+	#<IMAGES> 
+	// Images : <NAME> 
+	final static public void buildClipImages_<NAME>(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/<NAME>.png"),<COUNT>);
+		
+		#<CLIP> stuff.addTile(<X>,<Y>,<W>,<H>);//<INDEX> 
+		#<END CLIP>
+		
+		stuff.gc();
+	}
+	#<END IMAGES>
+
+	//--------------------------------------------------------------------------------------------------------------
+	#<MAP>
+	// Map : <NAME>
+	final static public CMap createMap_<NAME>(IImages tiles,boolean isAnimate,boolean isCyc){
+		
+		//<X COUNT> x <Y COUNT>
+		
+		// tiles
+	    CAnimates animates = new CAnimates(<SCENE PART COUNT>,tiles);
+	    #<SCENE PART> animates.addPart(0,0,<TILE>,<TRANS>);//<INDEX>
+		#<END SCENE PART>
+		
+	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    #<SCENE FRAME> animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+		#<END SCENE FRAME>
+		
+		short[][] tileMatrix = new short[][]{
+			<TILE MATRIX>
+		};
+		
+		// cds
+		CCollides collides = new CCollides(<CD PART COUNT>);
+	    #<CD PART>
+	    if("<TYPE>"=="rect") collides.addCDRect(<MASK>, <X1>, <Y1>, <W> , <H> );//<TYPE>//<INDEX>
+		if("<TYPE>"=="line") collides.addCDLine(<MASK>, <X1>, <Y1>, <X2>, <Y2>);//<TYPE>//<INDEX>
+		#<END CD PART>
+
+		short[][] flagMatrix = new short[][]{
+			<FLAG MATRIX>
+		};
+		
+	    CMap ret = new CMap(
+	            animates, 
+	            collides, 
+	            <CELL W>, <CELL H>, 
+	            tileMatrix, 
+	            flagMatrix, 
+	            isAnimate,isCyc 
+	            );
+	
+	    return ret;
+	}
+	#<END MAP>
+	
+	//--------------------------------------------------------------------------------------------------------------
+	#<SPRITE>
+	// Sprite : <NAME>
+	final static public CSprite createSprite_<NAME>(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(<SCENE PART COUNT>,tiles);
+	    #<SCENE PART> animates.addPart(<X>,<Y>,<TILE>,<TRANS>);//<INDEX>
+		#<END SCENE PART>
+		
+	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    #<SCENE FRAME> animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+		#<END SCENE FRAME>
+		
+		// cds
+	    CCollides collides = new CCollides(<CD PART COUNT>);
+		#<CD PART> collides.addCDRect(<MASK>, <X1>, <Y1>, <W> , <H> );//<TYPE>//<INDEX>
+	    #<END CD PART>
+	    
+	    collides.setFrame(new int[<CD FRAME COUNT>][]);
+	    #<CD FRAME> collides.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
+	    #<END CD FRAME>
+	    
+	    
+		// sprite frame
+	    int[][] frameAnimate = new int[][]{
+	        <FRAME ANIMATE>
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        <FRAME CD MAP>
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        <FRAME CD ATK>
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        <FRAME CD DEF>
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        <FRAME CD EXT>
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	#<END SPRITE>
+	
+#<END RESOURCE>
+
+
+//--------------------------------------------------------------------------------------------------------------
+// level trunk
+//--------------------------------------------------------------------------------------------------------------
+#<LEVEL>
+	
+	
+	#<WORLD>
+	// world : <NAME>
+	final static public String getWorld_<NAME>(){
+		return "<NAME>";
+	}
+	// world width : <NAME>
+	final static public int getWorldW_<NAME>(){
+		return <WIDTH>;
+	}
+	// world height : <NAME>
+	final static public int getWorldH_<NAME>(){
+		return <HEIGHT>;
+	}
+	#<END WORLD>
+	
+	
+	final static public CWayPoint[] getWorldWayPoints(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			// waypoint count : <WAYPOINT COUNT>
+			CWayPoint[] WayPoints = new CWayPoint[<WAYPOINT COUNT>];
+			#<WAYPOINT> WayPoints[<INDEX>] = new CWayPoint(<X>,<Y>);
+			#<END WAYPOINT>
+			
+			// waypoint link 
+			#<WAYPOINT LINK> WayPoints[<START>].link(WayPoints[<END>]);//<INDEX>
+			#<END WAYPOINT LINK>
+			
+			return WayPoints;
+		}
+	#<END WORLD>
+		return null;
+	}
+
+	final static public String getWorldMapName(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			String[] MapName = new String[<UNIT MAP COUNT>];
+			#<UNIT MAP> MapName[<INDEX>] = "<IDENTIFY>";// <X> <Y>
+			#<END UNIT MAP>
+			
+			return MapName[0];
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+	final static public String[] getWorldSprName(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			String[] SprName = new String[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> SprName[<INDEX>] = "<NAME>";
+			#<END UNIT SPRITE>
+			
+			return SprName;
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+	final static public String[] getWorldSprType(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			String[] SprID = new String[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> SprID[<INDEX>] = "<IDENTIFY>";
+			#<END UNIT SPRITE>
+			
+			return SprID;
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+	final static public int[] getWorldSprAnim(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			int[] SprAnim = new int[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> SprAnim[<INDEX>] = <ANIMATE ID> ;
+			#<END UNIT SPRITE>
+			
+			return SprAnim;
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+	final static public int[] getWorldSprX(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			int[] SprX = new int[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> SprX[<INDEX>] = <X> ;
+			#<END UNIT SPRITE>
+			
+			return SprX;
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+	final static public int[] getWorldSprY(String Name){
+	#<WORLD>
+		// World : <NAME>
+		if(Name=="<NAME>"){
+			int[] SprY = new int[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> SprY[<INDEX>] = <Y> ;
+			#<END UNIT SPRITE>
+			
+			return SprY;
+		}
+	#<END WORLD>
+		return null;
+	}
+	
+#<END LEVEL>
+
+
+	
+}
+
+
+
