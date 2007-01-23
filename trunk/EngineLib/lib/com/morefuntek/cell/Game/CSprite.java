@@ -626,10 +626,10 @@ public class CSprite extends CUnit {
 			point1[2] = collides.cds[i].X2;
 			point1[3] = collides.cds[i].Y2;
 			CSprite.TransformPoint(point1, next);
-			collides.cds[i].X1 = (short)point1[0];
-			collides.cds[i].Y1 = (short)point1[1];
-			collides.cds[i].X2 = (short)point1[2];
-			collides.cds[i].Y2 = (short)point1[3];
+			collides.cds[i].X1 = (short)Math.min(point1[0],point1[2]);
+			collides.cds[i].Y1 = (short)Math.min(point1[1],point1[3]);
+			collides.cds[i].X2 = (short)Math.max(point1[0],point1[2]);
+			collides.cds[i].Y2 = (short)Math.max(point1[1],point1[3]);
 			collides.fixArea(
 					collides.cds[i].X1, 
 					collides.cds[i].Y1, 
