@@ -36,13 +36,24 @@ public class UnitActor extends CSprite  {
 
 	//	-----------------------------------------------------------------------------------------
 	final static int STATE_STANDING			= 0;
+	
 	final static int STATE_JUMP_UP			= 1;
 	final static int STATE_JUMP_UPR			= 2;
 	final static int STATE_JUMP_DOWN	  	= 3;
 	final static int STATE_JUMP_STAND  		= 4;
+	
 	final static int STATE_WALKING			= 5;
 	final static int STATE_STAND_WALK		= 6;
 	final static int STATE_WALK_STAND		= 7;
+	final static int STATE_WALK_CHANGE		= 8;
+	
+	final static int STATE_STAND_UPON		= 9;
+	final static int STATE_UPONING			= 10;
+	final static int STATE_UPON_STAND		= 11;
+	
+	final static int STATE_STAND_DUCK		= 12;
+	final static int STATE_DUCKING			= 13;
+	final static int STATE_DUCK_STAND		= 14;
 	
 	int state = 0;
 	
@@ -52,6 +63,7 @@ public class UnitActor extends CSprite  {
 		case STATE_STANDING:
 			nextCycFrame();
 			break;
+			
 		case STATE_JUMP_UP:
 			nextCycFrame();
 			break;
@@ -67,6 +79,7 @@ public class UnitActor extends CSprite  {
 				setCurrentFrame(state, 0);
 			}
 			break;
+			
 		case STATE_WALKING:
 			nextCycFrame();
 			break;
@@ -77,6 +90,45 @@ public class UnitActor extends CSprite  {
 			}
 			break;
 		case STATE_WALK_STAND:
+			if(nextFrame()){
+				state = STATE_STANDING;
+				setCurrentFrame(state, 0);
+			}
+			break;
+		case STATE_WALK_CHANGE:
+			if(nextFrame()){
+				state = STATE_WALKING;
+				setCurrentFrame(state, 0);
+			}
+			break;
+			
+			
+		case STATE_STAND_UPON:
+			if(nextFrame()){
+				state = STATE_UPONING;
+				setCurrentFrame(state, 0);
+			}
+			break;
+		case STATE_UPONING:
+			nextCycFrame();
+			break;
+		case STATE_UPON_STAND:
+			if(nextFrame()){
+				state = STATE_STANDING;
+				setCurrentFrame(state, 0);
+			}
+			break;
+			
+		case STATE_STAND_DUCK:
+			if(nextFrame()){
+				state = STATE_DUCKING;
+				setCurrentFrame(state, 0);
+			}
+			break;
+		case STATE_DUCKING:
+			nextCycFrame();
+			break;
+		case STATE_DUCK_STAND:
 			if(nextFrame()){
 				state = STATE_STANDING;
 				setCurrentFrame(state, 0);
@@ -104,50 +156,121 @@ public class UnitActor extends CSprite  {
 		boolean isLand = isLand();
 		SpeedX256 = 0;
 		if(!isLand){
+			// jump up
+			if(SpeedY256<0){
+				if(AScreen.isKeyHold(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+					state = STATE_JUMP_UPR;
+					setCurrentFrame(state, CurFrame);
+				}else{
+					state = STATE_JUMP_UP;
+					setCurrentFrame(state, CurFrame);
+				}
+			}
+			// jump down
+			if(SpeedY256>0){
+				state = STATE_JUMP_DOWN;
+				setCurrentFrame(state, CurFrame);
+			}
+			// jump que
+			if(SpeedY256==0){
+				state = STATE_JUMP_DOWN;
+				setCurrentFrame(state, 0);
+			}	
+			
+			if(AScreen.isKeyHold(AScreen.KEY_LEFT)){
+				SpeedX256 = -WalkV;
+				if(Transform!=IImages.TRANS_H){
+					transform(IImages.TRANS_H);
+				}
+			}
+			if(AScreen.isKeyHold(AScreen.KEY_RIGHT)){
+				SpeedX256 =  WalkV;
+				if(Transform!=IImages.TRANS_NONE){
+					transform(IImages.TRANS_H);
+				}
+			}
+			
 			SpeedY256 += Gravity;
 		}else{
-			if(SpeedY256>0){
-				state = STATE_JUMP_STAND;
-				setCurrentFrame(state, 0);
+			
+			if(AScreen.isKeyHold(AScreen.KEY_DOWN)){
+				if( state!=STATE_STAND_DUCK &&
+					state!=STATE_DUCKING){
+					state = STATE_STAND_DUCK;
+					setCurrentFrame(state, 0);
+				}
+			}else{
+				if(AScreen.isKeyUp(AScreen.KEY_LEFT)){
+					state = STATE_WALK_STAND;
+					setCurrentFrame(state, 0);
+				}
+				if(AScreen.isKeyUp(AScreen.KEY_RIGHT)){
+					state = STATE_WALK_STAND;
+					setCurrentFrame(state, 0);
+				}
+				if(AScreen.isKeyDown(AScreen.KEY_LEFT)){
+					state = STATE_STAND_WALK;
+					setCurrentFrame(state, 0);
+				}
+				if(AScreen.isKeyDown(AScreen.KEY_RIGHT)){
+					state = STATE_STAND_WALK;
+					setCurrentFrame(state, 0);
+				}
+				if(AScreen.isKeyHold(AScreen.KEY_LEFT)){
+					SpeedX256 = -WalkV;
+					if( state!=STATE_WALKING &&
+						state!=STATE_STAND_WALK &&
+						state!=STATE_WALK_CHANGE){
+						state = STATE_STAND_WALK;
+						setCurrentFrame(state, 0);
+					}
+					if(Transform!=IImages.TRANS_H){
+						transform(IImages.TRANS_H);
+						state = STATE_WALK_CHANGE;
+						setCurrentFrame(state, 0);
+					}
+				}
+				if(AScreen.isKeyHold(AScreen.KEY_RIGHT)){
+					SpeedX256 =  WalkV;
+					if( state!=STATE_WALKING &&
+						state!=STATE_STAND_WALK &&
+						state!=STATE_WALK_CHANGE){
+						state = STATE_STAND_WALK;
+						setCurrentFrame(state, 0);
+					}
+					if(Transform!=IImages.TRANS_NONE){
+						transform(IImages.TRANS_H);
+						state = STATE_WALK_CHANGE;
+						setCurrentFrame(state, 0);
+					}
+				}
+				if(SpeedY256>0){
+					if(AScreen.isKeyHold(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+						state = STATE_WALKING;
+						setCurrentFrame(state, 0);
+					}else{
+						state = STATE_JUMP_STAND;
+						setCurrentFrame(state, 0);
+					}
+				}
 			}
-			SpeedY256 = 0;
+
+			if(AScreen.isKeyDown(AScreen.KEY_UP)){
+				if(state==STATE_DUCKING){
+					state = STATE_DUCK_STAND;
+					setCurrentFrame(state, 0);
+				}else{
+					SpeedY256 = JumpV;
+				}
+				
+			}else{
+				SpeedY256 = 0;
+			}
+			
 		}
 		
 		
-		// user input
-		if(AScreen.isKeyUp(AScreen.KEY_LEFT)){
-			state = STATE_WALK_STAND;
-			setCurrentFrame(state, 0);
-		}
-		if(AScreen.isKeyUp(AScreen.KEY_RIGHT)){
-			state = STATE_WALK_STAND;
-			setCurrentFrame(state, 0);
-		}
-		if(AScreen.isKeyDown(AScreen.KEY_LEFT)){
-			if(Transform!=IImages.TRANS_H){
-				transform(IImages.TRANS_H);
-			}
-			state = STATE_STAND_WALK;
-			setCurrentFrame(state, 0);
-		}
-		if(AScreen.isKeyDown(AScreen.KEY_RIGHT)){
-			if(Transform!=IImages.TRANS_NONE){
-				transform(IImages.TRANS_H);
-			}
-			state = STATE_STAND_WALK;
-			setCurrentFrame(state, 0);
-		}
-		if(AScreen.isKeyHold(AScreen.KEY_LEFT)){
-			SpeedX256 = -WalkV;
-		}
-		if(AScreen.isKeyHold(AScreen.KEY_RIGHT)){
-			SpeedX256 =  WalkV;
-		}
-		if(AScreen.isKeyDown(AScreen.KEY_UP)){
-			if(isLand){
-				SpeedY256 = JumpV;
-			}
-		}
+		
 		
 		// physices
 		if(SpeedY256<0){
@@ -173,23 +296,7 @@ public class UnitActor extends CSprite  {
 			SpeedY256 = 0;
 		}
 		
-		if(!isLand ){
-			// jump up
-			if(SpeedY256<0){
-				if(SpeedX256!=0){
-					state = STATE_JUMP_UPR;
-					setCurrentFrame(state, CurFrame);
-				}else{
-					state = STATE_JUMP_UP;
-					setCurrentFrame(state, CurFrame);
-				}
-			}
-			// jump down
-			if(SpeedY256>0){
-				state = STATE_JUMP_DOWN;
-				setCurrentFrame(state, CurFrame);
-			}
-		}
+		
 		
 	}
 	

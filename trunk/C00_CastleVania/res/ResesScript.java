@@ -331,7 +331,7 @@ public class ResesScript {
 	final static public CSprite createSprite_Actor00(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(77,tiles);
+	    CAnimates animates = new CAnimates(88,tiles);
 	     animates.addPart(-17,-36,3,0);//0
 		 animates.addPart(-17,-36,0,0);//1
 		 animates.addPart(-17,-36,1,0);//2
@@ -351,67 +351,78 @@ public class ResesScript {
 		 animates.addPart(-20,-35,78,0);//16
 		 animates.addPart(-19,-35,79,0);//17
 		 animates.addPart(-18,-36,80,0);//18
-		 animates.addPart(-21,-35,16,0);//19
-		 animates.addPart(-21,-35,18,0);//20
-		 animates.addPart(-22,-35,19,0);//21
-		 animates.addPart(-21,-35,26,0);//22
-		 animates.addPart(-18,-35,20,0);//23
-		 animates.addPart(-19,-35,28,0);//24
-		 animates.addPart(-19,-35,22,0);//25
-		 animates.addPart(-20,-35,23,0);//26
-		 animates.addPart(-19,-35,32,0);//27
-		 animates.addPart(-20,-35,24,0);//28
-		 animates.addPart(-17,-36,9,0);//29
-		 animates.addPart(-16,-36,14,0);//30
-		 animates.addPart(-16,-36,15,0);//31
-		 animates.addPart(-15,-36,10,0);//32
-		 animates.addPart(-13,-34,101,0);//33
-		 animates.addPart(-10,-34,102,0);//34
-		 animates.addPart(-13,-35,103,0);//35
-		 animates.addPart(-17,-36,8,0);//36
-		 animates.addPart(-20,-35,4,0);//37
-		 animates.addPart(-20,-35,5,0);//38
-		 animates.addPart(-20,-35,6,0);//39
-		 animates.addPart(-19,-35,7,0);//40
-		 animates.addPart(-20,-35,124,0);//41
-		 animates.addPart(-20,-35,125,0);//42
-		 animates.addPart(-20,-36,9,0);//43
-		 animates.addPart(-20,-31,48,0);//44
-		 animates.addPart(-20,-31,37,0);//45
-		 animates.addPart(-20,-31,38,0);//46
-		 animates.addPart(-20,-31,45,0);//47
-		 animates.addPart(-20,-30,46,0);//48
-		 animates.addPart(-20,-29,47,0);//49
-		 animates.addPart(-20,-30,37,0);//50
-		 animates.addPart(-18,-31,38,0);//51
-		 animates.addPart(-20,-29,37,0);//52
-		 animates.addPart(-20,-29,39,0);//53
-		 animates.addPart(-20,-29,40,0);//54
-		 animates.addPart(-16,-29,41,0);//55
-		 animates.addPart(-20,-29,42,0);//56
-		 animates.addPart(-20,-29,43,0);//57
-		 animates.addPart(-20,-29,44,0);//58
-		 animates.addPart(-20,-35,7,0);//59
-		 animates.addPart(-20,-35,92,0);//60
-		 animates.addPart(-20,-35,93,0);//61
-		 animates.addPart(-20,-35,109,0);//62
-		 animates.addPart(-20,-35,94,0);//63
-		 animates.addPart(-20,-35,11,0);//64
-		 animates.addPart(-20,-35,88,0);//65
-		 animates.addPart(-20,-35,89,0);//66
-		 animates.addPart(-20,-35,90,0);//67
-		 animates.addPart(-17,-35,72,0);//68
-		 animates.addPart(-17,-35,73,0);//69
-		 animates.addPart(-17,-35,74,0);//70
-		 animates.addPart(-20,-35,122,0);//71
-		 animates.addPart(-20,-35,123,0);//72
-		 animates.addPart(-20,-35,115,0);//73
-		 animates.addPart(-20,-29,119,0);//74
-		 animates.addPart(-20,-29,120,0);//75
-		 animates.addPart(-20,-29,38,0);//76
+		 animates.addPart(-22,-35,16,0);//19
+		 animates.addPart(-23,-36,19,0);//20
+		 animates.addPart(-22,-35,26,0);//21
+		 animates.addPart(-19,-35,20,0);//22
+		 animates.addPart(-20,-35,21,0);//23
+		 animates.addPart(-20,-35,28,0);//24
+		 animates.addPart(-20,-35,22,0);//25
+		 animates.addPart(-20,-35,29,0);//26
+		 animates.addPart(-21,-36,23,0);//27
+		 animates.addPart(-21,-35,30,0);//28
+		 animates.addPart(-20,-35,32,0);//29
+		 animates.addPart(-20,-35,17,0);//30
+		 animates.addPart(-21,-35,24,0);//31
+		 animates.addPart(-16,-36,9,0);//32
+		 animates.addPart(-16,-35,14,0);//33
+		 animates.addPart(-17,-35,15,0);//34
+		 animates.addPart(-15,-36,10,0);//35
+		 animates.addPart(-13,-34,101,0);//36
+		 animates.addPart(-10,-34,102,0);//37
+		 animates.addPart(-13,-35,103,0);//38
+		 animates.addPart(-17,-36,8,0);//39
+		 animates.addPart(-25,-35,124,2);//40
+		 animates.addPart(-18,-35,125,0);//41
+		 animates.addPart(-22,-35,18,0);//42
+		 animates.addPart(-23,-35,25,0);//43
+		 animates.addPart(-17,-35,4,0);//44
+		 animates.addPart(-17,-35,5,0);//45
+		 animates.addPart(-18,-35,6,0);//46
+		 animates.addPart(-17,-35,7,0);//47
+		 animates.addPart(-21,-31,45,0);//48
+		 animates.addPart(-17,-29,46,0);//49
+		 animates.addPart(-18,-28,47,0);//50
+		 animates.addPart(-17,-29,37,0);//51
+		 animates.addPart(-16,-29,38,0);//52
+		 animates.addPart(-18,-31,48,0);//53
+		 animates.addPart(-20,-31,45,0);//54
+		 animates.addPart(-20,-30,46,0);//55
+		 animates.addPart(-20,-29,47,0);//56
+		 animates.addPart(-20,-30,37,0);//57
+		 animates.addPart(-18,-31,38,0);//58
+		 animates.addPart(-16,-29,39,0);//59
+		 animates.addPart(-16,-29,41,0);//60
+		 animates.addPart(-20,-28,42,0);//61
+		 animates.addPart(-22,-28,43,0);//62
+		 animates.addPart(-20,-29,44,0);//63
+		 animates.addPart(-15,-29,40,0);//64
+		 animates.addPart(-20,-29,42,0);//65
+		 animates.addPart(-20,-29,43,0);//66
+		 animates.addPart(-20,-35,4,0);//67
+		 animates.addPart(-20,-35,5,0);//68
+		 animates.addPart(-20,-35,6,0);//69
+		 animates.addPart(-20,-35,7,0);//70
+		 animates.addPart(-20,-35,92,0);//71
+		 animates.addPart(-20,-35,93,0);//72
+		 animates.addPart(-20,-35,109,0);//73
+		 animates.addPart(-20,-35,94,0);//74
+		 animates.addPart(-20,-35,11,0);//75
+		 animates.addPart(-20,-35,88,0);//76
+		 animates.addPart(-20,-35,89,0);//77
+		 animates.addPart(-20,-35,90,0);//78
+		 animates.addPart(-17,-35,72,0);//79
+		 animates.addPart(-17,-35,73,0);//80
+		 animates.addPart(-17,-35,74,0);//81
+		 animates.addPart(-17,-35,124,0);//82
+		 animates.addPart(-17,-35,114,0);//83
+		 animates.addPart(-20,-35,115,0);//84
+		 animates.addPart(-20,-29,119,0);//85
+		 animates.addPart(-20,-28,120,0);//86
+		 animates.addPart(-20,-29,38,0);//87
 		
 		
-	    animates.setFrame(new int[77][]);
+	    animates.setFrame(new int[88][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -489,13 +500,24 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{74,},74);//74
 		 animates.setComboFrame(new int[]{75,},75);//75
 		 animates.setComboFrame(new int[]{76,},76);//76
+		 animates.setComboFrame(new int[]{77,},77);//77
+		 animates.setComboFrame(new int[]{78,},78);//78
+		 animates.setComboFrame(new int[]{79,},79);//79
+		 animates.setComboFrame(new int[]{80,},80);//80
+		 animates.setComboFrame(new int[]{81,},81);//81
+		 animates.setComboFrame(new int[]{82,},82);//82
+		 animates.setComboFrame(new int[]{83,},83);//83
+		 animates.setComboFrame(new int[]{84,},84);//84
+		 animates.setComboFrame(new int[]{85,},85);//85
+		 animates.setComboFrame(new int[]{86,},86);//86
+		 animates.setComboFrame(new int[]{87,},87);//87
 		
 		
 		// cds
 	    CCollides collides = new CCollides(3);
-		 collides.addCDRect(65535, -4, -32, 8 , 33 );//rect//0
-	     collides.addCDRect(65535, -4, 0, 8 , 1 );//rect//1
-	     collides.addCDRect(65535, -4, 1, 8 , 1 );//rect//2
+		 collides.addCDRect(65535, -2, -32, 4 , 32 );//rect//0
+	     collides.addCDRect(65535, -2, -1, 4 , 1 );//rect//1
+	     collides.addCDRect(65535, -2, 0, 4 , 1 );//rect//2
 	    
 	    
 	    collides.setFrame(new int[3][]);
@@ -512,22 +534,25 @@ public class ResesScript {
 {6,7,},
 {8,9,10,11,12,13,14,},
 {15,16,17,18,},
-{19,20,21,22,23,24,25,26,27,28,},
-{29,30,31,},
-{32,33,34,35,32,36,},
-{37,38,39,40,},
-{41,42,},
-{43,44,45,46,},
-{47,48,49,50,51,},
+{19,20,21,22,23,24,25,26,27,28,29,30,31,},
+{32,33,34,},
+{35,36,37,38,35,39,},
+{40,40,40,40,41,41,30,31,42,43,},
+{1,44,45,46,47,},
+{47,},
+{47,46,45,44,1,},
+{1,48,49,50,51,52,},
 {52,},
-{53,54,55,56,57,58,},
-{55,56,57,},
-{37,38,39,59,60,60,61,62,63,64,},
-{65,66,66,67,68,69,70,},
-{71,72,41,},
-{73,},
-{74,75,76,},
-{39,59,},
+{52,53,3,},
+{54,55,56,57,58,},
+{59,60,61,62,63,64,},
+{60,65,66,},
+{67,68,69,70,71,71,72,73,74,75,},
+{76,77,77,78,79,80,81,},
+{82,83,},
+{84,},
+{85,86,87,},
+{69,70,},
 
 	    };
 	    int[][] frameCDMap = new int[][]{
@@ -536,19 +561,22 @@ public class ResesScript {
 {1,1,},
 {1,1,1,1,1,1,1,},
 {1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
-{1,1,},
-{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,},
 {1,},
+{1,1,1,1,1,},
+{1,1,1,1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,1,1,1,},
 {1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,},
-{1,1,1,},
+{1,1,},
 {1,},
 {1,1,1,},
 {1,1,},
@@ -560,19 +588,22 @@ public class ResesScript {
 {1,1,},
 {1,1,1,1,1,1,1,},
 {1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
-{1,1,},
-{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,},
 {1,},
+{1,1,1,1,1,},
+{1,1,1,1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,1,1,1,},
 {1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,},
-{1,1,1,},
+{1,1,},
 {1,},
 {1,1,1,},
 {1,1,},
@@ -584,19 +615,22 @@ public class ResesScript {
 {1,1,},
 {1,1,1,1,1,1,1,},
 {1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
-{1,1,},
-{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,},
 {1,},
+{1,1,1,1,1,},
+{1,1,1,1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,1,1,1,},
 {1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,},
-{1,1,1,},
+{1,1,},
 {1,},
 {1,1,1,},
 {1,1,},
@@ -608,19 +642,22 @@ public class ResesScript {
 {1,1,},
 {1,1,1,1,1,1,1,},
 {1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,},
-{1,1,1,1,},
-{1,1,},
-{1,1,1,1,},
+{1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,},
 {1,},
+{1,1,1,1,1,},
+{1,1,1,1,1,1,},
+{1,},
+{1,1,1,},
+{1,1,1,1,1,},
 {1,1,1,1,1,1,},
 {1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,},
-{1,1,1,},
+{1,1,},
 {1,},
 {1,1,1,},
 {1,1,},

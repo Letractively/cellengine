@@ -32,7 +32,7 @@ public class ScreenLevel extends AScreen {
 		
        	IsDebug = true;
     
-       	FrameDelay = 25;
+       	FrameDelay = 40;
        	
        	// res
        	IImages mapTile = new CImages20();
@@ -80,8 +80,8 @@ public class ScreenLevel extends AScreen {
 	}
 	
 	public void notifyLogic() {
-    	if(isKeyHold(KEY_STAR)) {FrameDelay -= 10;}
-        if(isKeyHold(KEY_SHARP)){FrameDelay += 10;}
+    	if(isKeyDown(KEY_STAR)) {FrameDelay -= 10;}
+        if(isKeyDown(KEY_SHARP)){FrameDelay += 10;}
     	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenLogo");}
     	if(isKeyDown(KEY_B)){AScreen.ExitGame = true;}
 
