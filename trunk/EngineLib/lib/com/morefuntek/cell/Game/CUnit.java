@@ -35,27 +35,7 @@ public class CUnit extends CObject
 	
 //	---------------------------------------------------------------------------------------------
 
-	protected IState onState = null;
 
-	/**
-	 * 设置状态
-	 * @param state 
-	 */
-	public void setState(IState state){
-		onState = state;
-	}
-	
-	public IState getState(){
-		return onState;
-	}
-	
-	/**
-	 * 更新所有状态 
-	 */
-	public void updateStates(){
-		if(onState==null)return;
-		onState.update();
-	}
 	
 	
 //	---------------------------------------------------------------------------------------------
