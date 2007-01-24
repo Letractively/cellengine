@@ -79,13 +79,13 @@ public class CParticleSystem {
 		if(Active){
 			Active = false;
 			for(int i=0;i<Particles.length;i++){
+				Particles[i].Timer--;
 				if(Particles[i].isTerminate()==false){
 					Launcher.particleAffected(Particles[i],i);
 					Active = true;
 				}else{
 					Launcher.particleTerminated(Particles[i],i);
 				}
-				Particles[i].Timer--;
 	       	}
 		}
 	}

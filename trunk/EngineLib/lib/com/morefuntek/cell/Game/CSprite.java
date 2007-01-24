@@ -929,17 +929,19 @@ public class CSprite extends CUnit {
 	 * @param y 
 	 */
 	public void render(Graphics g,int x,int y) {
-		if (Visible) {
-			animates.render(g,FrameAnimate[CurAnimate][CurFrame],x,y);
-		}
+		if (OnScreen){
+			if (Visible) {
+				animates.render(g,FrameAnimate[CurAnimate][CurFrame],x,y);
+			}
 //#ifdef _DEBUG
-		if (Active && IsDebug){
-			collides.render(g,FrameCDMap[CurAnimate][CurFrame],x,y,0xff00ff00);
-			collides.render(g,FrameCDAtk[CurAnimate][CurFrame],x,y,0xffff0000);
-			collides.render(g,FrameCDDef[CurAnimate][CurFrame],x,y,0xff0000ff);
-			collides.render(g,FrameCDExt[CurAnimate][CurFrame],x,y,0xffffffff);
-		}
+			if (Active && IsDebug){
+				collides.render(g,FrameCDMap[CurAnimate][CurFrame],x,y,0xff00ff00);
+				collides.render(g,FrameCDAtk[CurAnimate][CurFrame],x,y,0xffff0000);
+				collides.render(g,FrameCDDef[CurAnimate][CurFrame],x,y,0xff0000ff);
+				collides.render(g,FrameCDExt[CurAnimate][CurFrame],x,y,0xffffffff);
+			}
 //#endif
+		}
 	}
 
 	//	----------------------------------------------------------------------------------------------------

@@ -193,12 +193,12 @@ public class CWorld extends CObject {
 					Camera.Y + Camera.getHeight()
 					)){
 					((CSprite)Sprs.elementAt(i)).OnScreen = true;
-					((CSprite)Sprs.elementAt(i)).render(g,
-							((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
-							((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
 				}else{
 					((CSprite)Sprs.elementAt(i)).OnScreen = false;
 				}
+				((CSprite)Sprs.elementAt(i)).render(g,
+						((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
+						((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
 			}
 			
 			g.setClip(cx,cy,cw,ch);
