@@ -9,11 +9,10 @@ import com.morefuntek.cell.Game.CCollides;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.IState;
 
-public class UnitActor extends CSprite implements IState {
+public class UnitActor extends CSprite  {
 
 	public UnitActor(CSprite spr) {
 		super(spr);
-		setState(this);
 		haveSprBlock = false;
 		haveMapBlock = true;
 		
