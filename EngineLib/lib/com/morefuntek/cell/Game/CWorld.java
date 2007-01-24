@@ -144,7 +144,7 @@ public class CWorld extends CObject {
 	 */
 	public void update(){
 		for(int i=0;i<Sprs.size();i++){
-			((CSprite)Sprs.elementAt(i)).updateStates();
+			((CSprite)Sprs.elementAt(i)).update();
 		}
 	}
 	
