@@ -107,6 +107,10 @@ public class UnitActor extends CSprite implements IState {
 		if(!isLand){
 			SpeedY256 += Gravity;
 		}else{
+			if(SpeedY256>0){
+				state = STATE_JUMP_STAND;
+				setCurrentFrame(state, 0);
+			}
 			SpeedY256 = 0;
 		}
 		
