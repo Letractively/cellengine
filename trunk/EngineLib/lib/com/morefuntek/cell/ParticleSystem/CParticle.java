@@ -13,8 +13,8 @@ public class CParticle {
 	// time
 	public int Category = 0;
 	
-//	/**Terminate time*/
-//	public int TerminateTime = 1;
+	/**Terminate time*/
+	public int TerminateTime = 0;
 	/**timer*/
 	public int Timer = 0;
 	
@@ -28,13 +28,11 @@ public class CParticle {
 	
 	// surface
 	public int Color = 0;
-//	public Image Image = null;
-//	
-//	// data
-//	public int[] Data = null;
+
+	
 	
 	public boolean isTerminate(){
-		return Timer < 0;
+		return Timer > TerminateTime;
 	}
 	
 }

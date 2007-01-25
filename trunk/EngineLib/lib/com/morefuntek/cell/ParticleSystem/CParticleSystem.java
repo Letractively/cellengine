@@ -60,7 +60,7 @@ public class CParticleSystem {
 		int c = 0;
 		for(int i=0;i<Particles.length;i++){
 			if(c>=count)break;
-			if(Particles[i].isTerminate()==true){
+			if(Particles[i].isTerminate()){
 				Particles[i].Category = category;
 				Particles[i].X = x;
 				Particles[i].Y = y;
@@ -79,7 +79,7 @@ public class CParticleSystem {
 		if(Active){
 			Active = false;
 			for(int i=0;i<Particles.length;i++){
-				Particles[i].Timer--;
+				Particles[i].Timer++;
 				if(Particles[i].isTerminate()==false){
 					Launcher.particleAffected(Particles[i],i);
 					Active = true;
