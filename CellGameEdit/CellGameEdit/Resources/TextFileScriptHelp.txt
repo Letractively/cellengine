@@ -1,0 +1,160 @@
+--------------------------------------------------------------------------------------------------------------
+指令说明
+--------------------------------------------------------------------------------------------------------------
+ 格式： 
+ 所有指令名称由一对<>尖括号包围，#<代表数据块，
+ 该脚本是对最后生成数据格式的一种约定。
+   例如：
+     有如下约定
+     #<DATA>
+          data[<INDEX>] = <DATAS>;
+     #<<END DATA>
+     并且程序里和<DATA>对应的有3个数据块，那么最后生成的数据是
+     data[0] = ....;
+     data[1] = ....;
+     data[2] = ....;
+--------------------------------------------------------------------------------------------------------------     
+ 指令列表：
+ OUTPUT               /* 后面跟输出的文件名 */
+
+ #<RESOURCE           /* 资源数据 */ 
+
+     #<IMAGES         /* 图片组数据 */
+         NAME         /* 该图片组的名称 */
+         COUNT        /* 该图片组包含的图块数量 */
+	   #<CLIP>          /* 每一个图片块的数据，每一个定义了每个图块在原图中的范围 */ 
+             <INDEX>    /* 当前是第几块 */
+             <X>        /* 当前Clip位置的 X */ 
+             <Y>        /* 当前Clip位置的 Y */ 
+             <W>        /* 当前Clip的 宽 */ 
+             <H>        /* 当前Clip的 高 */ 
+         #<END CLIP>  /* 图片切块数据块结束 */
+     #<END IMAGES>    /* 图片组数据块  结束 */
+
+     #<MAP>
+         <NAME> 
+         <X COUNT> 
+         <Y COUNT> 
+         <CELL W> 
+         <CELL H> 
+
+         <SCENE PART COUNT> 
+         #<SCENE PART>
+             <INDEX>
+             <TILE>
+             <TRANS> 
+         #<END SCENE PART> 
+
+         <SCENE FRAME COUNT>
+         #<SCENE FRAME> 
+             <INDEX> 
+             <DATA>
+         #<END SCENE FRAME>
+
+         <CD PART COUNT>
+         #<CD PART>
+             <INDEX>
+             <TYPE>
+             <MASK>
+             <X1> 
+             <Y1>
+             <X2> 
+             <Y2>
+             <W>
+             <H> 
+         #<END CD PART> 
+
+         <TILE MATRIX>
+         <FLAG MATRIX>
+
+     #<END MAP> 
+	
+     #<SPRITE> 
+         <NAME> 
+         <SCENE PART COUNT>
+	   #<SCENE PART> 
+             <INDEX> 
+             <TILE>
+             <X> 
+             <Y> 
+             <TRANS>
+	   #<END SCENE PART> 
+		
+         <SCENE FRAME COUNT>  
+	   #<SCENE FRAME> 
+             <INDEX> 
+	       <DATA> 
+	   #<END SCENE FRAME> 
+
+         <CD PART COUNT> 
+	   #<CD PART> 
+             INDEX
+	       TYPE 
+	       MASK 
+             X1
+             Y1 
+             X2 
+             Y2 
+             W 
+             H 
+	   #<END CD PART> 
+
+         CD FRAME COUNT
+         #<CD FRAME> 
+             <INDEX>
+	       <DATA>
+	   #<END CD FRAME> 
+	    
+	   <FRAME NAME>
+	   <FRAME ANIMATE>
+	   <FRAME CD MAP>
+	   <FRAME CD ATK>
+	   <FRAME CD DEF>
+       <FRAME CD EXT>
+        
+     #<END SPRITE> 
+	
+ #<END RESOURCE> 
+  
+
+ #<LEVEL> 
+	
+     #<WORLD> 
+         <NAME>
+  
+	   <UNIT MAP COUNT> 
+	   #< UNIT MAP  
+             <INDEX>   
+             <NAME>
+             <IDENTIFY>  
+             <X> 
+             <Y> 
+         #<END UNIT MAP> 
+		
+         <UNIT SPRITE COUNT> 
+         #<UNIT SPRITE> 
+             <INDEX>
+             <NAME>
+             <IDENTIFY>  
+             <ANIMATE ID>
+             <X> 
+             <Y> 
+         #< END UNIT SPRITE> 
+		
+         WAYPOINT COUNT 
+         #<WAYPOINT>  
+             <INDEX> 
+             <X> 
+             <Y> 
+         #<END WAYPOINT> 
+		
+         #<WAYPOINT LINK> 
+             <INDEX> 
+             <START>
+             <END> 
+         #<END WAYPOINT LINK> 
+	 
+     #<END WORLD> 
+     
+ #<END LEVEL> 
+--------------------------------------------------------------------------------------------------------------
