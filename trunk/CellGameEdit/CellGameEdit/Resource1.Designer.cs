@@ -60,6 +60,13 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Bitmap CellStudio {
+            get {
+                object obj = ResourceManager.GetObject("CellStudio", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Icon Icon_1 {
             get {
                 object obj = ResourceManager.GetObject("Icon_1", resourceCulture);
@@ -547,6 +554,30 @@ namespace CellGameEdit {
             get {
                 object obj = ResourceManager.GetObject("Image9", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 --------------------------------------------------------------------------------------------------------------
+        ///指令说明
+        ///--------------------------------------------------------------------------------------------------------------
+        /// 格式： 
+        /// 所有指令名称由一对&lt;&gt;尖括号包围，#&lt;代表数据块，
+        /// 该脚本是对最后生成数据格式的一种约定。
+        ///   例如：
+        ///     有如下约定
+        ///     #&lt;DATA&gt;
+        ///          data[&lt;INDEX&gt;] = &lt;DATAS&gt;;
+        ///     #&lt;&lt;END DATA&gt;
+        ///     并且程序里和&lt;DATA&gt;对应的有3个数据块，那么最后生成的数据是
+        ///     data[0] = ....;
+        ///     data[1] = ....;
+        ///     data[2] = ....;
+        ///------------------------------- [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        /// </summary>
+        internal static string TextFileScriptHelp {
+            get {
+                return ResourceManager.GetString("TextFileScriptHelp", resourceCulture);
             }
         }
     }

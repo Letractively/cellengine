@@ -182,7 +182,7 @@
             // 自定义脚本ToolStripMenuItem
             // 
             this.自定义脚本ToolStripMenuItem.Name = "自定义脚本ToolStripMenuItem";
-            this.自定义脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.自定义脚本ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.自定义脚本ToolStripMenuItem.Text = "当前公共脚本";
             this.自定义脚本ToolStripMenuItem.Click += new System.EventHandler(this.自定义脚本ToolStripMenuItem_Click);
             // 
@@ -191,7 +191,7 @@
             this.当前工程脚本ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripMenuItem6});
             this.当前工程脚本ToolStripMenuItem.Name = "当前工程脚本ToolStripMenuItem";
-            this.当前工程脚本ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.当前工程脚本ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.当前工程脚本ToolStripMenuItem.Text = "当前工程脚本";
             // 
             // toolStripMenuItem6
@@ -202,13 +202,13 @@
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(149, 6);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(143, 6);
             // 
             // javaToolStripMenuItem
             // 
             this.javaToolStripMenuItem.Enabled = false;
             this.javaToolStripMenuItem.Name = "javaToolStripMenuItem";
-            this.javaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.javaToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.javaToolStripMenuItem.Text = "Java代码";
             this.javaToolStripMenuItem.Visible = false;
             this.javaToolStripMenuItem.Click += new System.EventHandler(this.javaToolStripMenuItem_Click);
@@ -225,13 +225,14 @@
             // 关于ToolStripMenuItem
             // 
             this.关于ToolStripMenuItem.Name = "关于ToolStripMenuItem";
-            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.关于ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.关于ToolStripMenuItem.Text = "关于";
+            this.关于ToolStripMenuItem.Click += new System.EventHandler(this.关于ToolStripMenuItem_Click);
             // 
             // 显示输出ToolStripMenuItem
             // 
             this.显示输出ToolStripMenuItem.Name = "显示输出ToolStripMenuItem";
-            this.显示输出ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.显示输出ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.显示输出ToolStripMenuItem.Text = "显示输出";
             this.显示输出ToolStripMenuItem.Click += new System.EventHandler(this.显示输出ToolStripMenuItem_Click);
             // 
@@ -251,7 +252,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Cell Game Editor";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Shown += new System.EventHandler(this.Form1_Shown);
             this.Load += new System.EventHandler(this.Form1_Load);

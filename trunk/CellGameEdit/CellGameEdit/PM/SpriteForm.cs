@@ -182,6 +182,7 @@ namespace CellGameEdit.PM
         Frame AllFrame ;
         Group animates ;
         Group collides ;
+        String[] frameName;
         int[][] frameAnimate ;
         int[][] frameCDMap ;
         int[][] frameCDAtk ;
@@ -194,6 +195,7 @@ namespace CellGameEdit.PM
             AllFrame = new Frame();
             animates = new Group();
             collides = new Group();
+            frameName = new string[listView2.Items.Count];
             frameAnimate = new int[listView2.Items.Count][];
             frameCDMap = new int[listView2.Items.Count][];
             frameCDAtk = new int[listView2.Items.Count][];
@@ -204,6 +206,7 @@ namespace CellGameEdit.PM
             {
                 int FrameCount = ((ArrayList)AnimTable[listView2.Items[animID]]).Count;
 
+                frameName[animID] = listView2.Items[animID].Text;
                 frameAnimate[animID] = new int[FrameCount];
                 frameCDMap[animID] = new int[FrameCount];
                 frameCDAtk[animID] = new int[FrameCount];
@@ -537,12 +540,15 @@ namespace CellGameEdit.PM
 
 
                 // sprframes
+                String outFrameName = "";
                 String outFrameAnimate = "";
                 String outFrameCDMap = "";
                 String outFrameCDAtk = "";
                 String outFrameCDDef = "";
                 String outFrameCDExt = "";
 
+                for (int i = 0; i < frameName.Length; i++)
+                    outFrameName += "\"" + frameName[i] + "\",\r\n"; 
 
                 for (int i = 0; i < frameAnimate.Length; i++)
                     outFrameAnimate += "{" + Util.toTextArray(frameAnimate[i]) + "},\r\n";
@@ -562,6 +568,7 @@ namespace CellGameEdit.PM
                     "<SCENE FRAME COUNT>" ,
                     "<CD PART COUNT>",
                     "<CD FRAME COUNT>",
+                    "<FRAME NAME>",
                     "<FRAME ANIMATE>",
                     "<FRAME CD MAP>",
                     "<FRAME CD ATK>",
@@ -574,6 +581,7 @@ namespace CellGameEdit.PM
                     animates.frameGetCount().ToString(),
                     AllFrame.getCDCount().ToString(),
                     collides.frameGetCount().ToString(),
+                    outFrameName,
                     outFrameAnimate,
                     outFrameCDMap,
                     outFrameCDAtk,

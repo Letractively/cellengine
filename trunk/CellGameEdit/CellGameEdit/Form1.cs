@@ -348,6 +348,12 @@ namespace CellGameEdit
             catch (Exception err) { Console.WriteLine(err.Message); }
         }
 
+        private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            AboutBox1 about = new AboutBox1();
+            about.ShowDialog();
+        }
+
       
 
      

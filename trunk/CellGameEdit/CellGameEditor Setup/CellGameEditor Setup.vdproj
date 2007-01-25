@@ -15,19 +15,31 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
+        "MsmKey" = "8:_178171B8B4364FE98FC66AE9BB41870B"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
-        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
+        "MsmKey" = "8:_178171B8B4364FE98FC66AE9BB41870B"
+        "OwnerKey" = "8:_52B5FD9C55FAB3A5D0B336F5059BF6D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
+        "MsmKey" = "8:_178171B8B4364FE98FC66AE9BB41870B"
+        "OwnerKey" = "8:_9A470C3BE04E7CA2216F9040B7C876DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_52B5FD9C55FAB3A5D0B336F5059BF6D6"
+        "OwnerKey" = "8:_9A470C3BE04E7CA2216F9040B7C876DE"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_52B5FD9C55FAB3A5D0B336F5059BF6D6"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -39,20 +51,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
+        "MsmKey" = "8:_9A470C3BE04E7CA2216F9040B7C876DE"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
-        "OwnerKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
-        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -64,19 +64,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_042C6DE3220BCDB68BDEC546DF10742A"
+        "OwnerKey" = "8:_9A470C3BE04E7CA2216F9040B7C876DE"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_56698983494A9A52D7CD91B5184FF16B"
+        "OwnerKey" = "8:_52B5FD9C55FAB3A5D0B336F5059BF6D6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_78B7FE36AE2D47C492BA5012BCF80ED5"
+        "OwnerKey" = "8:_178171B8B4364FE98FC66AE9BB41870B"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -169,20 +169,20 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_042C6DE3220BCDB68BDEC546DF10742A"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_52B5FD9C55FAB3A5D0B336F5059BF6D6"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:CellLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:J2me, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_042C6DE3220BCDB68BDEC546DF10742A"
+                    "_52B5FD9C55FAB3A5D0B336F5059BF6D6"
                     {
-                    "Name" = "8:CellLib.dll"
+                    "Name" = "8:J2me.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:CellLib.dll"
+            "SourcePath" = "8:J2me.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
@@ -200,20 +200,20 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_56698983494A9A52D7CD91B5184FF16B"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_9A470C3BE04E7CA2216F9040B7C876DE"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:J2me, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:CellLib, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_56698983494A9A52D7CD91B5184FF16B"
+                    "_9A470C3BE04E7CA2216F9040B7C876DE"
                     {
-                    "Name" = "8:J2me.dll"
+                    "Name" = "8:CellLib.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:J2me.dll"
+            "SourcePath" = "8:CellLib.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
@@ -339,7 +339,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:CellGameEditor"
         "ProductCode" = "8:{156EC386-9110-4F01-9ADB-4ACF900BF51A}"
-        "PackageCode" = "8:{76259DD6-CAAA-48C0-B25F-D0BF92A8F973}"
+        "PackageCode" = "8:{49F4E071-2E87-48BB-BB86-0A108F2E986A}"
         "UpgradeCode" = "8:{EE5A5160-9D62-4264-A9C2-994FD8B014B4}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -882,7 +882,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_78B7FE36AE2D47C492BA5012BCF80ED5"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_178171B8B4364FE98FC66AE9BB41870B"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -901,7 +901,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_70BA54391A194B2385F85D2824EEFD9F"
             {
-            "SourcePath" = "8:..\\CellGameEdit\\obj\\Release\\CellGameEdit.exe"
+            "SourcePath" = "8:..\\CellGameEdit\\obj\\Debug\\CellGameEdit.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
@@ -927,7 +927,7 @@
                 {
                 }
             }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_C17C16AAF84946E0BB71E9CF0CA85E11"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_7E84912A4AF340C99F6F3CD61B693E7C"
             {
             "SourcePath" = "8:"
             "TargetName" = "8:"
