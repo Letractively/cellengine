@@ -52,7 +52,9 @@ public class CWorld extends CObject {
 	
 //	------------------------------------------------------------------------------------------------------
 //	sprite
-	
+	public void insertSprite(CSprite spr,int index){
+		this.Sprs.insertElementAt(spr, index);
+	}
 	public void addSprite(CSprite spr){
 		if(isRPGView){
 			int index = Sprs.size() ;
