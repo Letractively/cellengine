@@ -14,7 +14,7 @@ public class CParticle {
 	public int Category = 0;
 	
 	/**Terminate time*/
-	public int TerminateTime = 0;
+	public int TerminateTime = -1;
 	/**timer*/
 	public int Timer = 0;
 	
