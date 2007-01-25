@@ -20,8 +20,8 @@ public class CParticleSystem {
 	 * @param particle
 	 * @param launcher 
 	 */
-	public CParticleSystem(CParticle[] particle,IParticleLauncher launcher){
-		Particles = particle;
+	public CParticleSystem(CParticle[] particles,IParticleLauncher launcher){
+		Particles = particles;
 		Launcher  = launcher;
 	}
 	
@@ -29,8 +29,8 @@ public class CParticleSystem {
 	 * change particles node
 	 * @param particle 
 	 */
-	public void changeParticles(CParticle[] particle){
-		Particles = particle;
+	public void changeParticles(CParticle[] particles){
+		Particles = particles;
 	}
 	/**
 	 * change particles movement's state
