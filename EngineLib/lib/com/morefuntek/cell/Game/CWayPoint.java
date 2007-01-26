@@ -81,9 +81,7 @@ public class CWayPoint extends CObject {
 		if(!this.Link.contains(point)){
 			this.Link.addElement(point);
 		}
-		if(!point.Link.contains(this)){
-			point.Link.addElement(this);
-		}
+
 		
 	}
 	
