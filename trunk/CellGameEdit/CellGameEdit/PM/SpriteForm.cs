@@ -564,6 +564,7 @@ namespace CellGameEdit.PM
                 sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
                     new string[] { 
                     "<NAME>", 
+                    "<IMAGES NAME>",
                     "<SCENE PART COUNT>" ,
                     "<SCENE FRAME COUNT>" ,
                     "<CD PART COUNT>",
@@ -576,7 +577,8 @@ namespace CellGameEdit.PM
                     "<FRAME CD EXT>"
                 },
                     new string[] { 
-                    this.id, 
+                    this.id,
+                    super.id,
                     AllFrame.getSubCount().ToString(),
                     animates.frameGetCount().ToString(),
                     AllFrame.getCDCount().ToString(),

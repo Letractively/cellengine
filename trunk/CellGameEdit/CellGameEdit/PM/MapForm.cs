@@ -587,6 +587,7 @@ namespace CellGameEdit.PM
                 map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
                     new string[] { 
                     "<NAME>", 
+                    "<IMAGES NAME>",
                     "<CELL W>",
                     "<CELL H>" , 
                     "<X COUNT>",
@@ -599,6 +600,7 @@ namespace CellGameEdit.PM
                 },
                     new string[] { 
                     this.id, 
+                    super.id,
                     CellW.ToString(),
                     CellH.ToString(),
                     XCount.ToString(),

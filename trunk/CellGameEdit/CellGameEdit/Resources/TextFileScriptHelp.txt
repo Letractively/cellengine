@@ -33,6 +33,7 @@
 
      #<MAP>
          <NAME> 
+         <IMAGES NAME>
          <X COUNT> 
          <Y COUNT> 
          <CELL W> 
@@ -71,6 +72,7 @@
 	
      #<SPRITE> 
          <NAME> 
+         <IMAGES NAME>
          <SCENE PART COUNT>
 	   #<SCENE PART> 
              <INDEX> 
@@ -88,18 +90,18 @@
 
          <CD PART COUNT> 
 	   #<CD PART> 
-             INDEX
-	       TYPE 
-	       MASK 
-             X1
-             Y1 
-             X2 
-             Y2 
-             W 
-             H 
+             <INDEX>
+	       <TYPE> 
+	       <MASK> 
+             <X1>
+             <Y1> 
+             <X2> 
+             <Y2> 
+             <W> 
+             <H> 
 	   #<END CD PART> 
 
-         CD FRAME COUNT
+         <CD FRAME COUNT>
          #<CD FRAME> 
              <INDEX>
 	       <DATA>
@@ -129,6 +131,7 @@
              <IDENTIFY>  
              <X> 
              <Y> 
+             <SUPER>
          #<END UNIT MAP> 
 		
          <UNIT SPRITE COUNT> 
@@ -146,6 +149,7 @@
              <INDEX> 
              <X> 
              <Y> 
+             <SUPER>
          #<END WAYPOINT> 
 		
          #<WAYPOINT LINK> 
