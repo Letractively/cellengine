@@ -220,9 +220,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string Y = ((Unit)maps[i]).y.ToString();
                         string ID = ((Unit)maps[i]).map.id;
                         string NAME = ((Unit)maps[i]).id;
+                        string SUPER = ((Unit)maps[i]).map.super.id;
                         map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, });
+                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" ,"<SUPER>"},
+                               new string[] { NAME, ID, i.ToString(), X, Y, SUPER });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
                     if (temp == null)
@@ -247,10 +248,12 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string Y = ((Unit)sprs[i]).y.ToString();
                         string ID = ((Unit)sprs[i]).spr.id;
                         string NAME = ((Unit)sprs[i]).id;
+                        string SUPER = ((Unit)sprs[i]).spr.super.id;
+
                         string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID });
+                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<SUPER>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, SUPER });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
                     if (temp == null)
