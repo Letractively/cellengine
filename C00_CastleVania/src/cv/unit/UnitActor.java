@@ -2,12 +2,9 @@ package cv.unit;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.IImages;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CAnimates;
-import com.morefuntek.cell.Game.CCollides;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
+import com.cell.IImages;
+import com.cell.game.AScreen;
+import com.cell.game.CSprite;
 
 public class UnitActor extends CSprite  {
 
@@ -20,8 +17,10 @@ public class UnitActor extends CSprite  {
 	}
 
 	public void update() {
-		onControl();
+		input();
 		onAction();
+		onState();
+		onControl();
 	}
 
 	
@@ -29,36 +28,96 @@ public class UnitActor extends CSprite  {
 	public void render(Graphics g, int x, int y) {
 		super.render(g, x, y);
 		if(IsDebug)
-		super.collides.render(g, 0, x, y, 0xffff0000);
+		super.collides.render(g, 0, x, y, 0xff00ff00);
 	}
-
-
-
-	//	-----------------------------------------------------------------------------------------
-	final static int STATE_STANDING			= 0;
-	
-	final static int STATE_JUMP_UP			= 1;
-	final static int STATE_JUMP_UPR			= 2;
-	final static int STATE_JUMP_DOWN	  	= 3;
-	final static int STATE_JUMP_STAND  		= 4;
-	
-	final static int STATE_WALKING			= 5;
-	final static int STATE_STAND_WALK		= 6;
-	final static int STATE_WALK_STAND		= 7;
-	final static int STATE_WALK_CHANGE		= 8;
-	
-	final static int STATE_STAND_UPON		= 9;
-	final static int STATE_UPONING			= 10;
-	final static int STATE_UPON_STAND		= 11;
-	
-	final static int STATE_STAND_DUCK		= 12;
-	final static int STATE_DUCKING			= 13;
-	final static int STATE_DUCK_STAND		= 14;
+//	-----------------------------------------------------------------------------------------
 	
 	
-	final static int STATE_ATTACK_LAND		= 15;
-	final static int STATE_ATTACK_JUMP		= 16;
-	final static int STATE_ATTACK_DUCK		= 17;
+	
+	boolean turnR = false;
+	boolean turnL = false;
+	boolean turnU = false;
+	boolean turnD = false;
+	boolean turnAction = false;
+	
+	boolean onR = false;
+	boolean onL = false;
+	boolean onU = false;
+	boolean onD = false;
+	boolean onAction = false;
+	
+	boolean releaseR = false;
+	boolean releaseL = false;
+	boolean releaseU = false;
+	boolean releaseD = false;
+	boolean releaseAction = false;
+	
+	public void input(){
+		turnL = AScreen.isKeyDown(AScreen.KEY_LEFT);
+		turnR = AScreen.isKeyDown(AScreen.KEY_RIGHT);
+		turnU = AScreen.isKeyDown(AScreen.KEY_UP);
+		turnD = AScreen.isKeyDown(AScreen.KEY_DOWN);
+		turnAction = AScreen.isKeyDown(AScreen.KEY_C);
+		
+		onL = AScreen.isKeyHold(AScreen.KEY_LEFT);
+		onR = AScreen.isKeyHold(AScreen.KEY_RIGHT);
+		onU = AScreen.isKeyHold(AScreen.KEY_UP);
+		onD = AScreen.isKeyHold(AScreen.KEY_DOWN);
+		onAction = AScreen.isKeyHold(AScreen.KEY_C);
+		
+		releaseL = AScreen.isKeyUp(AScreen.KEY_LEFT);
+		releaseR = AScreen.isKeyUp(AScreen.KEY_RIGHT);
+		releaseU = AScreen.isKeyUp(AScreen.KEY_UP);
+		releaseD = AScreen.isKeyUp(AScreen.KEY_DOWN);
+		releaseAction = AScreen.isKeyUp(AScreen.KEY_C);
+	}
+	
+	public void onControl(){
+		turnR = false;
+		turnL = false;
+		turnU = false;
+		turnD = false;
+		turnAction = false;
+		
+		onR = false;
+		onL = false;
+		onU = false;
+		onD = false;
+		onAction = false;
+		
+		releaseR = false;
+		releaseL = false;
+		releaseU = false;
+		releaseD = false;
+		releaseAction = false;
+		
+	}
+	
+	
+//	-----------------------------------------------------------------------------------------
+	final int STATE_STANDING		= 0;
+	
+	final int STATE_JUMP_UP			= 1;
+	final int STATE_JUMP_UPR		= 2;
+	final int STATE_JUMP_DOWN	  	= 3;
+	final int STATE_JUMP_STAND  	= 4;
+	
+	final int STATE_WALKING			= 5;
+	final int STATE_STAND_WALK		= 6;
+	final int STATE_WALK_STAND		= 7;
+	final int STATE_WALK_CHANGE		= 8;
+	
+	final int STATE_STAND_UPON		= 9;
+	final int STATE_UPONING			= 10;
+	final int STATE_UPON_STAND		= 11;
+	
+	final int STATE_STAND_DUCK		= 12;
+	final int STATE_DUCKING			= 13;
+	final int STATE_DUCK_STAND		= 14;
+	
+	final int STATE_ATTACK_LAND		= 15;
+	final int STATE_ATTACK_JUMP		= 16;
+	final int STATE_ATTACK_DUCK		= 17;
 	
 	int state = 0;
 	
@@ -160,9 +219,7 @@ public class UnitActor extends CSprite  {
 			}
 			break;
 		}
-		
-		
-		
+
 		
 	}
 	
@@ -170,19 +227,19 @@ public class UnitActor extends CSprite  {
 
 	public static int Gravity 			= 200;
 	public static int WalkV 			=  3*256;
-	public static int JumpV 			= -12*256;
+	public static int JumpV 			= -11*256;
 	public static int JumpHoldTime 		= 0;
 	public static int JumpHoldTimeMAX 	= 10;
 	
 	
-	void onControl(){
+	void onState(){
 		
 		// init data
 		boolean isLand = isLand();
 		SpeedX256 = 0;
 		if(!isLand){
 			
-			if(AScreen.isKeyDown(AScreen.KEY_C)){
+			if(turnAction){
 				//如果不是在攻击状态中,才能继续下次攻击
 				if( state != STATE_ATTACK_JUMP ){
 					state = STATE_ATTACK_JUMP;
@@ -194,7 +251,7 @@ public class UnitActor extends CSprite  {
 			if(state != STATE_ATTACK_JUMP){
 				// jump up
 				if(SpeedY256<0){
-					if(AScreen.isKeyHold(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+					if(onL|onR){
 						state = STATE_JUMP_UPR;
 						setCurrentFrame(state, CurFrame);
 					}else{
@@ -213,7 +270,7 @@ public class UnitActor extends CSprite  {
 					setCurrentFrame(state, 0);
 				}	
 			}
-			if(AScreen.isKeyHold(AScreen.KEY_LEFT)){
+			if(onL){
 				SpeedX256 = -WalkV;
 				//只有攻击完结之后才可转身
 				if(state != STATE_ATTACK_JUMP){
@@ -222,7 +279,7 @@ public class UnitActor extends CSprite  {
 					}
 				}
 			}
-			if(AScreen.isKeyHold(AScreen.KEY_RIGHT)){
+			if(onR){
 				SpeedX256 =  WalkV;
 				if(Transform!=IImages.TRANS_NONE){
 					transform(IImages.TRANS_H);
@@ -232,7 +289,7 @@ public class UnitActor extends CSprite  {
 			SpeedY256 += Gravity;
 		}else{
 			
-			if(AScreen.isKeyDown(AScreen.KEY_C)){
+			if(turnAction){
 				//如果不是在攻击状态中,才能继续下次攻击
 				if( state != STATE_ATTACK_LAND &&
 					state != STATE_ATTACK_DUCK ){
@@ -251,7 +308,7 @@ public class UnitActor extends CSprite  {
 			if( state != STATE_ATTACK_LAND &&
 				state != STATE_ATTACK_DUCK ){
 				//判断是否一直蹲着,屏蔽站立的状态变化
-				if(AScreen.isKeyHold(AScreen.KEY_DOWN)){
+				if(onD){
 					if( state!=STATE_STAND_DUCK &&
 						state!=STATE_DUCKING){
 						state = STATE_STAND_DUCK;
@@ -259,17 +316,17 @@ public class UnitActor extends CSprite  {
 					}
 				}else{
 					//方向键松开,改变到(走->停)的状态
-					if(AScreen.isKeyUp(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+					if(releaseL|releaseR){
 						state = STATE_WALK_STAND;
 						setCurrentFrame(state, 0);
 					}
 					//方向键按下,改变到(停->走)的状态
-					if(AScreen.isKeyDown(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+					if(turnL|turnR){
 						state = STATE_STAND_WALK;
 						setCurrentFrame(state, 0);
 					}
 					//一直按着方向改变X位置
-					if(AScreen.isKeyHold(AScreen.KEY_LEFT)){
+					if(onL){
 						SpeedX256 = -WalkV;
 						//如果此次之前不是和走有关的状态
 						if( state!=STATE_WALKING &&
@@ -285,7 +342,7 @@ public class UnitActor extends CSprite  {
 							setCurrentFrame(state, 0);
 						}
 					}
-					if(AScreen.isKeyHold(AScreen.KEY_RIGHT)){
+					if(onR){
 						SpeedX256 =  WalkV;
 						if( state!=STATE_WALKING &&
 							state!=STATE_STAND_WALK &&
@@ -302,7 +359,7 @@ public class UnitActor extends CSprite  {
 					//最后判断之前是否在空中
 					if(SpeedY256>0){
 						//如果当前按着方向键,继续播放走路动画
-						if(AScreen.isKeyHold(AScreen.KEY_LEFT|AScreen.KEY_RIGHT)){
+						if(onL|onR){
 							state = STATE_WALKING;
 							setCurrentFrame(state, 0);
 						}else{//否则播放落地动画
@@ -315,7 +372,7 @@ public class UnitActor extends CSprite  {
 
 			}
 
-			if(AScreen.isKeyDown(AScreen.KEY_UP)){
+			if(turnU){
 				if(state==STATE_DUCKING){
 					state = STATE_DUCK_STAND;
 					setCurrentFrame(state, 0);
@@ -442,12 +499,10 @@ public class UnitActor extends CSprite  {
 				CD_TYPE_EXT, 0, 
 				world.getMap()
 				);
-		
+
 		setCurrentFrame(prewAnimate, prewFrame);
 		return flag;
 	}
-	
-	
 	
 //	-------------------------------------------------------------------------------------------
 

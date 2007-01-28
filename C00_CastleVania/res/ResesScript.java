@@ -3,14 +3,15 @@
 /* Email : wazazhang@gmail.com */
 
 //
-// SkyCity Script v0.0.0
+// CastleVania Script v0.0.0
 // 
 // 指定文件输出
 // <OUTPUT>     ..\res\ResesScript.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
+import cv.LevelManager;
 
 public class ResesScript {
 
@@ -163,14 +164,13 @@ public class ResesScript {
 		 stuff.addTile(160,679,40,30);//134 
 		
 		
-		stuff.gc();
 	}
 	
  
 	// Images : MapTile00 
 	final static public void buildClipImages_MapTile00(IImages stuff){
 	
-		stuff.buildImages(CIO.loadImage("/MapTile00.png"),24);
+		stuff.buildImages(CIO.loadImage("/MapTile00.png"),32);
 		
 		 stuff.addTile(0,0,16,16);//0 
 		 stuff.addTile(16,0,16,16);//1 
@@ -196,34 +196,73 @@ public class ResesScript {
 		 stuff.addTile(48,64,16,16);//21 
 		 stuff.addTile(64,64,16,16);//22 
 		 stuff.addTile(80,64,16,16);//23 
+		 stuff.addTile(0,80,16,16);//24 
+		 stuff.addTile(0,96,16,16);//25 
+		 stuff.addTile(16,80,16,16);//26 
+		 stuff.addTile(16,96,16,16);//27 
+		 stuff.addTile(32,80,16,16);//28 
+		 stuff.addTile(32,96,16,16);//29 
+		 stuff.addTile(48,80,16,16);//30 
+		 stuff.addTile(48,96,16,16);//31 
 		
 		
-		stuff.gc();
+	}
+	
+ 
+	// Images : E00_Zombi 
+	final static public void buildClipImages_E00_Zombi(IImages stuff){
+	
+		stuff.buildImages(CIO.loadImage("/E00_Zombi.png"),11);
+		
+		 stuff.addTile(0,0,16,2);//0 
+		 stuff.addTile(0,2,16,2);//1 
+		 stuff.addTile(0,4,18,8);//2 
+		 stuff.addTile(0,12,20,10);//3 
+		 stuff.addTile(0,22,20,16);//4 
+		 stuff.addTile(0,38,19,19);//5 
+		 stuff.addTile(0,57,22,26);//6 
+		 stuff.addTile(0,83,21,36);//7 
+		 stuff.addTile(0,119,20,34);//8 
+		 stuff.addTile(0,153,21,33);//9 
+		 stuff.addTile(0,186,20,34);//10 
+		
+		
 	}
 	
 
 
 	//--------------------------------------------------------------------------------------------------------------
 	
-	// Map : Level_00
+	// Map : Level_00 //MapTile00
 	final static public CMap createMap_Level_00(IImages tiles,boolean isAnimate,boolean isCyc){
 		
-		//20 x 20
+		//40 x 20
 		
 		// tiles
-	    CAnimates animates = new CAnimates(9,tiles);
+	    CAnimates animates = new CAnimates(20,tiles);
 	     animates.addPart(0,0,20,0);//0
 		 animates.addPart(0,0,13,0);//1
 		 animates.addPart(0,0,1,0);//2
 		 animates.addPart(0,0,0,0);//3
 		 animates.addPart(0,0,12,0);//4
-		 animates.addPart(0,0,2,0);//5
-		 animates.addPart(0,0,14,0);//6
-		 animates.addPart(0,0,6,0);//7
-		 animates.addPart(0,0,7,0);//8
+		 animates.addPart(0,0,14,0);//5
+		 animates.addPart(0,0,19,0);//6
+		 animates.addPart(0,0,5,0);//7
+		 animates.addPart(0,0,18,0);//8
+		 animates.addPart(0,0,2,0);//9
+		 animates.addPart(0,0,6,0);//10
+		 animates.addPart(0,0,7,0);//11
+		 animates.addPart(0,0,24,0);//12
+		 animates.addPart(0,0,26,0);//13
+		 animates.addPart(0,0,28,0);//14
+		 animates.addPart(0,0,30,0);//15
+		 animates.addPart(0,0,25,0);//16
+		 animates.addPart(0,0,27,0);//17
+		 animates.addPart(0,0,29,0);//18
+		 animates.addPart(0,0,31,0);//19
 		
 		
-	    animates.setFrame(new int[9][]);
+	    animates.setFrame(new int[20][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -233,29 +272,40 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{6,},6);//6
 		 animates.setComboFrame(new int[]{7,},7);//7
 		 animates.setComboFrame(new int[]{8,},8);//8
+		 animates.setComboFrame(new int[]{9,},9);//9
+		 animates.setComboFrame(new int[]{10,},10);//10
+		 animates.setComboFrame(new int[]{11,},11);//11
+		 animates.setComboFrame(new int[]{12,13,14,15,},12);//12
+		 animates.setComboFrame(new int[]{13,14,15,12,},13);//13
+		 animates.setComboFrame(new int[]{14,15,12,13,},14);//14
+		 animates.setComboFrame(new int[]{15,12,13,14,},15);//15
+		 animates.setComboFrame(new int[]{16,17,18,19,},16);//16
+		 animates.setComboFrame(new int[]{17,18,19,16,},17);//17
+		 animates.setComboFrame(new int[]{18,19,16,17,},18);//18
+		 animates.setComboFrame(new int[]{19,16,17,18,},19);//19
 		
 		
 		short[][] tileMatrix = new short[][]{
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-{1,2,2,2,2,2,2,2,2,3,2,3,2,2,3,3,2,2,3,4,},
-{1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,4,},
-{1,2,2,2,2,2,2,2,2,2,2,3,2,2,2,2,2,2,2,4,},
-{1,2,2,3,2,2,2,2,3,3,2,2,2,3,2,2,2,2,3,4,},
-{1,2,2,2,2,5,2,2,5,3,3,5,2,2,5,2,3,5,2,4,},
-{1,2,2,2,2,3,2,2,2,3,2,3,2,3,3,2,2,2,3,4,},
-{1,3,2,2,2,2,2,2,2,2,2,2,2,3,2,3,2,2,2,4,},
-{1,2,2,2,2,4,6,6,6,6,6,6,6,6,6,6,6,6,6,6,},
-{1,2,2,2,2,2,3,2,2,2,2,2,2,3,2,2,2,2,2,4,},
-{1,3,2,2,2,2,2,2,2,2,2,2,2,3,3,2,2,3,2,4,},
-{1,2,2,7,8,2,2,2,2,2,2,3,2,2,2,2,2,2,2,4,},
-{1,2,3,2,2,2,2,2,3,3,2,3,2,3,3,2,3,2,2,4,},
-{1,2,2,3,3,2,7,8,2,2,3,2,2,2,2,2,2,2,2,4,},
-{1,3,3,2,3,2,2,2,2,2,2,2,2,3,2,2,2,2,2,4,},
-{2,2,3,7,8,2,2,2,2,7,8,2,2,2,2,3,3,3,2,4,},
-{3,2,2,2,2,2,2,3,2,2,2,2,3,2,2,7,8,2,2,3,},
-{3,2,2,2,2,2,2,2,3,2,2,2,2,2,2,3,2,3,3,3,},
-{6,6,6,6,6,6,6,6,1,3,3,2,2,2,2,2,2,3,3,3,},
-{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,0,},
+			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
+{1,2,2,2,2,2,2,2,2,3,2,3,2,2,3,3,2,2,3,4,5,6,2,3,2,3,3,2,2,2,2,2,2,2,2,2,2,2,2,4,},
+{1,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,4,5,6,2,2,3,2,2,2,2,7,2,2,7,7,2,2,3,3,2,4,},
+{1,2,7,2,2,2,7,2,2,2,2,7,2,2,7,7,7,2,2,4,5,6,3,2,2,3,3,7,2,2,2,7,2,2,3,2,2,3,2,4,},
+{1,2,-12,3,2,-13,2,2,-14,3,2,-15,2,3,-12,2,2,-13,3,4,5,6,2,-14,3,7,-15,7,2,-12,4,5,5,1,2,2,2,8,5,5,},
+{1,2,-16,2,2,-17,2,2,-18,3,3,-19,2,2,-16,2,3,-17,2,4,5,6,2,-18,7,2,-19,2,7,-16,2,8,6,2,2,2,2,2,2,4,},
+{1,2,2,2,2,3,2,2,2,3,2,3,2,3,3,2,2,2,3,4,5,6,2,3,2,2,7,2,3,2,2,8,6,3,2,7,3,2,3,4,},
+{1,3,7,7,2,2,2,2,2,2,2,2,2,3,2,3,2,2,2,4,5,6,2,2,3,2,3,2,3,2,2,8,6,3,2,2,2,3,2,4,},
+{1,2,2,2,2,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,2,2,7,8,5,5,5,5,1,3,2,4,},
+{1,2,2,2,2,2,3,2,2,2,2,2,2,3,2,2,2,2,2,4,5,6,2,3,2,2,2,3,2,2,2,8,6,2,2,2,2,2,2,4,},
+{1,3,2,2,2,2,2,2,7,2,2,2,2,3,3,2,2,3,2,4,5,6,2,3,3,2,2,2,2,3,2,8,6,2,2,2,7,2,2,4,},
+{1,2,2,10,11,2,2,2,2,10,11,3,2,2,2,10,11,2,2,4,5,6,2,2,3,7,3,2,10,11,2,8,6,2,7,3,2,2,2,4,},
+{1,2,3,2,2,2,2,2,3,3,2,3,7,7,3,2,3,2,2,4,5,6,3,2,3,3,2,2,3,7,2,8,6,2,3,8,5,5,5,5,},
+{1,2,2,3,3,2,7,7,2,2,3,2,2,2,2,2,2,2,2,4,5,6,2,2,2,2,2,3,2,2,3,8,6,2,3,2,2,2,3,4,},
+{1,3,3,2,3,2,7,2,2,2,2,2,7,3,2,2,2,7,2,4,5,6,2,2,2,2,7,2,2,2,2,8,6,2,3,3,7,7,2,4,},
+{2,2,3,10,11,2,7,2,2,10,11,2,2,7,2,10,11,3,2,4,5,6,2,3,3,8,5,5,5,5,5,5,6,10,11,3,2,3,3,4,},
+{3,2,2,2,2,2,2,3,2,2,2,2,3,7,2,3,3,2,2,3,3,3,2,2,7,2,2,2,2,3,2,8,6,3,2,2,2,3,2,3,},
+{3,2,2,2,2,2,2,2,3,2,2,7,7,2,2,3,2,3,2,2,2,2,2,2,2,2,3,3,2,3,2,8,6,2,2,2,7,3,2,2,},
+{5,5,5,5,5,5,5,5,1,3,3,2,2,2,2,2,2,3,2,2,2,3,3,3,3,3,3,3,3,2,8,5,6,2,3,3,2,2,3,2,},
+{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,},
 
 		};
 		
@@ -288,26 +338,26 @@ public class ResesScript {
 		
 
 		short[][] flagMatrix = new short[][]{
-			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
-{4,0,0,2,2,0,0,0,0,2,2,0,0,0,0,0,0,0,0,1,},
-{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,2,0,0,5,},
-{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,5,},
-{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,5,},
-{0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,},
+			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,2,2,0,0,0,0,2,2,0,0,0,0,2,2,0,0,1,1,1,0,0,0,0,0,0,2,2,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{4,0,0,2,2,0,0,0,0,2,2,0,0,0,0,2,2,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,2,2,0,0,0,0,1,},
+{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,5,},
+{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,5,},
+{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,5,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 
 		};
 		
@@ -327,11 +377,12 @@ public class ResesScript {
 	
 	//--------------------------------------------------------------------------------------------------------------
 	
-	// Sprite : Actor00
+	// Sprite : Actor00 //Actor00
+	
 	final static public CSprite createSprite_Actor00(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(78,tiles);
+	    CAnimates animates = new CAnimates(77,tiles);
 	     animates.addPart(-17,-36,3,0);//0
 		 animates.addPart(-17,-36,0,0);//1
 		 animates.addPart(-17,-36,1,0);//2
@@ -340,79 +391,78 @@ public class ResesScript {
 		 animates.addPart(-18,-36,84,0);//5
 		 animates.addPart(-21,-35,68,0);//6
 		 animates.addPart(-22,-35,69,0);//7
-		 animates.addPart(-21,-35,70,0);//8
+		 animates.addPart(-21,-36,74,0);//8
 		 animates.addPart(-21,-35,71,0);//9
-		 animates.addPart(-21,-36,74,0);//10
-		 animates.addPart(-22,-35,73,0);//11
-		 animates.addPart(-21,-36,72,0);//12
-		 animates.addPart(-22,-36,75,0);//13
-		 animates.addPart(-21,-36,76,0);//14
-		 animates.addPart(-22,-34,77,0);//15
-		 animates.addPart(-20,-35,78,0);//16
-		 animates.addPart(-19,-35,79,0);//17
-		 animates.addPart(-18,-36,80,0);//18
-		 animates.addPart(-22,-35,16,0);//19
-		 animates.addPart(-23,-36,19,0);//20
-		 animates.addPart(-22,-35,26,0);//21
-		 animates.addPart(-19,-35,20,0);//22
-		 animates.addPart(-20,-35,21,0);//23
-		 animates.addPart(-20,-35,28,0);//24
-		 animates.addPart(-20,-35,22,0);//25
-		 animates.addPart(-20,-35,29,0);//26
-		 animates.addPart(-21,-36,23,0);//27
-		 animates.addPart(-21,-35,30,0);//28
-		 animates.addPart(-20,-35,32,0);//29
-		 animates.addPart(-20,-35,17,0);//30
-		 animates.addPart(-21,-35,24,0);//31
-		 animates.addPart(-16,-36,9,0);//32
-		 animates.addPart(-16,-35,14,0);//33
-		 animates.addPart(-17,-35,15,0);//34
-		 animates.addPart(-15,-36,10,0);//35
-		 animates.addPart(-13,-34,101,0);//36
-		 animates.addPart(-10,-34,102,0);//37
-		 animates.addPart(-13,-35,103,0);//38
-		 animates.addPart(-17,-36,8,0);//39
-		 animates.addPart(-25,-35,124,2);//40
-		 animates.addPart(-18,-35,125,0);//41
-		 animates.addPart(-22,-35,18,0);//42
-		 animates.addPart(-23,-35,25,0);//43
-		 animates.addPart(-17,-35,4,0);//44
-		 animates.addPart(-17,-35,5,0);//45
-		 animates.addPart(-18,-35,6,0);//46
-		 animates.addPart(-17,-35,7,0);//47
-		 animates.addPart(-21,-31,45,0);//48
-		 animates.addPart(-17,-29,46,0);//49
-		 animates.addPart(-18,-28,47,0);//50
-		 animates.addPart(-17,-29,37,0);//51
-		 animates.addPart(-16,-29,38,0);//52
-		 animates.addPart(-18,-31,48,0);//53
-		 animates.addPart(-20,-35,91,0);//54
-		 animates.addPart(-20,-35,92,0);//55
-		 animates.addPart(-20,-35,93,0);//56
-		 animates.addPart(-18,-35,109,0);//57
-		 animates.addPart(-17,-35,94,0);//58
-		 animates.addPart(-15,-35,12,0);//59
-		 animates.addPart(-15,-35,11,0);//60
-		 animates.addPart(-16,-36,10,0);//61
-		 animates.addPart(-17,-36,9,0);//62
-		 animates.addPart(-21,-37,88,0);//63
-		 animates.addPart(-20,-37,89,0);//64
-		 animates.addPart(-20,-37,90,0);//65
-		 animates.addPart(-17,-29,41,0);//66
-		 animates.addPart(-22,-28,42,0);//67
-		 animates.addPart(-24,-28,43,0);//68
-		 animates.addPart(-22,-29,44,0);//69
-		 animates.addPart(-17,-29,40,0);//70
-		 animates.addPart(-16,-29,39,0);//71
-		 animates.addPart(-17,-35,124,0);//72
-		 animates.addPart(-17,-35,114,0);//73
-		 animates.addPart(-20,-35,115,0);//74
-		 animates.addPart(-20,-29,119,0);//75
-		 animates.addPart(-20,-28,120,0);//76
-		 animates.addPart(-20,-29,38,0);//77
+		 animates.addPart(-22,-35,73,0);//10
+		 animates.addPart(-21,-36,72,0);//11
+		 animates.addPart(-22,-36,75,0);//12
+		 animates.addPart(-21,-36,76,0);//13
+		 animates.addPart(-22,-34,77,0);//14
+		 animates.addPart(-20,-35,78,0);//15
+		 animates.addPart(-19,-35,79,0);//16
+		 animates.addPart(-18,-36,80,0);//17
+		 animates.addPart(-22,-35,16,0);//18
+		 animates.addPart(-23,-36,19,0);//19
+		 animates.addPart(-22,-35,26,0);//20
+		 animates.addPart(-19,-35,20,0);//21
+		 animates.addPart(-20,-35,21,0);//22
+		 animates.addPart(-20,-35,28,0);//23
+		 animates.addPart(-20,-35,22,0);//24
+		 animates.addPart(-20,-35,29,0);//25
+		 animates.addPart(-21,-36,23,0);//26
+		 animates.addPart(-21,-35,30,0);//27
+		 animates.addPart(-20,-35,32,0);//28
+		 animates.addPart(-20,-35,17,0);//29
+		 animates.addPart(-21,-35,24,0);//30
+		 animates.addPart(-16,-36,9,0);//31
+		 animates.addPart(-16,-35,14,0);//32
+		 animates.addPart(-17,-35,15,0);//33
+		 animates.addPart(-15,-36,10,0);//34
+		 animates.addPart(-13,-34,101,0);//35
+		 animates.addPart(-10,-34,102,0);//36
+		 animates.addPart(-13,-35,103,0);//37
+		 animates.addPart(-17,-36,8,0);//38
+		 animates.addPart(-25,-35,124,2);//39
+		 animates.addPart(-18,-35,125,0);//40
+		 animates.addPart(-22,-35,18,0);//41
+		 animates.addPart(-23,-35,25,0);//42
+		 animates.addPart(-17,-35,4,0);//43
+		 animates.addPart(-17,-35,5,0);//44
+		 animates.addPart(-18,-35,6,0);//45
+		 animates.addPart(-17,-35,7,0);//46
+		 animates.addPart(-21,-31,45,0);//47
+		 animates.addPart(-17,-29,46,0);//48
+		 animates.addPart(-18,-28,47,0);//49
+		 animates.addPart(-17,-29,37,0);//50
+		 animates.addPart(-16,-29,38,0);//51
+		 animates.addPart(-18,-31,48,0);//52
+		 animates.addPart(-20,-35,91,0);//53
+		 animates.addPart(-20,-35,92,0);//54
+		 animates.addPart(-20,-35,93,0);//55
+		 animates.addPart(-18,-35,109,0);//56
+		 animates.addPart(-17,-35,94,0);//57
+		 animates.addPart(-15,-35,12,0);//58
+		 animates.addPart(-15,-35,11,0);//59
+		 animates.addPart(-16,-36,10,0);//60
+		 animates.addPart(-17,-36,9,0);//61
+		 animates.addPart(-21,-37,88,0);//62
+		 animates.addPart(-20,-37,89,0);//63
+		 animates.addPart(-20,-37,90,0);//64
+		 animates.addPart(-17,-29,41,0);//65
+		 animates.addPart(-22,-28,42,0);//66
+		 animates.addPart(-24,-28,43,0);//67
+		 animates.addPart(-22,-29,44,0);//68
+		 animates.addPart(-17,-29,40,0);//69
+		 animates.addPart(-16,-29,39,0);//70
+		 animates.addPart(-17,-35,124,0);//71
+		 animates.addPart(-17,-35,114,0);//72
+		 animates.addPart(-20,-35,115,0);//73
+		 animates.addPart(-20,-29,119,0);//74
+		 animates.addPart(-20,-28,120,0);//75
+		 animates.addPart(-20,-29,38,0);//76
 		
 		
-	    animates.setFrame(new int[78][]);
+	    animates.setFrame(new int[77][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -490,24 +540,36 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{74,},74);//74
 		 animates.setComboFrame(new int[]{75,},75);//75
 		 animates.setComboFrame(new int[]{76,},76);//76
-		 animates.setComboFrame(new int[]{77,},77);//77
 		
 		
 		// cds
-	    CCollides collides = new CCollides(3);
+	    CCollides collides = new CCollides(8);
 		 collides.addCDRect(65535, -2, -32, 4 , 32 );//rect//0
 	     collides.addCDRect(65535, -2, -1, 4 , 1 );//rect//1
 	     collides.addCDRect(65535, -2, 0, 4 , 1 );//rect//2
+	     collides.addCDRect(65535, -5, -33, 10 , 33 );//rect//3
+	     collides.addCDRect(65535, -5, -18, 10 , 18 );//rect//4
+	     collides.addCDRect(65535, 5, -29, 30 , 6 );//rect//5
+	     collides.addCDRect(65535, 5, -31, 30 , 6 );//rect//6
+	     collides.addCDRect(65535, 5, -16, 30 , 6 );//rect//7
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrame(new int[10][]);
 	     collides.setComboFrame(new int[]{0,1,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
-	     collides.setComboFrame(new int[]{2,},2);//2
+	     collides.setComboFrame(new int[]{3,3,},2);//2
+	     collides.setComboFrame(new int[]{2,},3);//3
+	     collides.setComboFrame(new int[]{3,},4);//4
+	     collides.setComboFrame(new int[]{4,},5);//5
+	     collides.setComboFrame(new int[]{4,4,},6);//6
+	     collides.setComboFrame(new int[]{5,},7);//7
+	     collides.setComboFrame(new int[]{6,},8);//8
+	     collides.setComboFrame(new int[]{7,},9);//9
 	    
 	    
 	    
 		// sprite frame
+
 		String[] frameName = new String[]{
 			"00 standing",
 "01 stand jump",
@@ -536,29 +598,29 @@ public class ResesScript {
 		for(int i=0;i<frameName.length;i++){
 			System.out.println(frameName[i]);
 		}
-		
+
 	    int[][] frameAnimate = new int[][]{
 	        {0,1,2,3,2,1,},
 {4,5,},
 {6,7,},
-{8,9,10,11,12,13,14,},
-{15,16,17,18,},
-{19,20,21,22,23,24,25,26,27,28,29,30,31,},
-{32,33,34,},
-{35,36,37,38,35,39,},
-{40,40,40,40,41,41,30,31,42,43,},
-{1,44,45,46,47,},
-{47,},
-{47,46,45,44,1,},
-{1,48,49,50,51,52,},
-{52,},
-{52,53,3,},
-{54,55,55,56,57,58,59,60,61,39,62,},
-{63,64,64,65,65,65,65,65,65,65,65,},
-{66,67,67,68,69,70,70,71,71,52,52,},
-{72,73,},
-{74,},
-{75,76,77,},
+{7,8,9,10,11,12,13,},
+{14,15,16,17,},
+{18,19,20,21,22,23,24,25,26,27,28,29,30,},
+{31,32,33,},
+{34,35,36,37,34,38,},
+{39,39,39,39,40,40,29,30,41,42,},
+{1,43,44,45,46,},
+{46,},
+{46,45,44,43,1,},
+{1,47,48,49,50,51,},
+{51,},
+{51,52,3,},
+{53,54,54,55,56,57,58,59,60,38,61,},
+{62,63,63,64,64,64,64,64,64,64,64,},
+{65,66,66,67,68,69,69,70,70,51,51,},
+{71,72,},
+{73,},
+{74,75,76,},
 
 	    };
 	    int[][] frameCDMap = new int[][]{
@@ -601,40 +663,40 @@ public class ResesScript {
 {1,1,1,1,1,1,},
 {1,},
 {1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
+{1,7,1,1,1,1,1,1,1,1,1,},
+{1,8,1,1,1,1,1,1,1,1,1,},
+{1,9,1,1,1,1,1,1,1,1,1,},
 {1,1,},
 {1,},
 {1,1,1,},
 
 	    };
 	    int[][] frameCDDef = new int[][]{
-	        {1,1,1,1,1,1,},
-{1,1,},
-{1,1,},
-{1,1,1,1,1,1,1,},
-{1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,},
-{1,1,1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,1,1,},
-{1,},
-{1,1,1,1,1,},
-{1,1,1,1,1,1,},
-{1,},
-{1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,1,1,1,1,1,1,1,1,1,},
+	        {2,4,4,4,4,4,},
+{4,4,},
+{4,4,},
+{4,4,4,4,4,4,4,},
+{4,4,4,4,},
+{4,4,4,4,4,4,4,4,4,4,4,4,4,},
+{4,4,4,},
+{4,4,4,4,4,4,},
+{4,4,4,4,4,4,4,4,4,4,},
+{4,4,4,4,4,},
+{4,},
+{4,4,4,4,4,},
+{5,5,5,5,5,6,},
+{5,},
+{5,5,5,},
+{4,4,4,4,4,4,4,4,4,4,4,},
+{4,4,4,4,4,4,4,4,4,4,4,},
+{5,5,5,5,5,5,5,5,5,5,5,},
 {1,1,},
 {1,},
 {1,1,1,},
 
 	    };
 	    int[][] frameCDExt = new int[][]{
-	        {2,1,1,1,1,1,},
+	        {3,1,1,1,1,1,},
 {1,1,},
 {1,1,},
 {1,1,1,1,1,1,1,},
@@ -673,163 +735,324 @@ public class ResesScript {
 	}
 	
 
+	// Sprite : e00_zombi //E00_Zombi
+	
+	final static public CSprite createSprite_e00_zombi(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(8,tiles);
+	     animates.addPart(-8,0,0,0);//0
+		 animates.addPart(-9,-7,2,0);//1
+		 animates.addPart(-10,-9,3,0);//2
+		 animates.addPart(-10,-15,4,0);//3
+		 animates.addPart(-10,-18,5,0);//4
+		 animates.addPart(-11,-25,6,0);//5
+		 animates.addPart(-10,-35,7,0);//6
+		 animates.addPart(-10,-33,8,0);//7
+		
+		
+	    animates.setFrame(new int[8][]);
+	     animates.setComboFrame(new int[]{0,},0);//0
+		 animates.setComboFrame(new int[]{1,},1);//1
+		 animates.setComboFrame(new int[]{2,},2);//2
+		 animates.setComboFrame(new int[]{3,},3);//3
+		 animates.setComboFrame(new int[]{4,},4);//4
+		 animates.setComboFrame(new int[]{5,},5);//5
+		 animates.setComboFrame(new int[]{6,},6);//6
+		 animates.setComboFrame(new int[]{7,},7);//7
+		
+		
+		// cds
+	    CCollides collides = new CCollides(4);
+		 collides.addCDRect(65535, -5, -8, 10 , 8 );//rect//0
+	     collides.addCDRect(2, -5, -1, 10 , 1 );//rect//1
+	     collides.addCDRect(65535, -5, 0, 10 , 1 );//rect//2
+	     collides.addCDRect(65535, -5, -34, 13 , 34 );//rect//3
+	    
+	    
+	    collides.setFrame(new int[4][]);
+	     collides.setComboFrame(new int[]{0,1,},0);//0
+	     collides.setComboFrame(new int[]{},1);//1
+	     collides.setComboFrame(new int[]{2,},2);//2
+	     collides.setComboFrame(new int[]{3,},3);//3
+	    
+	    
+	    
+		// sprite frame
+
+		String[] frameName = new String[]{
+			"0000",
+"0001",
+"0003",
+
+		};
+		
+		for(int i=0;i<frameName.length;i++){
+			System.out.println(frameName[i]);
+		}
+
+	    int[][] frameAnimate = new int[][]{
+	        {0,1,2,3,4,5,6,},
+{6,6,6,6,7,7,7,7,},
+{6,5,4,3,2,1,0,},
+
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {1,1,1,1,1,1,1,},
+{3,3,3,3,3,3,3,3,},
+{1,1,1,1,1,1,1,},
+
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {1,1,1,1,1,1,1,},
+{3,3,3,3,3,3,3,3,},
+{1,1,1,1,1,1,1,},
+
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {2,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,},
+
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
+	
+
+	//--------------------------------------------------------------------------------------------------------------
+	
+	 
+	final public static String images_Actor00 = "Actor00";
+	
+ 
+	final public static String images_MapTile00 = "MapTile00";
+	
+ 
+	final public static String images_E00_Zombi = "E00_Zombi";
 	
 
 
+	
+	final public static String map_Level_00 = "Level_00";
+	
+
+	
+	
+	final public static String spr_Actor00 = "Actor00";
+	
+
+	final public static String spr_e00_zombi = "e00_zombi";
+	
+
+
+
+	//--------------------------------------------------------------------------------------------------------------
+	final public static boolean buildImages(String key, IImages stuff){
+	 
+		if(key=="Actor00"){
+			buildClipImages_Actor00(stuff);
+			return true;
+		}
+	
+ 
+		if(key=="MapTile00"){
+			buildClipImages_MapTile00(stuff);
+			return true;
+		}
+	
+ 
+		if(key=="E00_Zombi"){
+			buildClipImages_E00_Zombi(stuff);
+			return true;
+		}
+	
+
+		return false;
+	}
+	
+	final public static CMap createMap(String key, IImages tiles, boolean isAnimate, boolean isCyc){
+	
+		if(key=="Level_00"){
+			return createMap_Level_00(tiles,isAnimate,isCyc);
+		}
+	
+
+		return null;
+	}
+	
+	final public static CSprite createSprite(String key, IImages tiles){
+	
+		if(key=="Actor00"){
+			return createSprite_Actor00(tiles);
+		}
+	
+
+		if(key=="e00_zombi"){
+			return createSprite_e00_zombi(tiles);
+		}
+	
+
+		return null;
+	}
+	
 
 //--------------------------------------------------------------------------------------------------------------
 // level trunk
 //--------------------------------------------------------------------------------------------------------------
 
-	
-	
-	
-	// world : Level_00
-	final static public String getWorld_Level_00(){
-		return "Level_00";
-	}
-	// world width : Level_00
-	final static public int getWorldW_Level_00(){
-		return 320;
-	}
-	// world height : Level_00
-	final static public int getWorldH_Level_00(){
-		return 320;
-	}
+
+
+	 
+	final public static String world_Level_00 = "Level_00";
 	
 
 	
-	
-	final static public CWayPoint[] getWorldWayPoints(String Name){
+
+	final static public LevelManager createWorld(String name){
+		LevelManager level = new LevelManager();
+		
+		// screen size
+		level.WindowX = 0;
+		level.WindowY = 0;
+		level.WindowW = 176;
+		level.WindowH = 208;
+		
+		level.WorldName = name;
 	
 		// World : Level_00
-		if(Name=="Level_00"){
+		if(name=="Level_00"){
+		
+			// World Size
+			level.Width  = 640 ;
+			level.Height = 320;
+			
+			// WayPoint
 			// waypoint count : 0
 			CWayPoint[] WayPoints = new CWayPoint[0];
 			
-			
 			// waypoint link 
 			
+			level.WayPoints = WayPoints;
 			
-			return WayPoints;
+			//IImages tile ;
+		
+			// Sprite
+			level.SprsTile = new String[8];
+			level.SprsType = new String[8];
+			level.SprsInfo = new String[8];
+			level.SprsX    = new int[8];
+			level.SprsY    = new int[8];
+			// sprite count : 8
+			 
+			level.SprsTile[0] = "Actor00";    // sprite tile name
+			level.SprsType[0] = "Actor00"; // sprite type
+			level.SprsInfo[0] = "a00";     // sprite info form editor
+			level.SprsX[0]    = 16;          // sprite xpos form editor
+			level.SprsY[0]    = 288;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
+			level.SprsType[1] = "e00_zombi"; // sprite type
+			level.SprsInfo[1] = "e00_zombi";     // sprite info form editor
+			level.SprsX[1]    = 368;          // sprite xpos form editor
+			level.SprsY[1]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
+			level.SprsType[2] = "e00_zombi"; // sprite type
+			level.SprsInfo[2] = "e00_";     // sprite info form editor
+			level.SprsX[2]    = 320;          // sprite xpos form editor
+			level.SprsY[2]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
+			level.SprsType[3] = "e00_zombi"; // sprite type
+			level.SprsInfo[3] = "e00_zombi";     // sprite info form editor
+			level.SprsX[3]    = 272;          // sprite xpos form editor
+			level.SprsY[3]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
+			level.SprsType[4] = "e00_zombi"; // sprite type
+			level.SprsInfo[4] = "e00_zombi";     // sprite info form editor
+			level.SprsX[4]    = 176;          // sprite xpos form editor
+			level.SprsY[4]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
+			level.SprsType[5] = "e00_zombi"; // sprite type
+			level.SprsInfo[5] = "e00_zombi";     // sprite info form editor
+			level.SprsX[5]    = 464;          // sprite xpos form editor
+			level.SprsY[5]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[6] = "E00_Zombi";    // sprite tile name
+			level.SprsType[6] = "e00_zombi"; // sprite type
+			level.SprsInfo[6] = "e00_zombi";     // sprite info form editor
+			level.SprsX[6]    = 416;          // sprite xpos form editor
+			level.SprsY[6]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[7] = "E00_Zombi";    // sprite tile name
+			level.SprsType[7] = "e00_zombi"; // sprite type
+			level.SprsInfo[7] = "e00_zombi";     // sprite info form editor
+			level.SprsX[7]    = 224;          // sprite xpos form editor
+			level.SprsY[7]    = 304;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			
+			
+			// Map
+			 
+			level.MapTile = "MapTile00";    // map tile name
+			level.MapType = "Level_00"; // map type 
+			level.MapInfo = "M000_Level_00";     // map info form editor
+			//level.Map = new Map();
+			
+			
 		}
 	
 
-		return null;
-	}
-
-	final static public String getWorldMapType(String Name){
 	
-		// World : Level_00
-		if(Name=="Level_00"){
-			String[] MapType = new String[1];
-			 MapType[0] = "Level_00";// 0 0
-			
-			
-			return MapType[0];
-		}
-	
-
-		return null;
-	}
-
-	final static public String getWorldMapName(String Name){
-	
-		// World : Level_00
-		if(Name=="Level_00"){
-			String[] MapName = new String[1];
-			 MapName[0] = "M000_Level_00";// 0 0
-			
-			
-			return MapName[0];
-		}
-	
-
-		return null;
+		return level;
 	}
 	
-	final static public String[] getWorldSprName(String Name){
 	
-		// World : Level_00
-		if(Name=="Level_00"){
-			String[] SprName = new String[1];
-			// sprite count : 1
-			 SprName[0] = "S001_Actor00";
-			
-			
-			return SprName;
-		}
-	
-
-		return null;
-	}
-	
-	final static public String[] getWorldSprType(String Name){
-	
-		// World : Level_00
-		if(Name=="Level_00"){
-			String[] SprID = new String[1];
-			// sprite count : 1
-			 SprID[0] = "Actor00";
-			
-			
-			return SprID;
-		}
-	
-
-		return null;
-	}
-	
-	final static public int[] getWorldSprAnim(String Name){
-	
-		// World : Level_00
-		if(Name=="Level_00"){
-			int[] SprAnim = new int[1];
-			// sprite count : 1
-			 SprAnim[0] = 0 ;
-			
-			
-			return SprAnim;
-		}
-	
-
-		return null;
-	}
-	
-	final static public int[] getWorldSprX(String Name){
-	
-		// World : Level_00
-		if(Name=="Level_00"){
-			int[] SprX = new int[1];
-			// sprite count : 1
-			 SprX[0] = 15 ;
-			
-			
-			return SprX;
-		}
-	
-
-		return null;
-	}
-	
-	final static public int[] getWorldSprY(String Name){
-	
-		// World : Level_00
-		if(Name=="Level_00"){
-			int[] SprY = new int[1];
-			// sprite count : 1
-			 SprY[0] = 287 ;
-			
-			
-			return SprY;
-		}
-	
-
-		return null;
-	}
-	
-
-
 
 	
 }

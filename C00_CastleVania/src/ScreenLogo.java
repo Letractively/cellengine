@@ -2,7 +2,7 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import com.morefuntek.cell.Game.AScreen;
+import com.cell.game.AScreen;
 
 
 
@@ -40,7 +40,7 @@ final public class ScreenLogo extends AScreen {
 			index --;
 			if(index<0)index = 0;
 		}
-		if(isKeyDown(KEY_C)){
+		if(isKeyDown(KEY_5|KEY_C)){
 			if(!isTransition()){
 				ChangeSubScreen(list[index]);
 			}

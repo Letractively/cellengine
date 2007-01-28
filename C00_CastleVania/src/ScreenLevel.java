@@ -3,15 +3,17 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.m3g.World;
 
-import com.morefuntek.cell.CImages20;
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.IImages;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCamera;
-import com.morefuntek.cell.Game.CMap;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CWorld;
-import com.morefuntek.cell.Game.CWorldMini;
+import com.cell.CImages20;
+import com.cell.CImagesJPhone;
+import com.cell.CMath;
+import com.cell.CTilesJPhone;
+import com.cell.IImages;
+import com.cell.game.AScreen;
+import com.cell.game.CCamera;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWorld;
+import com.cell.game.CWorldMini;
 
 import cv.unit.UnitActor;
 
@@ -23,14 +25,16 @@ public class ScreenLevel extends AScreen {
 	CMap 		map;
 	CCamera 	cam;
 	
-	UnitActor 	actor	;
+	UnitActor 	actor;
+	UnitActor   enemys[];
+	UnitActor   events[];
 	
 	CWorldMini	worldMini;
 	
 	public ScreenLevel(){
 
 		
-       	IsDebug = true;
+       	IsDebug = false;
     
        	FrameDelay = 40;
        	
@@ -47,15 +51,15 @@ public class ScreenLevel extends AScreen {
        	actor = new UnitActor(act);
        	actor.X = 32;
     	actor.Y = 64;
-    	
+//    	actor.BackColor;
     	// map type
-       	map = ResesScript.createMap_Level_00(mapTile, false, false);
+       	map = ResesScript.createMap_Level_00(mapTile, true, false);
        	
        	// camera 
        	cam = new CCamera(0,0,
        			SCREEN_WIDTH,
        			SCREEN_WIDTH,
-       			map,true,0);
+       			map,true,0xff00ff00);
        	
        	// world
        	world = new CWorld();
@@ -70,7 +74,7 @@ public class ScreenLevel extends AScreen {
        			cam.getHeight()/4,
        			2,2,
        			8+8*16,
-       			0);
+       			20+20*40);
     	
     	
     	
