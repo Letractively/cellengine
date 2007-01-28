@@ -27,12 +27,7 @@ public class LevelManager extends CWorld {
 	public String MapTile;
 	public String MapType;
 	public String MapInfo;
-	
-	public LevelManager(){
 
-	}
-	
-	
 	
 	
 }
