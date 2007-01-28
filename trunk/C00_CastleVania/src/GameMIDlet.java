@@ -3,10 +3,11 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
-import com.morefuntek.cell.CCanvas20;
-import com.morefuntek.cell.CCanvasNokia;
-import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.AScreen;
+import com.cell.CCanvas20;
+import com.cell.CCanvasJPhone;
+import com.cell.CCanvasNokia;
+import com.cell.CObject;
+import com.cell.game.AScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
@@ -22,26 +23,24 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		CObject.IsDebug = true;
 //#endif	
 		
-//#ifdef _NOKIA_UI
-		CObject.IsNokia = true;
-//#else
-		CObject.IsNokia = false;
-//#endif		
-		
 		System.out.println("Total Memory = "+(Runtime.getRuntime().totalMemory()/1024)+"(K byte)");
 
-		if(CObject.IsNokia){
-			canvas = new CCanvasNokia();
-		}else{
-			canvas = new CCanvas20();
-			canvas.setFullScreenMode(true);
-		}
-
-		
-		AScreen.SCREEN_WIDTH = canvas.getWidth();
+		canvas = new CCanvas20();
+		canvas.setFullScreenMode(true);
+		AScreen.SCREEN_WIDTH  = canvas.getWidth();
 		AScreen.SCREEN_HEIGHT = canvas.getHeight();
-		AScreen.SCREEN_HCENTER = canvas.getWidth()/2;
-		AScreen.SCREEN_VCENTER = canvas.getHeight()/2;
+		
+//		canvas = new CCanvasNokia();
+//		AScreen.SCREEN_WIDTH  = canvas.getWidth();
+//		AScreen.SCREEN_HEIGHT = canvas.getHeight();
+		
+//		canvas = new CCanvasJPhone();
+//		AScreen.SCREEN_WIDTH = 176;
+//		AScreen.SCREEN_HEIGHT = 208;
+
+
+		AScreen.SCREEN_HCENTER = AScreen.SCREEN_WIDTH/2;
+		AScreen.SCREEN_VCENTER = AScreen.SCREEN_HEIGHT/2;
 		System.out.println("Screen W = " + AScreen.SCREEN_WIDTH);
 		System.out.println("Screen H = " + AScreen.SCREEN_HEIGHT);
 		
@@ -83,7 +82,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 				}
 			}
 		}catch(Exception err){
-			err.printStackTrace();
+			System.out.println(err.getMessage());
 		}
 		destroyApp(true);
 	}

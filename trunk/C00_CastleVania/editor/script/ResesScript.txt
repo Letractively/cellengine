@@ -1,13 +1,14 @@
 
 //
-// SkyCity Script v0.0.0
+// CastleVania Script v0.0.0
 // 
 // 指定文件输出
 // <OUTPUT>     ..\res\ResesScript.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
+import cv.LevelManager;
 
 public class ResesScript {
 
@@ -26,13 +27,12 @@ public class ResesScript {
 		#<CLIP> stuff.addTile(<X>,<Y>,<W>,<H>);//<INDEX> 
 		#<END CLIP>
 		
-		stuff.gc();
 	}
 	#<END IMAGES>
 
 	//--------------------------------------------------------------------------------------------------------------
 	#<MAP>
-	// Map : <NAME>
+	// Map : <NAME> //<IMAGES NAME>
 	final static public CMap createMap_<NAME>(IImages tiles,boolean isAnimate,boolean isCyc){
 		
 		//<X COUNT> x <Y COUNT>
@@ -76,7 +76,8 @@ public class ResesScript {
 	
 	//--------------------------------------------------------------------------------------------------------------
 	#<SPRITE>
-	// Sprite : <NAME>
+	// Sprite : <NAME> //<IMAGES NAME>
+	
 	final static public CSprite createSprite_<NAME>(IImages tiles){
 
 	    // tiles
@@ -99,6 +100,7 @@ public class ResesScript {
 	    
 	    
 		// sprite frame
+
 		String[] frameName = new String[]{
 			<FRAME NAME>
 		};
@@ -106,7 +108,7 @@ public class ResesScript {
 		for(int i=0;i<frameName.length;i++){
 			System.out.println(frameName[i]);
 		}
-		
+
 	    int[][] frameAnimate = new int[][]{
 	        <FRAME ANIMATE>
 	    };
@@ -138,156 +140,129 @@ public class ResesScript {
 	}
 	#<END SPRITE>
 	
+
+	//--------------------------------------------------------------------------------------------------------------
+	
+	#<IMAGES> 
+	final public static String images_<NAME> = "<NAME>";
+	#<END IMAGES>
+
+	#<MAP>
+	final public static String map_<NAME> = "<NAME>";
+	#<END MAP>
+	
+	#<SPRITE>
+	final public static String spr_<NAME> = "<NAME>";
+	#<END SPRITE>
+
+
+	//--------------------------------------------------------------------------------------------------------------
+	final public static boolean buildImages(String key, IImages stuff){
+	#<IMAGES> 
+		if(key=="<NAME>"){
+			buildClipImages_<NAME>(stuff);
+			return true;
+		}
+	#<END IMAGES>
+		return false;
+	}
+	
+	final public static CMap createMap(String key, IImages tiles, boolean isAnimate, boolean isCyc){
+	#<MAP>
+		if(key=="<NAME>"){
+			return createMap_<NAME>(tiles,isAnimate,isCyc);
+		}
+	#<END MAP>
+		return null;
+	}
+	
+	final public static CSprite createSprite(String key, IImages tiles){
+	#<SPRITE>
+		if(key=="<NAME>"){
+			return createSprite_<NAME>(tiles);
+		}
+	#<END SPRITE>
+		return null;
+	}
+	
 #<END RESOURCE>
-
-
 //--------------------------------------------------------------------------------------------------------------
 // level trunk
 //--------------------------------------------------------------------------------------------------------------
+
 #<LEVEL>
-	
-	
-	#<WORLD>
-	// world : <NAME>
-	final static public String getWorld_<NAME>(){
-		return "<NAME>";
-	}
-	// world width : <NAME>
-	final static public int getWorldW_<NAME>(){
-		return <WIDTH>;
-	}
-	// world height : <NAME>
-	final static public int getWorldH_<NAME>(){
-		return <HEIGHT>;
-	}
+
+	#<WORLD> 
+	final public static String world_<NAME> = "<NAME>";
 	#<END WORLD>
 	
-	
-	final static public CWayPoint[] getWorldWayPoints(String Name){
+
+	final static public LevelManager createWorld(String name){
+		LevelManager level = new LevelManager();
+		
+		// screen size
+		level.WindowX = 0;
+		level.WindowY = 0;
+		level.WindowW = 176;
+		level.WindowH = 208;
+		
+		level.WorldName = name;
 	#<WORLD>
 		// World : <NAME>
-		if(Name=="<NAME>"){
+		if(name=="<NAME>"){
+		
+			// World Size
+			level.Width  = <WIDTH> ;
+			level.Height = <HEIGHT>;
+			
+			// WayPoint
 			// waypoint count : <WAYPOINT COUNT>
 			CWayPoint[] WayPoints = new CWayPoint[<WAYPOINT COUNT>];
-			#<WAYPOINT> WayPoints[<INDEX>] = new CWayPoint(<X>,<Y>);
+			#<WAYPOINT> 
+			WayPoints[<INDEX>] = new CWayPoint(<X>,<Y>);
 			#<END WAYPOINT>
-			
 			// waypoint link 
-			#<WAYPOINT LINK> WayPoints[<START>].link(WayPoints[<END>]);//<INDEX>
+			#<WAYPOINT LINK> 
+			WayPoints[<START>].linkTo(WayPoints[<END>]);
 			#<END WAYPOINT LINK>
+			level.WayPoints = WayPoints;
 			
-			return WayPoints;
-		}
-	#<END WORLD>
-		return null;
-	}
-
-	final static public String getWorldMapType(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			String[] MapType = new String[<UNIT MAP COUNT>];
-			#<UNIT MAP> MapType[<INDEX>] = "<IDENTIFY>";// <X> <Y>
+			//IImages tile ;
+		
+			// Sprite
+			level.SprsTile = new String[<UNIT SPRITE COUNT>];
+			level.SprsType = new String[<UNIT SPRITE COUNT>];
+			level.SprsInfo = new String[<UNIT SPRITE COUNT>];
+			level.SprsX    = new int[<UNIT SPRITE COUNT>];
+			level.SprsY    = new int[<UNIT SPRITE COUNT>];
+			// sprite count : <UNIT SPRITE COUNT>
+			#<UNIT SPRITE> 
+			level.SprsTile[<INDEX>] = "<SUPER>";    // sprite tile name
+			level.SprsType[<INDEX>] = "<IDENTIFY>"; // sprite type
+			level.SprsInfo[<INDEX>] = "<NAME>";     // sprite info form editor
+			level.SprsX[<INDEX>]    = <X>;          // sprite xpos form editor
+			level.SprsY[<INDEX>]    = <Y>;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			#<END UNIT SPRITE>
+			
+			// Map
+			#<UNIT MAP> 
+			level.MapTile = "<SUPER>";    // map tile name
+			level.MapType = "<IDENTIFY>"; // map type 
+			level.MapInfo = "<NAME>";     // map info form editor
+			//level.Map = new Map();
 			#<END UNIT MAP>
 			
-			return MapType[0];
 		}
 	#<END WORLD>
-		return null;
-	}
-
-	final static public String getWorldMapName(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			String[] MapName = new String[<UNIT MAP COUNT>];
-			#<UNIT MAP> MapName[<INDEX>] = "<NAME>";// <X> <Y>
-			#<END UNIT MAP>
-			
-			return MapName[0];
-		}
-	#<END WORLD>
-		return null;
+	
+		return level;
 	}
 	
-	final static public String[] getWorldSprName(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			String[] SprName = new String[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
-			#<UNIT SPRITE> SprName[<INDEX>] = "<NAME>";
-			#<END UNIT SPRITE>
-			
-			return SprName;
-		}
-	#<END WORLD>
-		return null;
-	}
-	
-	final static public String[] getWorldSprType(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			String[] SprID = new String[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
-			#<UNIT SPRITE> SprID[<INDEX>] = "<IDENTIFY>";
-			#<END UNIT SPRITE>
-			
-			return SprID;
-		}
-	#<END WORLD>
-		return null;
-	}
-	
-	final static public int[] getWorldSprAnim(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			int[] SprAnim = new int[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
-			#<UNIT SPRITE> SprAnim[<INDEX>] = <ANIMATE ID> ;
-			#<END UNIT SPRITE>
-			
-			return SprAnim;
-		}
-	#<END WORLD>
-		return null;
-	}
-	
-	final static public int[] getWorldSprX(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			int[] SprX = new int[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
-			#<UNIT SPRITE> SprX[<INDEX>] = <X> ;
-			#<END UNIT SPRITE>
-			
-			return SprX;
-		}
-	#<END WORLD>
-		return null;
-	}
-	
-	final static public int[] getWorldSprY(String Name){
-	#<WORLD>
-		// World : <NAME>
-		if(Name=="<NAME>"){
-			int[] SprY = new int[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
-			#<UNIT SPRITE> SprY[<INDEX>] = <Y> ;
-			#<END UNIT SPRITE>
-			
-			return SprY;
-		}
-	#<END WORLD>
-		return null;
-	}
 	
 #<END LEVEL>
-
-
 	
 }
 
