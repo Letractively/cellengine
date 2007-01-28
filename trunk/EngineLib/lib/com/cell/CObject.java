@@ -20,8 +20,6 @@ public class CObject {
 	// ------------------------------------------------------
 	/**DEBUG dip 开关*/
 	static public boolean IsDebug = false;
-	/**识别当前是否为NOKIA平台*/
-	static public boolean IsNokia = false;
 	
 	// ------------------------------------------------------
 

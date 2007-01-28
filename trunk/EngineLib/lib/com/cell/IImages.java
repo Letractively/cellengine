@@ -50,6 +50,11 @@ public interface IImages {
 	 */
 	public Image getSrcImage();
 	
+	/**
+	 * µÃµ½×ÓÍ¼Æ¬
+	 * @param index
+	 * @return
+	 */
 	public Image getImage(int index);
 	
 	/**

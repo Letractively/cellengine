@@ -54,6 +54,7 @@ public class CWorldMini extends CObject {
 						colorKeySprPos%images.getWidth(index),
 						colorKeySprPos/images.getWidth(index));
 			} catch (RuntimeException e){
+				System.out.println(e.getMessage());
 				world.getSprite(i).BackColor = 0xffffffff;
 			}
        	}
@@ -68,6 +69,7 @@ public class CWorldMini extends CObject {
     					colorKeyMapPos/images.getWidth(index)
 						);
 			} catch (RuntimeException e){
+				System.out.println(e.getMessage());
 				mapColor[i] = 0xff00ff00;
 			}
        	}
