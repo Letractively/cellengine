@@ -228,7 +228,7 @@ abstract public class AScreen extends CObject {
 		    	setTransitionIn();
 		    	NextScreenClassName = null;
 	    	} catch (Exception e) {
-				e.printStackTrace();
+	    		System.out.println(e.getMessage());
 				ExitGame = true;
 			}
 		}

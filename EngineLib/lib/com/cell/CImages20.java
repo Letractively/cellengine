@@ -73,13 +73,9 @@ public class CImages20 extends CObject implements IImages {
 	 * @see com.cell.IImages#getKeyColor(int, int)
 	 */
 	public int getPixel(int index, int x,int y){
-		Graphics g = srcImage.getGraphics();
-//		int c = GraphicsUtil.getPixel(
-//				g, 
-//				TileX[index] + x, 
-//				TileY[index] + y
-//				);
-		return 0;
+		int[] c = new int[1];
+		srcImage.getRGB(c, 0, 1, TileX[index]+x, TileY[index]+y, 1, 1);
+		return c[0];
 	}
 	
 	/**

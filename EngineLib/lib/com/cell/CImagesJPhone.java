@@ -72,13 +72,23 @@ public class CImagesJPhone extends CObject implements IImages {
 	 * @see com.cell.IImages#getKeyColor(int, int)
 	 */
 	public int getPixel(int index, int x,int y){
-		Graphics g = srcImage.getGraphics();
-		int c = GraphicsUtil.getPixel(
-				g, 
-				TileX[index] + x, 
-				TileY[index] + y
-				);
-		return c;
+		try{
+			Image back = Image.createImage(1,1);
+			Graphics bg = back.getGraphics();
+			bg.drawImage(srcImage, -(TileX[index] + x), -(TileY[index] + y), 0);
+			int c = GraphicsUtil.getPixel(bg, 0, 0);
+			return c;
+		}catch(Exception err){
+			System.out.println(err.getMessage());
+			return 0xffff0000;
+		}
+//		Graphics g = srcImage.getGraphics();
+//		int c = GraphicsUtil.getPixel(
+//				g, 
+//				TileX[index] + x, 
+//				TileY[index] + y
+//				);
+//		return c;
 	}
 	
 	/**
