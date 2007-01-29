@@ -26,6 +26,14 @@ public class CParticleSystem {
 	}
 	
 	/**
+	 * is active
+	 * @return
+	 */
+	public boolean isActive(){
+		return Active;
+	}
+	
+	/**
 	 * change particles node
 	 * @param particle 
 	 */
