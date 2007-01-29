@@ -15,19 +15,14 @@ import com.cell.game.CSprite;
 import com.cell.game.CWorld;
 import com.cell.game.CWorldMini;
 
+import cv.LevelManager;
 import cv.unit.UnitActor;
 
 
 public class ScreenLevel extends AScreen {
 
 	// game world
-	CWorld 		world;
-	CMap 		map;
-	CCamera 	cam;
-	
-	UnitActor 	actor;
-	UnitActor   enemys[];
-	UnitActor   events[];
+	LevelManager 		world;
 	
 	CWorldMini	worldMini;
 	
@@ -37,47 +32,18 @@ public class ScreenLevel extends AScreen {
        	IsDebug = false;
     
        	FrameDelay = 40;
-       	
-       	// res
-       	IImages mapTile = new CImages20();
-       	IImages actTile = new CImages20();
-       
-       	ResesScript.buildClipImages_MapTile00(mapTile);
-       	ResesScript.buildClipImages_Actor00(actTile);
-       	
-       	// spr type
-       	CSprite act = ResesScript.createSprite_Actor00(actTile);
 
-       	actor = new UnitActor(act);
-       	actor.X = 32;
-    	actor.Y = 64;
-//    	actor.BackColor;
-    	// map type
-       	map = ResesScript.createMap_Level_00(mapTile, true, false);
-       	
-       	// camera 
-       	cam = new CCamera(0,0,
-       			SCREEN_WIDTH,
-       			SCREEN_WIDTH,
-       			map,true,0xff00ff00);
-       	
        	// world
-       	world = new CWorld();
-       	world.setMap(map);// setmap
-    	world.setCamera(cam);//set camera
-
-    	world.addSprite(actor);
-
+       	world = ResesScript.createWorld("Level_00");
+       	world.init();
+       	
     	worldMini = new CWorldMini(
        			world,
-       			cam.getWidth()/2,
-       			cam.getHeight()/4,
+       			world.Camera.getWidth()/2,
+       			world.Camera.getHeight()/4,
        			2,2,
        			8+8*16,
        			20+20*40);
-    	
-    	
-    	
     	
     	
        	resetTimer();
@@ -91,9 +57,11 @@ public class ScreenLevel extends AScreen {
 
     	if(isKeyDown(KEY_0)){IsDebug = !IsDebug;}
     	
-    	int cdx = actor.X - (cam.getX() + cam.getWidth() /2);
-    	int cdy = actor.Y - (cam.getY() + cam.getHeight()/2);
-    	cam.mov(cdx/4,cdy/4);
+    	
+    	int cdx = world.getSprite(0).X - (world.getCamera().getX() + world.getCamera().getWidth() /2);
+    	int cdy = world.getSprite(0).Y - (world.getCamera().getY() + world.getCamera().getHeight()/2);
+    	world.getCamera().mov(cdx/4,cdy/4);
+    	
 		world.update();
   
         tickTimer();
