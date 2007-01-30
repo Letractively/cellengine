@@ -45,8 +45,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.splitContainer6 = new System.Windows.Forms.SplitContainer();
-            this.label10 = new System.Windows.Forms.Label();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel5 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.toolStripMenuItem10 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem11 = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,12 +70,12 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.splitContainer7 = new System.Windows.Forms.SplitContainer();
             this.toolStrip6 = new System.Windows.Forms.ToolStrip();
+            this.toolStripLabel4 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.攻击ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.防御ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.其他ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.label9 = new System.Windows.Forms.Label();
             this.numericUpDown8 = new System.Windows.Forms.NumericUpDown();
             this.label8 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -141,6 +141,7 @@
             this.toolStripButton8 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton33 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton29 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton30 = new System.Windows.Forms.ToolStripButton();
             this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
@@ -208,8 +209,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
-            this.splitContainer1.Size = new System.Drawing.Size(804, 548);
-            this.splitContainer1.SplitterDistance = 159;
+            this.splitContainer1.Size = new System.Drawing.Size(792, 548);
+            this.splitContainer1.SplitterDistance = 155;
             this.splitContainer1.TabIndex = 0;
             // 
             // panel1
@@ -220,7 +221,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 25);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(159, 523);
+            this.panel1.Size = new System.Drawing.Size(155, 523);
             this.panel1.TabIndex = 3;
             // 
             // pictureBox1
@@ -242,7 +243,7 @@
             this.toolStripButton32});
             this.toolStrip3.Location = new System.Drawing.Point(0, 0);
             this.toolStrip3.Name = "toolStrip3";
-            this.toolStrip3.Size = new System.Drawing.Size(159, 25);
+            this.toolStrip3.Size = new System.Drawing.Size(155, 25);
             this.toolStrip3.TabIndex = 4;
             this.toolStrip3.Text = "toolStrip3";
             // 
@@ -287,8 +288,8 @@
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer3.Size = new System.Drawing.Size(641, 548);
-            this.splitContainer3.SplitterDistance = 502;
+            this.splitContainer3.Size = new System.Drawing.Size(633, 548);
+            this.splitContainer3.SplitterDistance = 469;
             this.splitContainer3.TabIndex = 0;
             // 
             // splitContainer4
@@ -309,7 +310,7 @@
             this.splitContainer4.Panel2.Controls.Add(this.trackBar1);
             this.splitContainer4.Panel2.Controls.Add(this.toolStrip4);
             this.splitContainer4.Panel2.Controls.Add(this.statusStrip1);
-            this.splitContainer4.Size = new System.Drawing.Size(502, 548);
+            this.splitContainer4.Size = new System.Drawing.Size(469, 548);
             this.splitContainer4.SplitterDistance = 368;
             this.splitContainer4.TabIndex = 0;
             // 
@@ -326,8 +327,8 @@
             // splitContainer5.Panel2
             // 
             this.splitContainer5.Panel2.Controls.Add(this.tabControl1);
-            this.splitContainer5.Size = new System.Drawing.Size(502, 343);
-            this.splitContainer5.SplitterDistance = 299;
+            this.splitContainer5.Size = new System.Drawing.Size(469, 343);
+            this.splitContainer5.SplitterDistance = 313;
             this.splitContainer5.TabIndex = 1;
             // 
             // panel2
@@ -339,7 +340,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(299, 343);
+            this.panel2.Size = new System.Drawing.Size(313, 343);
             this.panel2.TabIndex = 0;
             // 
             // pictureBox2
@@ -363,7 +364,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(199, 343);
+            this.tabControl1.Size = new System.Drawing.Size(152, 343);
             this.tabControl1.TabIndex = 1;
             this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
@@ -373,7 +374,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 21);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(191, 318);
+            this.tabPage1.Size = new System.Drawing.Size(144, 318);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "组合部件";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -388,7 +389,6 @@
             // splitContainer6.Panel1
             // 
             this.splitContainer6.Panel1.AutoScroll = true;
-            this.splitContainer6.Panel1.Controls.Add(this.label10);
             this.splitContainer6.Panel1.Controls.Add(this.toolStrip1);
             this.splitContainer6.Panel1.Controls.Add(this.label3);
             this.splitContainer6.Panel1.Controls.Add(this.label2);
@@ -400,29 +400,27 @@
             // splitContainer6.Panel2
             // 
             this.splitContainer6.Panel2.Controls.Add(this.listView3);
-            this.splitContainer6.Size = new System.Drawing.Size(185, 312);
+            this.splitContainer6.Size = new System.Drawing.Size(138, 312);
             this.splitContainer6.SplitterDistance = 101;
             this.splitContainer6.TabIndex = 1;
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 51);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(29, 12);
-            this.label10.TabIndex = 6;
-            this.label10.Text = "翻转";
             // 
             // toolStrip1
             // 
             this.toolStrip1.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel5,
             this.toolStripDropDownButton3});
-            this.toolStrip1.Location = new System.Drawing.Point(5, 63);
+            this.toolStrip1.Location = new System.Drawing.Point(5, 53);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(34, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(63, 25);
             this.toolStrip1.TabIndex = 5;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripLabel5
+            // 
+            this.toolStripLabel5.Name = "toolStripLabel5";
+            this.toolStripLabel5.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel5.Text = "翻转";
             // 
             // toolStripDropDownButton3
             // 
@@ -545,7 +543,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(109, 2);
+            this.button2.Location = new System.Drawing.Point(73, 2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(47, 23);
             this.button2.TabIndex = 2;
@@ -555,7 +553,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(109, 27);
+            this.button1.Location = new System.Drawing.Point(73, 27);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(47, 23);
             this.button1.TabIndex = 1;
@@ -614,7 +612,7 @@
             this.listView3.Location = new System.Drawing.Point(0, 0);
             this.listView3.Name = "listView3";
             this.listView3.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.listView3.Size = new System.Drawing.Size(185, 207);
+            this.listView3.Size = new System.Drawing.Size(138, 207);
             this.listView3.TabIndex = 0;
             this.listView3.UseCompatibleStateImageBehavior = false;
             this.listView3.View = System.Windows.Forms.View.Details;
@@ -649,7 +647,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(191, 318);
+            this.tabPage2.Size = new System.Drawing.Size(183, 318);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "组合判定";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -665,7 +663,6 @@
             // 
             this.splitContainer7.Panel1.AutoScroll = true;
             this.splitContainer7.Panel1.Controls.Add(this.toolStrip6);
-            this.splitContainer7.Panel1.Controls.Add(this.label9);
             this.splitContainer7.Panel1.Controls.Add(this.numericUpDown8);
             this.splitContainer7.Panel1.Controls.Add(this.label8);
             this.splitContainer7.Panel1.Controls.Add(this.label6);
@@ -680,20 +677,27 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.listView4);
-            this.splitContainer7.Size = new System.Drawing.Size(185, 312);
-            this.splitContainer7.SplitterDistance = 139;
+            this.splitContainer7.Size = new System.Drawing.Size(177, 312);
+            this.splitContainer7.SplitterDistance = 176;
             this.splitContainer7.TabIndex = 1;
             // 
             // toolStrip6
             // 
             this.toolStrip6.Dock = System.Windows.Forms.DockStyle.None;
             this.toolStrip6.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel4,
             this.toolStripDropDownButton1});
-            this.toolStrip6.Location = new System.Drawing.Point(113, 27);
+            this.toolStrip6.Location = new System.Drawing.Point(5, 132);
             this.toolStrip6.Name = "toolStrip6";
-            this.toolStrip6.Size = new System.Drawing.Size(34, 25);
+            this.toolStrip6.Size = new System.Drawing.Size(63, 25);
             this.toolStrip6.TabIndex = 16;
             this.toolStrip6.Text = "toolStrip6";
+            // 
+            // toolStripLabel4
+            // 
+            this.toolStripLabel4.Name = "toolStripLabel4";
+            this.toolStripLabel4.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel4.Text = "类型";
             // 
             // toolStripDropDownButton1
             // 
@@ -750,15 +754,6 @@
             this.其他ToolStripMenuItem.Text = "其他";
             this.其他ToolStripMenuItem.Click += new System.EventHandler(this.ToolStripMenuItemSprCD_Click);
             // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(111, 2);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "类型";
-            // 
             // numericUpDown8
             // 
             this.numericUpDown8.Hexadecimal = true;
@@ -769,7 +764,7 @@
             0,
             0});
             this.numericUpDown8.Name = "numericUpDown8";
-            this.numericUpDown8.Size = new System.Drawing.Size(70, 21);
+            this.numericUpDown8.Size = new System.Drawing.Size(47, 21);
             this.numericUpDown8.TabIndex = 14;
             this.numericUpDown8.ValueChanged += new System.EventHandler(this.numericUpDown8_ValueChanged);
             // 
@@ -916,7 +911,7 @@
             this.listView4.HideSelection = false;
             this.listView4.Location = new System.Drawing.Point(0, 0);
             this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(185, 169);
+            this.listView4.Size = new System.Drawing.Size(177, 132);
             this.listView4.TabIndex = 0;
             this.listView4.UseCompatibleStateImageBehavior = false;
             this.listView4.View = System.Windows.Forms.View.Details;
@@ -971,7 +966,7 @@
             this.toolStripButton28});
             this.toolStrip2.Location = new System.Drawing.Point(0, 0);
             this.toolStrip2.Name = "toolStrip2";
-            this.toolStrip2.Size = new System.Drawing.Size(502, 25);
+            this.toolStrip2.Size = new System.Drawing.Size(469, 25);
             this.toolStrip2.TabIndex = 0;
             this.toolStrip2.Text = "toolStrip2";
             // 
@@ -1122,7 +1117,7 @@
             this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel3.Location = new System.Drawing.Point(0, 25);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(502, 84);
+            this.panel3.Size = new System.Drawing.Size(469, 84);
             this.panel3.TabIndex = 4;
             // 
             // pictureBox3
@@ -1142,7 +1137,7 @@
             this.trackBar1.Location = new System.Drawing.Point(0, 109);
             this.trackBar1.Maximum = 0;
             this.trackBar1.Name = "trackBar1";
-            this.trackBar1.Size = new System.Drawing.Size(502, 45);
+            this.trackBar1.Size = new System.Drawing.Size(469, 45);
             this.trackBar1.TabIndex = 3;
             this.trackBar1.TickStyle = System.Windows.Forms.TickStyle.Both;
             this.trackBar1.ValueChanged += new System.EventHandler(this.trackBar1_ValueChanged);
@@ -1170,7 +1165,7 @@
             this.toolStripButton25});
             this.toolStrip4.Location = new System.Drawing.Point(0, 0);
             this.toolStrip4.Name = "toolStrip4";
-            this.toolStrip4.Size = new System.Drawing.Size(502, 25);
+            this.toolStrip4.Size = new System.Drawing.Size(469, 25);
             this.toolStrip4.TabIndex = 2;
             this.toolStrip4.Text = "toolStrip4";
             // 
@@ -1351,7 +1346,7 @@
             this.toolStripStatusLabel1});
             this.statusStrip1.Location = new System.Drawing.Point(0, 154);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(502, 22);
+            this.statusStrip1.Size = new System.Drawing.Size(469, 22);
             this.statusStrip1.TabIndex = 0;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -1377,7 +1372,7 @@
             // 
             this.splitContainer2.Panel2.Controls.Add(this.numericUpDown2);
             this.splitContainer2.Panel2.Controls.Add(this.label1);
-            this.splitContainer2.Size = new System.Drawing.Size(135, 548);
+            this.splitContainer2.Size = new System.Drawing.Size(160, 548);
             this.splitContainer2.SplitterDistance = 328;
             this.splitContainer2.TabIndex = 2;
             // 
@@ -1393,7 +1388,7 @@
             this.listView2.Location = new System.Drawing.Point(0, 25);
             this.listView2.MultiSelect = false;
             this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(135, 303);
+            this.listView2.Size = new System.Drawing.Size(160, 303);
             this.listView2.TabIndex = 1;
             this.listView2.UseCompatibleStateImageBehavior = false;
             this.listView2.View = System.Windows.Forms.View.Details;
@@ -1416,11 +1411,12 @@
             this.toolStripButton8,
             this.toolStripButton9,
             this.toolStripButton13,
+            this.toolStripButton33,
             this.toolStripButton29,
             this.toolStripButton30});
             this.toolStrip5.Location = new System.Drawing.Point(0, 0);
             this.toolStrip5.Name = "toolStrip5";
-            this.toolStrip5.Size = new System.Drawing.Size(135, 25);
+            this.toolStrip5.Size = new System.Drawing.Size(160, 25);
             this.toolStrip5.TabIndex = 0;
             this.toolStrip5.Text = "toolStrip5";
             // 
@@ -1468,6 +1464,17 @@
             this.toolStripButton13.Text = "复制当前动作";
             this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
             // 
+            // toolStripButton33
+            // 
+            this.toolStripButton33.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton33.Image = global::CellGameEdit.Resource1.Image56;
+            this.toolStripButton33.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton33.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton33.Name = "toolStripButton33";
+            this.toolStripButton33.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton33.Text = "粘贴";
+            this.toolStripButton33.Click += new System.EventHandler(this.toolStripButton33_Click);
+            // 
             // toolStripButton29
             // 
             this.toolStripButton29.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -1475,7 +1482,7 @@
             this.toolStripButton29.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton29.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton29.Name = "toolStripButton29";
-            this.toolStripButton29.Size = new System.Drawing.Size(23, 13);
+            this.toolStripButton29.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton29.Text = "上移";
             this.toolStripButton29.Click += new System.EventHandler(this.toolStripButton29_Click);
             // 
@@ -1486,7 +1493,7 @@
             this.toolStripButton30.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton30.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton30.Name = "toolStripButton30";
-            this.toolStripButton30.Size = new System.Drawing.Size(23, 13);
+            this.toolStripButton30.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton30.Text = "下移";
             this.toolStripButton30.Click += new System.EventHandler(this.toolStripButton30_Click);
             // 
@@ -1531,7 +1538,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(804, 548);
+            this.ClientSize = new System.Drawing.Size(792, 548);
             this.Controls.Add(this.splitContainer1);
             this.Location = new System.Drawing.Point(180, 3);
             this.Name = "SpriteForm";
@@ -1672,9 +1679,7 @@
         private System.Windows.Forms.NumericUpDown numericUpDown5;
         private System.Windows.Forms.NumericUpDown numericUpDown8;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label9;
         private System.Windows.Forms.ToolStrip toolStrip6;
-        private System.Windows.Forms.Label label10;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem10;
@@ -1722,5 +1727,8 @@
         private System.Windows.Forms.ToolStripButton toolStripButton30;
         private System.Windows.Forms.ToolStripButton toolStripButton31;
         private System.Windows.Forms.ToolStripButton toolStripButton32;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel5;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel4;
+        private System.Windows.Forms.ToolStripButton toolStripButton33;
     }
 }
