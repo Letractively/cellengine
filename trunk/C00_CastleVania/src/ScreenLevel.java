@@ -43,7 +43,10 @@ public class ScreenLevel extends AScreen {
        			world.Camera.getHeight()/4,
        			2,2,
        			8+8*16,
-       			20+20*40);
+       			20+20*40,
+       			true,
+       			true,
+       			true);
     	
     	
        	resetTimer();
