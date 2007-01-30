@@ -33,8 +33,21 @@ public class CUnit extends CObject
 	
 //	---------------------------------------------------------------------------------------------
 
-
+	private IState state = null;
 	
+	public void setState(IState state){
+		this.state = state;
+	}
+	
+	public void delState(){
+		this.state = null;
+	}
+	
+	public void updateState(){
+		if(state!=null){
+			state.update();
+		}
+	}
 	
 //	---------------------------------------------------------------------------------------------
 	

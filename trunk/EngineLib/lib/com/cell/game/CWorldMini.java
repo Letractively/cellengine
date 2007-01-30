@@ -10,19 +10,12 @@ import com.cell.IImages;
 public class CWorldMini extends CObject {
 
 	public int[] MapColor;
-	
-	public boolean ShowSpr = true;
-	public boolean ShowMap = true;
-	public boolean ShowCam = true;
-	
+
 	public int X = 0;
 	public int Y = 0;
-	
+
 	public int SprPriority = 0;
-	
-	public Image Buffer;
-	
-	CWorld World;
+
 	
 	int W;
 	int H;
@@ -35,46 +28,30 @@ public class CWorldMini extends CObject {
 	int WTW;
 	int WTH;
 	
+	CWorld World;
 	
+	Image Buffer;
 	Graphics bg;
-	
+
+	boolean ShowSpr = true;
+	boolean ShowMap = true;
+	boolean ShowCam = true;
+
 	public CWorldMini(
 			CWorld world,
 			int width,int height,
 			int cellW,int cellH,
 			int colorKeyMapPos,
-			int colorKeySprPos){
+			int colorKeySprPos, 
+			boolean isShowMap, 
+			boolean isShowSpr, 
+			boolean isShowCam
+			){
 		
-		for(int i=0;i<world.getSpriteCount();i++){
-       		try {
-       			IImages images = world.getSprite(i).getAnimates().images;
-       			int index = world.getSprite(i).getAnimates().STileID[world.getSprite(i).getAnimates().Frames[world.getSprite(i).CurAnimate][world.getSprite(i).CurFrame]];
-				world.getSprite(i).BackColor = images.getPixel(
-						index, 
-						colorKeySprPos%images.getWidth(index),
-						colorKeySprPos/images.getWidth(index));
-			} catch (RuntimeException e){
-				System.out.println(e.getMessage());
-				world.getSprite(i).BackColor = 0xffffffff;
-			}
-       	}
-		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
-    	for(int i=0;i<mapColor.length;i++){
-    		try {
-    			IImages images = world.getMap().getAnimates().images;
-       			int index = world.getMap().getAnimates().STileID[world.getMap().getAnimates().Frames[i][0]];
-    			mapColor[i] = images.getPixel(
-    					index, 
-    					colorKeyMapPos%images.getWidth(index),
-    					colorKeyMapPos/images.getWidth(index)
-						);
-			} catch (RuntimeException e){
-				System.out.println(e.getMessage());
-				mapColor[i] = 0xff00ff00;
-			}
-       	}
-    	MapColor = mapColor;
-    	
+		ShowSpr = isShowSpr;
+		ShowMap = isShowMap;
+		ShowCam = isShowCam;
+		
 		World = world;
 		W = width;
 		H = height;
@@ -85,16 +62,50 @@ public class CWorldMini extends CObject {
 		WTW = World.getMap().getWCount() * CW;
 		WTH = World.getMap().getHCount() * CH;
 		
-		Buffer = Image.createImage(WTW ,WTH);
-		bg = Buffer.getGraphics();
-		
-		for (int by = 0; by < world.getMap().getHCount(); by++) {
-			for (int bx = 0; bx < world.getMap().getWCount(); bx++) {
-				bg.setColor(MapColor[World.Map.getTile(bx, by)]);
-				bg.fillRect(bx*CW, by*CH, CW, CH);
-			}
+		if(ShowSpr){
+			for(int i=0;i<world.getSpriteCount();i++){
+	       		try {
+	       			IImages images = world.getSprite(i).getAnimates().images;
+	       			int index = world.getSprite(i).getAnimates().STileID[world.getSprite(i).getAnimates().Frames[world.getSprite(i).CurAnimate][world.getSprite(i).CurFrame]];
+					world.getSprite(i).BackColor = images.getPixel(
+							index, 
+							colorKeySprPos%images.getWidth(index),
+							colorKeySprPos/images.getWidth(index));
+				} catch (RuntimeException e){
+					System.out.println(e.getMessage());
+					world.getSprite(i).BackColor = 0xffffffff;
+				}
+	       	}
 		}
 		
+		if(ShowMap){
+			int[] mapColor = new int[world.getMap().getAnimates().getCount()];
+	    	for(int i=0;i<mapColor.length;i++){
+	    		try {
+	    			IImages images = world.getMap().getAnimates().images;
+	       			int index = world.getMap().getAnimates().STileID[world.getMap().getAnimates().Frames[i][0]];
+	    			mapColor[i] = images.getPixel(
+	    					index, 
+	    					colorKeyMapPos%images.getWidth(index),
+	    					colorKeyMapPos/images.getWidth(index)
+							);
+				} catch (RuntimeException e){
+					System.out.println(e.getMessage());
+					mapColor[i] = 0xff00ff00;
+				}
+	       	}
+	    	MapColor = mapColor;
+	    	
+	    	Buffer = Image.createImage(WTW ,WTH);
+			bg = Buffer.getGraphics();
+			for (int by = 0; by < world.getMap().getHCount(); by++) {
+				for (int bx = 0; bx < world.getMap().getWCount(); bx++) {
+					bg.setColor(MapColor[World.Map.getTile(bx, by)]);
+					bg.fillRect(bx*CW, by*CH, CW, CH);
+				}
+			}
+		}
+
 	}
 
 	public int getWidth(){

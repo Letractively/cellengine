@@ -147,14 +147,6 @@ public class CSprite extends CUnit {
 		
 		Transform = spr.Transform;
 	}
-	
-	/**
-	 * 更新所有状态 
-	 */
-	public void update(){
-		
-	}
-	
 
 	/**
 	 * 复制本身,浅表
