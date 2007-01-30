@@ -1981,6 +1981,10 @@ namespace CellGameEdit.PM
             framesRefersh();
         }
  // animate
+        public static String clipAnimateName;
+        public static ArrayList clipAnimate;
+        public static ImagesForm clipSuperForm;
+
         private void animAdd()
         {
             ArrayList frames = new ArrayList();
@@ -2007,29 +2011,52 @@ namespace CellGameEdit.PM
         }
         private void animCopy()
         {
-            if (animGetCurFrames() != null)
+            try
             {
-                ArrayList frames = new ArrayList();
-
-                ListViewItem item = new ListViewItem(new String[] { animCount.ToString("d4"), animGetCurFrames().Count.ToString() });
-
-                foreach(Object obj in animGetCurFrames())
+                if (animGetCurFrames() != null)
                 {
-                    Frame frame = new Frame((Frame)obj);
-                    frames.Add(frame);
+                    clipAnimateName = listView2.SelectedItems[0].Text;
+                    clipAnimate = new ArrayList();
+                    foreach (Frame obj in animGetCurFrames())
+                    {
+                        Frame frame = new Frame(obj);
+                        clipAnimate.Add(frame);
+                    }
+                    clipSuperForm = this.super;
                 }
-
-                //Animates.Add(frames);
-                listView2.Items.Add(item);
-                AnimTable.Add(item, frames);
-
-                item.Focused = true;
-                item.Selected = true;
-
-                animCount++;
             }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
         }
+        private void animPaste()
+        {
+            try
+            {
+                if (clipAnimate != null && clipSuperForm != null && clipAnimateName!=null)
+                {
+                    if (clipSuperForm == this.super)
+                    {
+                        ListViewItem item = new ListViewItem(new String[] { clipAnimateName, clipAnimate.Count.ToString() });
 
+                        listView2.Items.Add(item);
+
+                        ArrayList frames = new ArrayList();
+                        foreach (Frame obj in clipAnimate)
+                        {
+                            Frame frame = new Frame(obj);
+                            frames.Add(frame);
+                        }
+
+                        AnimTable.Add(item, frames);
+
+                        item.Focused = true;
+                        item.Selected = true;
+
+                        animCount++;
+                    }
+                }
+            }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+        }
 
 
         private ArrayList animGetCurFrames()
@@ -2059,6 +2086,11 @@ namespace CellGameEdit.PM
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
             animCopy();
+            framesRefersh();
+        }
+        private void toolStripButton33_Click(object sender, EventArgs e)
+        {
+            animPaste();
             framesRefersh();
         }
         private void listView2_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -2168,6 +2200,8 @@ namespace CellGameEdit.PM
 
 
 
+
+
       
 
         
@@ -2251,7 +2285,7 @@ namespace CellGameEdit.PM
         public Frame(Frame obj)
         {                    
             //ArrayList Animates;
-            SubTable = (ArrayList)obj.SubTable.Clone();
+            //SubTable = (ArrayList)obj.SubTable.Clone();
 
             SubIndex = (ArrayList)obj.SubIndex.Clone();
             SubX = (ArrayList)obj.SubX.Clone();
@@ -2263,7 +2297,7 @@ namespace CellGameEdit.PM
             SubSelected = (ArrayList)obj.SubSelected.Clone();
 
             //ArrayList Collides;
-            CDTable = (ArrayList)obj.CDTable.Clone();
+            //CDTable = (ArrayList)obj.CDTable.Clone();
 
             CDMask = (ArrayList)obj.CDMask.Clone();
             CDX = (ArrayList)obj.CDX.Clone();
@@ -2273,6 +2307,38 @@ namespace CellGameEdit.PM
             CDType = (ArrayList)obj.CDType.Clone();
 
             CDSelected = (ArrayList)obj.CDSelected.Clone();
+
+
+            SubTable = new ArrayList();
+            for (int i = 0; i < SubIndex.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(new string[] {
+                    ((int)SubIndex[i]).ToString("d"),
+                    ((int)SubX[i]).ToString("d"),
+                    ((int)SubY[i]).ToString("d"),
+                    Frame.flipTextTable[(int)SubFlip[i]] }
+                    );
+                item.Checked = true;
+                SubTable.Add(item);
+                SubSelected.Add(false);
+            }
+
+            CDTable = new ArrayList();
+            for (int i = 0; i < CDMask.Count; i++)
+            {
+                ListViewItem item = new ListViewItem(new string[] {
+                    ((int)CDMask[i]).ToString("x"),
+                    ((int)CDX[i]).ToString("d"),
+                    ((int)CDY[i]).ToString("d"),
+                    ((int)CDW[i]).ToString("d"),
+                    ((int)CDH[i]).ToString("d"),
+                     Frame.CDtypeTextTable[(int)CDType[i]]}
+                    );
+                item.Checked = true;
+                CDTable.Add(item);
+                CDSelected.Add(false);
+            }
+
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected Frame(SerializationInfo info, StreamingContext context)
