@@ -42,7 +42,7 @@ public class ResesScript {
 	    #<SCENE PART> animates.addPart(0,0,<TILE>,<TRANS>);//<INDEX>
 		#<END SCENE PART>
 		
-	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    animates.setFrames(new int[<SCENE FRAME COUNT>][]);
 	    #<SCENE FRAME> animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 		#<END SCENE FRAME>
 		
@@ -85,7 +85,7 @@ public class ResesScript {
 	    #<SCENE PART> animates.addPart(<X>,<Y>,<TILE>,<TRANS>);//<INDEX>
 		#<END SCENE PART>
 		
-	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    animates.setFrames(new int[<SCENE FRAME COUNT>][]);
 	    #<SCENE FRAME> animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 		#<END SCENE FRAME>
 		
@@ -94,7 +94,7 @@ public class ResesScript {
 		#<CD PART> collides.addCDRect(<MASK>, <X1>, <Y1>, <W> , <H> );//<TYPE>//<INDEX>
 	    #<END CD PART>
 	    
-	    collides.setFrame(new int[<CD FRAME COUNT>][]);
+	    collides.setFrames(new int[<CD FRAME COUNT>][]);
 	    #<CD FRAME> collides.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 	    #<END CD FRAME>
 	    

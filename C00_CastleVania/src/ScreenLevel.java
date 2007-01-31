@@ -1,14 +1,16 @@
 
 
+import java.util.Hashtable;
+
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.m3g.World;
 
+import com.cell.AScreen;
 import com.cell.CImages20;
 import com.cell.CImagesJPhone;
 import com.cell.CMath;
 import com.cell.CTilesJPhone;
 import com.cell.IImages;
-import com.cell.game.AScreen;
 import com.cell.game.CCamera;
 import com.cell.game.CMap;
 import com.cell.game.CSprite;
@@ -35,7 +37,11 @@ public class ScreenLevel extends AScreen {
 
        	// world
        	world = ResesScript.createWorld("Level_00");
-       	world.init();
+       	Hashtable AITable = new Hashtable();
+       	AITable.put(ResesScript.spr_Actor00, "cv.unit.UnitActor");
+       	AITable.put(ResesScript.spr_e00_zombi, "cv.unit.UnitZombi");
+       	world.init(AITable);
+       	
        	
     	worldMini = new CWorldMini(
        			world,
