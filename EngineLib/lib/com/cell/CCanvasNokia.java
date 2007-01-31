@@ -4,7 +4,6 @@ package com.cell;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.game.AScreen;
 import com.nokia.mid.ui.FullCanvas;
 
 
