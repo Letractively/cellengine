@@ -3,7 +3,6 @@ package com.cell;
 import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.game.AScreen;
 
 public class CCanvasJPhone extends Canvas {
 	/**

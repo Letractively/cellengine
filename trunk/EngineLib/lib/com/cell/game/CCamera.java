@@ -4,6 +4,7 @@ package com.cell.game;
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
+import com.cell.AScreen;
 import com.cell.CMath;
 
 

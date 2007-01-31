@@ -584,6 +584,10 @@ public class CSprite extends CUnit {
 	
 //	------------------------------------------------------------------------------------------
 
+	public byte getCurTransform(){
+		return Transform;
+	}
+	
 	/**
 	 * 从当前状态翻转到下一状态
 	 * @param next 8种反转状态的一种
