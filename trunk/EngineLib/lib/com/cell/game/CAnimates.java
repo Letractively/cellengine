@@ -124,7 +124,9 @@ public class CAnimates extends CGroup{
 	}
 
 	//---------------------------------------------------------------------------------------------------
-	
+	public IImages getImages(){
+		return images;
+	}
 	/**
 	 * Get image form construct images reference</br>
 	 * 从当前的images里得到image
