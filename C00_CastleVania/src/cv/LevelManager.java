@@ -33,7 +33,7 @@ public class LevelManager extends CWorld {
 	public String MapType;
 	public String MapInfo;
 
-	Hashtable SpritesTable = new Hashtable();
+//	Hashtable SpritesTable = new Hashtable();
 	
 	public void init(){
 		try{

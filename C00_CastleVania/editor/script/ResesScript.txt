@@ -19,13 +19,14 @@ public class ResesScript {
 	//--------------------------------------------------------------------------------------------------------------
 	#<IMAGES> 
 	// Images : <NAME> 
-	final static public void buildClipImages_<NAME>(IImages stuff){
-	
+	final static public IImages createClipImages_<NAME>(){
+		IImages stuff = new CImages20();
 		stuff.buildImages(CIO.loadImage("/<NAME>.png"),<COUNT>);
 		
 		#<CLIP> stuff.addTile(<X>,<Y>,<W>,<H>);//<INDEX> 
 		#<END CLIP>
 		
+		return stuff;
 	}
 	#<END IMAGES>
 
@@ -158,14 +159,13 @@ public class ResesScript {
 
 
 	//--------------------------------------------------------------------------------------------------------------
-	final public static boolean buildImages(String key, IImages stuff){
+	final public static IImages createImages(String key){
 	#<IMAGES> 
 		if(key=="<NAME>"){
-			buildClipImages_<NAME>(stuff);
-			return true;
+			return createClipImages_<NAME>();
 		}
 	#<END IMAGES>
-		return false;
+		return null;
 	}
 	
 	final public static CMap createMap(String key, IImages tiles, boolean isAnimate, boolean isCyc){
@@ -192,6 +192,12 @@ public class ResesScript {
 //--------------------------------------------------------------------------------------------------------------
 
 #<LEVEL>
+
+
+	final static public String[] WorldNames = new String[]{
+	#<WORLD> "<NAME>",
+	#<END WORLD>
+	};
 
 	#<WORLD> 
 	final public static String world_<NAME> = "<NAME>";
