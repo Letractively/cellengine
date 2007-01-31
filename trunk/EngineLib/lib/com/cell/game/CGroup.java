@@ -78,8 +78,12 @@ public class CGroup extends CObject {
 	 * 设置帧序列： frame[帧号][部件号] = 资源部件（图片或碰撞块）
 	 * @param frames frames[frame id][part id]
 	 */
-	public void setFrame(int[][] frames){
+	public void setFrames(int[][] frames){
 		Frames = frames;
+	}
+	
+	public int[][] getFrames(){
+		return Frames;
 	}
 	
 	/**
