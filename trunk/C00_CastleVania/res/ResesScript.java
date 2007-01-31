@@ -22,8 +22,8 @@ public class ResesScript {
 	//--------------------------------------------------------------------------------------------------------------
 	 
 	// Images : Actor00 
-	final static public void buildClipImages_Actor00(IImages stuff){
-	
+	final static public IImages createClipImages_Actor00(){
+		IImages stuff = new CImages20();
 		stuff.buildImages(CIO.loadImage("/Actor00.png"),135);
 		
 		 stuff.addTile(0,0,40,40);//0 
@@ -163,12 +163,13 @@ public class ResesScript {
 		 stuff.addTile(160,679,40,30);//134 
 		
 		
+		return stuff;
 	}
 	
  
 	// Images : MapTile00 
-	final static public void buildClipImages_MapTile00(IImages stuff){
-	
+	final static public IImages createClipImages_MapTile00(){
+		IImages stuff = new CImages20();
 		stuff.buildImages(CIO.loadImage("/MapTile00.png"),32);
 		
 		 stuff.addTile(0,0,16,16);//0 
@@ -205,12 +206,13 @@ public class ResesScript {
 		 stuff.addTile(48,96,16,16);//31 
 		
 		
+		return stuff;
 	}
 	
  
 	// Images : E00_Zombi 
-	final static public void buildClipImages_E00_Zombi(IImages stuff){
-	
+	final static public IImages createClipImages_E00_Zombi(){
+		IImages stuff = new CImages20();
 		stuff.buildImages(CIO.loadImage("/E00_Zombi.png"),11);
 		
 		 stuff.addTile(0,0,16,2);//0 
@@ -226,6 +228,7 @@ public class ResesScript {
 		 stuff.addTile(0,186,20,34);//10 
 		
 		
+		return stuff;
 	}
 	
 
@@ -261,7 +264,7 @@ public class ResesScript {
 		 animates.addPart(0,0,31,0);//19
 		
 		
-	    animates.setFrame(new int[20][]);
+	    animates.setFrames(new int[20][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -461,7 +464,7 @@ public class ResesScript {
 		 animates.addPart(-20,-29,38,0);//76
 		
 		
-	    animates.setFrame(new int[77][]);
+	    animates.setFrames(new int[77][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -553,7 +556,7 @@ public class ResesScript {
 	     collides.addCDRect(65535, 5, -16, 30 , 6 );//rect//7
 	    
 	    
-	    collides.setFrame(new int[10][]);
+	    collides.setFrames(new int[10][]);
 	     collides.setComboFrame(new int[]{0,1,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{3,3,},2);//2
@@ -752,7 +755,7 @@ public class ResesScript {
 		 animates.addPart(-10,-33,8,0);//7
 		
 		
-	    animates.setFrame(new int[8][]);
+	    animates.setFrames(new int[8][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -771,7 +774,7 @@ public class ResesScript {
 	     collides.addCDRect(65535, -5, -34, 13 , 34 );//rect//3
 	    
 	    
-	    collides.setFrame(new int[4][]);
+	    collides.setFrames(new int[4][]);
 	     collides.setComboFrame(new int[]{0,1,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{2,},2);//2
@@ -870,27 +873,24 @@ public class ResesScript {
 
 
 	//--------------------------------------------------------------------------------------------------------------
-	final public static boolean buildImages(String key, IImages stuff){
+	final public static IImages createImages(String key){
 	 
 		if(key=="Actor00"){
-			buildClipImages_Actor00(stuff);
-			return true;
+			return createClipImages_Actor00();
 		}
 	
  
 		if(key=="MapTile00"){
-			buildClipImages_MapTile00(stuff);
-			return true;
+			return createClipImages_MapTile00();
 		}
 	
  
 		if(key=="E00_Zombi"){
-			buildClipImages_E00_Zombi(stuff);
-			return true;
+			return createClipImages_E00_Zombi();
 		}
 	
 
-		return false;
+		return null;
 	}
 	
 	final public static CMap createMap(String key, IImages tiles, boolean isAnimate, boolean isCyc){
@@ -924,6 +924,13 @@ public class ResesScript {
 //--------------------------------------------------------------------------------------------------------------
 
 
+
+
+	final static public String[] WorldNames = new String[]{
+	 "Level_00",
+	
+
+	};
 
 	 
 	final public static String world_Level_00 = "Level_00";
@@ -968,7 +975,7 @@ public class ResesScript {
 			// sprite count : 8
 			 
 			level.SprsTile[0] = "Actor00";    // sprite tile name
-			level.SprsType[0] = spr_Actor00; // sprite type
+			level.SprsType[0] = "Actor00"; // sprite type
 			level.SprsInfo[0] = "a00";     // sprite info form editor
 			level.SprsX[0]    = 16;          // sprite xpos form editor
 			level.SprsY[0]    = 288;          // sprite ypos form editor
@@ -977,7 +984,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
-			level.SprsType[1] = spr_e00_zombi; // sprite type
+			level.SprsType[1] = "e00_zombi"; // sprite type
 			level.SprsInfo[1] = "e00_zombi";     // sprite info form editor
 			level.SprsX[1]    = 368;          // sprite xpos form editor
 			level.SprsY[1]    = 304;          // sprite ypos form editor
@@ -986,7 +993,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
-			level.SprsType[2] = spr_e00_zombi; // sprite type
+			level.SprsType[2] = "e00_zombi"; // sprite type
 			level.SprsInfo[2] = "e00_";     // sprite info form editor
 			level.SprsX[2]    = 320;          // sprite xpos form editor
 			level.SprsY[2]    = 304;          // sprite ypos form editor
@@ -995,7 +1002,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
-			level.SprsType[3] = spr_e00_zombi; // sprite type
+			level.SprsType[3] = "e00_zombi"; // sprite type
 			level.SprsInfo[3] = "e00_zombi";     // sprite info form editor
 			level.SprsX[3]    = 272;          // sprite xpos form editor
 			level.SprsY[3]    = 304;          // sprite ypos form editor
@@ -1004,7 +1011,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
-			level.SprsType[4] = spr_e00_zombi; // sprite type
+			level.SprsType[4] = "e00_zombi"; // sprite type
 			level.SprsInfo[4] = "e00_zombi";     // sprite info form editor
 			level.SprsX[4]    = 176;          // sprite xpos form editor
 			level.SprsY[4]    = 304;          // sprite ypos form editor
@@ -1013,7 +1020,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
-			level.SprsType[5] = spr_e00_zombi; // sprite type
+			level.SprsType[5] = "e00_zombi"; // sprite type
 			level.SprsInfo[5] = "e00_zombi";     // sprite info form editor
 			level.SprsX[5]    = 464;          // sprite xpos form editor
 			level.SprsY[5]    = 304;          // sprite ypos form editor
@@ -1022,7 +1029,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[6] = "E00_Zombi";    // sprite tile name
-			level.SprsType[6] = spr_e00_zombi; // sprite type
+			level.SprsType[6] = "e00_zombi"; // sprite type
 			level.SprsInfo[6] = "e00_zombi";     // sprite info form editor
 			level.SprsX[6]    = 416;          // sprite xpos form editor
 			level.SprsY[6]    = 304;          // sprite ypos form editor
@@ -1031,7 +1038,7 @@ public class ResesScript {
 			//}
 			 
 			level.SprsTile[7] = "E00_Zombi";    // sprite tile name
-			level.SprsType[7] = spr_e00_zombi; // sprite type
+			level.SprsType[7] = "e00_zombi"; // sprite type
 			level.SprsInfo[7] = "e00_zombi";     // sprite info form editor
 			level.SprsX[7]    = 224;          // sprite xpos form editor
 			level.SprsY[7]    = 304;          // sprite ypos form editor
@@ -1043,7 +1050,7 @@ public class ResesScript {
 			// Map
 			 
 			level.MapTile = "MapTile00";    // map tile name
-			level.MapType = map_Level_00; // map type 
+			level.MapType = "Level_00"; // map type 
 			level.MapInfo = "M000_Level_00";     // map info form editor
 			//level.Map = new Map();
 			

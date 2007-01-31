@@ -2,7 +2,7 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import com.cell.game.AScreen;
+import com.cell.AScreen;
 
 
 

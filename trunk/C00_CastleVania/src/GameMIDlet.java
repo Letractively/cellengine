@@ -3,11 +3,11 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
+import com.cell.AScreen;
 import com.cell.CCanvas20;
 import com.cell.CCanvasJPhone;
 import com.cell.CCanvasNokia;
 import com.cell.CObject;
-import com.cell.game.AScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
