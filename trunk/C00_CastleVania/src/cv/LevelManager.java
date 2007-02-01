@@ -62,15 +62,16 @@ public class LevelManager extends CWorld {
 		}
 		
 //		create sprs 	
-		Hashtable sprTable = new Hashtable();
+//		Hashtable sprTable = new Hashtable();
 		for(int i=0;i<SprsType.length;i++){
-			CSprite spr = (CSprite)sprTable.get(SprsType[i]);
-			if( spr == null ){
-				spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
-				sprTable.put(SprsType[i], spr);
-				println(" create sprite : " + SprsType[i]);
-			}
-			SprStuff obj = new SprStuff((CSprite)sprTable.get(SprsType[i]));
+//			CSprite spr = (CSprite)sprTable.get(SprsType[i]);
+//			if( spr == null ){
+//				spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
+//				sprTable.put(SprsType[i], spr);
+//				println(" create sprite : " + SprsType[i]);
+//			}
+			CSprite  spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
+			SprStuff obj = new SprStuff(spr);
 			obj.X = SprsX[i];
 			obj.Y = SprsY[i];
 			obj.HPos256 = obj.X * 256 ;
