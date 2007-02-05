@@ -5,6 +5,11 @@ import com.mascotcapsule.micro3d.v3.ActionTable;
 
 public class UnitZombi extends Unit {
 
+	
+	public UnitZombi(){
+		Team = 1;
+	}
+	
 
 	public void update() {
 		
@@ -17,12 +22,14 @@ public class UnitZombi extends Unit {
 		}
 	}
 
-//	public void render(Graphics g, int x, int y) {
-//		spr.render(g, x, y);
-//		if(IsDebug)
-//		super.collides.render(g, 0, x, y, 0xff00ff00);
-//	}
+	public void attack(Unit unit){
+		
+	}
 	
+	public void damage(Unit unit){
+		
+	}
+
 //	-----------------------------------------------------------------------------------------
 	
 	final int STATE_START		= 0;

@@ -9,7 +9,13 @@ abstract public class Unit extends CObject implements IState{
 	public String Type;
 	public String Info;
 	
+	public int Team ;
+	
 	abstract public void update();
+
+	abstract public void attack(Unit unit);
+	
+	abstract public void damage(Unit unit);
 
 	public void init(SprStuff spr,String type,String info){
 		Spr = spr;
@@ -17,4 +23,8 @@ abstract public class Unit extends CObject implements IState{
 		Info = info;
 		Spr.setState(this);
 	}
+	
+	
+	
+	
 }

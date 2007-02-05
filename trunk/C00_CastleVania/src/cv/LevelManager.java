@@ -1,6 +1,7 @@
 package cv;
 
 import java.util.Hashtable;
+import java.util.Vector;
 
 import com.cell.AScreen;
 import com.cell.CImages20;
@@ -38,6 +39,9 @@ public class LevelManager extends CWorld {
 	public String MapInfo;
 
 	Hashtable UnitTable;
+	
+	Vector UnitTeam0 = new Vector();
+	Vector UnitTeam1 = new Vector();
 	
 	public void init(Hashtable unitTable){
 		try{
@@ -80,11 +84,17 @@ public class LevelManager extends CWorld {
 			try{
 				Unit ai = (Unit)Class.forName(((String)UnitTable.get(SprsType[i]))).newInstance();
 				ai.init(obj, SprsType[i], SprsInfo[i]);
+				switch(ai.Team){
+				case 0:UnitTeam0.addElement(ai);break;
+				case 1:UnitTeam1.addElement(ai);break;
+				}
 				print("AI OK : " );
 			}catch(Exception err){
 				print("Error : " + err.getMessage() + " : ");
 			}
 			println(SprsType[i] + " -> " + ((String)UnitTable.get(SprsType[i])) + " : " + SprsInfo[i]);
+			
+			
 			
 			this.addSprite(obj);
 		}
@@ -109,6 +119,30 @@ public class LevelManager extends CWorld {
 	}
 
 	public void update() {
+		for(int i=UnitTeam0.size()-1;i>=0;i--){
+			for(int j=UnitTeam1.size()-1;j>=0;j--){
+				Unit t0 = (Unit)UnitTeam0.elementAt(i);
+				Unit t1 = (Unit)UnitTeam1.elementAt(j);
+				
+				if( t0.Spr.OnScreen && t1.Spr.OnScreen && //
+					t0.Spr.Active   && t1.Spr.Active   ){ //
+					if(CSprite.touch_Spr_Spr(
+							t0.Spr, CSprite.CD_TYPE_ATK, 
+							t1.Spr, CSprite.CD_TYPE_DEF )){
+						t0.attack(t1);
+						t1.damage(t0);
+					}
+					
+					if(CSprite.touch_Spr_Spr(
+							t1.Spr, CSprite.CD_TYPE_ATK, 
+							t0.Spr, CSprite.CD_TYPE_DEF )){
+						t1.attack(t0);
+						t0.damage(t1);
+					}
+				}
+			}
+		}
+		
 		super.update();
 	}
 	

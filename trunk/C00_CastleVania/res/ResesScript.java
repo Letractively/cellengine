@@ -384,7 +384,7 @@ public class ResesScript {
 	final static public CSprite createSprite_Actor00(IImages tiles){
 
 	    // tiles
-	    CAnimates animates = new CAnimates(77,tiles);
+	    CAnimates animates = new CAnimates(75,tiles);
 	     animates.addPart(-17,-36,3,0);//0
 		 animates.addPart(-17,-36,0,0);//1
 		 animates.addPart(-17,-36,1,0);//2
@@ -458,13 +458,11 @@ public class ResesScript {
 		 animates.addPart(-16,-29,39,0);//70
 		 animates.addPart(-17,-35,124,0);//71
 		 animates.addPart(-17,-35,114,0);//72
-		 animates.addPart(-20,-35,115,0);//73
-		 animates.addPart(-20,-29,119,0);//74
-		 animates.addPart(-20,-28,120,0);//75
-		 animates.addPart(-20,-29,38,0);//76
+		 animates.addPart(-19,-35,115,0);//73
+		 animates.addPart(-18,-28,120,0);//74
 		
 		
-	    animates.setFrames(new int[77][]);
+	    animates.setFrames(new int[75][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -540,8 +538,6 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{72,},72);//72
 		 animates.setComboFrame(new int[]{73,},73);//73
 		 animates.setComboFrame(new int[]{74,},74);//74
-		 animates.setComboFrame(new int[]{75,},75);//75
-		 animates.setComboFrame(new int[]{76,},76);//76
 		
 		
 		// cds
@@ -592,9 +588,9 @@ public class ResesScript {
 "15 attack land",
 "16 attack air",
 "17 attack duck",
-"地面受伤",
-"空中受伤ING",
-"空伤落地",
+"18 damage land",
+"19 damage air",
+"20 danage duck",
 
 		};
 		
@@ -622,9 +618,9 @@ public class ResesScript {
 {53,54,54,55,56,57,58,59,60,38,61,},
 {62,63,63,64,64,64,64,64,64,64,64,},
 {65,66,66,67,68,69,69,70,70,51,51,},
-{71,72,},
-{73,},
-{74,75,76,},
+{71,72,71,72,71,72,71,72,},
+{73,73,73,73,73,73,73,73,},
+{74,74,74,74,74,74,74,74,},
 
 	    };
 	    int[][] frameCDMap = new int[][]{
@@ -646,9 +642,9 @@ public class ResesScript {
 {1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,},
-{1,},
-{1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
 
 	    };
 	    int[][] frameCDAtk = new int[][]{
@@ -670,9 +666,9 @@ public class ResesScript {
 {1,7,1,1,1,1,1,1,1,1,1,},
 {1,8,1,1,1,1,1,1,1,1,1,},
 {1,9,1,1,1,1,1,1,1,1,1,},
-{1,1,},
-{1,},
-{1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
 
 	    };
 	    int[][] frameCDDef = new int[][]{
@@ -694,9 +690,9 @@ public class ResesScript {
 {4,4,4,4,4,4,4,4,4,4,4,},
 {4,4,4,4,4,4,4,4,4,4,4,},
 {5,5,5,5,5,5,5,5,5,5,5,},
-{1,1,},
-{1,},
-{1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
 
 	    };
 	    int[][] frameCDExt = new int[][]{
@@ -718,9 +714,9 @@ public class ResesScript {
 {1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,1,},
-{1,1,},
-{1,},
-{1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
+{1,1,1,1,1,1,1,1,},
 
 	    };
 	

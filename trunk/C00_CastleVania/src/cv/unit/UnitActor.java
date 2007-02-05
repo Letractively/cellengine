@@ -7,25 +7,94 @@ import com.cell.game.IState;
 
 public class UnitActor extends Unit {
 
-
+	int InviTime = -1;
+	
+	public UnitActor(){
+		Team = 0;
+	}
+	
+//	public void render(Graphics g, int x, int y) {
+//	spr.render(g, x, y);
+//	if(IsDebug)
+//	super.collides.render(g, 0, x, y, 0xff00ff00);
+//}
+	
 	public void update() {
 		input();
 		onAction();
 		onState();
 		onControl();
+		
+		InviTime--;
 	}
 
+	public void attack(Unit unit){
+		onAttack = true;
+	}
 	
+	public void damage(Unit unit){
+		if(onDamage || InviTime>0)return;
+		
+		InviTime = 16;
+		onDamage = true;
+		
+		Spr.SpeedX256 = 0;
+		Spr.SpeedY256 = 0;
+		
+		switch(state){
+		
+		case STATE_JUMP_UP:
+		case STATE_JUMP_UPR:
+		case STATE_JUMP_DOWN:
+		case STATE_ATTACK_JUMP:
+			int d = Spr.X - unit.Spr.X ;
+			if(d!=0){
+				d = d/Math.abs(d);
+			}else{
+				d = (Spr.getCurTransform()!=IImages.TRANS_H?-1:1);
+			}
+			Spr.SpeedX256 = WalkV * d ;
+			Spr.SpeedY256 = - Gravity * 2;
+			state = STATE_DAMAGE_JUMP;
+			Spr.setCurrentFrame(state, 0);
+			break;
+			
+			
+		case STATE_STANDING:
+		case STATE_JUMP_STAND:
+		case STATE_WALKING:
+		case STATE_STAND_WALK:
+		case STATE_WALK_STAND:
+		case STATE_WALK_CHANGE:
+		case STATE_STAND_UPON:
+		case STATE_UPONING:
+		case STATE_UPON_STAND:
+		case STATE_DUCK_STAND:
+		case STATE_ATTACK_LAND:
+			state = STATE_DAMAGE_LAND;
+			Spr.setCurrentFrame(state, 0);
+			break;
+			
+		case STATE_STAND_DUCK:
+		case STATE_DUCKING:
+		case STATE_ATTACK_DUCK:
+			state = STATE_DAMAGE_DUCK;
+			Spr.setCurrentFrame(state, 0);
+			break;
+		
+			
+		case STATE_DAMAGE_LAND:
+		case STATE_DAMAGE_JUMP:
+		case STATE_DAMAGE_DUCK:
+			break;
+		}
+
+		
 	
-//	public void render(Graphics g, int x, int y) {
-//		spr.render(g, x, y);
-//		if(IsDebug)
-//		super.collides.render(g, 0, x, y, 0xff00ff00);
-//	}
+	}
+
 //	-----------------------------------------------------------------------------------------
-	
-	
-	
+
 	boolean turnR = false;
 	boolean turnL = false;
 	boolean turnU = false;
@@ -43,6 +112,9 @@ public class UnitActor extends Unit {
 	boolean releaseU = false;
 	boolean releaseD = false;
 	boolean releaseAction = false;
+	
+	boolean onDamage;
+	boolean onAttack;
 	
 	void input(){
 		turnL = AScreen.isKeyDown(AScreen.KEY_LEFT);
@@ -110,6 +182,10 @@ public class UnitActor extends Unit {
 	final int STATE_ATTACK_LAND		= 15;
 	final int STATE_ATTACK_JUMP		= 16;
 	final int STATE_ATTACK_DUCK		= 17;
+	
+	final int STATE_DAMAGE_LAND		= 18;
+	final int STATE_DAMAGE_JUMP		= 19;
+	final int STATE_DAMAGE_DUCK		= 20;
 	
 	int state = 0;
 	
@@ -210,6 +286,28 @@ public class UnitActor extends Unit {
 				Spr.setCurrentFrame(state, 0);
 			}
 			break;
+			
+		case STATE_DAMAGE_LAND:
+			if(Spr.nextFrame()){
+				onDamage = false;
+				state = STATE_STANDING;
+				Spr.setCurrentFrame(state, 0);
+			}
+			break;
+		case STATE_DAMAGE_JUMP:
+			if(Spr.nextFrame()){
+				onDamage = false;
+				state = STATE_JUMP_DOWN;
+				Spr.setCurrentFrame(state, 0);
+			}
+			break;
+		case STATE_DAMAGE_DUCK:
+			if(Spr.nextFrame()){
+				onDamage = false;
+				state = STATE_DUCKING;
+				Spr.setCurrentFrame(state, 0);
+			}
+			break;
 		}
 
 		
@@ -228,167 +326,176 @@ public class UnitActor extends Unit {
 		
 		// init data
 		boolean isLand = Spr.isLand();
-		Spr.SpeedX256 = 0;
+		if(onDamage){
+		}else{
+			Spr.SpeedX256 = 0;
+		}
+		
 		if(!isLand){
 			
-			if(turnAction){
-				//如果不是在攻击状态中,才能继续下次攻击
-				if( state != STATE_ATTACK_JUMP ){
-					state = STATE_ATTACK_JUMP;
-					Spr.setCurrentFrame(state, 0);
-				}
-			}
-			
-			//在攻击状态中不接受其他改变指令
-			if(state != STATE_ATTACK_JUMP){
-				// jump up
-				if(Spr.SpeedY256<0){
-					if(onL|onR){
-						state = STATE_JUMP_UPR;
-						Spr.setCurrentFrame(state, Spr.getCurrentFrame());
-					}else{
-						state = STATE_JUMP_UP;
-						Spr.setCurrentFrame(state, Spr.getCurrentFrame());
+			if(onDamage){
+				
+			}else{
+				if(turnAction){
+					//如果不是在攻击状态中,才能继续下次攻击
+					if( state != STATE_ATTACK_JUMP ){
+						state = STATE_ATTACK_JUMP;
+						Spr.setCurrentFrame(state, 0);
 					}
 				}
-				// jump down
-				if(Spr.SpeedY256>0){
-					state = STATE_JUMP_DOWN;
-					Spr.setCurrentFrame(state, Spr.getCurrentFrame());
-				}
-				// jump que
-				if(Spr.SpeedY256==0){
-					state = STATE_JUMP_DOWN;
-					Spr.setCurrentFrame(state, 0);
-				}	
-			}
-			if(onL){
-				Spr.SpeedX256 = -WalkV;
-				//只有攻击完结之后才可转身
+				
+				//在攻击状态中不接受其他改变指令
 				if(state != STATE_ATTACK_JUMP){
-					if(Spr.getCurTransform()!=IImages.TRANS_H){
+					// jump up
+					if(Spr.SpeedY256<0){
+						if(onL|onR){
+							state = STATE_JUMP_UPR;
+							Spr.setCurrentFrame(state, Spr.getCurrentFrame());
+						}else{
+							state = STATE_JUMP_UP;
+							Spr.setCurrentFrame(state, Spr.getCurrentFrame());
+						}
+					}
+					// jump down
+					if(Spr.SpeedY256>0){
+						state = STATE_JUMP_DOWN;
+						Spr.setCurrentFrame(state, Spr.getCurrentFrame());
+					}
+					// jump que
+					if(Spr.SpeedY256==0){
+						state = STATE_JUMP_DOWN;
+						Spr.setCurrentFrame(state, 0);
+					}	
+				}
+				if(onL){
+					Spr.SpeedX256 = -WalkV;
+					//只有攻击完结之后才可转身
+					if(state != STATE_ATTACK_JUMP){
+						if(Spr.getCurTransform()!=IImages.TRANS_H){
+							Spr.transform(IImages.TRANS_H);
+						}
+					}
+				}
+				if(onR){
+					Spr.SpeedX256 =  WalkV;
+					if(Spr.getCurTransform()!=IImages.TRANS_NONE){
 						Spr.transform(IImages.TRANS_H);
 					}
 				}
 			}
-			if(onR){
-				Spr.SpeedX256 =  WalkV;
-				if(Spr.getCurTransform()!=IImages.TRANS_NONE){
-					Spr.transform(IImages.TRANS_H);
-				}
-			}
-			
 			Spr.SpeedY256 += Gravity;
+			
 		}else{
-			
-			if(turnAction){
-				//如果不是在攻击状态中,才能继续下次攻击
-				if( state != STATE_ATTACK_LAND &&
-					state != STATE_ATTACK_DUCK ){
-					//判断攻击状态是蹲还是站
-					if( state==STATE_STAND_DUCK ||
-						state==STATE_DUCKING ){
-						state = STATE_ATTACK_DUCK;
-					}else{
-						state = STATE_ATTACK_LAND;
-					}
-					Spr.setCurrentFrame(state, 0);
-				}
-			}
-			
-			//如果不在攻击状态中才可以更换状态
-			if( state != STATE_ATTACK_LAND &&
-				state != STATE_ATTACK_DUCK ){
-				//判断是否一直蹲着,屏蔽站立的状态变化
-				if(onD){
-					if( state!=STATE_STAND_DUCK &&
-						state!=STATE_DUCKING){
-						state = STATE_STAND_DUCK;
-						Spr.setCurrentFrame(state, 0);
-					}
-				}else{
-					//方向键松开,改变到(走->停)的状态
-					if(releaseL|releaseR){
-						state = STATE_WALK_STAND;
-						Spr.setCurrentFrame(state, 0);
-					}
-					//方向键按下,改变到(停->走)的状态
-					if(turnL|turnR){
-						state = STATE_STAND_WALK;
-						Spr.setCurrentFrame(state, 0);
-					}
-					//一直按着方向改变X位置
-					if(onL){
-						Spr.SpeedX256 = -WalkV;
-						//如果此次之前不是和走有关的状态
-						if( state!=STATE_WALKING &&
-							state!=STATE_STAND_WALK &&
-							state!=STATE_WALK_CHANGE){
-							state = STATE_STAND_WALK;
-							Spr.setCurrentFrame(state, 0);
-						}
-						//判断方向是否同向,否则转身
-						if(Spr.getCurTransform()!=IImages.TRANS_H){
-							Spr.transform(IImages.TRANS_H);
-							state = STATE_WALK_CHANGE;
-							Spr.setCurrentFrame(state, 0);
-						}
-					}
-					if(onR){
-						Spr.SpeedX256 =  WalkV;
-						if( state!=STATE_WALKING &&
-							state!=STATE_STAND_WALK &&
-							state!=STATE_WALK_CHANGE){
-							state = STATE_STAND_WALK;
-							Spr.setCurrentFrame(state, 0);
-						}
-						if(Spr.getCurTransform()!=IImages.TRANS_NONE){
-							Spr.transform(IImages.TRANS_H);
-							state = STATE_WALK_CHANGE;
-							Spr.setCurrentFrame(state, 0);
-						}
-					}
-					//最后判断之前是否在空中
-					if(Spr.SpeedY256>0){
-						//如果当前按着方向键,继续播放走路动画
-						if(onL|onR){
-							state = STATE_WALKING;
-							Spr.setCurrentFrame(state, 0);
-						}else{//否则播放落地动画
-							state = STATE_JUMP_STAND;
-							Spr.setCurrentFrame(state, 0);
-						}
-					}
-					
-				}
-
-			}
-
-			if(turnU){
-				if(state==STATE_DUCKING){
-					state = STATE_DUCK_STAND;
-					Spr.setCurrentFrame(state, 0);
-				}else{
-					if(Spr.SpeedX256==0){
-						state = STATE_JUMP_UP;
-					}else{
-						state = STATE_JUMP_UPR;
-					}
-					Spr.setCurrentFrame(state, 0);
-					
-					Spr.SpeedY256 = JumpV;
-				}
+			if(onDamage){
 				
 			}else{
-				Spr.SpeedY256 = 0;
+				if(turnAction){
+					//如果不是在攻击状态中,才能继续下次攻击
+					if( state != STATE_ATTACK_LAND &&
+						state != STATE_ATTACK_DUCK ){
+						//判断攻击状态是蹲还是站
+						if( state==STATE_STAND_DUCK ||
+							state==STATE_DUCKING ){
+							state = STATE_ATTACK_DUCK;
+						}else{
+							state = STATE_ATTACK_LAND;
+						}
+						Spr.setCurrentFrame(state, 0);
+					}
+				}
+				
+				//如果不在攻击状态中才可以更换状态
+				if( state != STATE_ATTACK_LAND &&
+					state != STATE_ATTACK_DUCK ){
+					//判断是否一直蹲着,屏蔽站立的状态变化
+					if(onD){
+						if( state!=STATE_STAND_DUCK &&
+							state!=STATE_DUCKING){
+							state = STATE_STAND_DUCK;
+							Spr.setCurrentFrame(state, 0);
+						}
+					}else{
+						//方向键松开,改变到(走->停)的状态
+						if(releaseL|releaseR){
+							state = STATE_WALK_STAND;
+							Spr.setCurrentFrame(state, 0);
+						}
+						//方向键按下,改变到(停->走)的状态
+						if(turnL|turnR){
+							state = STATE_STAND_WALK;
+							Spr.setCurrentFrame(state, 0);
+						}
+						//一直按着方向改变X位置
+						if(onL){
+							Spr.SpeedX256 = -WalkV;
+							//如果此次之前不是和走有关的状态
+							if( state!=STATE_WALKING &&
+								state!=STATE_STAND_WALK &&
+								state!=STATE_WALK_CHANGE){
+								state = STATE_STAND_WALK;
+								Spr.setCurrentFrame(state, 0);
+							}
+							//判断方向是否同向,否则转身
+							if(Spr.getCurTransform()!=IImages.TRANS_H){
+								Spr.transform(IImages.TRANS_H);
+								state = STATE_WALK_CHANGE;
+								Spr.setCurrentFrame(state, 0);
+							}
+						}
+						if(onR){
+							Spr.SpeedX256 =  WalkV;
+							if( state!=STATE_WALKING &&
+								state!=STATE_STAND_WALK &&
+								state!=STATE_WALK_CHANGE){
+								state = STATE_STAND_WALK;
+								Spr.setCurrentFrame(state, 0);
+							}
+							if(Spr.getCurTransform()!=IImages.TRANS_NONE){
+								Spr.transform(IImages.TRANS_H);
+								state = STATE_WALK_CHANGE;
+								Spr.setCurrentFrame(state, 0);
+							}
+						}
+						//最后判断之前是否在空中
+						if(Spr.SpeedY256>0){
+							//如果当前按着方向键,继续播放走路动画
+							if(onL|onR){
+								state = STATE_WALKING;
+								Spr.setCurrentFrame(state, 0);
+							}else{//否则播放落地动画
+								state = STATE_JUMP_STAND;
+								Spr.setCurrentFrame(state, 0);
+							}
+						}
+						
+					}
+
+				}
+
+				if(turnU){
+					if(state==STATE_DUCKING){
+						state = STATE_DUCK_STAND;
+						Spr.setCurrentFrame(state, 0);
+					}else{
+						if(Spr.SpeedX256==0){
+							state = STATE_JUMP_UP;
+						}else{
+							state = STATE_JUMP_UPR;
+						}
+						Spr.setCurrentFrame(state, 0);
+						
+						Spr.SpeedY256 = JumpV;
+					}
+					
+				}else{
+					Spr.SpeedY256 = 0;
+				}
 			}
+		}	
 			
-		}
 		
 		
-		
-		
-		// physices
+		// physics
 		if(Spr.SpeedY256<0){
 			Spr.getCollides().getCD(1).Mask = 0x0000;
 			Spr.getCollides().getCD(2).Mask = 0x0000;
@@ -400,15 +507,17 @@ public class UnitActor extends Unit {
 		if(Spr.actMoveX(Spr.SpeedX256/256)){
 		}
 		if(Spr.actMoveY(Spr.SpeedY256/256)){
-//			if(SpeedY256>0){
-				if(Spr.SpeedX256==0){
-					state = STATE_JUMP_STAND;
-					Spr.setCurrentFrame(state, 0);
-				}else{
-					state = STATE_WALKING;
-					Spr.setCurrentFrame(state, 0);
-				}
-//			}
+			if(onDamage){
+				onDamage = false;
+				Spr.SpeedX256 = 0;
+			}
+			if(Spr.SpeedX256==0){
+				state = STATE_JUMP_STAND;
+				Spr.setCurrentFrame(state, 0);
+			}else{
+				state = STATE_WALKING;
+				Spr.setCurrentFrame(state, 0);
+			}
 			Spr.SpeedY256 = 0;
 		}
 		
