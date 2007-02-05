@@ -217,11 +217,7 @@ abstract public class AScreen extends CObject {
 	 */
 	static public void ChangeSubScreen(String screenClassName,String transitionText) 
 	{
-		if(TransitionText.length>0){
-			TransitionText[0] = transitionText;
-		}else{
-			TransitionText = new String[]{transitionText};
-		}
+		TransitionText = new String[]{transitionText};
 		ChangeSubScreen(screenClassName) ;
 	}
 	
