@@ -77,7 +77,7 @@ abstract public class AScreen extends CObject {
 	static private boolean 	TransitionIn 		= false;
 	static private boolean 	TransitionOut 		= false;
 	
-	static private String 	TransitionText 		= "Loading...";
+	static private String 	TransitionText[] 	= new String[]{"Loading..."};
 	static private int 		TransitionCellW 	= 16;
 	static private int		TransitionDelta 	= 2;
 
@@ -170,13 +170,25 @@ abstract public class AScreen extends CObject {
 				(TransitionOut && TransitionTime>=TransitionMaxTime-1)
 			))
 		{
-			g.setColor(0xffffffff);
-		    g.drawString(
-		    		TransitionText, 
-		    		w/2-AScreen.CurFont.stringWidth(TransitionText)/2, 
-		    		h/2-AScreen.CurFont.getHeight()/2, 
-		    		0
-		    		);
+//			g.setColor(0xffffffff);
+//		    g.drawString(
+//		    		TransitionText, 
+//		    		w/2-AScreen.CurFont.stringWidth(TransitionText)/2, 
+//		    		h/2-AScreen.CurFont.getHeight()/2, 
+//		    		0
+//		    		);
+			
+			int th = (getStringHeight() + 1) * TransitionText.length;
+	    	int ty = SCREEN_HEIGHT/2 - th/2;
+	    	
+	    	for(int i=0;i<TransitionText.length;i++){
+	    		
+	            	drawString(g, TransitionText[i] + " : ", 
+	        				SCREEN_WIDTH/2 - getStringWidth(TransitionText[i])/2 , 
+	        				ty + (getStringHeight() + 1) * i , 
+	        				0xffffffff);
+	            	
+	    	}
 		}
 
 		
@@ -204,6 +216,21 @@ abstract public class AScreen extends CObject {
 	 * @param transitionText 想要在切屏时显示的文字
 	 */
 	static public void ChangeSubScreen(String screenClassName,String transitionText) 
+	{
+		if(TransitionText.length>0){
+			TransitionText[0] = transitionText;
+		}else{
+			TransitionText = new String[]{transitionText};
+		}
+		ChangeSubScreen(screenClassName) ;
+	}
+	
+	/**
+	 * 切换到另一屏
+	 * @param screenClassName 你继承的CScreen类名字
+	 * @param transitionText 想要在切屏时显示的文字
+	 */
+	static public void ChangeSubScreen(String screenClassName,String[] transitionText) 
 	{
 		TransitionText = transitionText;
 		ChangeSubScreen(screenClassName) ;
