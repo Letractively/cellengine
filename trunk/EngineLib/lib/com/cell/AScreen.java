@@ -182,8 +182,7 @@ abstract public class AScreen extends CObject {
 	    	int ty = SCREEN_HEIGHT/2 - th/2;
 	    	
 	    	for(int i=0;i<TransitionText.length;i++){
-	    		
-	            	drawString(g, TransitionText[i] + " : ", 
+	            	drawString(g, TransitionText[i], 
 	        				SCREEN_WIDTH/2 - getStringWidth(TransitionText[i])/2 , 
 	        				ty + (getStringHeight() + 1) * i , 
 	        				0xffffffff);
@@ -204,6 +203,7 @@ abstract public class AScreen extends CObject {
 	 */
 	static public void ChangeSubScreen(String screenClassName) 
 	{
+		TransitionText = new String[]{"Loading..."};
 		NextScreenClassName = screenClassName;
 		KeyEnable = false;
 		LogicEnable = false;
