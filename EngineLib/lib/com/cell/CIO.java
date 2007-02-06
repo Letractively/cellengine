@@ -459,5 +459,57 @@ public class CIO extends CObject{
 	}
 
 
-
+	static public void putShort(byte[] data,int pos,short value){
+		data[pos+0] = (byte)((value>>> 0)&0xff);
+		data[pos+1] = (byte)((value>>> 8)&0xff);
+	}
+	
+	static public short getShort(byte[] data,int pos){
+		short ret = 0;
+		ret |= ((((short)0xff)&data[pos+0])<< 0);
+		ret |= ((((short)0xff)&data[pos+1])<< 8);
+		return ret;
+	}
+	
+	static public void putInt(byte[] data,int pos,int value){
+		data[pos+0] = (byte)((value>>> 0)&0xff);
+		data[pos+1] = (byte)((value>>> 8)&0xff);
+		data[pos+2] = (byte)((value>>>16)&0xff);
+		data[pos+3] = (byte)((value>>>24)&0xff);
+		
+	}
+	
+	static public int getInt(byte[] data,int pos){
+		int ret = 0;
+		ret |= ((((int)0xff)&data[pos+0])<< 0);
+		ret |= ((((int)0xff)&data[pos+1])<< 8);
+		ret |= ((((int)0xff)&data[pos+2])<<16);
+		ret |= ((((int)0xff)&data[pos+3])<<24);
+		return ret;
+	}
+	
+	static public void putLong(byte[] data,int pos,long value){
+		data[pos+0] = (byte)((value>>> 0)&0xff);
+		data[pos+1] = (byte)((value>>> 8)&0xff);
+		data[pos+2] = (byte)((value>>>16)&0xff);
+		data[pos+3] = (byte)((value>>>24)&0xff);
+		data[pos+4] = (byte)((value>>>32)&0xff);
+		data[pos+5] = (byte)((value>>>40)&0xff);
+		data[pos+6] = (byte)((value>>>48)&0xff);
+		data[pos+7] = (byte)((value>>>56)&0xff);
+	}
+	
+	static public long getLong(byte[] data,int pos){
+		long ret = 0;
+		ret |= ((((long)0xff)&data[pos+0])<< 0);
+		ret |= ((((long)0xff)&data[pos+1])<< 8);
+		ret |= ((((long)0xff)&data[pos+2])<<16);
+		ret |= ((((long)0xff)&data[pos+3])<<24);
+		ret |= ((((long)0xff)&data[pos+4])<<32);
+		ret |= ((((long)0xff)&data[pos+5])<<40);
+		ret |= ((((long)0xff)&data[pos+6])<<48);
+		ret |= ((((long)0xff)&data[pos+7])<<56);
+		return ret;
+	}
+	
 }
