@@ -218,7 +218,10 @@ abstract public class AScreen extends CObject {
 	static public void ChangeSubScreen(String screenClassName,String transitionText) 
 	{
 		TransitionText = new String[]{transitionText};
-		ChangeSubScreen(screenClassName) ;
+		NextScreenClassName = screenClassName;
+		KeyEnable = false;
+		LogicEnable = false;
+		setTransitionOut();
 	}
 	
 	/**
@@ -229,7 +232,10 @@ abstract public class AScreen extends CObject {
 	static public void ChangeSubScreen(String screenClassName,String[] transitionText) 
 	{
 		TransitionText = transitionText;
-		ChangeSubScreen(screenClassName) ;
+		NextScreenClassName = screenClassName;
+		KeyEnable = false;
+		LogicEnable = false;
+		setTransitionOut();
 	}
 	
 	/**
