@@ -3,8 +3,6 @@ package cv;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import com.cell.AScreen;
-import com.cell.CImages20;
 import com.cell.IImages;
 import com.cell.game.CCamera;
 import com.cell.game.CMap;
@@ -12,9 +10,6 @@ import com.cell.game.CSprite;
 import com.cell.game.CWorld;
 
 import cv.unit.Unit;
-import cv.unit.UnitActor;
-import cv.unit.SprStuff;
-import cv.unit.UnitZombi;
 
 import ResesScript;
 
@@ -74,29 +69,32 @@ public class LevelManager extends CWorld {
 //				sprTable.put(SprsType[i], spr);
 //				println(" create sprite : " + SprsType[i]);
 //			}
-			CSprite  spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
-			SprStuff obj = new SprStuff(spr);
-			obj.X = SprsX[i];
-			obj.Y = SprsY[i];
-			obj.HPos256 = obj.X * 256 ;
-			obj.VPos256 = obj.Y * 256 ;
-			
+			CSprite spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
+
 			try{
+				Unit.SprStuff = spr;
 				Unit ai = (Unit)Class.forName(((String)UnitTable.get(SprsType[i]))).newInstance();
-				ai.init(obj, SprsType[i], SprsInfo[i]);
+				Unit.SprStuff = null;
+				
+				ai.Type = SprsType[i];
+				ai.Info = SprsInfo[i];
+				ai.X = SprsX[i];
+				ai.Y = SprsY[i];
+				ai.HPos256 = ai.X * 256 ;
+				ai.VPos256 = ai.Y * 256 ;
 				switch(ai.Team){
 				case 0:UnitTeam0.addElement(ai);break;
 				case 1:UnitTeam1.addElement(ai);break;
 				}
+				this.addSprite(ai);
+				
 				print("AI OK : " );
 			}catch(Exception err){
+				this.addSprite(spr);
 				print("Error : " + err.getMessage() + " : ");
 			}
 			println(SprsType[i] + " -> " + ((String)UnitTable.get(SprsType[i])) + " : " + SprsInfo[i]);
 			
-			
-			
-			this.addSprite(obj);
 		}
 
 //		create map
@@ -124,18 +122,19 @@ public class LevelManager extends CWorld {
 				Unit t0 = (Unit)UnitTeam0.elementAt(i);
 				Unit t1 = (Unit)UnitTeam1.elementAt(j);
 				
-				if( t0.Spr.OnScreen && t1.Spr.OnScreen && //
-					t0.Spr.Active   && t1.Spr.Active   ){ //
+				if( t0.OnScreen && t1.OnScreen && //
+					t0.Active   && t1.Active   ){ //
+					
 					if(CSprite.touch_Spr_Spr(
-							t0.Spr, CSprite.CD_TYPE_ATK, 
-							t1.Spr, CSprite.CD_TYPE_DEF )){
+							t0, CSprite.CD_TYPE_ATK, 
+							t1, CSprite.CD_TYPE_DEF )){
 						t0.attack(t1);
 						t1.damage(t0);
 					}
 					
 					if(CSprite.touch_Spr_Spr(
-							t1.Spr, CSprite.CD_TYPE_ATK, 
-							t0.Spr, CSprite.CD_TYPE_DEF )){
+							t1, CSprite.CD_TYPE_ATK, 
+							t0, CSprite.CD_TYPE_DEF )){
 						t1.attack(t0);
 						t0.damage(t1);
 					}

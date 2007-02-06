@@ -13,24 +13,35 @@ public class UnitZombi extends Unit {
 
 	public void update() {
 		
-		if(Random.nextInt()%100==0){
-			startWalk();
-		}
-		
-		if(Spr.Active){
-			onAction();
+		if(damageTime>0){
+			damageTime--;
+		}else{
+			if(Random.nextInt()%100==0){
+				startWalk();
+			}
+			if(Active){
+				onAction();
+			}
 		}
 	}
-
+	boolean onDamage;
+	boolean onAttack;
+	int damageTime = 0;
+	
 	public void attack(Unit unit){
 		
 	}
 	
 	public void damage(Unit unit){
+		damageTime = 5;
+		onDamage = true;
 		
+		SpawnNumber(unit.Attack, X, Y - getVisibleHeight());
 	}
 
 //	-----------------------------------------------------------------------------------------
+
+	
 	
 	final int STATE_START		= 0;
 	final int STATE_WALKING		= 1;
@@ -41,22 +52,22 @@ public class UnitZombi extends Unit {
 	void onAction(){
 		switch(state){
 		case STATE_START:
-			if(Spr.nextFrame()){
+			if(nextFrame()){
 				state = STATE_WALKING;
-				Spr.setCurrentFrame(state, 0);
+				setCurrentFrame(state, 0);
 			}
 			break;
 		case STATE_WALKING:
-			Spr.nextCycFrame();
+			nextCycFrame();
 			WalkTimer--;
-			if(WalkTimer<0 || Spr.actMoveX(WalkSpeed)){
+			if(WalkTimer<0 || actMoveX(WalkSpeed)){
 				state = STATE_END;
-				Spr.setCurrentFrame(state, 0);
+				setCurrentFrame(state, 0);
 				WalkTimer = -1;
 			}
 			break;
 		case STATE_END:
-			if(Spr.nextFrame()){
+			if(nextFrame()){
 				startHold();
 			}
 			break;
@@ -66,8 +77,8 @@ public class UnitZombi extends Unit {
 //	-----------------------------------------------------------------------------------------
 	public void startHold(){
 		state = -1;
-		Spr.Active = false;
-		Spr.Visible = false;
+		Active = false;
+		Visible = false;
 	}
 	
 //	-----------------------------------------------------------------------------------------
@@ -75,21 +86,21 @@ public class UnitZombi extends Unit {
 	int WalkSpeed = 2;
 	public void startWalk(){
 		if(WalkTimer<0){
-			Spr.Active = true;
-			Spr.Visible = true;
+			Active = true;
+			Visible = true;
 			state = STATE_START;
-			Spr.setCurrentFrame(state, 0);
+			setCurrentFrame(state, 0);
 			WalkTimer = 100 + Random.nextInt()%50;
 			WalkSpeed *= Math.abs(Random.nextInt()%2)==0?-1:1;
 			
 			if(WalkSpeed>0){
-				if(Spr.getCurTransform()!=IImages.TRANS_H){
-					Spr.transform(IImages.TRANS_H);
+				if(getCurTransform()!=IImages.TRANS_H){
+					transform(IImages.TRANS_H);
 				}
 			}
 			if(WalkSpeed<0){
-				if(Spr.getCurTransform()!=IImages.TRANS_NONE){
-					Spr.transform(IImages.TRANS_H);
+				if(getCurTransform()!=IImages.TRANS_NONE){
+					transform(IImages.TRANS_H);
 				}
 			}
 		
