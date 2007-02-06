@@ -27,7 +27,8 @@ public class CParticle {
 	
 	// surface
 	public int Color = 0;
-
+	
+	public int Data = 0;
 	
 	
 	public boolean isTerminate(){
