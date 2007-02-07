@@ -17,7 +17,8 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 	public String Info;//精灵在场景编辑器里的信息
 	
 	public int HP 		= 100;
-	public int Attack 	= 10;
+	public int Attack 	= 50;
+	
 	
 	public int Team ;//精灵敌我判断的标志
 	
@@ -149,15 +150,20 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 //	----------------------------------------------------------------------------------------------------------
 //	粒子系统
 //	----------------------------------------------------------------------------------------------------------
-	final private int EFFECT_NUMBER	= 0;
-
 	
+	//数字
+	final private int EFFECT_NUMBER	= 0;
 	private int EffectNumber;
 	public void SpawnNumber(int number,int x,int y){
 		EffectNumber = number;
 		Effect.spawn(1, EFFECT_NUMBER, x, y);
 	}
 	
+	//火焰
+	final private int EFFECT_FIRE_U = 1;
+	public void SpawnFireU(int x,int y){
+		Effect.spawn(1, EFFECT_FIRE_U, x, y);
+	}
 	
 	public void particleEmitted(CParticle particle, int id) {
 		particle.Timer = 0;
@@ -175,6 +181,11 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 			particle.Data  	= EffectNumber;
 			particle.AccY	= -128;
 			break;
+		case EFFECT_FIRE_U:
+			particle.TerminateTime = 16;
+			particle.Color 	= 0xffff0000;
+			particle.AccY	= -64;
+			break;
 		}
 	}
 	
@@ -186,14 +197,17 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 	}
 	
 	public void particleRender(Graphics g, CParticle particle, int id) {
+		int x = world.toScreenPosX(particle.X>>8);
+		int y = world.toScreenPosY(particle.Y>>8);
 		switch(particle.Category){
 		case EFFECT_NUMBER:
 			g.setColor(particle.Color);
-			g.drawString(
-					particle.Data+"", 
-					world.toScreenPosX(particle.X>>8), 
-					world.toScreenPosY(particle.Y>>8), 
-					g.TOP|g.HCENTER);
+			g.drawString(particle.Data+"", x, y, g.TOP|g.HCENTER);
+			break;
+		case EFFECT_FIRE_U:
+			int size = particle.TerminateTime - particle.Timer;
+			g.setColor(particle.Color);
+			g.drawArc(x-size/2, y-size/2, size, size, 0, 360);
 			break;
 		}
 	}

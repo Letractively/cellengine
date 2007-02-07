@@ -4,29 +4,23 @@ import com.cell.IImages;
 import com.mascotcapsule.micro3d.v3.ActionTable;
 
 public class UnitZombi extends Unit {
-
+	
+	boolean onDamage;
+	boolean onAttack;
+	int damageTime = 0;
 	
 	public UnitZombi(){
 		Team = 1;
 	}
 	
-
 	public void update() {
-		
 		if(damageTime>0){
 			damageTime--;
 		}else{
-			if(Random.nextInt()%100==0){
-				startWalk();
-			}
-			if(Active){
-				onAction();
-			}
+			onAction();
 		}
 	}
-	boolean onDamage;
-	boolean onAttack;
-	int damageTime = 0;
+	
 	
 	public void attack(Unit unit){
 		
@@ -36,16 +30,19 @@ public class UnitZombi extends Unit {
 		damageTime = 5;
 		onDamage = true;
 		
+		HP-=unit.Attack;
+		
 		SpawnNumber(unit.Attack, X, Y - getVisibleHeight());
+		
+		if(HP<=0)startDead();
 	}
 
 //	-----------------------------------------------------------------------------------------
 
-	
-	
 	final int STATE_START		= 0;
 	final int STATE_WALKING		= 1;
 	final int STATE_END 		= 2;
+	final int STATE_DEAD		= 3;
 	
 	int state = -1;
 	
@@ -59,8 +56,11 @@ public class UnitZombi extends Unit {
 			break;
 		case STATE_WALKING:
 			nextCycFrame();
-			WalkTimer--;
-			if(WalkTimer<0 || actMoveX(WalkSpeed)){
+			if(actMoveX(WalkSpeed)){
+				transform(IImages.TRANS_H);
+				WalkSpeed*=-1;
+			}
+			if(--WalkTimer<0){
 				state = STATE_END;
 				setCurrentFrame(state, 0);
 				WalkTimer = -1;
@@ -71,10 +71,22 @@ public class UnitZombi extends Unit {
 				startHold();
 			}
 			break;
+		case STATE_DEAD:
+			if(nextFrame()){
+				startHold();
+			}
+			SpawnFireU(X+Random.nextInt()%getVisibleWidth(), Y-Math.abs(Random.nextInt()%getVisibleHeight()));
+			break;
+		default:
+			if(--HoldTimer<0){
+				HoldTimer = (40*2) + Random.nextInt()%(40*2);
+				startWalk();
+			}
 		}
 	}
 	
 //	-----------------------------------------------------------------------------------------
+	int HoldTimer = -1;
 	public void startHold(){
 		state = -1;
 		Active = false;
@@ -85,25 +97,22 @@ public class UnitZombi extends Unit {
 	int WalkTimer = -1;
 	int WalkSpeed = 2;
 	public void startWalk(){
-		if(WalkTimer<0){
-			Active = true;
-			Visible = true;
-			state = STATE_START;
-			setCurrentFrame(state, 0);
-			WalkTimer = 100 + Random.nextInt()%50;
-			WalkSpeed *= Math.abs(Random.nextInt()%2)==0?-1:1;
-			
-			if(WalkSpeed>0){
-				if(getCurTransform()!=IImages.TRANS_H){
-					transform(IImages.TRANS_H);
-				}
-			}
-			if(WalkSpeed<0){
-				if(getCurTransform()!=IImages.TRANS_NONE){
-					transform(IImages.TRANS_H);
-				}
-			}
+		Active = true;
+		Visible = true;
+		state = STATE_START;
+		setCurrentFrame(state, 0);
+		WalkTimer = 4*40 + Random.nextInt()%2*40;
+		WalkSpeed *= Math.abs(Random.nextInt()%2)==0?-1:1;
 		
+		if(WalkSpeed>0){
+			if(getCurTransform()!=IImages.TRANS_H){
+				transform(IImages.TRANS_H);
+			}
+		}
+		if(WalkSpeed<0){
+			if(getCurTransform()!=IImages.TRANS_NONE){
+				transform(IImages.TRANS_H);
+			}
 		}
 	}
 	
@@ -111,5 +120,12 @@ public class UnitZombi extends Unit {
 
 //	-------------------------------------------------------------------------------------------
 
+	public void startDead(){
+		Active = false;
+		Visible = true;
+		state = STATE_DEAD;
+		setCurrentFrame(state, 0);
+		
+	}
 	
 }
