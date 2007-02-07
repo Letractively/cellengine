@@ -43,12 +43,12 @@ public class CCanvas20 extends Canvas{
 	}
 	
 	protected void sizeChanged(int w, int h) {
-		AScreen.SCREEN_WIDTH = w;
-		AScreen.SCREEN_HEIGHT = h;
-		AScreen.SCREEN_HCENTER = w/2;
-		AScreen.SCREEN_VCENTER = h/2;
-		AScreen.println("Change Screen W = " + w);
-		AScreen.println("Change Screen H = " + h);
+//		AScreen.SCREEN_WIDTH = w;
+//		AScreen.SCREEN_HEIGHT = h;
+//		AScreen.SCREEN_HCENTER = w/2;
+//		AScreen.SCREEN_VCENTER = h/2;
+//		AScreen.println("Change Screen W = " + w);
+//		AScreen.println("Change Screen H = " + h);
 	}
 	
 	//-------------------------------------------------------------------------------------

@@ -10,11 +10,12 @@ import com.morefuntek.cell.CObject;
 
 
 public class CTextBox extends CObject {
+	
 	//text
 	static public Font TextFont = Font.getFont(
 			Font.FACE_MONOSPACE, 
 			Font.STYLE_PLAIN, 
-			Font.SIZE_LARGE
+			Font.SIZE_SMALL
 			);
 	static protected Vector Texts = new Vector();
 	static public int TextColor = 0xff000000;
@@ -163,15 +164,15 @@ public class CTextBox extends CObject {
 			}
 			
 			g.setColor(BodyColor);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, 
-//					Y+H/2-TransitionTime/2, 
-//					W, 
-//					TransitionTime,
-//					true);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, 
+					Y+H/2-TransitionTime/2, 
+					W, 
+					TransitionTime,
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -189,15 +190,15 @@ public class CTextBox extends CObject {
 				TransitionClose = false;
 			}
 			g.setColor(BodyColor);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, 
-//					Y+H/2- (H-TransitionTime)/2, 
-//					W, 
-//					(H-TransitionTime),
-//					true);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, 
+					Y+H/2- (H-TransitionTime)/2, 
+					W, 
+					(H-TransitionTime),
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -214,12 +215,12 @@ public class CTextBox extends CObject {
 			// body
 //			g.setColor(BodyColor);
 //			g.fillRect(X, Y, W, H);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, Y, W, H,
-//					true);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, Y, W, H,
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(X, Y, W-1, H-1);
 			
@@ -265,14 +266,14 @@ public class CTextBox extends CObject {
 						VScrollSize, 
 						scrollsize);
 			}
-			
 		}
-		
 		
 	}
 	
 	
-	
+	static public boolean isShown(){
+		return TransitionOpen || TransitionClose|| !Texts.isEmpty();
+	}
 	
 	
 	

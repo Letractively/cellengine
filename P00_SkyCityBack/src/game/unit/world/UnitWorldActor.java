@@ -1,5 +1,7 @@
 package game.unit.world;
 
+import game.unit.battle.UnitBattleActor;
+
 import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.CMath;
@@ -16,13 +18,13 @@ public class UnitWorldActor extends CSprite implements IParticleLauncher {
 	static public int ActorX = 128;
 	static public int ActorY = 128;
 	static public int ActorDirect = 0;
-	
+	static public int CityIndex = -1;
 	
 	
 	public int Direct 	= 0;
 	
 	int MaxSpeed 	= 4*256;
-	int Speed  	= 0;
+	public int Speed  	= 0;
 	int Turn	= 8;
 	int Acc		= 16;
 	int DColor 	= 0;
@@ -145,6 +147,10 @@ public class UnitWorldActor extends CSprite implements IParticleLauncher {
 	public void breakDown(){
 		Speed-=Acc;
 		if(Speed<-MaxSpeed/4)Speed=-MaxSpeed/4;
+	}
+	
+	public boolean isMaxSpeed(){
+		return Speed==MaxSpeed;
 	}
 	
 	

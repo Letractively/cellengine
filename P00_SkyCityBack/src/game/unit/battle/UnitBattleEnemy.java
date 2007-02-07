@@ -158,41 +158,43 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 		return ai;
 	}
 	
+	//敌人初始HP
 	public int getHP(){
 		switch(ai){
-		case 1:return 10;
-		case 2:return 20;
-		case 3:return 30;
+		case 1:return 4*3;
+		case 2:return 4*4;
+		case 3:return 4*5;
 		
-		case 4:return 10;
-		case 5:return 20;
-		case 6:return 30;
+		case 4:return 4*3;
+		case 5:return 4*4;
+		case 6:return 4*5;
 		
-		case 7:return 20;
-		case 8:return 30;
-		case 9:return 40;
+		case 7:return 4*6;
+		case 8:return 4*7;
+		case 9:return 4*8;
 		
-		case 10:return 50;
-		case 11:return 60;
-		case 12:return 70;
+		case 10:return 60;
+		case 11:return 80;
+		case 12:return 100;
 		
-		case 13:return 4;
-		case 14:return 8;
-		case 15:return 12;
-		case 16:return 1;
+		case 13:return 2;
+		case 14:return 4;
+		case 15:return 8;
+		case 16:return 4;
 		case 17:return 8;
-		case 18:return 12;
+		case 18:return 16;
 		
-		case 50:return 2000;
-		case 51:return 2000;
-		case 52:return 2000;
-		case 53:return 2000;
-		case 54:return 2000;
+		case 50:return 4000;//海盗
+		case 51:return 20000;//太阳
+		case 52:return 4000;//触手
+		case 53:return 3000;//潜水艇
+		case 54:return 3000;//UFO
 		
 		default:return 10;
 		}
 	}
 	
+//	敌人初始子弹数量
 	public int getBulletCount(){
 		switch(ai){
 		case 1:return 2;
@@ -268,6 +270,7 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 			case 1:fireBossMultiAngle(target,0,0);break;
 			case 2:fireMissile(target);break;
 			}
+			ForzenTimeMax = 4;;
 			break;
 		case 51:
 			cdframe = FrameCDExt[CurAnimate][CurFrame];

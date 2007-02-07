@@ -23,11 +23,19 @@ public class UnitBattleSub extends CSprite {
 		"×·×Ùµ¯",
 		"¼¯Êøµ¯"
 	};
+	//ÎäÆ÷ÊýÁ¿
 	final static public int[] WeaopnCount = new int[]{
 			8,
 			16,
 			2,
-			16,
+			8,
+	};
+	//ÎäÆ÷¼Û¸ñ
+	final static public int[] WeaopnPrice = new int[]{
+		3000,
+		400,
+		800,
+		3000,
 	};
 
 	final static public int[] WeaopnBullet = new int[]{
@@ -59,7 +67,7 @@ public class UnitBattleSub extends CSprite {
 	
 	public UnitBattleActor Father;
 	
-	public int AMMOR = 1000000;
+	public int AMMOR = 50;
 	
 	public boolean WeaopnOn = false;
 	
@@ -74,30 +82,31 @@ public class UnitBattleSub extends CSprite {
 	}
 //	-----------------------------------------------------------------------------------------------------
 
+	final int pos[] = new int[]{0,2,1,3};
 	public void onFollow(UnitBattleActor actor){
 		int dx = 0;
 		int dy = 0;
 		int d = actor.FollowTrackX.length / 4 ;
 		switch(SubType){
 		case SUB_CYCLE:
-			dx = actor.X + CMath.sinTimes256(getTimer()*8+SubIndex*Angle)/8;
-			dy = actor.Y + CMath.cosTimes256(getTimer()*8+SubIndex*Angle)/8;
+			dx = actor.X + CMath.sinTimes256(getTimer()*4+pos[SubIndex]*Angle)/8;
+			dy = actor.Y + CMath.cosTimes256(getTimer()*4+pos[SubIndex]*Angle)/8;
 			break;
 		case SUB_FOLLOW:
-			dx = actor.FollowTrackX[CMath.cycNum(actor.FollowTrackIndex, -(d-1)-SubIndex*d, actor.FollowTrackX.length)]/256;
-			dy = actor.FollowTrackY[CMath.cycNum(actor.FollowTrackIndex, -(d-1)-SubIndex*d, actor.FollowTrackY.length)]/256;
+			dx = actor.FollowTrackX[CMath.cycNum(actor.FollowTrackIndex, -(d-1)-pos[SubIndex]*d, actor.FollowTrackX.length)]/256;
+			dy = actor.FollowTrackY[CMath.cycNum(actor.FollowTrackIndex, -(d-1)-pos[SubIndex]*d, actor.FollowTrackY.length)]/256;
 			break;
 		case SUB_HOLD_TB:
 			dx = actor.X ;
 			dy = actor.Y - (SubIndex%2==0?-1:1)*(SubIndex/2==0?16:32);
 			break;
 		case SUB_CYCLE_H:
-			dx = actor.X + 32 + CMath.sinTimes256(getTimer()*10+SubIndex*Angle)/20;
-			dy = actor.Y + 0  + CMath.cosTimes256(getTimer()*10+SubIndex*Angle)/10;
+			dx = actor.X + 32 + CMath.sinTimes256(getTimer()*10+pos[SubIndex]*Angle)/20;
+			dy = actor.Y + 0  + CMath.cosTimes256(getTimer()*10+pos[SubIndex]*Angle)/10;
 			break;
 		case SUB_CYCLE_X:
-			dx = actor.X + CMath.sinTimes256((getTimer()*2+(SubIndex/2==0?0:1)*180)*(SubIndex%2==0?-1:1))/8;
-			dy = actor.Y + CMath.cosTimes256((getTimer()*2+(SubIndex/2==0?0:1)*180)*(SubIndex%2==0?-1:1))/8;
+			dx = actor.X + CMath.sinTimes256((getTimer()*2+(pos[SubIndex]/2==0?0:1)*180)*(pos[SubIndex]%2==0?-1:1))/8;
+			dy = actor.Y + CMath.cosTimes256((getTimer()*2+(pos[SubIndex]/2==0?0:1)*180)*(pos[SubIndex]%2==0?-1:1))/8;
 			break;
 		}
 		dx -= X;

@@ -12,7 +12,7 @@ public class CWorldMini extends CObject {
 	public int[] MapColor;
 	
 	public boolean ShowSpr = true;
-	public boolean ShowMap = true;
+	public boolean ShowMap = false;
 	public boolean ShowCam = true;
 	
 	public int X = 0;
@@ -45,26 +45,26 @@ public class CWorldMini extends CObject {
 			int colorKeyMapPos,
 			int colorKeySprPos){
 		
-		for(int i=0;i<world.getSpriteCount();i++){
-       		try {
-				world.getSprite(i).BackColor = world.getSprite(i).getAnimates().images.getRGBFormPixcel(
-						world.getSprite(i).getAnimates().STileID[world.getSprite(i).getAnimates().Frames[world.getSprite(i).CurAnimate][world.getSprite(i).CurFrame]], 
-						colorKeySprPos);
-			} catch (RuntimeException e){
-				world.getSprite(i).BackColor = 0xffffffff;
-			}
-       	}
-		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
-    	for(int i=0;i<mapColor.length;i++){
-    		try {
-    			mapColor[i] = world.getMap().getAnimates().images.getRGBFormPixcel(
-    					world.getMap().getAnimates().STileID[world.getMap().getAnimates().Frames[i][0]], 
-						colorKeyMapPos);
-			} catch (RuntimeException e){
-				mapColor[i] = 0xff00ff00;
-			}
-       	}
-    	MapColor = mapColor;
+//		for(int i=0;i<world.getSpriteCount();i++){
+//       		try {
+//				world.getSprite(i).BackColor = world.getSprite(i).getAnimates().images.getRGBFormPixcel(
+//						world.getSprite(i).getAnimates().STileID[world.getSprite(i).getAnimates().Frames[world.getSprite(i).CurAnimate][world.getSprite(i).CurFrame]], 
+//						colorKeySprPos);
+//			} catch (RuntimeException e){
+//				world.getSprite(i).BackColor = 0xffffffff;
+//			}
+//       	}
+//		int[] mapColor = new int[world.getMap().getAnimates().getCount()];
+//    	for(int i=0;i<mapColor.length;i++){
+//    		try {
+//    			mapColor[i] = world.getMap().getAnimates().images.getRGBFormPixcel(
+//    					world.getMap().getAnimates().STileID[world.getMap().getAnimates().Frames[i][0]], 
+//						colorKeyMapPos);
+//			} catch (RuntimeException e){
+//				mapColor[i] = 0xff00ff00;
+//			}
+//       	}
+//    	MapColor = mapColor;
     	
 		World = world;
 		W = width;
@@ -76,15 +76,15 @@ public class CWorldMini extends CObject {
 		WTW = World.getMap().getWCount() * CW;
 		WTH = World.getMap().getHCount() * CH;
 		
-		Buffer = Image.createImage(WTW ,WTH);
-		bg = Buffer.getGraphics();
+//		Buffer = Image.createImage(WTW ,WTH);
+//		bg = Buffer.getGraphics();
 		
-		for (int by = 0; by < world.getMap().getHCount(); by++) {
-			for (int bx = 0; bx < world.getMap().getWCount(); bx++) {
-				bg.setColor(MapColor[World.Map.getTile(bx, by)]);
-				bg.fillRect(bx*CW, by*CH, CW, CH);
-			}
-		}
+//		for (int by = 0; by < world.getMap().getHCount(); by++) {
+//			for (int bx = 0; bx < world.getMap().getWCount(); bx++) {
+//				bg.setColor(MapColor[World.Map.getTile(bx, by)]);
+//				bg.fillRect(bx*CW, by*CH, CW, CH);
+//			}
+//		}
 		
 	}
 
@@ -116,13 +116,13 @@ public class CWorldMini extends CObject {
 		    	if(Y<0)Y=0;
 		    	if(Y+WH>World.getMap().getHeight())Y=World.getMap().getHeight()-WH;
 
-				if(ShowMap){
-					AScreen.drawRegion(g, Buffer, 
-							(X)*CW/World.getMap().CellW, 
-							(Y)*CH/World.getMap().CellH,
-							W, H, 
-							x, y);
-				}
+//				if(ShowMap){
+//					AScreen.drawRegion(g, Buffer, 
+//							(X)*CW/World.getMap().CellW, 
+//							(Y)*CH/World.getMap().CellH,
+//							W, H, 
+//							x, y);
+//				}
 				if(ShowSpr){
 					for(int i=0;i<World.getSpriteCount();i++){
 						if( World.getSprite(i).Visible &&
@@ -150,22 +150,22 @@ public class CWorldMini extends CObject {
 	    		int TX = CMath.cycNum(X, 0, World.getMap().getWidth());
 	    		int TY = CMath.cycNum(Y, 0, World.getMap().getHeight());
 	    		
-				if(ShowMap){
-					int sx = (TX)*CW/World.getMap().CellW;
-					int sy = (TY)*CH/World.getMap().CellH;
-					int dx = sx + W;
-					int dy = sy + H;
-					int sbx = sx / WTW ;
-					int sby = sy / WTH ;
-					int dbx = dx / WTW ;
-					int dby = dy / WTH ;
-					
-					for(int bx=0;bx<=dbx-sbx;bx++){
-						for(int by=0;by<=dby-sby;by++){
-							g.drawImage(Buffer, x + bx*WTW-sx, y + by*WTH-sy, 0);
-						}
-					}
-				}
+//				if(ShowMap){
+//					int sx = (TX)*CW/World.getMap().CellW;
+//					int sy = (TY)*CH/World.getMap().CellH;
+//					int dx = sx + W;
+//					int dy = sy + H;
+//					int sbx = sx / WTW ;
+//					int sby = sy / WTH ;
+//					int dbx = dx / WTW ;
+//					int dby = dy / WTH ;
+//					
+//					for(int bx=0;bx<=dbx-sbx;bx++){
+//						for(int by=0;by<=dby-sby;by++){
+//							g.drawImage(Buffer, x + bx*WTW-sx, y + by*WTH-sy, 0);
+//						}
+//					}
+//				}
 				if(ShowSpr){
 					for(int i=0;i<World.getSpriteCount();i++){
 						if( World.getSprite(i).Visible &&

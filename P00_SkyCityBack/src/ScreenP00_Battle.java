@@ -6,12 +6,14 @@ import game.unit.battle.UnitBattleActor;
 import game.unit.battle.UnitBattleBullet;
 import game.unit.battle.UnitBattleSub;
 import game.unit.battle.UnitBattleEnemy;
+import game.unit.world.UnitWorldActor;
 
 import javax.microedition.lcdui.Graphics;
 
 import com.morefuntek.cell.CImages20;
 import com.morefuntek.cell.CImagesNokia;
 import com.morefuntek.cell.CMath;
+import com.morefuntek.cell.CSoundPlayer;
 import com.morefuntek.cell.IImages;
 import com.morefuntek.cell.Game.AScreen;
 import com.morefuntek.cell.Game.CCamera;
@@ -19,6 +21,7 @@ import com.morefuntek.cell.Game.CMap;
 import com.morefuntek.cell.Game.CSprite;
 import com.morefuntek.cell.Game.CWayPoint;
 import com.morefuntek.cell.Game.CWorld;
+import com.sun.midp.io.j2me.mms.DatagramImpl.SubclassedDatagramReader;
 
 
 
@@ -47,8 +50,8 @@ public class ScreenP00_Battle extends AScreen {
 	Vector 	openEnemys  = new Vector();
 	Vector 	closeEnemys = new Vector();
 	
-	Vector 	enemyBullet = new Vector(128);
-	Vector 	actorBullet = new Vector(128);
+	Vector 	enemyBullet = new Vector(0);
+	Vector 	actorBullet = new Vector(0);
 	
 	Vector  Ammor = new Vector();
 	
@@ -62,7 +65,10 @@ public class ScreenP00_Battle extends AScreen {
 	int OverMaxTime = -1;
 	boolean isBossLevel = false;
 	
-	boolean AutoFire    = false;
+	boolean AutoFire    = true;
+	
+	
+
 	
 	//该例子演示如何使用编辑器生成的数据构造一个游戏世界，
 	//编辑器生成的数据是由一个文本脚本文件定义，参考编辑器安装目录下的ResesScript.txt。
@@ -70,26 +76,30 @@ public class ScreenP00_Battle extends AScreen {
 	//本例中该脚本被定义成一个对象工厂
 	public ScreenP00_Battle(){
 		
+		if(ScreenP00_Menu.player!=null){
+			ScreenP00_Menu.player.destroy();
+		}
+		
 		System.out.println("Start Free Memory = "+(Runtime.getRuntime().freeMemory()/1024)+"(K byte)");
 	    
 		try{
-			FrameDelay = 20;
+			FrameDelay = 25;
        	
 //      世界信息
 	       	if(WorldName!=null){
 	       		worldName = WorldName;
 	       	}else{
-	       		worldName = ResesScript.WorldNames[1 + Math.abs(Random.nextInt()%(ResesScript.WorldNames.length-1))];
+	       		worldName = ResesScriptBattle.WorldNames[Math.abs(Random.nextInt()%ResesScriptBattle.WorldNames.length)];
 	       	}
 		
 			println("Entry : " + worldName);
 			
-			worldW = ResesScript.getWorldWidth(worldName);
-			worldH = ResesScript.getWorldHeight(worldName);
+			worldW = ResesScriptBattle.getWorldWidth(worldName);
+			worldH = ResesScriptBattle.getWorldHeight(worldName);
 	       	world = new CWorld();
 	       	world.Width = worldW;
 	       	world.Height = worldH;
-	    	world.WayPoints = ResesScript.getWorldWayPoints(worldName);
+	    	world.WayPoints = ResesScriptBattle.getWorldWayPoints(worldName);
 
 	    	initSprite();
 	    	initMap();
@@ -111,25 +121,47 @@ public class ScreenP00_Battle extends AScreen {
 	}
 	
 	public void notifyLogic() {
-//    	if(isKeyDown(KEY_B)){ChangeSubScreen("ScreenP00_World");}
-//    	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenP00_World");}
+    	
     	
     	if(isKeyDown(KEY_0)){IsDebug = !IsDebug;}
     	
-    	
-    	
-    	
-		processActor();
-		processEnemy();
-		processCamera();
-		
-		OverMaxTime--;
-		
-    	//每帧更新一次游戏世界，游戏单位的状态机也将被更新
-		world.update();
-    	//帧记录器增加
-        tickTimer();
-        
+    	if(!Pause){
+    		
+    		if(isKeyDown(KEY_B)){notifyPause();}
+        	if(isKeyDown(KEY_A)){notifyPause();}
+        	
+			processActor();
+			processEnemy();
+			processCamera();
+			
+			OverMaxTime--;
+			
+	    	//每帧更新一次游戏世界，游戏单位的状态机也将被更新
+			world.update();
+			
+	    	//帧记录器增加
+	        tickTimer();
+	        
+    	}else{
+
+        	if(isKeyDown(KEY_UP)){
+        		menuIndex = CMath.cycNum(menuIndex, -1, menu.length);
+        	}
+        	if(isKeyDown(KEY_DOWN)){
+        		menuIndex = CMath.cycNum(menuIndex,  1, menu.length);
+        	}
+        	
+        	if(isKeyDown(KEY_B)){Pause = false;}
+        	if(isKeyDown(KEY_A|KEY_C)){
+//        		TODO
+        		switch(menuIndex){
+        		case 0: Pause = false; break;
+        		case 1: ChangeSubScreen("ScreenP00_World", "Loading..."); break;
+        		case 2: ChangeSubScreen("ScreenP00_Menu" , "Loading..."); break;
+        		}
+        		ScreenP00_World.Save();
+        	}
+    	}
     }
 	
 	public void notifyRender(Graphics g) {
@@ -138,37 +170,109 @@ public class ScreenP00_Battle extends AScreen {
 		//每帧渲染一次世界
         world.render(g);
         renderLayer(g);
-        //显示FPS
-        showFPS(g, 1, 1, 0xffffffff);
         
-        drawString(g, "" + actor.HP, 1, 64, 0xffffffff);
+        if(!Pause){
+        	
+        }else{
+        	int h = (getStringHeight() + 1) * menu.length;
+        	int y = SCREEN_HEIGHT/2 - h/2;
+        	
+        	g.setColor(0xff8080ff);
+        	g.fillRect(0, y, SCREEN_WIDTH, h);
+        	g.setColor(0xffffffff);
+        	g.drawRect(0, y, SCREEN_WIDTH-1, h-1);
+        	
+        	for(int i=0;i<menu.length;i++){
+        		if(i==menuIndex){
+        			g.setColor(0xff0000ff);
+                	g.fillRect(0, y + (getStringHeight() + 1) * i, SCREEN_WIDTH, (getStringHeight() + 1));
+                	g.setColor(0xffffffff);
+                	g.drawRect(0, y + (getStringHeight() + 1) * i, SCREEN_WIDTH-1, (getStringHeight() - 1));
+                	
+                	drawString(g, menu[i], 
+            				SCREEN_WIDTH/2 - getStringWidth(menu[i])/2, 
+            				y + (getStringHeight() + 1) * i , 
+            				0xffffffff);
+        		}else{
+        			drawString(g, menu[i], 
+            				SCREEN_WIDTH/2 - getStringWidth(menu[i])/2, 
+            				y + (getStringHeight() + 1) * i , 
+            				0xff000000);
+        		}
+        	}
+        	
+	    	int aw = getStringWidth("确定") +4;
+	    	int ah = getStringHeight() +4;
+	    	int ax = 1;
+	    	int ay = SCREEN_HEIGHT - ah - 1;
+	    	g.setColor(0xffff8080);
+	    	g.fillRect(ax, ay, aw, ah);
+	    	g.setColor(0xffffffff);
+	    	g.drawRect(ax, ay, aw, ah);
+	    	drawString(g, "确定", ax+2, ay+2, 0xffffffff);
+	    	
+	    	int bw = getStringWidth("取消")+4;
+	    	int bh = getStringHeight()+4;
+	    	int bx = SCREEN_WIDTH  - bw - 1;
+	    	int by = SCREEN_HEIGHT - bh - 1;
+	    	g.setColor(0xffff8080);
+	    	g.fillRect(bx, by, bw, bh);
+	    	g.setColor(0xffffffff);
+	    	g.drawRect(bx, by, bw, bh);
+	    	drawString(g, "取消", bx+2, by+2, 0xffffffff);
+        }
+        //显示FPS
+//        showFPS(g, 1, 1, 0xffffffff);
+        
+//        drawString(g, "" + actor.HP, 1, 64, 0xffffffff);
     }
 
-	public void notifyPause() {}
-	public void notifyResume() {}
+	String[] menu = new String[]{
+			"继续游戏",
+			"退出战场",
+			"返回主菜单"
+		};
+	int menuIndex = 0;
+	boolean Pause = false;
+		
+	public void notifyPause() {
+		Pause = true;
+		menuIndex = 0;
+		
+		try{
+			ScreenP00_Menu.player.pause();
+		}catch(Exception err){
+		}
+	}
+	public void notifyResume() {
+		try{
+			ScreenP00_Menu.player.resume();
+		}catch(Exception err){
+		}
+	}
 
 //	------------------------------------------------------------------------------------------------
 
 	void initSprite(){
-		try{
+//		try{
 		
 //		create bullet
-		IImages bltTile = ResesScript.createClipImages_battleWeaopnTile();
-		CSprite bullet  = ResesScript.createSprite_weaopnSprite(bltTile);
-//		CSprite sub     = ResesScript.createSprite_btSub(tiles);
+		IImages bltTile = ResesScriptBattle.createClipImages_battleWeaopnTile();
+		CSprite bullet  = ResesScriptBattle.createSprite_weaopnSprite(bltTile);
+//		CSprite sub     = ResesScriptBattle.createSprite_btSub(tiles);
 		
 //		create world level
-		String[] SprsTile = ResesScript.getWorldSprTile(worldName);
-		String[] SprsType = ResesScript.getWorldSprType(worldName);
-		String[] SprsInfo = ResesScript.getWorldSprName(worldName);
-		int[] SprsX = ResesScript.getWorldSprX(worldName);
-		int[] SprsY = ResesScript.getWorldSprY(worldName);
+		String[] SprsTile = ResesScriptBattle.getWorldSprTile(worldName);
+		String[] SprsType = ResesScriptBattle.getWorldSprType(worldName);
+		String[] SprsInfo = ResesScriptBattle.getWorldSprName(worldName);
+		int[] SprsX = ResesScriptBattle.getWorldSprX(worldName);
+		int[] SprsY = ResesScriptBattle.getWorldSprY(worldName);
 			
 //		 create tile bank
 		Hashtable tileTable = new Hashtable();
 		for(int i=0;i<SprsTile.length;i++){
 			if(!tileTable.containsKey(SprsTile[i])){
-				IImages tile = ResesScript.createImages(SprsTile[i]);
+				IImages tile = ResesScriptBattle.createImages(SprsTile[i]);
 				tileTable.put(SprsTile[i], tile);
 //				println(" create tile : " + SprsTile[i]);
 			}
@@ -177,7 +281,7 @@ public class ScreenP00_Battle extends AScreen {
 		Hashtable sprTable = new Hashtable();
 		for(int i=0;i<SprsType.length;i++){
 			if(!sprTable.containsKey(SprsType[i])){
-				CSprite spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
+				CSprite spr = ResesScriptBattle.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
 				sprTable.put(SprsType[i], spr);
 //				println(" create sprite : " + SprsType[i]);
 			}
@@ -199,7 +303,7 @@ public class ScreenP00_Battle extends AScreen {
 	       	if(ai>=50)isBossLevel = true;
 	       	
 	       	// instance
-       		if(SprsType[i] == ResesScript.spr_btSpr){
+       		if(SprsType[i] == ResesScriptBattle.spr_btSpr){
        	       	actor = new UnitBattleActor(obj);
        	       	for(int b=0;b<UnitBattleActor.WeaopnCount[UnitBattleActor.WeaopnType];b+=1){
     		   		Ammor.addElement(new UnitBattleBullet(bullet));
@@ -234,7 +338,7 @@ public class ScreenP00_Battle extends AScreen {
 //		for(int i=0;i<closeEnemys.size();i++){
 //			
 //		}
-		CSprite sub = ResesScript.createSprite_btSub(actor.getAnimates().getImages());
+		CSprite sub = ResesScriptBattle.createSprite_btSub(actor.getAnimates().getImages());
 		actorSub = new UnitBattleSub[UnitBattleSub.SubCount];
 		for(int s=0;s<actorSub.length;s++){
 	    	for(int b=0;b<UnitBattleSub.WeaopnCount[UnitBattleSub.WeaopnType[s]];b++){
@@ -247,45 +351,67 @@ public class ScreenP00_Battle extends AScreen {
 	       	actorSub[s].Ammor = Ammor;
 	       	actorSub[s].Bullets = actorBullet;
 	       	
+	       	actorSub[s].AMMOR *= UnitBattleSub.WeaopnCount[UnitBattleSub.WeaopnType[s]];
+	       	
 	       	actorSub[s].setCurrentFrame(UnitBattleSub.WeaopnType[s]%4, 0);
 	       	
 	       	world.addSprite(actorSub[s]);
 	    }
 		world.addSprites(Ammor);
 		
-		}catch(Exception err){
-			println(err.getMessage());
-			err.printStackTrace();
-		}
+//		}catch(Exception err){
+//			println(err.getMessage());
+//			err.printStackTrace();
+//		}
 	}
 
 	void initMap(){
 //		地图
 //      从编辑器的生成代码中创建 mapTile图片组，false是否显示动态地表，true是否循环地图
 		//从编辑器得到敌人信息
-       	String worldMapType = ResesScript.getWorldMapType(worldName);
-       	String worldMapInfo = ResesScript.getWorldMapName(worldName);
+       	String worldMapType = ResesScriptBattle.getWorldMapType(worldName);
+       	String worldMapInfo = ResesScriptBattle.getWorldMapName(worldName);
 
-		if(worldMapType == ResesScript.map_01_Map){
-			mapTile = ResesScript.createClipImages_battleMapTile1();
+		if(worldMapType == ResesScriptBattle.map_01_Map){
+			mapTile = ResesScriptBattle.createClipImages_battleMapTile1();
 			anyTile = null;
 			mapLayer = null;
-			map = ResesScript.createMap_01_Map(mapTile, false, true);
-   		}else if(worldMapType == ResesScript.map_02_Map){
-   			mapTile = ResesScript.createClipImages_battleMapTile2();
-   			anyTile = ResesScript.createClipImages_anyThing_Tile();
-   			mapLayer = ResesScript.createSprite_layer(anyTile);
-   			map = ResesScript.createMap_02_Map(mapTile, false, true);
-   		}else if(worldMapType == ResesScript.map_03_Map){
-   			mapTile = ResesScript.createClipImages_battleMapTile3();
+			map = ResesScriptBattle.createMap_01_Map(mapTile, false, true);
+			try{
+				ScreenP00_Menu.player = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
+				ScreenP00_Menu.player.play();
+			}catch(Exception err){
+			}
+   		}else if(worldMapType == ResesScriptBattle.map_02_Map){
+   			mapTile = ResesScriptBattle.createClipImages_battleMapTile2();
+   			anyTile = ResesScriptBattle.createClipImages_battleBGTile();
+   			mapLayer = ResesScriptBattle.createSprite_layer(anyTile);
+   			map = ResesScriptBattle.createMap_02_Map(mapTile, false, true);
+   			try{
+				ScreenP00_Menu.player = new CSoundPlayer("/BGM02.mid",CSoundPlayer.TYPE_MIDI,-1);
+				ScreenP00_Menu.player.play();
+			}catch(Exception err){
+			}
+   		}else if(worldMapType == ResesScriptBattle.map_03_Map){
+   			mapTile = ResesScriptBattle.createClipImages_battleMapTile3();
 			anyTile = null;
 			mapLayer = null;
-			map = ResesScript.createMap_03_Map(mapTile, true, true);
+			map = ResesScriptBattle.createMap_03_Map(mapTile, true, true);
+			try{
+				ScreenP00_Menu.player = new CSoundPlayer("/BGM03.mid",CSoundPlayer.TYPE_MIDI,-1);
+				ScreenP00_Menu.player.play();
+			}catch(Exception err){
+			}
    		}else{
-   			mapTile = ResesScript.createClipImages_battleMapTile1();
+   			mapTile = ResesScriptBattle.createClipImages_battleMapTile1();
 			anyTile = null;
 			mapLayer = null;
-			map = ResesScript.createMap_01_Map(mapTile, false, true);
+			map = ResesScriptBattle.createMap_01_Map(mapTile, false, true);
+			try{
+				ScreenP00_Menu.player = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
+				ScreenP00_Menu.player.play();
+			}catch(Exception err){
+			}
 		}
 		world.Height = map.getHeight() - 32;
 		world.addMap(map);
@@ -295,8 +421,8 @@ public class ScreenP00_Battle extends AScreen {
 //      手工创建一个 camera
        	cam = new CCamera(
        			0,0,
-       			AScreen.SCREEN_WIDTH,
-       			AScreen.SCREEN_WIDTH,
+       			SCREEN_WIDTH,
+       			SCREEN_HEIGHT+map.getCellH(),
        			map,true,0
        			);
        	
@@ -304,8 +430,8 @@ public class ScreenP00_Battle extends AScreen {
 	}
 	
 	void initUI(){
-		uiTile = ResesScript.createClipImages_fightUITile();
-		ui = ResesScript.createSprite_fightUISprite(uiTile);
+		uiTile = ResesScriptBattle.createClipImages_battleUITile();
+		ui = ResesScriptBattle.createSprite_fightUISprite(uiTile);
 	}
 	
 //	------------------------------------------------------------------------------------------------------------------      	
@@ -314,6 +440,14 @@ public class ScreenP00_Battle extends AScreen {
 		actor.Active = false;
 		actor.SpeedX256 = 0;
 		OverMaxTime = 100;
+		
+		if(actor.HP>0){
+			UnitBattleActor.Money += actor.SCORE;
+		}else{
+			UnitBattleActor.Money = 0;
+		}
+		
+		
 	}
 	
 	public void processActor(){
@@ -324,30 +458,35 @@ public class ScreenP00_Battle extends AScreen {
 					actorSub[i].SubType++;
 					actorSub[i].SubType%=5;
 				}
-				startTimeText("辅助攻击改变!", 32, SCREEN_HEIGHT/2);
+				startTimeText("辅助攻击改变!");
 			}
 			
-			if(isKeyDown(KEY_5|KEY_C)){
-				AutoFire = !AutoFire;
-				startTimeText("火力开启!", 32, SCREEN_HEIGHT/2);
-			}
-			
-			if(isKeyDown(KEY_1)){
-				actor.WeaopnOn = !actor.WeaopnOn;
-				if(actor.WeaopnOn){
-					startTimeText("主武器开启!", 32, SCREEN_HEIGHT/2);
-				}else{
-					startTimeText("主武器关闭!", 32, SCREEN_HEIGHT/2);
-				}
-			}
-			
-			if(isKeyDown(KEY_3)){
-				for(int i=actorSub.length-1;i>=0;i--){
-					actorSub[i].WeaopnOn = !actorSub[i].WeaopnOn;
-					if(actorSub[i].WeaopnOn){
-						startTimeText("辅助武器开启!", 32, SCREEN_HEIGHT/2);
+//			if(isKeyDown(KEY_5)){
+//				AutoFire = !AutoFire;
+//				if(AutoFire){
+//					startTimeText("火力开启!");
+//				}else{
+//					startTimeText("火力关闭!");
+//				}
+//				
+//			}
+			if(AutoFire){
+				if(isKeyDown(KEY_1)){
+					actor.WeaopnOn = !actor.WeaopnOn;
+					if(actor.WeaopnOn){
+						startTimeText("主武器开启!");
 					}else{
-						startTimeText("辅助武器关闭!", 32, SCREEN_HEIGHT/2);
+						startTimeText("主武器关闭!");
+					}
+				}
+				if(isKeyDown(KEY_3)){
+					for(int i=actorSub.length-1;i>=0;i--){
+						actorSub[i].WeaopnOn = !actorSub[i].WeaopnOn;
+						if(actorSub[i].WeaopnOn){
+							startTimeText("辅助武器开启!");
+						}else{
+							startTimeText("辅助武器关闭!");
+						}
 					}
 				}
 			}
@@ -497,7 +636,19 @@ public class ScreenP00_Battle extends AScreen {
 				actor.X = actor.HPos256/256;
 			}
 		}else if(OverMaxTime==0){
-			ChangeSubScreen("ScreenP00_World");
+			//TODO
+//			ChangeSubScreen("ScreenP00_World");
+			if(actor.HP>0){
+				ScreenP00_World.Destory(UnitWorldActor.CityIndex);
+				if(ScreenP00_World.GetUnDestoryedCityCount(ScreenP00_World.SavePos)<=0){
+					ChangeSubScreen("ScreenP00_Menu", "通关!");
+				}else{
+					ChangeSubScreen("ScreenP00_World", "得到"+actor.SCORE+"金!");
+				}
+			}else{
+				ChangeSubScreen("ScreenP00_World", "丢失了所有金钱!");
+			}
+			ScreenP00_World.Save();
 		}else{
 //			自动卷轴
 			if(cam.getX()+cam.getWidth()<world.Width){
@@ -572,6 +723,12 @@ public class ScreenP00_Battle extends AScreen {
 		renderText(g, 68, 28, 1, 11, ""+actor.SCORE);
 		renderText(g,143, 19, 2,  7, ""+actor.AMMOR);
 		
+		int subAmmor = 0;
+		for(int i=0;i<actorSub.length;i++){
+			subAmmor += actorSub[i].AMMOR;
+		}
+		renderText(g,36, 16, 2,  7, ""+subAmmor);
+		
 		if(textTime>0){
 			textTime--;
 			timeTextC += 10 ;
@@ -610,7 +767,7 @@ public class ScreenP00_Battle extends AScreen {
 		g.setColor(0xffffff00);
 		int ww = w * value/max;
 		if(ww>0){
-			g.fillRect(x, y, ww, h);
+			g.fillRect(x+1, y+1, ww-1, h-1);
 		}
 	}
 	
@@ -621,13 +778,24 @@ public class ScreenP00_Battle extends AScreen {
 	int timeTextX = 0;
 	int timeTextY = 0;
 	
-	public void startTimeText(String text,int x,int y){
+	public void startTimeText(String text){
 		textTime = 30;
 		timeText = text;
-		timeTextX = x;
-		timeTextY = y;
+		timeTextX = 8;
+		timeTextY = ui.getVisibleHeight()+4;
 		timeTextC = 0;
 	}
+	
+	
+	
+//	-----------------------------------------------------------------------------------------------
+
+	
+	
+	
+	
+	
+	
 	
 }
 

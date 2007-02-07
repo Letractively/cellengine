@@ -10,6 +10,7 @@ import com.morefuntek.cell.Game.IState;
 
 public class UnitBattleActor extends CSprite {
 
+	static public int Money		 = 0;
 	static public int WeaopnType = 2;
 	
 	
@@ -19,23 +20,32 @@ public class UnitBattleActor extends CSprite {
 		"±¬Ê½ö±µ¯",
 		"±¬µ¯",
 		"·Éµ¯",
-//		"ºÚ¶´ÅÚ"
+		"(ÎÞ)"
 	};
 	final static public int[] WeaopnCount = new int[]{
-		1,
+		2,
 		2,
 		32,
-		2,
-		2,
-//		1
+		4,
+		8,
+		32
 	};
+	final static public int[] WeaopnPrice = new int[]{
+		1000,
+		800,
+		200,
+		3000,
+		5000,
+		0
+	};
+	
 	final static public int[] WeaopnBullet = new int[]{
 		UnitBattleBullet.TYPE_LASER,
 		UnitBattleBullet.TYPE_BOMB,
 		UnitBattleBullet.TYPE_SLUG1,
 		UnitBattleBullet.TYPE_BOMBEXP,
 		UnitBattleBullet.TYPE_ROCKET,
-//		UnitBattleBullet.TYPE_MISSILE1,
+		UnitBattleBullet.TYPE_SLUG1,
 	};
 	
 	final static public int  WEAOPN_LASER	= 0;
@@ -43,7 +53,7 @@ public class UnitBattleActor extends CSprite {
 	final static public int  WEAOPN_SHORT	= 2;
 	final static public int  WEAOPN_EXP		= 3;
 	final static public int  WEAOPN_ROCKET	= 4;
-//	final static public int  WEAOPN_ALL		= 5;
+	final static public int  WEAOPN_ALL		= 5;
 	
 //	-----------------------------------------------------------------------------------------------------
 	
@@ -66,7 +76,6 @@ public class UnitBattleActor extends CSprite {
 //		for(int i=0;i<Bullets.size();i++){
 //			UnitBattleBullet bullet = (UnitBattleBullet)Bullets.elementAt(i);
 //		}
-	
 	}
 	
 	public void update() {
@@ -92,7 +101,7 @@ public class UnitBattleActor extends CSprite {
 		
 		UnitBattleBullet bullet;
 		
-		if(AMMOR<1 || !WeaopnOn){
+		if(AMMOR<1 || !WeaopnOn || WeaopnType == WEAOPN_ALL){
 			for(int i=0;i<3;i++){
 				int dx = CMath.cosTimes256(-8 + i*8);
 				int dy = CMath.sinTimes256(-8 + i*8);
@@ -133,10 +142,41 @@ public class UnitBattleActor extends CSprite {
 				}
 				break;
 			case WEAOPN_ROCKET:
+				bullet = getAmmor();
+				if(bullet!=null){
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y-32, 1, 0, 8, 0);
+					ForzenTimeMax = bullet.getForzenTime();
+//					bullet.startRocket(X, Y, 1);
+				}
+				bullet = getAmmor();
+				if(bullet!=null){
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y-16, 1, 0, 8, 0);
+					ForzenTimeMax = bullet.getForzenTime();
+//					bullet.startRocket(X, Y, 1);
+				}
+				bullet = getAmmor();
+				if(bullet!=null){
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y+16, 1, 0, 8, 0);
+					ForzenTimeMax = bullet.getForzenTime();
+//					bullet.startRocket(X, Y, 1);
+				}
+				bullet = getAmmor();
+				if(bullet!=null){
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y+32, 1, 0, 8, 0);
+					ForzenTimeMax = bullet.getForzenTime();
+//					bullet.startRocket(X, Y, 1);
+				}
+				break;
 			case WEAOPN_EXP:
 				bullet = getAmmor();
 				if(bullet!=null){
-					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y, 1, 0, 8, 0);
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y-16, 1, 0, 8, 0);
+					ForzenTimeMax = bullet.getForzenTime();
+//					bullet.startRocket(X, Y, 1);
+				}
+				bullet = getAmmor();
+				if(bullet!=null){
+					bullet.fire(WeaopnBullet[WeaopnType], this, null, X, Y+16, 1, 0, 8, 0);
 					ForzenTimeMax = bullet.getForzenTime();
 //					bullet.startRocket(X, Y, 1);
 				}

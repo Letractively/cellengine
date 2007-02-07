@@ -50,7 +50,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		//AScreen.TransitionEnable开关控制切换屏幕是否有特效，特效的实现参考AScreen的静态方法
 		//
 		//
-		AScreen.ChangeSubScreen("ScreenP00_Logo");
+		AScreen.ChangeSubScreen("ScreenP00_Menu");
 
 		(new Thread(this)).start();
 

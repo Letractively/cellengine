@@ -2,6 +2,7 @@ package com.morefuntek.cell.Game;
 
 
 import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
 
 import com.morefuntek.cell.CMath;
 import com.morefuntek.cell.IImages;
@@ -180,6 +181,13 @@ public class CSprite extends CUnit {
 		return null;
 	}
 	
+	/**
+	 * 的到当前帧的图片
+	 * @return 
+	 */
+	public Image getCurrentImage(int sub){
+		return animates.getFrameImage(FrameAnimate[CurAnimate][CurFrame], sub);
+	}
 	
 	/**
 	 * 判断一个精灵的当前帧和一个碰撞块是否相交。

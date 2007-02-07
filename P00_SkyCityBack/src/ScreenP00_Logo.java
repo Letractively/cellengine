@@ -20,17 +20,15 @@ public class ScreenP00_Logo extends AScreen {
     
     private String[] list = new String[]{
     		"ScreenP00_Menu",
-    		"ScreenP00_BattleLogo",
-    		"ScreenP00_World",
-//    		"ScreenP00_City",
-    		
     };
     
 	public ScreenP00_Logo() {
-		FrameDelay = 20;
+		FrameDelay = 25;
 		KeyEnable = true;
 		LogicEnable = true;
 		RenderEnable = true;
+		
+
 		
 //		for(int i=0;i<360;i++){
 //			int x = CMath.cosTimes256(i);

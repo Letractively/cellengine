@@ -161,22 +161,24 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 	public int getHP(){
 		switch (Type) {
 		case TYPE_MISSILE1:
-		case TYPE_MISSILE2:
 			return 20;
+		case TYPE_MISSILE2:
+			return 10;
 		case TYPE_LASER:
-			return 4;
+			return 8;
 		case TYPE_BOMB:
 			return 100;
 		case TYPE_BOMBEXP:
 			return 100;
 		case TYPE_SLUG1:
+			return 4;
 		case TYPE_SLUG2:
 			return 2;
 		case TYPE_LIGHT1:
 		case TYPE_LIGHT2:
 			return 8;
 		case TYPE_ROCKET:
-			return 40;
+			return 50;
 		default:
 			return 10;
 		}
@@ -379,7 +381,7 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		
 		MissileAngle = CMath.cycNum(360,-CMath.atan2(-SpeedY256, SpeedX256)+22,360);
 		int direct = CMath.cycNum(MissileAngle/45, 0, 8);
-		setCurrentFrame(direct, CurFrame);
+		setCurrentFrame(Type + direct, CurFrame);
 
 		smokeSpeed = 8;
 		switch(direct){
@@ -490,8 +492,6 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 	public int RocketAcc				= 256;
 	public int RocketDirect				= 1;
 	
-	public int RocketGravity			= 128;
-	public int RocketFlySpeed			= 256 * 2 ;
 	
 	private void startRocket(int sx,int sy,int direct){
 		Active = true;
@@ -499,7 +499,7 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		OnScreen = true;
 		RocketDirect = direct;
 		
-		SpeedX256 = 0; 
+		SpeedX256 = -RocketAcc*6; 
 		SpeedY256 = 0;
 		
 		X = sx;
@@ -515,15 +515,11 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		return !OnScreen;
 	}
 	void onRocket(){
-		if(Math.abs(SpeedY256)>RocketFlySpeed){
-			smokeSpeed = 128;
-			Effect.spawn(1,EFFECT_SMOKE_L,X, Y);
-			SpeedX256 += RocketDirect * RocketAcc;
-			HPos256 += SpeedX256 ; 
-		}else{
-			SpeedY256 += RocketGravity;
-			VPos256 += SpeedY256 ; 
-		}
+		smokeSpeed = 128;
+		Effect.spawn(1,EFFECT_SMOKE_L,X, Y);
+		SpeedX256 += RocketDirect * RocketAcc;
+		HPos256 += SpeedX256 ; 
+		
 
 		X = HPos256/256;
 		Y = VPos256/256;

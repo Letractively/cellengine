@@ -8,6 +8,7 @@ import com.morefuntek.cell.Game.IState;
 
 public class UnitWorldEvent extends CSprite {
 
+	
 	static public int OutX = 0;
 	static public int OutY = 32;
 	
@@ -20,6 +21,7 @@ public class UnitWorldEvent extends CSprite {
 	int FloatTime = Random.nextInt() % 360;
 	int Float = 0;
 	
+	public boolean Destoryed =false;
 	
 	
 	public UnitWorldEvent(CSprite stuff){
@@ -45,7 +47,6 @@ public class UnitWorldEvent extends CSprite {
 		Float = CMath.sinTimes256(getTimer()*FloatSpeed + FloatTime)*4/256;
 		nextCycFrame();
 		
-		
 	}
 
 	public void render(Graphics g, int x, int y) {
@@ -53,6 +54,9 @@ public class UnitWorldEvent extends CSprite {
 		//super.render(g, x, y);
 		if (Visible) {
 			animates.render(g,FrameAnimate[CurAnimate][CurFrame],x,y+Float);
+			if(!Destoryed){
+				animates.render(g,FrameAnimate[9][getTimer()%3],x,y);
+			}
 		}
 //#ifdef _DEBUG
 		if (Active && IsDebug){
