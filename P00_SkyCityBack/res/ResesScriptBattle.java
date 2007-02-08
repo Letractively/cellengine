@@ -9,8 +9,8 @@
 // <OUTPUT>     ..\[out]\ResesScriptBattle.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
 
 public class ResesScriptBattle {
 
@@ -94,7 +94,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(90,39,1,1);//65 
 		 stuff.addTile(90,27,1,1);//66 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -130,7 +129,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(194,0,90,82);//22 
 		 stuff.addTile(356,3,64,55);//23 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -199,7 +197,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(72,146,10,12);//55 
 		 stuff.addTile(63,158,10,7);//56 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -245,7 +242,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(144,32,16,16);//32 
 		 stuff.addTile(160,32,16,16);//33 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -270,7 +266,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(16,80,16,16);//11 
 		 stuff.addTile(0,96,16,16);//12 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -284,7 +279,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(0,0,176,23);//0 
 		 stuff.addTile(0,23,176,22);//1 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -303,7 +297,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(0,55,46,25);//5 
 		 stuff.addTile(23,48,1,1);//6 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -321,7 +314,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(64,103,17,16);//4 
 		 stuff.addTile(23,103,24,23);//5 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -341,7 +333,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(10,47,10,14);//6 
 		 stuff.addTile(0,47,10,13);//7 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -375,7 +366,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(16,144,16,16);//20 
 		 stuff.addTile(16,64,16,16);//21 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -389,7 +379,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(0,0,78,58);//0 
 		 stuff.addTile(0,58,78,58);//1 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -410,7 +399,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(7,25,14,1);//7 
 		 stuff.addTile(24,25,5,5);//8 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -450,7 +438,6 @@ public class ResesScriptBattle {
 		 stuff.addTile(104,0,9,32);//26 
 		 stuff.addTile(68,43,30,4);//27 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -500,7 +487,7 @@ public class ResesScriptBattle {
 		 animates.addPart(0,0,27,0);//31
 		
 		
-	    animates.setFrame(new int[32][]);
+	    animates.setFrames(new int[32][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -645,7 +632,7 @@ public class ResesScriptBattle {
 		 animates.addPart(0,0,6,0);//11
 		
 		
-	    animates.setFrame(new int[12][]);
+	    animates.setFrames(new int[12][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -776,7 +763,7 @@ public class ResesScriptBattle {
 		 animates.addPart(0,0,15,0);//17
 		
 		
-	    animates.setFrame(new int[18][]);
+	    animates.setFrames(new int[18][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -920,7 +907,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-7,4,61,0);//23
 		
 		
-	    animates.setFrame(new int[16][]);
+	    animates.setFrames(new int[16][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		 animates.setComboFrame(new int[]{3,4,},2);//2
@@ -948,7 +935,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -2, -1, 4 , 4 );//rect//4
 	    
 	    
-	    collides.setFrame(new int[6][]);
+	    collides.setFrames(new int[6][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -1078,7 +1065,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-6,3,61,0);//23
 		
 		
-	    animates.setFrame(new int[16][]);
+	    animates.setFrames(new int[16][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		 animates.setComboFrame(new int[]{3,4,},2);//2
@@ -1106,7 +1093,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -2, -1, 3 , 3 );//rect//4
 	    
 	    
-	    collides.setFrame(new int[6][]);
+	    collides.setFrames(new int[6][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -1273,7 +1260,7 @@ public class ResesScriptBattle {
 		 animates.addPart(100,-1,23,3);//60
 		
 		
-	    animates.setFrame(new int[6][]);
+	    animates.setFrames(new int[6][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,3,4,5,6,7,8,9,10,11,12,},1);//1
 		 animates.setComboFrame(new int[]{13,14,15,16,17,18,19,20,21,22,23,24,},2);//2
@@ -1290,7 +1277,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -9, 0, 119 , 1 );//rect//3
 	    
 	    
-	    collides.setFrame(new int[5][]);
+	    collides.setFrames(new int[5][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -1357,7 +1344,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-12,-4,34,0);//3
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{2,1,},1);//1
 		 animates.setComboFrame(new int[]{3,1,},2);//2
@@ -1368,7 +1355,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -9, -3, 15 , 5 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1429,7 +1416,7 @@ public class ResesScriptBattle {
 	     animates.addPart(-4,-2,43,0);//0
 		
 		
-	    animates.setFrame(new int[1][]);
+	    animates.setFrames(new int[1][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		
 		
@@ -1438,7 +1425,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -2, -2, 5 , 4 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1499,7 +1486,7 @@ public class ResesScriptBattle {
 	     animates.addPart(-11,-2,14,0);//0
 		
 		
-	    animates.setFrame(new int[1][]);
+	    animates.setFrames(new int[1][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		
 		
@@ -1508,7 +1495,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -6, -1, 15 , 2 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1571,7 +1558,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-27,-2,45,0);//2
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		 animates.setComboFrame(new int[]{},2);//2
@@ -1583,7 +1570,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -18, -19, 36 , 36 );//rect//1
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -1652,7 +1639,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-2,-2,3,0);//1
 		
 		
-	    animates.setFrame(new int[2][]);
+	    animates.setFrames(new int[2][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		
@@ -1662,7 +1649,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -1, -2, 3 , 3 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1723,7 +1710,7 @@ public class ResesScriptBattle {
 	     animates.addPart(-9,-1,0,0);//0
 		
 		
-	    animates.setFrame(new int[1][]);
+	    animates.setFrames(new int[1][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		
 		
@@ -1732,7 +1719,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -9, -1, 12 , 2 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1795,7 +1782,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-27,-2,63,0);//2
 		
 		
-	    animates.setFrame(new int[2][]);
+	    animates.setFrames(new int[2][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		
@@ -1805,7 +1792,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -8, -2, 16 , 3 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -1989,7 +1976,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-27,-2,63,0);//123
 		
 		
-	    animates.setFrame(new int[51][]);
+	    animates.setFrames(new int[51][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		 animates.setComboFrame(new int[]{3,4,},2);//2
@@ -2069,7 +2056,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -8, -2, 16 , 3 );//rect//21
 	    
 	    
-	    collides.setFrame(new int[23][]);
+	    collides.setFrames(new int[23][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -2318,7 +2305,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-45,-41,22,0);//23
 		
 		
-	    animates.setFrame(new int[24][]);
+	    animates.setFrames(new int[24][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{0,1,},1);//1
 		 animates.setComboFrame(new int[]{2,1,},2);//2
@@ -2349,7 +2336,7 @@ public class ResesScriptBattle {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -2468,7 +2455,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-11,5,35,0);//29
 		
 		
-	    animates.setFrame(new int[34][]);
+	    animates.setFrames(new int[34][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{2,1,},1);//1
 		 animates.setComboFrame(new int[]{3,1,},2);//2
@@ -2510,7 +2497,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -8, -4, 17 , 8 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -2620,7 +2607,7 @@ public class ResesScriptBattle {
 		 animates.addPart(3,-7,30,0);//19
 		
 		
-	    animates.setFrame(new int[22][]);
+	    animates.setFrames(new int[22][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -2649,7 +2636,7 @@ public class ResesScriptBattle {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -2742,7 +2729,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-6,-6,47,0);//3
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{2,1,},1);//1
 		 animates.setComboFrame(new int[]{3,1,},2);//2
@@ -2753,7 +2740,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -15, -10, 30 , 19 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{0,},2);//2
@@ -2817,7 +2804,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-12,-8,39,0);//2
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -2828,7 +2815,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -12, -8, 24 , 16 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{0,},2);//2
@@ -2893,7 +2880,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-2,-12,43,0);//3
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{0,2,},1);//1
 		 animates.setComboFrame(new int[]{0,3,},2);//2
@@ -2904,7 +2891,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -14, -8, 28 , 17 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{0,},2);//2
@@ -2967,7 +2954,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-13,-17,40,0);//1
 		
 		
-	    animates.setFrame(new int[2][]);
+	    animates.setFrames(new int[2][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		
@@ -2977,7 +2964,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -13, -14, 24 , 29 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{0,},2);//2
@@ -3041,7 +3028,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-10,-10,53,0);//2
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -3052,7 +3039,7 @@ public class ResesScriptBattle {
 		 collides.addCDRect(65535, -9, -10, 19 , 19 );//rect//0
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{0,},2);//2
@@ -3116,7 +3103,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-5,-3,56,0);//2
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -3129,7 +3116,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -5, -3, 10 , 7 );//rect//2
 	    
 	    
-	    collides.setFrame(new int[4][]);
+	    collides.setFrames(new int[4][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -3193,7 +3180,7 @@ public class ResesScriptBattle {
 		 animates.addPart(0,-21,1,0);//1
 		
 		
-	    animates.setFrame(new int[2][]);
+	    animates.setFrames(new int[2][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		
@@ -3202,7 +3189,7 @@ public class ResesScriptBattle {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -3273,7 +3260,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-23,-12,5,2);//5
 		
 		
-	    animates.setFrame(new int[7][]);
+	    animates.setFrames(new int[7][]);
 	     animates.setComboFrame(new int[]{0,1,},0);//0
 		 animates.setComboFrame(new int[]{2,3,},1);//1
 		 animates.setComboFrame(new int[]{0,4,},2);//2
@@ -3289,7 +3276,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -10, 10, 1 , 1 );//rect//1
 	    
 	    
-	    collides.setFrame(new int[4][]);
+	    collides.setFrames(new int[4][]);
 	     collides.setComboFrame(new int[]{0,0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -3376,7 +3363,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-24,42,4,0);//18
 		
 		
-	    animates.setFrame(new int[3][]);
+	    animates.setFrames(new int[3][]);
 	     animates.setComboFrame(new int[]{0,1,2,3,4,5,6,7,8,},0);//0
 		 animates.setComboFrame(new int[]{9,10,11,12,13,5,6,7,8,},1);//1
 		 animates.setComboFrame(new int[]{14,15,16,17,18,5,6,7,8,},2);//2
@@ -3402,7 +3389,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, -18, 48, 1 , 1 );//rect//15
 	    
 	    
-	    collides.setFrame(new int[11][]);
+	    collides.setFrames(new int[11][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,2,3,4,5,},2);//2
@@ -3481,7 +3468,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-8,-8,2,0);//3
 		
 		
-	    animates.setFrame(new int[4][]);
+	    animates.setFrames(new int[4][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -3492,7 +3479,7 @@ public class ResesScriptBattle {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -3616,7 +3603,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-23,-7,6,0);//46
 		
 		
-	    animates.setFrame(new int[8][]);
+	    animates.setFrames(new int[8][]);
 	     animates.setComboFrame(new int[]{0,1,2,3,4,5,6,7,8,9,10,11,},0);//0
 		 animates.setComboFrame(new int[]{12,0,1,3,4,5,6,7,8,9,10,11,},1);//1
 		 animates.setComboFrame(new int[]{13,2,1,3,4,5,6,7,8,9,10,11,},2);//2
@@ -3638,7 +3625,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, 12, 4, 1 , 1 );//rect//6
 	    
 	    
-	    collides.setFrame(new int[5][]);
+	    collides.setFrames(new int[5][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,2,3,},2);//2
@@ -3709,7 +3696,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-39,-29,1,0);//1
 		
 		
-	    animates.setFrame(new int[2][]);
+	    animates.setFrames(new int[2][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		
@@ -3723,7 +3710,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, 16, 10, 1 , 1 );//rect//4
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,2,3,4,},2);//2
@@ -3824,7 +3811,7 @@ public class ResesScriptBattle {
 		 animates.addPart(-8,-8,0,0);//33
 		
 		
-	    animates.setFrame(new int[5][]);
+	    animates.setFrames(new int[5][]);
 	     animates.setComboFrame(new int[]{0,1,2,3,4,5,6,7,8,9,},0);//0
 		 animates.setComboFrame(new int[]{10,2,11,12,13,14,5,15,16,17,},1);//1
 		 animates.setComboFrame(new int[]{18,19,20,2,21,22,5,23,24,25,},2);//2
@@ -3839,7 +3826,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, 0, -3, 1 , 1 );//rect//2
 	    
 	    
-	    collides.setFrame(new int[3][]);
+	    collides.setFrames(new int[3][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,2,},2);//2
@@ -3934,7 +3921,7 @@ public class ResesScriptBattle {
 		 animates.addPart(0,0,25,0);//27
 		
 		
-	    animates.setFrame(new int[21][]);
+	    animates.setFrames(new int[21][]);
 	     animates.setComboFrame(new int[]{0,1,2,3,4,5,6,7,},0);//0
 		 animates.setComboFrame(new int[]{8,},1);//1
 		 animates.setComboFrame(new int[]{9,},2);//2
@@ -3972,7 +3959,7 @@ public class ResesScriptBattle {
 	     collides.addCDRect(65535, 36, 16, 1 , 1 );//rect//9
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	     collides.setComboFrame(new int[]{0,1,2,3,4,5,6,7,8,9,},1);//1
 	    

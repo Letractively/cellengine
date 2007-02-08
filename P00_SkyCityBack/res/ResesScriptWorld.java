@@ -9,8 +9,8 @@
 // <OUTPUT>     ..\[out]\ResesScriptWorld.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
 
 public class ResesScriptWorld {
 
@@ -87,7 +87,6 @@ public class ResesScriptWorld {
 		 stuff.addTile(64,144,16,16);//58 
 		 stuff.addTile(80,144,16,16);//59 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -112,7 +111,6 @@ public class ResesScriptWorld {
 		 stuff.addTile(10,120,9,16);//11 
 		 stuff.addTile(19,120,9,16);//12 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -164,7 +162,6 @@ public class ResesScriptWorld {
 		 stuff.addTile(75,16,8,7);//38 
 		 stuff.addTile(77,23,5,5);//39 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -207,7 +204,6 @@ public class ResesScriptWorld {
 		 stuff.addTile(102,32,4,10);//29 
 		 stuff.addTile(106,32,4,10);//30 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -271,7 +267,7 @@ public class ResesScriptWorld {
 		 animates.addPart(0,0,52,0);//45
 		
 		
-	    animates.setFrame(new int[47][]);
+	    animates.setFrames(new int[47][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -469,7 +465,7 @@ public class ResesScriptWorld {
 		 animates.addPart(-4,-49,12,0);//16
 		
 		
-	    animates.setFrame(new int[12][]);
+	    animates.setFrames(new int[12][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -502,7 +498,7 @@ public class ResesScriptWorld {
 	     collides.addCDRect(65535, -30, -13, 64 , 36 );//rect//13
 	    
 	    
-	    collides.setFrame(new int[15][]);
+	    collides.setFrames(new int[15][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -674,7 +670,7 @@ public class ResesScriptWorld {
 		 animates.addPart(-4,-3,38,0);//44
 		
 		
-	    animates.setFrame(new int[37][]);
+	    animates.setFrames(new int[37][]);
 	     animates.setComboFrame(new int[]{0,1,2,},0);//0
 		 animates.setComboFrame(new int[]{3,1,},1);//1
 		 animates.setComboFrame(new int[]{4,1,},2);//2
@@ -727,7 +723,7 @@ public class ResesScriptWorld {
 	     collides.addCDRect(65535, -7, -9, 14 , 14 );//rect//8
 	    
 	    
-	    collides.setFrame(new int[10][]);
+	    collides.setFrames(new int[10][]);
 	     collides.setComboFrame(new int[]{0,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	     collides.setComboFrame(new int[]{1,},2);//2
@@ -901,7 +897,7 @@ public class ResesScriptWorld {
 		 animates.addPart(-1,-1,37,0);//3
 		
 		
-	    animates.setFrame(new int[4][]);
+	    animates.setFrames(new int[4][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -912,7 +908,7 @@ public class ResesScriptWorld {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -986,7 +982,7 @@ public class ResesScriptWorld {
 		 animates.addPart(0,0,24,0);//14
 		
 		
-	    animates.setFrame(new int[15][]);
+	    animates.setFrames(new int[15][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -1008,7 +1004,7 @@ public class ResesScriptWorld {
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[1][]);
+	    collides.setFrames(new int[1][]);
 	     collides.setComboFrame(new int[]{},0);//0
 	    
 	    
@@ -1098,7 +1094,7 @@ public class ResesScriptWorld {
 	     animates.addPart(0,0,2,0);//0
 		
 		
-	    animates.setFrame(new int[1][]);
+	    animates.setFrames(new int[1][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		
 		
@@ -1112,7 +1108,7 @@ public class ResesScriptWorld {
 	     collides.addCDRect(65535, 28, 12, 10 , 10 );//rect//5
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,1,2,3,4,5,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    

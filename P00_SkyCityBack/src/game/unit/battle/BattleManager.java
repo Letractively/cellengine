@@ -1,48 +1,74 @@
 package game.unit.battle;
 
+import java.util.Vector;
+
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
-import com.morefuntek.cell.ParticleSystem.CParticle;
-import com.morefuntek.cell.ParticleSystem.CParticleSystem;
-import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.particle.*;
 
-//	所有子弹的效果
-abstract public class UnitBattle extends CSprite implements IParticleLauncher {
+public class BattleManager extends CWorld  implements IParticleLauncher{
 
-//	----------------------------------------------------------------------------------------------------
-//	基本
-	public int HP = 100;
 	
-	public UnitBattle(CSprite stuff){
-		super(stuff);
+	public Vector 	openEnemys  = new Vector();
+	public Vector 	closeEnemys = new Vector();
+	
+	public Vector 	enemyBullet = new Vector();
+	public Vector 	actorBullet = new Vector();
+	
+	public Vector  Ammor = new Vector();
+	
+	public BattleManager(){
+		
 		if(Effect==null){
-			CParticle[] particles = new CParticle[16];
+			CParticle[] particles = new CParticle[128];
 		    for(int i=0;i<particles.length;i++){
 		       	particles[i] = new CParticle();
 		    }
 		    Effect = new CParticleSystem(particles,this);
 		}
 		
+	}
+	
+	public void render(Graphics g) {
+		super.render(g);
 		
+		renderSprites(g, openEnemys);
+		renderSprites(g, enemyBullet);
+		renderSprites(g, actorBullet);
+		
+		if(Effect!=null)Effect.render(g);
+	}
+	
+	public void update() {
+		super.update();
+		
+		updateSprites(openEnemys);
+		updateSprites(enemyBullet);
+		updateSprites(actorBullet);
+		
+		if(Effect!=null)Effect.update();
 	}
 
-//	----------------------------------------------------------------------------------------------------
-//	逻辑
-	
-	abstract public void hasTouch(UnitBattle target);
-	
-	
-//	----------------------------------------------------------------------------------------------------
+
+	public void Dispose(){
+		BattleManager.Effect = null;
+	}
+
+
+
+	//	----------------------------------------------------------------------------------------------------
 //	粒子系统
 //	final static public int PARTICLE_SMOKE 		= 0;
 //	final static public int PARTICLE_EXP		= 1;
 //	final static public int PARTICLE_CONTRACT	= 3;
 //	
 //	
+	final static public int PARTICLE_LIGHT		= 102;
+	final static public int PARTICLE_BIG		= 103;
+	final static public int PARTICLE_BIG_L		= 104;
+	
 	final static public int Div = 256 ;
 
 	final static public int EFFECT_LASER		= 0;
@@ -63,12 +89,17 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 	final static public int EFFECT_SMOKE_B		= 13;
 	final static public int EFFECT_SMOKE_BR		= 14;
 	
-	final static public int PARTICLE_LIGHT		= 1000;
-
-	static public CSprite effect ;
+	static public void spawn(int count,int type,int x,int y){
+		if(Effect!=null)Effect.spawn(count, type, x, y);
+	}
+	
+	static public void SpawnExtParticle(int type,int count,int x,int y){
+		if(Effect!=null)Effect.spawn(count, type, x, y);
+	}
+	
 	static public int smokeSpeed = 512;
 	
-	static CParticleSystem Effect;
+	static public CParticleSystem Effect;
 
 	public void particleEmitted(CParticle particle, int id) {
 		
@@ -80,7 +111,7 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 		particle.AccY = 0;
 		particle.Timer = 0 ;
 		particle.Color = 0xffffffff;
-		
+
 		int angle = Random.nextInt()%30;
 		switch(particle.Category){
 		case EFFECT_SMOKE_R: angle  += 0 * 45 ; break;
@@ -91,7 +122,11 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 		case EFFECT_SMOKE_BL: angle += 5 * 45; break;
 		case EFFECT_SMOKE_B: angle  += 6 * 45; break;
 		case EFFECT_SMOKE_BR: angle += 7 * 45; break;
+		default:
+			angle = Random.nextInt();
+		
 		}
+//		int d = 4+Math.abs(Random.nextInt()%8);
 		
 		switch(particle.Category){
 		case EFFECT_LASER:
@@ -100,11 +135,7 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 		case EFFECT_MISSILE:
 		case EFFECT_EXP:
 		case EFFECT_ALL:
-			if(effect!=null){
-				particle.TerminateTime = effect.getFrameCount(particle.Category);
-			}else{
-				particle.TerminateTime = 4;
-			}
+			particle.TerminateTime = 4;
 			break;
 		case EFFECT_SMOKE:
 			particle.TerminateTime = 8;
@@ -125,66 +156,41 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 			particle.AccY = particle.SpeedY*256/8/smokeSpeed;
 			break;
 		// ext particle
+		case PARTICLE_BIG:
+			particle.TerminateTime = 100;
+			particle.Color = 0xffffffff;
+			break;
+		case PARTICLE_BIG_L:
+			particle.TerminateTime = 4;
+			particle.Color = 0xffffffff;
+			break;
 		case PARTICLE_LIGHT:
 			particle.TerminateTime = 12;
 			particle.Color = 0xffffffff;
 			break;
-//			case PARTICLE_EXP:
-//			particle.TerminateTime = 12;
-//			particle.Color = 0xffffffff;
-//			particle.SpeedX = CMath.sinTimes256(id*10 + angle)*d;
-//			particle.SpeedY = CMath.cosTimes256(id*10 + angle)*d;
-//			particle.AccX = -CMath.sinTimes256(id*10 + angle)/12;
-//			particle.AccY = -CMath.cosTimes256(id*10 + angle)/12;
-//			break;
-//		case PARTICLE_SMOKE:
-//			particle.TerminateTime = 10;
-//			particle.Color = 0xffffffff;
-//			break;
-//		case PARTICLE_CONTRACT:
-//			particle.TerminateTime = 64;
-//			particle.Color = Random.nextInt();
-//			particle.X += CMath.sinTimes256(id*10 + angle)*64;
-//			particle.Y += CMath.cosTimes256(id*10 + angle)*64;
-//			particle.SpeedX = -CMath.sinTimes256(id*10 + angle);
-//			particle.SpeedY = -CMath.cosTimes256(id*10 + angle);
-//			break;
 		}
-		
-		
-		
-		
-//		particle.Timer = effect.getFrameCount(particle.Category);
-		
-//		switch(particle.Category){
-//		case PARTICLE_EXP:
-//			particle.Timer = 10;
-//			particle.Color = 0xffff0000;
-//			particle.SpeedX = CMath.sinTimes256(id*10 + angle)*4;
-//			particle.SpeedY = CMath.cosTimes256(id*10 + angle)*4;
-//			particle.AccX = -CMath.sinTimes256(id*10 + angle)/8;
-//			particle.AccY = -CMath.cosTimes256(id*10 + angle)/8;
-//			break;
-//		case PARTICLE_CONTRACT:
-//			particle.Timer = 64;
-//			particle.Color = Random.nextInt();
-//			particle.X += CMath.sinTimes256(id*10 + angle)*64;
-//			particle.Y += CMath.cosTimes256(id*10 + angle)*64;
-//			particle.SpeedX = -CMath.sinTimes256(id*10 + angle);
-//			particle.SpeedY = -CMath.cosTimes256(id*10 + angle);
-//			break;
-//		}
 
-		
 	}
 	public void particleAffected(CParticle particle, int id) {
 		particle.SpeedX += particle.AccX;
 		particle.SpeedY += particle.AccY;
 		particle.Y += particle.SpeedY;
 		particle.X += particle.SpeedX;
+		
+		switch(particle.Category){
+		case PARTICLE_BIG:
+			if(particle.Timer%3==0){
+				Effect.spawn(1, PARTICLE_BIG_L, 
+						particle.X/256 + Random.nextInt()%16, 
+						particle.Y/256 + Random.nextInt()%16);
+			}
+			break;
+
+		}
+		
 	}
 	public void particleRender(Graphics g, CParticle particle, int id) {
-		int size;
+		int size = 8;
 		
 		switch(particle.Category){
 		case EFFECT_LASER:
@@ -196,24 +202,18 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 			size = (particle.TerminateTime - particle.Timer) * 4  ;
 			g.setColor(particle.Color);
 			g.fillArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
 					size, 
 					size, 
 					0, 360);
 			size = particle.Timer * 8;
 			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
 					size, 
 					size, 
 					0, 360);
-			if(effect!=null){
-				effect.X = world.toScreenPosX(particle.X/Div);
-				effect.Y = world.toScreenPosY(particle.Y/Div);
-				effect.setCurrentFrame(particle.Category, particle.Timer - 1);
-				effect.render(g, effect.X, effect.Y);
-			}
 			break;
 		case EFFECT_SMOKE:
 		case EFFECT_SMOKE_R: 
@@ -233,8 +233,8 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 			
 			g.setColor(particle.Color);
 			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
 					size, 
 					size, 
 					0, 360);
@@ -261,36 +261,39 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 //					0, 360);
 //			break;
 		case PARTICLE_LIGHT:
-			size = (particle.TerminateTime - particle.Timer) * 8 ;
+			size = (particle.TerminateTime - particle.Timer) * 10 ;
 			g.setColor(particle.Color);
 			g.fillArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
 					size, 
 					size, 
 					0, 360);
 			size = particle.Timer * 8 ;
 			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
 					size, 
 					size, 
 					0, 360);
 			break;
-//		case PARTICLE_CONTRACT:
-//			if(particle.Timer<64){
-//				size = (particle.Timer) / 4;
-//			}else{
-//				size = (64-particle.Timer) / 4;
-//			}
-//			g.setColor(particle.Color);
-//			g.fillArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
+		case PARTICLE_BIG_L:
+			size = (particle.TerminateTime - particle.Timer) * 16 ;
+			g.setColor(particle.Color);
+			g.fillArc(
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
+					size, 
+					size, 
+					0, 360);
+			size = particle.Timer * 8 ;
+			g.drawArc(
+					toScreenPosX(particle.X/Div) - size/2, 
+					toScreenPosY(particle.Y/Div) - size/2,
+					size, 
+					size, 
+					0, 360);
+			break;
 		}
 		
 		
@@ -344,5 +347,4 @@ abstract public class UnitBattle extends CSprite implements IParticleLauncher {
 	
 	
 
-	
 }

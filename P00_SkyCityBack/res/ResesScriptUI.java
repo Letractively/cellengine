@@ -9,8 +9,8 @@
 // <OUTPUT>     ..\[out]\ResesScriptUI.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
 
 public class ResesScriptUI {
 
@@ -39,7 +39,6 @@ public class ResesScriptUI {
 		 stuff.addTile(98,142,49,13);//10 
 		 stuff.addTile(85,155,49,13);//11 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -64,7 +63,6 @@ public class ResesScriptUI {
 		 stuff.addTile(109,190,5,7);//11 
 		 stuff.addTile(112,184,8,5);//12 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -92,7 +90,6 @@ public class ResesScriptUI {
 		 stuff.addTile(88,132,44,44);//14 
 		 stuff.addTile(132,132,44,44);//15 
 		
-		stuff.gc();
 		
 		return stuff;
 	}
@@ -124,7 +121,7 @@ public class ResesScriptUI {
 		 animates.addPart(0,0,15,0);//13
 		
 		
-	    animates.setFrame(new int[14][]);
+	    animates.setFrames(new int[14][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -223,7 +220,7 @@ public class ResesScriptUI {
 		 animates.addPart(29,52,8,2);//12
 		
 		
-	    animates.setFrame(new int[10][]);
+	    animates.setFrames(new int[10][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -243,7 +240,7 @@ public class ResesScriptUI {
 	     collides.addCDRect(65535, -24, 57, 49 , 13 );//rect//2
 	    
 	    
-	    collides.setFrame(new int[2][]);
+	    collides.setFrames(new int[2][]);
 	     collides.setComboFrame(new int[]{0,1,2,},0);//0
 	     collides.setComboFrame(new int[]{},1);//1
 	    
@@ -315,14 +312,14 @@ public class ResesScriptUI {
 	    CAnimates animates = new CAnimates(0,tiles);
 	    
 		
-	    animates.setFrame(new int[0][]);
+	    animates.setFrames(new int[0][]);
 	    
 		
 		// cds
 	    CCollides collides = new CCollides(0);
 		
 	    
-	    collides.setFrame(new int[0][]);
+	    collides.setFrames(new int[0][]);
 	    
 	    
 	    

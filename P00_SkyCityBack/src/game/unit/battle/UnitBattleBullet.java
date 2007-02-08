@@ -5,20 +5,14 @@ package game.unit.battle;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.CAnimates;
-import com.morefuntek.cell.Game.CCollides;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
-import com.morefuntek.cell.ParticleSystem.CParticle;
-import com.morefuntek.cell.ParticleSystem.CParticleSystem;
-import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
+import com.cell.*;
+import com.cell.game.*;
 
 /**
  * @author yifeizhang
  *
  */
-public class UnitBattleBullet extends CSprite implements IParticleLauncher{
+public class UnitBattleBullet extends CSprite implements IState{
 
 //	----------------------------------------------------------------------------------------	
 	
@@ -43,15 +37,9 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 	
 	
 	public UnitBattleBullet(CSprite spr) {
-		super(spr);
+		super(spr);setState(this);
 		startNone();
 		
-		CParticle[] particles = new CParticle[16];
-	    for(int i=0;i<particles.length;i++){
-	       	particles[i] = new CParticle();
-	    }
-	    Effect = new CParticleSystem(particles,this);
-	    
 	    HP = getHP();
 	}
 
@@ -106,12 +94,11 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 				startNone();
 			}	
 		}
-		Effect.update();
+		
 	}
 	
 	public void render(Graphics g, int x, int y) {
 		super.render(g, x, y);
-		Effect.render(g);
 	}
 	
 	public int getType(){
@@ -286,27 +273,27 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		switch (Type) {
 		case TYPE_MISSILE1:
 		case TYPE_MISSILE2:
-			Effect.spawn(1,EFFECT_MISSILE,X, Y);
+			BattleManager.spawn(1,BattleManager.EFFECT_MISSILE,X, Y);
 			break;
 		case TYPE_LASER:
-			Effect.spawn(1,EFFECT_LASER,
+			BattleManager.spawn(1,BattleManager.EFFECT_LASER,
 					target.X + Random.nextInt()%4, 
 					target.Y + (Y-target.Y)/2 );
 			break;
 		case TYPE_BOMB:
 		case TYPE_BOMBEXP:
-			Effect.spawn(1,EFFECT_EXP,X, Y);
+			BattleManager.spawn(1,BattleManager.EFFECT_EXP,X, Y);
 			break;
 		case TYPE_SLUG1:
 		case TYPE_SLUG2:
-			Effect.spawn(1,EFFECT_SLUG,X, Y);
+			BattleManager.spawn(1,BattleManager.EFFECT_SLUG,X, Y);
 			break;
 		case TYPE_LIGHT1:
 		case TYPE_LIGHT2:
-			Effect.spawn(1,EFFECT_LIGHT,X, Y);
+			BattleManager.spawn(1,BattleManager.EFFECT_LIGHT,X, Y);
 			break;
 		case TYPE_ROCKET:
-			Effect.spawn(1,EFFECT_ALL,X, Y);
+			BattleManager.spawn(1,BattleManager.EFFECT_ALL,X, Y);
 			break;
 		}
 		
@@ -383,16 +370,16 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		int direct = CMath.cycNum(MissileAngle/45, 0, 8);
 		setCurrentFrame(Type + direct, CurFrame);
 
-		smokeSpeed = 8;
+		BattleManager.smokeSpeed = 8;
 		switch(direct){
-		case 0:Effect.spawn(1,EFFECT_SMOKE_L,X, Y);break;
-		case 1:Effect.spawn(1,EFFECT_SMOKE_TL,X, Y);break;
-		case 2:Effect.spawn(1,EFFECT_SMOKE_T,X, Y);break;
-		case 3:Effect.spawn(1,EFFECT_SMOKE_TR,X, Y);break;
-		case 4:Effect.spawn(1,EFFECT_SMOKE_R,X, Y);break;
-		case 5:Effect.spawn(1,EFFECT_SMOKE_BR,X, Y);break;
-		case 6:Effect.spawn(1,EFFECT_SMOKE_B,X, Y);break;
-		case 7:Effect.spawn(1,EFFECT_SMOKE_BL,X, Y);break;
+		case 0:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_L,X, Y);break;
+		case 1:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_TL,X, Y);break;
+		case 2:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_T,X, Y);break;
+		case 3:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_TR,X, Y);break;
+		case 4:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_R,X, Y);break;
+		case 5:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_BR,X, Y);break;
+		case 6:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_B,X, Y);break;
+		case 7:BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_BL,X, Y);break;
 		}	
 
 		nextCycFrame();
@@ -515,8 +502,8 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 		return !OnScreen;
 	}
 	void onRocket(){
-		smokeSpeed = 128;
-		Effect.spawn(1,EFFECT_SMOKE_L,X, Y);
+		BattleManager.smokeSpeed = 128;
+		BattleManager.spawn(1,BattleManager.EFFECT_SMOKE_L,X, Y);
 		SpeedX256 += RocketDirect * RocketAcc;
 		HPos256 += SpeedX256 ; 
 		
@@ -553,311 +540,11 @@ public class UnitBattleBullet extends CSprite implements IParticleLauncher{
 	void onCollapsar(){
 		CollapsarTime--;
 		
-//		Effect.spawn(1,PARTICLE_CONTRACT,X, Y);
+//		BattleManager.spawn(1,PARTICLE_CONTRACT,X, Y);
 		
 		nextCycFrame();
 	}
 	
 //	---------------------------------------------------------------------------------------------------------
-
-
-//	----------------------------------------------------------------------------------------------------
-//	Á£×ÓÏµÍ³
-//	final static public int PARTICLE_SMOKE 		= 0;
-//	final static public int PARTICLE_EXP		= 1;
-//	final static public int PARTICLE_CONTRACT	= 3;
-//	
-//	
-	final static public int PARTICLE_LIGHT		= 102;
-	final static public int PARTICLE_BIG		= 103;
-	final static public int PARTICLE_BIG_L		= 104;
-	
-	final static public int Div = 256 ;
-
-	final static public int EFFECT_LASER		= 0;
-	final static public int EFFECT_LIGHT		= 1;
-	final static public int EFFECT_SLUG			= 2;
-	final static public int EFFECT_MISSILE		= 3;
-	final static public int EFFECT_EXP			= 4;
-	final static public int EFFECT_ALL			= 5;
-	
-	final static public int EFFECT_SMOKE		= 6;
-	
-	final static public int EFFECT_SMOKE_R		= 7;
-	final static public int EFFECT_SMOKE_TR		= 8;
-	final static public int EFFECT_SMOKE_T		= 9;
-	final static public int EFFECT_SMOKE_TL		= 10;
-	final static public int EFFECT_SMOKE_L		= 11;
-	final static public int EFFECT_SMOKE_BL		= 12;
-	final static public int EFFECT_SMOKE_B		= 13;
-	final static public int EFFECT_SMOKE_BR		= 14;
-	
-	
-	
-	public void SpawnExtParticle(int type,int count,int x,int y){
-		Effect.spawn(count, type, x, y);
-	}
-	
-	
-	static public CSprite effect ;
-	static public int smokeSpeed = 512;
-	
-	CParticleSystem Effect;
-
-	public void particleEmitted(CParticle particle, int id) {
-		
-		particle.X *= 256 ;
-		particle.Y *= 256 ;
-		particle.SpeedX = 0;
-		particle.SpeedY = 0;
-		particle.AccX = 0;
-		particle.AccY = 0;
-		particle.Timer = 0 ;
-		particle.Color = 0xffffffff;
-
-		int angle = Random.nextInt()%30;
-		switch(particle.Category){
-		case EFFECT_SMOKE_R: angle  += 0 * 45 ; break;
-		case EFFECT_SMOKE_TR: angle += 1 * 45; break;
-		case EFFECT_SMOKE_T: angle  += 2 * 45; break;
-		case EFFECT_SMOKE_TL: angle += 3 * 45; break;
-		case EFFECT_SMOKE_L: angle  += 4 * 45; break;
-		case EFFECT_SMOKE_BL: angle += 5 * 45; break;
-		case EFFECT_SMOKE_B: angle  += 6 * 45; break;
-		case EFFECT_SMOKE_BR: angle += 7 * 45; break;
-		default:
-			angle = Random.nextInt();
-		
-		}
-//		int d = 4+Math.abs(Random.nextInt()%8);
-		
-		switch(particle.Category){
-		case EFFECT_LASER:
-		case EFFECT_LIGHT:
-		case EFFECT_SLUG:
-		case EFFECT_MISSILE:
-		case EFFECT_EXP:
-		case EFFECT_ALL:
-			if(effect!=null){
-				particle.TerminateTime = effect.getFrameCount(particle.Category);
-			}else{
-				particle.TerminateTime = 4;
-			}
-			break;
-		case EFFECT_SMOKE:
-			particle.TerminateTime = 8;
-			break;
-		case EFFECT_SMOKE_R: 
-		case EFFECT_SMOKE_TR:
-		case EFFECT_SMOKE_T:
-		case EFFECT_SMOKE_TL:
-		case EFFECT_SMOKE_L:
-		case EFFECT_SMOKE_BL:
-		case EFFECT_SMOKE_B:
-		case EFFECT_SMOKE_BR:
-			particle.TerminateTime = 8;
-			particle.Color = 0xff0000ff;
-			particle.SpeedX += CMath.cosTimes256(angle)*smokeSpeed/256;
-			particle.SpeedY -= CMath.sinTimes256(angle)*smokeSpeed/256;
-			particle.AccX = particle.SpeedX*256/8/smokeSpeed;
-			particle.AccY = particle.SpeedY*256/8/smokeSpeed;
-			break;
-		// ext particle
-		case PARTICLE_BIG:
-			particle.TerminateTime = 100;
-			particle.Color = 0xffffffff;
-			break;
-		case PARTICLE_BIG_L:
-			particle.TerminateTime = 4;
-			particle.Color = 0xffffffff;
-			break;
-		case PARTICLE_LIGHT:
-			particle.TerminateTime = 12;
-			particle.Color = 0xffffffff;
-			break;
-		}
-
-	}
-	public void particleAffected(CParticle particle, int id) {
-		particle.SpeedX += particle.AccX;
-		particle.SpeedY += particle.AccY;
-		particle.Y += particle.SpeedY;
-		particle.X += particle.SpeedX;
-		
-		switch(particle.Category){
-		case PARTICLE_BIG:
-			if(particle.Timer%3==0){
-				Effect.spawn(1, PARTICLE_BIG_L, 
-						particle.X/256 + Random.nextInt()%16, 
-						particle.Y/256 + Random.nextInt()%16);
-			}
-			break;
-
-		}
-		
-	}
-	public void particleRender(Graphics g, CParticle particle, int id) {
-		int size = 8;
-		
-		switch(particle.Category){
-		case EFFECT_LASER:
-		case EFFECT_LIGHT:
-		case EFFECT_SLUG:
-		case EFFECT_MISSILE:
-		case EFFECT_EXP:
-		case EFFECT_ALL:
-			size = (particle.TerminateTime - particle.Timer) * 4  ;
-			g.setColor(particle.Color);
-			g.fillArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			size = particle.Timer * 8;
-			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			if(effect!=null){
-				effect.X = world.toScreenPosX(particle.X/Div);
-				effect.Y = world.toScreenPosY(particle.Y/Div);
-				effect.setCurrentFrame(particle.Category, particle.Timer - 1);
-				effect.render(g, effect.X, effect.Y);
-			}
-			break;
-		case EFFECT_SMOKE:
-		case EFFECT_SMOKE_R: 
-		case EFFECT_SMOKE_TR:
-		case EFFECT_SMOKE_T:
-		case EFFECT_SMOKE_TL:
-		case EFFECT_SMOKE_L:
-		case EFFECT_SMOKE_BL:
-		case EFFECT_SMOKE_B:
-		case EFFECT_SMOKE_BR:
-			size = particle.Timer / 2;
-			int c = 0xff - 0x80 * particle.Timer / particle.TerminateTime ;
-			particle.Color = 0xff0000ff | 
-				(c<<8 ) |
-				(c<<16)
-				;
-			
-			g.setColor(particle.Color);
-			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			break;
-		// ext particle	
-//			case PARTICLE_EXP:
-//			size = particle.Timer / 2;
-//			g.setColor(particle.Color);
-//			g.fillArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
-//		case PARTICLE_SMOKE:
-//			size = particle.Timer / 2;
-//			g.setColor(particle.Color);
-//			g.drawArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
-		case PARTICLE_LIGHT:
-			size = (particle.TerminateTime - particle.Timer) * 10 ;
-			g.setColor(particle.Color);
-			g.fillArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			size = particle.Timer * 8 ;
-			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			break;
-		case PARTICLE_BIG_L:
-			size = (particle.TerminateTime - particle.Timer) * 16 ;
-			g.setColor(particle.Color);
-			g.fillArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			size = particle.Timer * 8 ;
-			g.drawArc(
-					world.toScreenPosX(particle.X/Div) - size/2, 
-					world.toScreenPosY(particle.Y/Div) - size/2,
-					size, 
-					size, 
-					0, 360);
-			break;
-		}
-		
-		
-		
-		
-		
-		
-		
-		
-//		switch(particle.Category){
-//		case PARTICLE_EXP:
-//			size = particle.Timer / 2;
-//			g.setColor(particle.Color);
-//			g.drawArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
-//		case PARTICLE_SMOKE:
-//			size = particle.Timer / 2;
-//			g.setColor(particle.Color);
-//			g.drawArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
-//		case PARTICLE_CONTRACT:
-//			if(particle.Timer<64){
-//				size = (particle.Timer) / 4;
-//			}else{
-//				size = (64-particle.Timer) / 4;
-//			}
-//			g.setColor(particle.Color);
-//			g.fillArc(
-//					world.toScreenPosX(particle.X/Div) - size/2, 
-//					world.toScreenPosY(particle.Y/Div) - size/2,
-//					size, 
-//					size, 
-//					0, 360);
-//			break;
-//		}
-		
-
-	}
-	public void particleTerminated(CParticle particle, int id) {
-	}
-	
-	
 
 }

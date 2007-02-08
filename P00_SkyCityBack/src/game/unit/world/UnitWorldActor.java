@@ -4,15 +4,11 @@ import game.unit.battle.UnitBattleActor;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
-import com.morefuntek.cell.ParticleSystem.CParticle;
-import com.morefuntek.cell.ParticleSystem.CParticleSystem;
-import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.particle.*;
 
-public class UnitWorldActor extends CSprite implements IParticleLauncher {
+public class UnitWorldActor extends CSprite implements IState , IParticleLauncher {
 
 
 	static public int ActorX = 128;
@@ -31,6 +27,7 @@ public class UnitWorldActor extends CSprite implements IParticleLauncher {
 	
 	public UnitWorldActor(CSprite stuff){
 		super(stuff);
+		setState(this);
 		setCurrentFrame(0, 0);
 		
 		CParticle[] particles = new CParticle[32];

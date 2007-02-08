@@ -2,13 +2,10 @@ package game.unit.battle;
 
 import java.util.Vector;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCD;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
+import com.cell.*;
+import com.cell.game.*;
 
-public class UnitBattleActor extends CSprite {
+public class UnitBattleActor extends CSprite implements IState{
 
 	static public int Money		 = 0;
 	static public int WeaopnType = 2;
@@ -70,7 +67,7 @@ public class UnitBattleActor extends CSprite {
 	
 	public UnitBattleActor(CSprite stuff){
 		super(stuff);
-		
+		setState(this);
 //		if(!Bullets.isEmpty())MainWeaopn = ((UnitBattleBullet)Bullets.firstElement()).getType();
 //	
 //		for(int i=0;i<Bullets.size();i++){
@@ -310,19 +307,19 @@ public class UnitBattleActor extends CSprite {
 	public void startDestory(){
 		this.Active = false;
 		this.Visible = false;
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, 
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, 
 				X, 
 				Y);
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, 
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, 
 				X + Random.nextInt()%16, 
 				Y + Random.nextInt()%16);
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, 
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, 
 				X + Random.nextInt()%16, 
 				Y + Random.nextInt()%16);
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, 
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, 
 				X + Random.nextInt()%16, 
 				Y + Random.nextInt()%16);
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, 
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, 
 				X + Random.nextInt()%16, 
 				Y + Random.nextInt()%16);
 	}
@@ -336,8 +333,8 @@ public class UnitBattleActor extends CSprite {
 	public void startSmoke(){
 		UnitBattleBullet ammor = getAmmor();
 		if(ammor!=null){
-			UnitBattleBullet.smokeSpeed = 128;
-			ammor.SpawnExtParticle(1,UnitBattleBullet.EFFECT_SMOKE_L, X-16, Y);
+			BattleManager.smokeSpeed = 128;
+			BattleManager.SpawnExtParticle(1,BattleManager.EFFECT_SMOKE_L, X-16, Y);
 		}
 	}
 	

@@ -2,14 +2,10 @@ package game.unit.battle;
 
 import java.util.Vector;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCD;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CUnit;
-import com.morefuntek.cell.Game.IState;
+import com.cell.*;
+import com.cell.game.*;
 
-public class UnitBattleSub extends CSprite {
+public class UnitBattleSub extends CSprite implements IState{
 	
 	static public int SubCount = 4;
 	
@@ -72,7 +68,7 @@ public class UnitBattleSub extends CSprite {
 	public boolean WeaopnOn = false;
 	
 	public UnitBattleSub(CSprite stuff){
-		super(stuff);
+		super(stuff);setState(this);
 	}
 	
 	public void update() {

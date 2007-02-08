@@ -9,24 +9,14 @@ import javax.microedition.lcdui.Image;
 import javax.microedition.lcdui.TextBox;
 import javax.microedition.rms.RecordStore;
 
-import com.morefuntek.cell.CIO;
-import com.morefuntek.cell.CImages20;
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.CSoundPlayer;
-import com.morefuntek.cell.IImages;
-import com.morefuntek.cell.GUI.CTextBox;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCamera;
-import com.morefuntek.cell.Game.CMap;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CWorld;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.gui.CTextBox;
+import com.cell.particle.*;
 
 
 public class ScreenP00_Menu extends AScreen {
 
-	static public CSoundPlayer player ;
-	
-	
 	static public int SaveID = 0;
 	
 	
@@ -61,13 +51,13 @@ public class ScreenP00_Menu extends AScreen {
     
     
 	public ScreenP00_Menu() {
-		if(ScreenP00_Menu.player!=null){
-			ScreenP00_Menu.player.destroy();
+		if(GameMIDlet.soundman!=null){
+			GameMIDlet.soundman.destroy();
 		}
 		
 		try{
-			ScreenP00_Menu.player = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
-			ScreenP00_Menu.player.play();
+			GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
+			GameMIDlet.soundman.play();
 		}catch(Exception err){
 		}
 		
@@ -186,13 +176,13 @@ public class ScreenP00_Menu extends AScreen {
 	  
 	public void notifyPause(){ 
 		try{
-			ScreenP00_Menu.player.pause();
+			GameMIDlet.soundman.pause();
 		}catch(Exception err){
 		}
 	}
 	public void notifyResume() {
 		try{
-			ScreenP00_Menu.player.resume();
+			GameMIDlet.soundman.resume();
 		}catch(Exception err){
 		}
 	}
@@ -412,7 +402,7 @@ public class ScreenP00_Menu extends AScreen {
 		"接触这些岛屿就会触发战斗，战斗是" +
 		"横版射击，通过反向键控制战舰移动。" +
 		"在战斗之前，可以通过界面提示购买" +
-		"武器，在战斗中使用1＃、3＃、5＃激" +
+		"武器，在战斗中使用1＃、3＃激" +
 		"活武器，然后消灭战斗场景内的所有敌" +
 		"人就可过关，当玩家把地图内7座城堡" +
 		"内的海盗头目都打败，海盗们就认输退" +
@@ -430,7 +420,6 @@ public class ScreenP00_Menu extends AScreen {
 		"战斗场景内\n"+
 		"1＃ 主武器开关\n"+
 		"3＃ 副武器开关\n"+
-		"5＃ 射击开关\n"+
 		"7＃ 攻击阵形调整\n"+
 		"\n"+
 		
@@ -558,19 +547,19 @@ public class ScreenP00_Menu extends AScreen {
 				switch(ConfigSubIndex[ConfigIndex]){
 				case 1:
 					CSoundPlayer.SoundEnable = true;
-					if(ScreenP00_Menu.player!=null){
-						ScreenP00_Menu.player.destroy();
+					if(GameMIDlet.soundman!=null){
+						GameMIDlet.soundman.destroy();
 					}
 					try{
-						ScreenP00_Menu.player = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
-						ScreenP00_Menu.player.play();
+						GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
+						GameMIDlet.soundman.play();
 					}catch(Exception err){
 					}
 					break;
 				case 2:
 					CSoundPlayer.SoundEnable = false;
 					try{
-						ScreenP00_Menu.player.destroy();
+						GameMIDlet.soundman.destroy();
 					}catch(Exception err){
 					}
 					break;

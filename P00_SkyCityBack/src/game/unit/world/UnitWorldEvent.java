@@ -2,11 +2,11 @@ package game.unit.world;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.particle.*;
 
-public class UnitWorldEvent extends CSprite {
+public class UnitWorldEvent extends CSprite implements IState {
 
 	
 	static public int OutX = 0;
@@ -26,6 +26,7 @@ public class UnitWorldEvent extends CSprite {
 	
 	public UnitWorldEvent(CSprite stuff){
 		super(stuff);
+		setState(this);
 	}
 	
 	public void setLevel(String info){

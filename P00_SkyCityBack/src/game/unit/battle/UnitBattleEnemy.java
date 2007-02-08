@@ -3,17 +3,10 @@ package game.unit.battle;
 import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCD;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CWayPoint;
-import com.morefuntek.cell.Game.IState;
-import com.morefuntek.cell.ParticleSystem.CParticle;
-import com.morefuntek.cell.ParticleSystem.CParticleSystem;
-import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
+import com.cell.*;
+import com.cell.game.*;
 
-public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
+public class UnitBattleEnemy extends CSprite implements IState{
 
 	static public int Level = 10;
 
@@ -44,7 +37,7 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 	//-------------------------------------------------------------------------------------------------
 	
 	public UnitBattleEnemy(CSprite stuff,CWayPoint point,int ai){
-		super(stuff);
+		super(stuff);setState(this);
 		Active  = false;
 		
 //		CParticle[] particles = new CParticle[8];
@@ -109,27 +102,27 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 	public void update() {
 
 		try{
-		if(Active){
-			if(isTrack){
-				onTrack();
-			}else if(isScroll){
-				onScroll();
-			}else if(isAttack){
-				onAttack();
-			}else if(isHold){
-				onHold();
-			}else {
-				terminate();
+			if(Active){
+				if(isTrack){
+					onTrack();
+				}else if(isScroll){
+					onScroll();
+				}else if(isAttack){
+					onAttack();
+				}else if(isHold){
+					onHold();
+				}else {
+					terminate();
+				}
+				
+				onDamage();
+				onDestory();
+				onFire();
+				
+				nextCycFrame();
 			}
-			
-			onDamage();
-			onDestory();
-			onFire();
-			
-			nextCycFrame();
-		}
 		}catch(Exception err){
-			
+			err.printStackTrace();
 		}
 //		Effect.update();
 	}
@@ -658,7 +651,7 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 		
 //		Effect.spawn(1, PARTICLE_LIGHT, X, Y);
 		
-		getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_LIGHT, 1, X, Y);
+		BattleManager.SpawnExtParticle(BattleManager.PARTICLE_LIGHT, 1, X, Y);
 		
 		switch(ai){
 		case 13:
@@ -676,7 +669,7 @@ public class UnitBattleEnemy extends CSprite /*implements IParticleLauncher*/{
 		case 54:
 		case 55:	
 //			Effect.spawn(1, PARTICLE_BIG, X, Y);
-			getAmmor().SpawnExtParticle(UnitBattleBullet.PARTICLE_BIG, 1, X, Y);
+			BattleManager.SpawnExtParticle(BattleManager.PARTICLE_BIG, 1, X, Y);
 			default:
 		}
 		

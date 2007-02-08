@@ -8,9 +8,10 @@ import game.unit.world.UnitWorldEvent;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.GUI.CTextBox;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.gui.CTextBox;
+import com.cell.particle.*;
 
 
 public class ScreenP00_World extends AScreen {
@@ -59,11 +60,11 @@ public class ScreenP00_World extends AScreen {
 	public ScreenP00_World(){
 
 		try{
-			if(ScreenP00_Menu.player!=null){
-				ScreenP00_Menu.player.destroy();
+			if(GameMIDlet.soundman!=null){
+				GameMIDlet.soundman.destroy();
 			}
-			ScreenP00_Menu.player = new CSoundPlayer("/BGMmap.mid",CSoundPlayer.TYPE_MIDI,-1);
-			ScreenP00_Menu.player.play();
+			GameMIDlet.soundman = new CSoundPlayer("/BGMmap.mid",CSoundPlayer.TYPE_MIDI,-1);
+			GameMIDlet.soundman.play();
 		}catch(Exception err){
 		}
 		
@@ -143,7 +144,8 @@ public class ScreenP00_World extends AScreen {
        			cam.getWidth()/4,
        			cam.getHeight()/4,
        			2, 2, 
-       			8+8*16, 0);
+       			8+8*16, 0,
+       			false,true,true);
        	
        	int px = actor.X - (cam.getX() + cam.getWidth() /2);
     	int py = actor.Y - (cam.getY() + cam.getHeight()/2);
@@ -261,7 +263,7 @@ public class ScreenP00_World extends AScreen {
         			}
             		break;
             	case 3:
-            		if(isKeyHold(KEY_A|KEY_B|KEY_C)){
+            		if(isKeyDown(KEY_A|KEY_B|KEY_C)){
         				if(CTextBox.vScroll(16)){
         					HelpState++;
             				CTextBox.closeTextBox();
@@ -379,13 +381,13 @@ public class ScreenP00_World extends AScreen {
 		Pause = true;
 		menuIndex = 0;
 		try{
-			ScreenP00_Menu.player.pause();
+			GameMIDlet.soundman.pause();
 		}catch(Exception err){
 		}
 	}
 	public void notifyResume() {
 		try{
-			ScreenP00_Menu.player.resume();
+			GameMIDlet.soundman.resume();
 		}catch(Exception err){
 		}
 	}
@@ -676,7 +678,7 @@ public class ScreenP00_World extends AScreen {
 	        String V = actor.Y < world.Height/2 ? "N" : "S";
 	        renderText(g,  12, 12, H+X/map.getCellW()+"\'" + X%map.getCellW());
 	        renderText(g, 112, 12, V+Y/map.getCellH()+"\'" + Y%map.getCellH());
-	
+	        
 	}
 	
 	
@@ -706,8 +708,12 @@ public class ScreenP00_World extends AScreen {
 			NUMSpr.render(g, 
 					x + sx, 
 					y);
-			sx += (NUMSpr.getCurrentImage(0).getWidth()+1);
+//			sx += (NUMSpr.getCurrentImage(0).getWidth()+1);
+			sx += 8+a;
 		}
+//		g.setColor(0xffffffff);
+//		g.drawString(num, x, y, 0);
+		
 		
 	}
 	
@@ -721,7 +727,6 @@ public class ScreenP00_World extends AScreen {
 	    int cost = 0;
 	    
 	    final private String[] help = new String[]{
-	    	"按5键开/关发射",
 	    	"按1键开/关主炮",
 	    	"按3键开/关副炮",
 	    	"按7键改变辅助攻击"

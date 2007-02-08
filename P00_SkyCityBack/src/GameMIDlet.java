@@ -2,10 +2,10 @@
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
 
-import com.morefuntek.cell.CCanvas20;
-import com.morefuntek.cell.CCanvasNokia;
-import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.AScreen;
+import com.cell.AScreen;
+import com.cell.CCanvas20;
+import com.cell.CSoundPlayer;
+
 
 /**
  * Ö÷MIDlet
@@ -15,7 +15,10 @@ import com.morefuntek.cell.Game.AScreen;
  */
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
+	static public CSoundPlayer soundman ;
+	
 	Canvas canvas ;
+	
 	
 //------------------------------------------------------------------------------------------
 
