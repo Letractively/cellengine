@@ -162,16 +162,16 @@ public class CTextBox extends CObject {
 				TransitionOpen = false;
 			}
 			
-			g.setColor(BodyColor);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, 
-//					Y+H/2-TransitionTime/2, 
-//					W, 
-//					TransitionTime,
-//					true);
+//			g.setColor(BodyColor);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, 
+					Y+H/2-TransitionTime/2, 
+					W, 
+					TransitionTime,
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -188,16 +188,16 @@ public class CTextBox extends CObject {
 				TransitionTime = H ;
 				TransitionClose = false;
 			}
-			g.setColor(BodyColor);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, 
-//					Y+H/2- (H-TransitionTime)/2, 
-//					W, 
-//					(H-TransitionTime),
-//					true);
+//			g.setColor(BodyColor);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, 
+					Y+H/2- (H-TransitionTime)/2, 
+					W, 
+					(H-TransitionTime),
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -214,12 +214,12 @@ public class CTextBox extends CObject {
 			// body
 //			g.setColor(BodyColor);
 //			g.fillRect(X, Y, W, H);
-//			g.drawRGB(
-//					BodyAlphaColor, 
-//					0, 
-//					0, 
-//					X, Y, W, H,
-//					true);
+			g.drawRGB(
+					BodyAlphaColor, 
+					0, 
+					0, 
+					X, Y, W, H,
+					true);
 			g.setColor(BorderColor);
 			g.drawRect(X, Y, W-1, H-1);
 			
