@@ -140,7 +140,9 @@ abstract public class AScreen extends CObject {
 		if(TransitionIn && TransitionTime>TransitionMaxTime){
 			Transition = false;
 		}
-		if(Transition==false)return;
+		if(Transition==false){
+			return;
+		}
 		
 		//System.out.println("Transition Screen : " + TransitionTime);
 		

@@ -19,7 +19,7 @@ public class CWorld extends CObject {
 	public int Width;
 	public int Height;
 	
-	public Vector 		Sprs = new Vector(0);
+	public Vector 		Sprs = new Vector();
 	public CMap 		Map;
 	public CCamera 		Camera;
 	public CWayPoint[] 	WayPoints ;
@@ -209,7 +209,31 @@ public class CWorld extends CObject {
 	}
 	
 	
+	public void renderSprites(Graphics g,Vector sprs){
+		for(int i=0;i<sprs.size();i++){
+			if(CCD.cdRect(
+				((CSprite)sprs.elementAt(i)).X + ((CSprite)sprs.elementAt(i)).animates.w_left, 
+				((CSprite)sprs.elementAt(i)).Y + ((CSprite)sprs.elementAt(i)).animates.w_top, 
+				((CSprite)sprs.elementAt(i)).X + ((CSprite)sprs.elementAt(i)).animates.w_right, 
+				((CSprite)sprs.elementAt(i)).Y + ((CSprite)sprs.elementAt(i)).animates.w_bottom, 
+				Camera.X, 
+				Camera.Y, 
+				Camera.X + Camera.getWidth(), 
+				Camera.Y + Camera.getHeight()
+				)){
+				((CSprite)sprs.elementAt(i)).OnScreen = true;
+			}else{
+				((CSprite)sprs.elementAt(i)).OnScreen = false;
+			}
+			((CSprite)sprs.elementAt(i)).render(g,
+					((CSprite)sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
+					((CSprite)sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
+		}
+	}
 	
-	
-
+	public void updateSprites(Vector sprs){
+		for(int i=0;i<sprs.size();i++){
+			((CSprite)sprs.elementAt(i)).updateState();
+		}
+	}
 }

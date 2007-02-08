@@ -273,7 +273,9 @@ public class CTextBox extends CObject {
 	
 	
 	
-	
+	static public boolean isShown(){
+		return TransitionOpen||TransitionClose||!Texts.isEmpty();
+	}
 	
 	
 	

@@ -14,6 +14,8 @@ import javax.microedition.media.control.VolumeControl;
 
 public class CSoundPlayer extends CObject implements PlayerListener {
 
+	static public boolean SoundEnable = true;
+	
 	/**
 	 * Note data
 	 */
@@ -111,17 +113,19 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 	 */
 	public CSoundPlayer(String filename, String type, int loop) {
 		try {
-			InputStream is = getClass().getResourceAsStream(filename);
-			if (is == null) {
-				println("Error Loading Sound File : " + filename);
-			} else {
-				player = Manager.createPlayer(is, type);
-				player.addPlayerListener(this);
-				player.stop();
-				player.realize();
-				player.prefetch();
-				player.setLoopCount(loop);
-				vc = (VolumeControl) player.getControl("VolumeControl");
+			if(SoundEnable){
+				InputStream is = getClass().getResourceAsStream(filename);
+				if (is == null) {
+					println("Error Loading Sound File : " + filename);
+				} else {
+					player = Manager.createPlayer(is, type);
+					player.addPlayerListener(this);
+					player.stop();
+					player.realize();
+					player.prefetch();
+					player.setLoopCount(loop);
+					vc = (VolumeControl) player.getControl("VolumeControl");
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -142,6 +146,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 	 */
 	public CSoundPlayer(byte[] tone, int loop) {
 		try {
+			if(SoundEnable){
 			player = Manager.createPlayer(Manager.TONE_DEVICE_LOCATOR);
 			player.addPlayerListener(this);
 			player.stop();
@@ -151,6 +156,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 			vc = (VolumeControl) player.getControl("VolumeControl");
 			tc = (ToneControl) player.getControl("ToneControl");
 			tc.setSequence(tone);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -168,6 +174,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 	final public void replay() {
 		pause();
 		try {
+			if(SoundEnable){
 			if (player != null && tc != null
 					&& player.getState() == Player.REALIZED) {
 				player.setMediaTime(-1);
@@ -175,6 +182,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 			} else if (player != null && player.getState() == Player.PREFETCHED) {
 				player.setMediaTime(-1);
 				player.start();
+			}
 			}
 		} catch (MediaException e) {
 			// TODO Auto-generated catch block
@@ -184,6 +192,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 
 	final public void play() {
 		try {
+			if(SoundEnable){
 			if (player != null && tc != null
 					&& player.getState() == Player.REALIZED) {
 				//                player.setMediaTime(-1);
@@ -191,6 +200,7 @@ public class CSoundPlayer extends CObject implements PlayerListener {
 			} else if (player != null && player.getState() == Player.PREFETCHED) {
 				//                player.setMediaTime(-1);
 				player.start();
+			}
 			}
 		} catch (MediaException e) {
 			// TODO Auto-generated catch block
