@@ -32,7 +32,11 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 //		}else{
 		canvas = new CCanvas20();
 		canvas.setFullScreenMode(true);
+		
 //		}
+		
+		Display.getDisplay(this).setCurrent(canvas);
+		
 		//得到虚拟屏幕大小
 		AScreen.SCREEN_WIDTH = canvas.getWidth();
 		AScreen.SCREEN_HEIGHT = canvas.getHeight();
@@ -41,7 +45,7 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		System.out.println("Screen W = " + AScreen.SCREEN_WIDTH);
 		System.out.println("Screen H = " + AScreen.SCREEN_HEIGHT);
 		
-		Display.getDisplay(this).setCurrent(canvas);
+		
 
 		//切换当前屏幕到 ScreenP00_Logo
 		//整个游戏的结构是每个游戏界面继承一个AScreen,比如菜单，帮助，主模块，等，
