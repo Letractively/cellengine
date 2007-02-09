@@ -1,4 +1,4 @@
-package com.cell.gui;
+package com.cell.hud;
 
 import java.util.Vector;
 
