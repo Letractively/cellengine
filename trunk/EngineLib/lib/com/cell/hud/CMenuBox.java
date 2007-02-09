@@ -1,4 +1,4 @@
-package com.cell.gui;
+package com.cell.hud;
 
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
