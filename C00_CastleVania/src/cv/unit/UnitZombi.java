@@ -1,5 +1,9 @@
 package cv.unit;
 
+import javax.microedition.lcdui.Image;
+
+import com.cell.CIO;
+import com.cell.CSoundPlayer;
 import com.cell.IImages;
 import com.mascotcapsule.micro3d.v3.ActionTable;
 
@@ -9,8 +13,14 @@ public class UnitZombi extends Unit {
 	boolean onAttack;
 	int damageTime = 0;
 	
+	Image img_face ;
+	CSoundPlayer snd_damage;
+	
 	public UnitZombi(){
 		Team = 1;
+		IsIncline = true;
+		img_face = CIO.loadImage("/face2.png");
+		snd_damage = new CSoundPlayer("/dingnigefei.wav",CSoundPlayer.TYPE_WAV,1);
 	}
 	
 	public void update() {
@@ -29,6 +39,12 @@ public class UnitZombi extends Unit {
 	public void damage(Unit unit){
 		damageTime = 5;
 		onDamage = true;
+		
+		world.showMessage(
+				"¶¥Äã¸ö·Î!", 
+				img_face, 
+				false);
+		snd_damage.replay();
 		
 		HP-=unit.Attack;
 		

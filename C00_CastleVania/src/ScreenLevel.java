@@ -26,7 +26,7 @@ public class ScreenLevel extends AScreen {
 	// game world
 	LevelManager 		world;
 	
-	CWorldMini	worldMini;
+	CWorldMini			worldMini;
 	
 	public ScreenLevel(){
 
@@ -36,11 +36,14 @@ public class ScreenLevel extends AScreen {
        	FrameDelay = 40;
 
        	// world
-       	world = ResesScript.createWorld("Level_00");
+       	world = ResesScript.createWorld("Level_01");
+       	
        	Hashtable AITable = new Hashtable();
        	AITable.put(ResesScript.spr_Actor00, "cv.unit.UnitActor");
        	AITable.put(ResesScript.spr_e00_zombi, "cv.unit.UnitZombi");
-       	world.init(AITable);
+       	world.UnitTable = AITable;
+       	
+       	world.init();
        	
        	
     	worldMini = new CWorldMini(
@@ -50,7 +53,7 @@ public class ScreenLevel extends AScreen {
        			2,2,
        			8+8*16,
        			20+20*40,
-       			true,
+       			false,
        			true,
        			true);
     	
@@ -67,9 +70,7 @@ public class ScreenLevel extends AScreen {
     	if(isKeyDown(KEY_0)){IsDebug = !IsDebug;}
     	
     	
-    	int cdx = world.getSprite(0).X - (world.getCamera().getX() + world.getCamera().getWidth() /2);
-    	int cdy = world.getSprite(0).Y - (world.getCamera().getY() + world.getCamera().getHeight()/2);
-    	world.getCamera().mov(cdx/4,cdy/4);
+
     	
 		world.update();
   
@@ -81,7 +82,7 @@ public class ScreenLevel extends AScreen {
         //clearScreenAndClip(g,0xff000000);
 
         world.render(g);
-        worldMini.render(g, 1, -1 + SCREEN_HEIGHT - worldMini.getHeight());
+//        worldMini.render(g, 1, -1 + SCREEN_HEIGHT - worldMini.getHeight());
         
         showFPS(g, 1, 1, 0xffffffff);
 

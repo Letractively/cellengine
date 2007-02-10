@@ -1,17 +1,29 @@
 package cv.unit;
 
 
+import javax.microedition.lcdui.Image;
+
 import com.cell.AScreen;
+import com.cell.CIO;
+import com.cell.CSoundPlayer;
 import com.cell.IImages;
 import com.cell.game.IState;
+import com.cell.hud.CTextBox;
 
 public class UnitActor extends Unit {
 
+	Image img_face ;
+	CSoundPlayer snd_damage;
+	
+	
 	int InviTime = -1;
 	
 	public UnitActor(){
 //		super();
 		Team = 0;
+		IsIncline = true;
+		img_face = CIO.loadImage("/ActorFace.png");
+		snd_damage = new CSoundPlayer("/niniang.wav",CSoundPlayer.TYPE_WAV,1);
 	}
 	
 //	public void render(Graphics g, int x, int y) {
@@ -35,6 +47,12 @@ public class UnitActor extends Unit {
 	
 	public void damage(Unit unit){
 		if(onDamage || InviTime>0)return;
+		
+		world.showMessage(
+				"哎呦!", 
+				img_face, 
+				false);
+		snd_damage.replay();
 		
 		SpawnNumber(unit.Attack, X, Y - getVisibleHeight());
 		
@@ -335,7 +353,7 @@ public class UnitActor extends Unit {
 		}
 		
 		if(!isLand){
-			
+			IsIncline = false;
 			if(onDamage){
 				
 			}else{
@@ -389,8 +407,9 @@ public class UnitActor extends Unit {
 			SpeedY256 += Gravity;
 			
 		}else{
+			IsIncline = true;
 			if(onDamage){
-				
+				SpeedY256 = 0;
 			}else{
 				if(turnAction){
 					//如果不是在攻击状态中,才能继续下次攻击
@@ -489,7 +508,6 @@ public class UnitActor extends Unit {
 						
 						SpeedY256 = JumpV;
 					}
-					
 				}else{
 					SpeedY256 = 0;
 				}
