@@ -433,8 +433,8 @@ namespace CellGameEdit.PM
             sw.WriteLine("    collides.addCDRect(0x00000004, " + 0 + ", " + (CellH - 1) + ", " + CellW + "," + 1 + ");");
             sw.WriteLine("    collides.addCDRect(0x00000008, " + 0 + ", " + 0 + ", " + 1 + "," + CellH + ");");
             sw.WriteLine("    collides.addCDRect(0x00000010, " + (CellW - 1) + ", " + 0 + ", " + 1 + "," + CellH + ");");
-            sw.WriteLine("    collides.addCDLine(0x00000020, " + 1 + ", " + 1 + ", " + (CellW-1) + "," + (CellH-1) + ");");
-            sw.WriteLine("    collides.addCDLine(0x00000040, " + (CellW-1) + ", " + 1 + ", " + 1 + "," + (CellH-1) + ");");
+            sw.WriteLine("    collides.addCDLine(0x00000020, " + 0 + ", " + 0 + ", " + (CellW-1) + "," + (CellH-1) + ");");
+            sw.WriteLine("    collides.addCDLine(0x00000040, " + (CellW-1) + ", " + 0 + ", " + 0 + "," + (CellH-1) + ");");
             sw.WriteLine();
             // map matrix
             sw.WriteLine("    short[][] tileMatrix = new short[][]{");
@@ -532,13 +532,13 @@ namespace CellGameEdit.PM
                      new int[]{1,0x00000000, 0, 0, CellW, CellH, CellW, CellH},//null
                      new int[]{1,0x00000001, 0, 0, CellW, CellH, CellW, CellH},//full
 
-                     new int[]{1,0x00000002, 0,       0,       CellW,   1,       CellW , CellH},
-                     new int[]{1,0x00000004, 0,       CellH-1, CellW,   1,       CellW , CellH},
-                     new int[]{1,0x00000008, 0,       0,       1,       CellH,   CellW , CellH},
-                     new int[]{1,0x00000010, CellW-1, 0,       1,       CellH,   CellW , CellH},
+                     new int[]{1,0x00000002, 0,       0,       CellW,   1,       CellW ,   CellH},//
+                     new int[]{1,0x00000004, 0,       CellH-1, CellW,   1,       CellW ,   CellH},//
+                     new int[]{1,0x00000008, 0,       0,       1,       CellH,   CellW ,   CellH},//
+                     new int[]{1,0x00000010, CellW-1, 0,       1,       CellH,   CellW ,   CellH},//
 
-                     new int[]{2,0x00000020, 1,       1,       CellW,   CellH,   CellW-1 , CellH-1},
-                     new int[]{2,0x00000040, CellW-1, 1,       CellW,   CellH,   1 ,       CellH-1},
+                     new int[]{2,0x00000020, 0,       0,       CellW,   CellH,   CellW-1 , CellH-1},//
+                     new int[]{2,0x00000040, CellW-1, 0,       CellW,   CellH,   0 ,       CellH-1},//
                 };
 
                 do
