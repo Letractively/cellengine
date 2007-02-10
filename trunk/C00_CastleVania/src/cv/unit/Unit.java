@@ -9,20 +9,32 @@ import com.cell.particle.CParticle;
 import com.cell.particle.CParticleSystem;
 import com.cell.particle.IParticleLauncher;
 
+import cv.LevelManager;
+
 abstract public class Unit extends CSprite implements IState , IParticleLauncher {
 	
+	/**构造精灵的原料*/
 	static public CSprite SprStuff;
 	
-	public String Type;//精灵在精灵编辑器中的类型
-	public String Info;//精灵在场景编辑器里的信息
+	final static public int TEAM_ACTOR 	= 0;
+	final static public int TEAM_ENEMY 	= 1;
+	final static public int TEAM_ITEM	= 2;
+	
+	public String 	Type;//精灵在精灵编辑器中的类型
+	public String 	Info;//精灵在场景编辑器里的信息
+	public int 		Team ;//精灵敌我判断的标志
+	public LevelManager world;
+	
 	
 	public int HP 		= 100;
 	public int Attack 	= 50;
 	
 	
-	public int Team ;//精灵敌我判断的标志
+	
 	
 	public CParticleSystem Effect;
+	public boolean IsIncline = false;
+	
 	
 	public Unit(){
 		super(SprStuff);
@@ -78,6 +90,7 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 			int prewAnimate = CurAnimate;
 			int prewFrame   = CurFrame;
 			setCurrentFrame(0, 0);
+			
 			boolean adjustMap = false;
 			
 			collides.getCD(0).Mask = 0xffff;
@@ -95,6 +108,7 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 					}
 				}
 			}
+			
 			setCurrentFrame(prewAnimate, prewFrame);
 		}
 		
@@ -112,20 +126,51 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 			int prewAnimate = CurAnimate;
 			int prewFrame   = CurFrame;
 			setCurrentFrame(0, 0);
+			
 			boolean adjustMap = false;
 			adjustMap = touch_SprSub_Map(this,CD_TYPE_MAP,0,this.world.Map);
 
+			if(IsIncline && !adjustMap ){
+				int y = Math.abs(x) + 1;
+				Y += y;
+				if(touch_SprSub_Map(this,CD_TYPE_MAP,0,this.world.Map)){
+					int dy = -1;
+					for(int i=y;i>=0;i--){
+						Y+=dy;
+						if(!touch_SprSub_Map(this,CD_TYPE_MAP,0,this.world.Map)){
+							break;
+						}
+					}
+				}else{
+					Y -= y;
+				}
+			}
+			
 			if(adjustMap){
+				int dy = -1;
 				X-=x;
 				while(X!=dstX){
 					X+=dx;
+					//如果X被阻挡
 					if(touch_SprSub_Map(this,CD_TYPE_MAP,0,this.world.Map)){
-						X-=dx;
-						ret = true;
-						break;
+						if(IsIncline){
+							Y+=dy;
+							//如果Y被阻挡
+							if(touch_SprSub_Map(this,CD_TYPE_MAP,0,this.world.Map)){
+								X-=dx;
+								Y-=dy;
+								ret = true;
+								break;
+							}
+						}else{
+							X-=dx;
+							ret = true;
+							break;
+						}
 					}
 				}
 			}
+			
 			setCurrentFrame(prewAnimate, prewFrame);
 		}
 		

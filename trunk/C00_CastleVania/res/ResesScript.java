@@ -24,7 +24,7 @@ public class ResesScript {
 	// Images : Actor00 
 	final static public IImages createClipImages_Actor00(){
 		IImages stuff = new CImages20();
-		stuff.buildImages(CIO.loadImage("/Actor00.png"),135);
+		stuff.buildImages(CIO.loadImage("/Actor00.png"),136);
 		
 		 stuff.addTile(0,0,40,40);//0 
 		 stuff.addTile(40,0,40,40);//1 
@@ -161,6 +161,7 @@ public class ResesScript {
 		 stuff.addTile(80,679,40,30);//132 
 		 stuff.addTile(120,679,40,30);//133 
 		 stuff.addTile(160,679,40,30);//134 
+		 stuff.addTile(0,709,64,64);//135 
 		
 		
 		return stuff;
@@ -170,7 +171,7 @@ public class ResesScript {
 	// Images : MapTile00 
 	final static public IImages createClipImages_MapTile00(){
 		IImages stuff = new CImages20();
-		stuff.buildImages(CIO.loadImage("/MapTile00.png"),32);
+		stuff.buildImages(CIO.loadImage("/MapTile00.png"),33);
 		
 		 stuff.addTile(0,0,16,16);//0 
 		 stuff.addTile(16,0,16,16);//1 
@@ -187,15 +188,15 @@ public class ResesScript {
 		 stuff.addTile(0,48,16,16);//12 
 		 stuff.addTile(16,48,16,16);//13 
 		 stuff.addTile(32,48,16,16);//14 
-		 stuff.addTile(48,48,16,16);//15 
-		 stuff.addTile(64,48,16,16);//16 
-		 stuff.addTile(80,48,16,16);//17 
+		 stuff.addTile(64,0,16,16);//15 
+		 stuff.addTile(64,64,16,16);//16 
+		 stuff.addTile(64,48,16,16);//17 
 		 stuff.addTile(0,64,16,16);//18 
 		 stuff.addTile(16,64,16,16);//19 
 		 stuff.addTile(32,64,16,16);//20 
-		 stuff.addTile(48,64,16,16);//21 
-		 stuff.addTile(64,64,16,16);//22 
-		 stuff.addTile(80,64,16,16);//23 
+		 stuff.addTile(64,16,16,16);//21 
+		 stuff.addTile(48,64,16,16);//22 
+		 stuff.addTile(64,32,16,16);//23 
 		 stuff.addTile(0,80,16,16);//24 
 		 stuff.addTile(0,96,16,16);//25 
 		 stuff.addTile(16,80,16,16);//26 
@@ -204,6 +205,7 @@ public class ResesScript {
 		 stuff.addTile(32,96,16,16);//29 
 		 stuff.addTile(48,80,16,16);//30 
 		 stuff.addTile(48,96,16,16);//31 
+		 stuff.addTile(48,48,16,16);//32 
 		
 		
 		return stuff;
@@ -241,30 +243,35 @@ public class ResesScript {
 		//40 x 20
 		
 		// tiles
-	    CAnimates animates = new CAnimates(20,tiles);
-	     animates.addPart(0,0,20,0);//0
-		 animates.addPart(0,0,13,0);//1
-		 animates.addPart(0,0,1,0);//2
-		 animates.addPart(0,0,0,0);//3
-		 animates.addPart(0,0,12,0);//4
-		 animates.addPart(0,0,14,0);//5
+	    CAnimates animates = new CAnimates(25,tiles);
+	     animates.addPart(0,0,14,0);//0
+		 animates.addPart(0,0,20,0);//1
+		 animates.addPart(0,0,32,5);//2
+		 animates.addPart(0,0,1,0);//3
+		 animates.addPart(0,0,0,0);//4
+		 animates.addPart(0,0,12,0);//5
 		 animates.addPart(0,0,19,0);//6
-		 animates.addPart(0,0,5,0);//7
-		 animates.addPart(0,0,18,0);//8
-		 animates.addPart(0,0,2,0);//9
-		 animates.addPart(0,0,6,0);//10
-		 animates.addPart(0,0,7,0);//11
-		 animates.addPart(0,0,24,0);//12
-		 animates.addPart(0,0,26,0);//13
-		 animates.addPart(0,0,28,0);//14
-		 animates.addPart(0,0,30,0);//15
-		 animates.addPart(0,0,25,0);//16
-		 animates.addPart(0,0,27,0);//17
-		 animates.addPart(0,0,29,0);//18
-		 animates.addPart(0,0,31,0);//19
+		 animates.addPart(0,0,32,3);//7
+		 animates.addPart(0,0,13,0);//8
+		 animates.addPart(0,0,5,0);//9
+		 animates.addPart(0,0,18,0);//10
+		 animates.addPart(0,0,2,0);//11
+		 animates.addPart(0,0,6,0);//12
+		 animates.addPart(0,0,7,0);//13
+		 animates.addPart(0,0,32,0);//14
+		 animates.addPart(0,0,0,2);//15
+		 animates.addPart(0,0,32,2);//16
+		 animates.addPart(0,0,26,0);//17
+		 animates.addPart(0,0,28,0);//18
+		 animates.addPart(0,0,30,0);//19
+		 animates.addPart(0,0,24,0);//20
+		 animates.addPart(0,0,27,0);//21
+		 animates.addPart(0,0,29,0);//22
+		 animates.addPart(0,0,31,0);//23
+		 animates.addPart(0,0,25,0);//24
 		
 		
-	    animates.setFrames(new int[20][]);
+	    animates.setFrames(new int[25][]);
 	     animates.setComboFrame(new int[]{0,},0);//0
 		 animates.setComboFrame(new int[]{1,},1);//1
 		 animates.setComboFrame(new int[]{2,},2);//2
@@ -277,37 +284,42 @@ public class ResesScript {
 		 animates.setComboFrame(new int[]{9,},9);//9
 		 animates.setComboFrame(new int[]{10,},10);//10
 		 animates.setComboFrame(new int[]{11,},11);//11
-		 animates.setComboFrame(new int[]{12,13,14,15,},12);//12
-		 animates.setComboFrame(new int[]{13,14,15,12,},13);//13
-		 animates.setComboFrame(new int[]{14,15,12,13,},14);//14
-		 animates.setComboFrame(new int[]{15,12,13,14,},15);//15
-		 animates.setComboFrame(new int[]{16,17,18,19,},16);//16
-		 animates.setComboFrame(new int[]{17,18,19,16,},17);//17
-		 animates.setComboFrame(new int[]{18,19,16,17,},18);//18
-		 animates.setComboFrame(new int[]{19,16,17,18,},19);//19
+		 animates.setComboFrame(new int[]{12,},12);//12
+		 animates.setComboFrame(new int[]{13,},13);//13
+		 animates.setComboFrame(new int[]{14,},14);//14
+		 animates.setComboFrame(new int[]{15,},15);//15
+		 animates.setComboFrame(new int[]{16,},16);//16
+		 animates.setComboFrame(new int[]{17,18,19,20,},17);//17
+		 animates.setComboFrame(new int[]{18,19,20,17,},18);//18
+		 animates.setComboFrame(new int[]{19,20,17,18,},19);//19
+		 animates.setComboFrame(new int[]{20,17,18,19,},20);//20
+		 animates.setComboFrame(new int[]{21,22,23,24,},21);//21
+		 animates.setComboFrame(new int[]{22,23,24,21,},22);//22
+		 animates.setComboFrame(new int[]{23,24,21,22,},23);//23
+		 animates.setComboFrame(new int[]{24,21,22,23,},24);//24
 		
 		
 		short[][] tileMatrix = new short[][]{
-			{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
-{1,2,2,2,2,2,2,2,2,3,2,3,2,2,3,3,2,2,3,4,5,6,2,3,2,3,3,2,2,2,2,2,2,2,2,2,2,2,2,4,},
-{1,2,7,2,2,2,2,2,2,2,2,2,2,2,2,2,3,2,2,4,5,6,2,2,3,2,2,2,2,7,2,2,7,7,2,2,3,3,2,4,},
-{1,2,7,2,2,2,7,2,2,2,2,7,2,2,7,7,7,2,2,4,5,6,3,2,2,3,3,7,2,2,2,7,2,2,3,2,2,3,2,4,},
-{1,2,-12,3,2,-13,2,2,-14,3,2,-15,2,3,-12,2,2,-13,3,4,5,6,2,-14,3,7,-15,7,2,-12,4,5,5,1,2,2,2,8,5,5,},
-{1,2,-16,2,2,-17,2,2,-18,3,3,-19,2,2,-16,2,3,-17,2,4,5,6,2,-18,7,2,-19,2,7,-16,2,8,6,2,2,2,2,2,2,4,},
-{1,2,2,2,2,3,2,2,2,3,2,3,2,3,3,2,2,2,3,4,5,6,2,3,2,2,7,2,3,2,2,8,6,3,2,7,3,2,3,4,},
-{1,3,7,7,2,2,2,2,2,2,2,2,2,3,2,3,2,2,2,4,5,6,2,2,3,2,3,2,3,2,2,8,6,3,2,2,2,3,2,4,},
-{1,2,2,2,2,4,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,1,2,2,7,8,5,5,5,5,1,3,2,4,},
-{1,2,2,2,2,2,3,2,2,2,2,2,2,3,2,2,2,2,2,4,5,6,2,3,2,2,2,3,2,2,2,8,6,2,2,2,2,2,2,4,},
-{1,3,2,2,2,2,2,2,7,2,2,2,2,3,3,2,2,3,2,4,5,6,2,3,3,2,2,2,2,3,2,8,6,2,2,2,7,2,2,4,},
-{1,2,2,10,11,2,2,2,2,10,11,3,2,2,2,10,11,2,2,4,5,6,2,2,3,7,3,2,10,11,2,8,6,2,7,3,2,2,2,4,},
-{1,2,3,2,2,2,2,2,3,3,2,3,7,7,3,2,3,2,2,4,5,6,3,2,3,3,2,2,3,7,2,8,6,2,3,8,5,5,5,5,},
-{1,2,2,3,3,2,7,7,2,2,3,2,2,2,2,2,2,2,2,4,5,6,2,2,2,2,2,3,2,2,3,8,6,2,3,2,2,2,3,4,},
-{1,3,3,2,3,2,7,2,2,2,2,2,7,3,2,2,2,7,2,4,5,6,2,2,2,2,7,2,2,2,2,8,6,2,3,3,7,7,2,4,},
-{2,2,3,10,11,2,7,2,2,10,11,2,2,7,2,10,11,3,2,4,5,6,2,3,3,8,5,5,5,5,5,5,6,10,11,3,2,3,3,4,},
-{3,2,2,2,2,2,2,3,2,2,2,2,3,7,2,3,3,2,2,3,3,3,2,2,7,2,2,2,2,3,2,8,6,3,2,2,2,3,2,3,},
-{3,2,2,2,2,2,2,2,3,2,2,7,7,2,2,3,2,3,2,2,2,2,2,2,2,2,3,3,2,3,2,8,6,2,2,2,7,3,2,2,},
-{5,5,5,5,5,5,5,5,1,3,3,2,2,2,2,2,2,3,2,2,2,3,3,3,3,3,3,3,3,2,8,5,6,2,3,3,2,2,3,2,},
-{5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,},
+			{0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,},
+{0,2,3,3,3,3,3,3,3,4,3,4,3,3,4,4,3,3,4,5,0,6,3,4,3,4,4,3,3,3,3,3,3,3,3,3,3,3,7,0,},
+{8,3,9,3,3,3,3,3,3,3,3,3,3,3,3,3,4,3,3,5,0,6,3,3,4,3,3,3,3,9,3,3,9,9,3,3,4,4,3,5,},
+{8,3,9,3,3,3,9,3,3,3,3,9,3,3,9,9,9,3,3,5,0,6,4,3,3,4,4,9,3,3,3,9,3,3,4,3,3,4,3,5,},
+{8,3,9,4,3,-17,3,3,-18,4,3,-19,3,4,-20,3,3,3,4,5,0,6,3,-18,4,9,-19,9,3,3,5,0,0,8,3,3,3,10,0,0,},
+{1,1,6,3,3,-21,3,3,-22,4,4,-23,3,3,-24,3,4,3,3,5,0,6,3,-22,9,3,-23,3,9,3,3,10,6,3,3,3,3,3,3,5,},
+{8,3,3,3,3,4,3,3,3,4,3,4,3,4,4,3,3,3,4,5,0,6,3,4,3,3,9,3,4,3,3,10,6,4,3,9,4,3,4,5,},
+{8,4,9,9,3,3,3,3,3,3,3,3,3,4,3,4,3,3,3,5,0,6,3,3,4,3,4,3,4,3,3,10,6,4,3,3,3,4,3,5,},
+{8,3,3,3,3,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,8,3,3,9,10,0,0,0,0,8,4,3,5,},
+{8,3,3,3,3,3,4,3,3,3,3,3,3,4,3,3,3,3,3,5,0,6,3,4,3,3,3,4,3,3,3,10,6,3,3,3,3,3,3,5,},
+{8,4,3,3,3,3,3,3,9,3,3,3,3,4,4,3,3,4,3,5,0,6,3,4,4,3,3,3,3,4,3,10,6,3,3,3,9,3,3,5,},
+{8,3,3,12,13,3,3,3,3,12,13,4,3,3,3,12,13,3,3,5,0,6,3,3,4,9,4,3,12,13,3,10,6,3,9,4,3,3,3,5,},
+{8,3,4,3,3,3,3,3,4,4,3,4,9,9,4,3,4,3,3,5,0,6,4,3,4,4,3,3,4,9,3,10,6,3,4,10,0,0,0,0,},
+{8,3,3,4,4,3,9,9,3,3,4,3,3,3,3,3,3,3,3,5,0,6,3,3,3,3,3,4,3,3,4,10,6,3,4,3,3,3,4,5,},
+{8,4,4,3,4,3,9,3,3,3,3,3,9,4,3,3,3,9,3,5,0,6,3,3,3,3,9,3,3,3,3,10,6,3,4,4,9,9,3,5,},
+{3,3,4,12,13,3,9,3,3,12,13,3,3,9,3,12,13,4,3,5,0,6,3,4,4,10,0,0,0,0,0,0,6,12,13,4,3,4,4,5,},
+{4,3,3,3,3,3,3,4,3,3,3,3,4,9,3,4,4,3,3,4,4,4,3,3,9,3,3,3,3,4,3,10,6,4,3,3,3,4,3,4,},
+{4,3,3,3,3,3,3,3,4,3,3,9,9,3,3,4,3,4,3,3,3,3,3,3,3,3,4,4,3,4,3,10,6,3,3,3,9,4,3,3,},
+{0,0,0,0,0,0,0,0,14,4,4,3,3,3,3,3,3,4,3,3,3,4,4,4,4,4,4,4,4,15,16,0,6,3,4,4,3,3,4,3,},
+{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,},
 
 		};
 		
@@ -332,20 +344,20 @@ public class ResesScript {
 	    if("rect"=="rect") collides.addCDRect(16, 15, 0, 1 , 16 );//rect//5
 		if("rect"=="line") collides.addCDLine(16, 15, 0, 16, 16);//rect//5
 		
-	    if("line"=="rect") collides.addCDRect(32, 1, 1, 16 , 16 );//line//6
-		if("line"=="line") collides.addCDLine(32, 1, 1, 15, 15);//line//6
+	    if("line"=="rect") collides.addCDRect(32, 0, 0, 16 , 16 );//line//6
+		if("line"=="line") collides.addCDLine(32, 0, 0, 15, 15);//line//6
 		
-	    if("line"=="rect") collides.addCDRect(64, 15, 1, 16 , 16 );//line//7
-		if("line"=="line") collides.addCDLine(64, 15, 1, 1, 15);//line//7
+	    if("line"=="rect") collides.addCDRect(64, 15, 0, 16 , 16 );//line//7
+		if("line"=="line") collides.addCDLine(64, 15, 0, 0, 15);//line//7
 		
 
 		short[][] flagMatrix = new short[][]{
 			{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,7,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,1,1,},
-{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
+{1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,},
 {1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1,1,1,1,0,0,1,},
@@ -358,7 +370,140 @@ public class ResesScript {
 {4,0,0,2,2,0,0,0,0,2,2,0,0,0,0,2,2,0,0,1,1,1,0,0,0,1,1,1,1,1,1,1,1,2,2,0,0,0,0,1,},
 {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,5,},
 {4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,5,},
-{1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,5,},
+{1,1,1,1,1,1,1,1,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,0,0,0,0,0,0,5,},
+{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+
+		};
+		
+	    CMap ret = new CMap(
+	            animates, 
+	            collides, 
+	            16, 16, 
+	            tileMatrix, 
+	            flagMatrix, 
+	            isAnimate,isCyc 
+	            );
+	
+	    return ret;
+	}
+	
+
+	// Map : Level_01 //MapTile00
+	final static public CMap createMap_Level_01(IImages tiles,boolean isAnimate,boolean isCyc){
+		
+		//40 x 20
+		
+		// tiles
+	    CAnimates animates = new CAnimates(16,tiles);
+	     animates.addPart(0,0,14,2);//0
+		 animates.addPart(0,0,13,0);//1
+		 animates.addPart(0,0,0,2);//2
+		 animates.addPart(0,0,12,0);//3
+		 animates.addPart(0,0,14,0);//4
+		 animates.addPart(0,0,0,0);//5
+		 animates.addPart(0,0,4,0);//6
+		 animates.addPart(0,0,1,0);//7
+		 animates.addPart(0,0,5,0);//8
+		 animates.addPart(0,0,6,0);//9
+		 animates.addPart(0,0,7,0);//10
+		 animates.addPart(0,0,32,2);//11
+		 animates.addPart(0,0,32,0);//12
+		 animates.addPart(0,0,32,4);//13
+		 animates.addPart(0,0,5,2);//14
+		 animates.addPart(0,0,4,2);//15
+		
+		
+	    animates.setFrames(new int[16][]);
+	     animates.setComboFrame(new int[]{0,},0);//0
+		 animates.setComboFrame(new int[]{1,},1);//1
+		 animates.setComboFrame(new int[]{2,},2);//2
+		 animates.setComboFrame(new int[]{3,},3);//3
+		 animates.setComboFrame(new int[]{4,},4);//4
+		 animates.setComboFrame(new int[]{5,},5);//5
+		 animates.setComboFrame(new int[]{6,},6);//6
+		 animates.setComboFrame(new int[]{7,},7);//7
+		 animates.setComboFrame(new int[]{8,},8);//8
+		 animates.setComboFrame(new int[]{9,},9);//9
+		 animates.setComboFrame(new int[]{10,},10);//10
+		 animates.setComboFrame(new int[]{11,},11);//11
+		 animates.setComboFrame(new int[]{12,},12);//12
+		 animates.setComboFrame(new int[]{13,},13);//13
+		 animates.setComboFrame(new int[]{14,},14);//14
+		 animates.setComboFrame(new int[]{15,},15);//15
+		
+		
+		short[][] tileMatrix = new short[][]{
+			{0,0,1,2,2,2,3,0,0,0,0,0,0,0,0,0,0,0,0,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,},
+{1,5,5,6,5,7,7,5,5,6,5,8,5,5,5,7,7,6,8,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,},
+{1,5,5,9,10,6,5,5,5,8,8,7,5,8,6,6,5,5,5,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,},
+{1,5,6,5,5,8,5,6,7,5,5,7,6,5,8,5,5,5,5,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,11,4,},
+{1,6,5,5,7,7,8,8,5,5,6,5,6,6,6,5,6,6,6,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,11,0,4,},
+{4,12,7,5,5,7,5,6,5,6,8,5,5,5,6,5,5,6,5,3,4,4,4,4,12,5,5,5,5,5,5,5,5,5,5,5,11,0,0,4,},
+{4,4,4,4,4,4,4,1,5,5,6,6,3,4,4,4,4,4,4,4,4,4,4,4,4,12,5,5,5,5,5,5,5,5,5,11,0,0,0,4,},
+{1,5,6,8,7,8,7,6,8,7,8,8,8,8,8,6,5,8,13,4,4,4,4,4,4,4,12,5,5,5,5,5,5,5,7,0,0,0,0,4,},
+{1,6,8,7,6,8,6,5,6,8,7,8,8,8,5,5,8,5,8,3,4,4,4,4,4,4,4,12,5,5,5,5,5,5,5,5,5,5,5,4,},
+{1,5,6,5,7,5,7,6,8,7,5,6,5,8,5,6,6,8,7,3,1,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,4,},
+{1,8,7,7,8,6,6,8,3,4,4,4,0,0,0,0,0,0,0,4,1,5,5,5,5,5,8,8,5,5,5,5,11,12,5,5,5,5,5,4,},
+{1,8,5,7,8,8,5,8,5,5,5,6,8,8,5,5,5,5,5,3,1,5,5,5,5,5,5,5,5,5,5,11,4,4,12,5,5,5,5,4,},
+{1,8,6,5,8,8,5,6,5,5,5,8,6,7,5,5,5,6,5,3,1,5,5,5,5,5,5,5,5,5,11,4,4,4,4,12,5,5,5,4,},
+{1,8,11,12,6,5,5,8,5,8,5,7,8,8,8,5,8,5,11,4,1,5,5,5,5,5,5,5,5,11,4,4,4,4,4,4,12,5,5,4,},
+{4,4,4,4,4,4,4,1,5,8,8,8,3,4,4,4,4,4,4,4,1,5,5,5,5,14,11,0,0,0,4,0,0,4,4,0,0,0,0,4,},
+{1,6,8,6,7,7,7,5,5,6,5,5,7,5,6,5,5,5,5,3,1,5,5,5,5,11,0,0,0,0,0,0,0,0,0,0,0,0,0,4,},
+{15,5,7,8,6,5,5,5,8,6,5,5,5,5,5,5,8,7,5,15,5,5,5,5,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,},
+{8,5,5,5,6,5,5,5,11,4,4,12,5,5,6,5,6,5,8,8,5,5,5,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,},
+{8,6,5,5,5,8,11,4,4,4,4,4,4,12,8,8,5,5,5,6,5,5,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,4,},
+{4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,},
+
+		};
+		
+		// cds
+		CCollides collides = new CCollides(8);
+	    
+	    if("rect"=="rect") collides.addCDRect(0, 0, 0, 16 , 16 );//rect//0
+		if("rect"=="line") collides.addCDLine(0, 0, 0, 16, 16);//rect//0
+		
+	    if("rect"=="rect") collides.addCDRect(1, 0, 0, 16 , 16 );//rect//1
+		if("rect"=="line") collides.addCDLine(1, 0, 0, 16, 16);//rect//1
+		
+	    if("rect"=="rect") collides.addCDRect(2, 0, 0, 16 , 1 );//rect//2
+		if("rect"=="line") collides.addCDLine(2, 0, 0, 16, 16);//rect//2
+		
+	    if("rect"=="rect") collides.addCDRect(4, 0, 15, 16 , 1 );//rect//3
+		if("rect"=="line") collides.addCDLine(4, 0, 15, 16, 16);//rect//3
+		
+	    if("rect"=="rect") collides.addCDRect(8, 0, 0, 1 , 16 );//rect//4
+		if("rect"=="line") collides.addCDLine(8, 0, 0, 16, 16);//rect//4
+		
+	    if("rect"=="rect") collides.addCDRect(16, 15, 0, 1 , 16 );//rect//5
+		if("rect"=="line") collides.addCDLine(16, 15, 0, 16, 16);//rect//5
+		
+	    if("line"=="rect") collides.addCDRect(32, 0, 0, 16 , 16 );//line//6
+		if("line"=="line") collides.addCDLine(32, 0, 0, 15, 15);//line//6
+		
+	    if("line"=="rect") collides.addCDRect(64, 15, 0, 16 , 16 );//line//7
+		if("line"=="line") collides.addCDLine(64, 15, 0, 0, 15);//line//7
+		
+
+		short[][] flagMatrix = new short[][]{
+			{1,1,1,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,2,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,},
+{1,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,6,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,},
+{1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,6,0,0,0,0,0,0,0,0,0,7,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6,1,1,1,1,1,1,1,6,0,0,0,0,0,0,0,0,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,6,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,7,6,0,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,7,1,1,6,0,0,0,0,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,7,1,1,1,1,6,0,0,0,1,},
+{1,0,7,6,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,0,0,0,0,0,0,0,0,7,1,1,1,1,1,1,6,0,0,1,},
+{1,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1,1,1,1,0,0,0,0,0,7,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{4,0,0,0,0,0,0,0,7,1,1,6,0,0,0,0,0,0,0,0,0,0,0,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
+{4,0,0,0,0,0,7,1,1,1,1,1,1,6,0,0,0,0,0,0,0,0,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,},
 
 		};
@@ -864,6 +1009,9 @@ public class ResesScript {
 	final public static String map_Level_00 = "Level_00";
 	
 
+	final public static String map_Level_01 = "Level_01";
+	
+
 	
 	
 	final public static String spr_Actor00 = "Actor00";
@@ -902,6 +1050,11 @@ public class ResesScript {
 		}
 	
 
+		if(key=="Level_01"){
+			return createMap_Level_01(tiles,isAnimate,isCyc);
+		}
+	
+
 		return null;
 	}
 	
@@ -931,11 +1084,16 @@ public class ResesScript {
 	final static public String[] WorldNames = new String[]{
 	 "Level_00",
 	
+ "Level_01",
+	
 
 	};
 
 	 
 	final public static String world_Level_00 = "Level_00";
+	
+ 
+	final public static String world_Level_01 = "Level_01";
 	
 
 	
@@ -1054,6 +1212,97 @@ public class ResesScript {
 			level.MapTile = "MapTile00";    // map tile name
 			level.MapType = "Level_00"; // map type 
 			level.MapInfo = "M000_Level_00";     // map info form editor
+			//level.Map = new Map();
+			
+			
+		}
+	
+
+		// World : Level_01
+		if(name=="Level_01"){
+		
+			// World Size
+			level.Width  = 320 ;
+			level.Height = 320;
+			
+			// WayPoint
+			// waypoint count : 0
+			CWayPoint[] WayPoints = new CWayPoint[0];
+			
+			// waypoint link 
+			
+			level.WayPoints = WayPoints;
+			
+			//IImages tile ;
+		
+			// Sprite
+			level.SprsTile = new String[6];
+			level.SprsType = new String[6];
+			level.SprsInfo = new String[6];
+			level.SprsX    = new int[6];
+			level.SprsY    = new int[6];
+			// sprite count : 6
+			 
+			level.SprsTile[0] = "Actor00";    // sprite tile name
+			level.SprsType[0] = "Actor00"; // sprite type
+			level.SprsInfo[0] = "S002_Actor00";     // sprite info form editor
+			level.SprsX[0]    = 27;          // sprite xpos form editor
+			level.SprsY[0]    = 303;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
+			level.SprsType[1] = "e00_zombi"; // sprite type
+			level.SprsInfo[1] = "S001_e00_zombi";     // sprite info form editor
+			level.SprsX[1]    = 292;          // sprite xpos form editor
+			level.SprsY[1]    = 303;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
+			level.SprsType[2] = "e00_zombi"; // sprite type
+			level.SprsInfo[2] = "S003_e00_zombi";     // sprite info form editor
+			level.SprsX[2]    = 162;          // sprite xpos form editor
+			level.SprsY[2]    = 271;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
+			level.SprsType[3] = "e00_zombi"; // sprite type
+			level.SprsInfo[3] = "S004_e00_zombi";     // sprite info form editor
+			level.SprsX[3]    = 242;          // sprite xpos form editor
+			level.SprsY[3]    = 303;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
+			level.SprsType[4] = "e00_zombi"; // sprite type
+			level.SprsInfo[4] = "S005_e00_zombi";     // sprite info form editor
+			level.SprsX[4]    = 75;          // sprite xpos form editor
+			level.SprsY[4]    = 303;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
+			level.SprsType[5] = "e00_zombi"; // sprite type
+			level.SprsInfo[5] = "S006_e00_zombi";     // sprite info form editor
+			level.SprsX[5]    = 47;          // sprite xpos form editor
+			level.SprsY[5]    = 191;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			
+			
+			// Map
+			 
+			level.MapTile = "MapTile00";    // map tile name
+			level.MapType = "Level_01"; // map type 
+			level.MapInfo = "M000_Level_01";     // map info form editor
 			//level.Map = new Map();
 			
 			

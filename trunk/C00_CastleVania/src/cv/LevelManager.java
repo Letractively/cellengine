@@ -3,11 +3,16 @@ package cv;
 import java.util.Hashtable;
 import java.util.Vector;
 
+import javax.microedition.lcdui.Graphics;
+import javax.microedition.lcdui.Image;
+
+import com.cell.AScreen;
 import com.cell.IImages;
 import com.cell.game.CCamera;
 import com.cell.game.CMap;
 import com.cell.game.CSprite;
 import com.cell.game.CWorld;
+import com.cell.hud.CTextBox;
 
 import cv.unit.Unit;
 
@@ -33,14 +38,16 @@ public class LevelManager extends CWorld {
 	public String MapType;
 	public String MapInfo;
 
-	Hashtable UnitTable;
+	public Hashtable UnitTable;
 	
 	Vector UnitTeam0 = new Vector();
 	Vector UnitTeam1 = new Vector();
+	Vector UnitTeam2 = new Vector();
 	
-	public void init(Hashtable unitTable){
+	public Unit	Actor;
+
+	public void init(){
 		try{
-		UnitTable = unitTable;
 			
 //		 create tile bank
 		IImages tile;
@@ -61,14 +68,7 @@ public class LevelManager extends CWorld {
 		}
 		
 //		create sprs 	
-//		Hashtable sprTable = new Hashtable();
 		for(int i=0;i<SprsType.length;i++){
-//			CSprite spr = (CSprite)sprTable.get(SprsType[i]);
-//			if( spr == null ){
-//				spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
-//				sprTable.put(SprsType[i], spr);
-//				println(" create sprite : " + SprsType[i]);
-//			}
 			CSprite spr = ResesScript.createSprite(SprsType[i],(IImages)tileTable.get(SprsTile[i]));
 
 			try{
@@ -82,14 +82,30 @@ public class LevelManager extends CWorld {
 				ai.Y = SprsY[i];
 				ai.HPos256 = ai.X * 256 ;
 				ai.VPos256 = ai.Y * 256 ;
+				
+				ai.world = this;
+				
 				switch(ai.Team){
-				case 0:UnitTeam0.addElement(ai);break;
-				case 1:UnitTeam1.addElement(ai);break;
+				case Unit.TEAM_ACTOR:
+					UnitTeam0.addElement(ai);
+					Actor = ai;
+					break;
+				case Unit.TEAM_ENEMY:
+					UnitTeam1.addElement(ai);
+					break;
+				case Unit.TEAM_ITEM:
+					UnitTeam2.addElement(ai);
+					break;
 				}
+				
 				this.addSprite(ai);
 				
 				print("AI OK : " );
 			}catch(Exception err){
+				spr.X = SprsX[i];
+				spr.Y = SprsY[i];
+				spr.HPos256 = spr.X * 256 ;
+				spr.VPos256 = spr.Y * 256 ;
 				this.addSprite(spr);
 				print("Error : " + err.getMessage() + " : ");
 			}
@@ -102,6 +118,11 @@ public class LevelManager extends CWorld {
 		this.setMap(map);
 		
 //		create camera
+		WindowX = 0;
+		WindowY = 0;
+		WindowW = AScreen.SCREEN_WIDTH;
+		WindowH = AScreen.SCREEN_HEIGHT;
+		
 		CCamera camera = new CCamera(
 				WindowX,
 				WindowY,
@@ -116,36 +137,94 @@ public class LevelManager extends CWorld {
 		}
 	}
 
+	
 	public void update() {
-		for(int i=UnitTeam0.size()-1;i>=0;i--){
-			for(int j=UnitTeam1.size()-1;j>=0;j--){
-				Unit t0 = (Unit)UnitTeam0.elementAt(i);
-				Unit t1 = (Unit)UnitTeam1.elementAt(j);
+		if(CTextBox.isShown()){
+			if(!CTextBox.isTransition()){
+				if(AScreen.isKeyDown(AScreen.KEY_ANY)){
+					if(CTextBox.vScroll(CTextBox.getTextHeight())){
+						CTextBox.closeTextBox();
+					}
+				}
+			}
+			
+		}else{
+			processCamera();
+			processActorDamage();
+			super.update();
+		}
+	}
+	
+
+	public void render(Graphics g) {
+		super.render(g);
+		CTextBox.render(g);
+	}
+	
+	
+	private void processCamera(){
+		int cdx = Actor.X - (getCamera().getX() + getCamera().getWidth() /2);
+    	int cdy = Actor.Y - (getCamera().getY() + getCamera().getHeight()/2);
+    	getCamera().mov(cdx/4,cdy/4);
+	}
+	
+	private void processActorDamage(){
+		
+		for(int i=UnitTeam1.size()-1;i>=0;i--){
+			Unit t0 = Actor;
+			Unit t1 = (Unit)UnitTeam1.elementAt(i);
+			
+			if( t0.OnScreen && t1.OnScreen && //
+				t0.Active   && t1.Active   ){ //
 				
-				if( t0.OnScreen && t1.OnScreen && //
-					t0.Active   && t1.Active   ){ //
-					
-					if(CSprite.touch_Spr_Spr(
-							t0, CSprite.CD_TYPE_ATK, 
-							t1, CSprite.CD_TYPE_DEF )){
-						t0.attack(t1);
-						t1.damage(t0);
-					}
-					
-					if(CSprite.touch_Spr_Spr(
-							t1, CSprite.CD_TYPE_ATK, 
-							t0, CSprite.CD_TYPE_DEF )){
-						t1.attack(t0);
-						t0.damage(t1);
-					}
+				if(CSprite.touch_Spr_Spr(
+						t0, CSprite.CD_TYPE_ATK, 
+						t1, CSprite.CD_TYPE_DEF )){
+					t0.attack(t1);
+					t1.damage(t0);
+				}
+				
+				if(CSprite.touch_Spr_Spr(
+						t1, CSprite.CD_TYPE_ATK, 
+						t0, CSprite.CD_TYPE_DEF )){
+					t1.attack(t0);
+					t0.damage(t1);
 				}
 			}
 		}
 		
-		super.update();
+		for(int i=UnitTeam2.size()-1;i>=0;i--){
+			Unit t0 = Actor;
+			Unit t1 = (Unit)UnitTeam2.elementAt(i);
+			
+			if( t0.OnScreen && t1.OnScreen && //
+				t0.Active   && t1.Active   ){ //
+				
+				if(CSprite.touch_Spr_Spr(
+						t1, CSprite.CD_TYPE_ATK, 
+						t0, CSprite.CD_TYPE_DEF )){
+					t1.attack(t0);
+					t0.damage(t1);
+				}
+			}
+		
+		}
 	}
-	
-	
+
+	public void showMessage(String msg,Image icon,boolean isLeft){
+		if(icon!=null){
+			CTextBox.IconX = isLeft ? 0 : getCamera().getWidth() - icon.getWidth();
+			CTextBox.IconY = -icon.getHeight();
+		}
+		CTextBox.showTextBox(
+				msg, 
+				icon, 
+				getCamera().WindowX, 
+				getCamera().WindowY + getCamera().getHeight()*3/4, 
+				getCamera().getWidth(), 
+				getCamera().getHeight()/4
+				);
+	}
 	
 }
 
