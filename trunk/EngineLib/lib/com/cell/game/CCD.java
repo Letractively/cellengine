@@ -90,7 +90,7 @@ public class CCD extends CObject{
 			g.drawLine(px + X1, py + Y1, px + X2, py + Y2 );
 			break;
 		case CD_TYPE_RECT:
-			g.drawRect(px + X1, py + Y1, X2 - X1 - 1, Y2 - Y1 - 1);
+			g.drawRect(px + X1, py + Y1, X2 - X1 , Y2 - Y1 );
 			break;
 		}
 	}
@@ -113,8 +113,8 @@ public class CCD extends CObject{
 
 		ret.X1 = (short) x;
 		ret.Y1 = (short) y;
-		ret.X2 = (short)(x + w);
-		ret.Y2 = (short)(y + h);
+		ret.X2 = (short)(x + w-1);
+		ret.Y2 = (short)(y + h-1);
 		return ret;
 	}
 
@@ -332,31 +332,6 @@ public class CCD extends CObject{
 		return false;
 	}
 
-//	/**
-//	 * 判断2个矩形是否相撞</br>
-//	 * 
-//	 * 第一个矩形</br>
-//	 * @param sx 
-//	 * @param sy
-//	 * @param sw
-//	 * @param sh
-//	 * 第二个矩形</br>
-//	 * @param dx 
-//	 * @param dy
-//	 * @param dw
-//	 * @param dh
-//	 * @return false:true 是否相撞</br>
-//	 */
-//	final static public boolean cdRectSize(
-//			int sx, int sy, int sw, int sh, 
-//			int dx, int dy, int dw, int dh) {
-//		if (sx+sw <= dx)		return false;
-//		if (sx >= dx+dw)		return false;
-//		if (sy+sh <= dy)		return false;
-//		if (sy >= dy+dh)		return false;
-//		return true;
-//	}
-	
 	/**
 	 * 判断2个矩形是否相撞</br>
 	 * 第一个矩形</br>
@@ -374,10 +349,10 @@ public class CCD extends CObject{
 	final static public boolean cdRect(
 			int sx1, int sy1, int sx2, int sy2, 
 			int dx1, int dy1, int dx2, int dy2) {
-		if (sx2 <= dx1)		return false;
-		if (sx1 >= dx2)		return false;
-		if (sy2 <= dy1)		return false;
-		if (sy1 >= dy2)		return false;
+		if (sx2 < dx1)		return false;
+		if (sx1 > dx2)		return false;
+		if (sy2 < dy1)		return false;
+		if (sy1 > dy2)		return false;
 		return true;
 	}
 
@@ -398,10 +373,10 @@ public class CCD extends CObject{
 	final static public boolean cdRectPoint(
 			int sx1, int sy1, int sx2, int sy2, 
 			int dx, int dy) {
-		if (sx2 <= dx)		return false;
-		if (sx1 >= dx)		return false;
-		if (sy2 <= dy)		return false;
-		if (sy1 >= dy)		return false;
+		if (sx2 < dx)		return false;
+		if (sx1 > dx)		return false;
+		if (sy2 < dy)		return false;
+		if (sy1 > dy)		return false;
 		return true;
 	}
 }

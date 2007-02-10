@@ -25,6 +25,9 @@ public class CTextBox extends CObject {
 	static protected int TextH ;
 	
 	//icon
+	static public int IconX = 0;
+	static public int IconY = 0;
+	static public int IconAnchor = 0;
 	static protected Image Icon ;
 	static public Image IconPush ;
 	
@@ -52,13 +55,13 @@ public class CTextBox extends CObject {
 	static protected int VScrollValue;
 	
 	
-	static protected boolean TransitionOpen ;
-	static protected boolean TransitionClose ;
+	static protected boolean TransitionOpen  = false;
+	static protected boolean TransitionClose = false;
 	static protected int TransitionTime = 0 ;
 	static public int TransitionSpeed = 4;
 	
 	
-	static public void setTextBox(
+	static public void showTextBox(
 			String msg,
 			Image icon,
 			int x,int y,int w,int h
@@ -77,11 +80,6 @@ public class CTextBox extends CObject {
 		TextY = Y + BorderSize;
 		TextW = W - BorderSize - BorderSize - VScrollSize;
 		TextH = H - BorderSize - BorderSize ;
-
-		if(Icon!=null){
-			TextX += (Icon.getWidth() + BorderSize);
-			TextW -= (Icon.getWidth() + BorderSize);
-		}
 		
 		VScrollMax = 0;
 		VScrollMin = 0;
@@ -95,11 +93,6 @@ public class CTextBox extends CObject {
 				sub = new StringBuffer();
 				continue;
 			}
-//			if(msg.substring(i,i+1).equals("\r")){
-//				Texts.addElement(sub.toString());
-//				sub = new StringBuffer();
-//				continue;
-//			}
 			if (TextFont.stringWidth(sub.toString()+msg.substring(i,i+1)) >= TextW){
 				Texts.addElement(sub.toString());
 				sub = new StringBuffer();
@@ -114,15 +107,12 @@ public class CTextBox extends CObject {
 		VScrollMax = Math.max(TextFont.getHeight()*Texts.size()-TextH,0);
 		VLineCount = TextH/TextFont.getHeight() + 2;
 	
-		
-		
 		if(BodyAlphaColor==null || BodyAlphaColor.length!=W){
 			BodyAlphaColor = new int[W];
 			for(int i=0;i<W;i++){
 				BodyAlphaColor[i] = (BodyColor&0x00ffffff)|0x80000000;
 			}
 		}
-		
 		
 		TransitionSpeed = H / 4 ;
 		TransitionOpen = true;
@@ -136,6 +126,10 @@ public class CTextBox extends CObject {
 		TransitionSpeed = H / 4 ;
 		TransitionClose = true;
 		TransitionTime = 0;
+	}
+	
+	static public int getTextHeight(){
+		return TextFont.getHeight();
 	}
 	
 	static public boolean vScroll(int d){
@@ -152,9 +146,7 @@ public class CTextBox extends CObject {
 	}
 	
 	
-	static public void showTextBox(Graphics g){
-
-
+	static public void render(Graphics g){
 		if(TransitionOpen){
 			TransitionTime+=TransitionSpeed;
 			if(TransitionTime>=H){
@@ -225,7 +217,11 @@ public class CTextBox extends CObject {
 			
 			// icon
 			if(Icon!=null){
-				g.drawImage(Icon, X+BorderSize, Y+BorderSize, 0);
+				g.drawImage(
+						Icon, 
+						X+IconX, 
+						Y+IconY, 
+						IconAnchor);
 			}
 			// text
 			g.setFont(TextFont);
@@ -277,7 +273,9 @@ public class CTextBox extends CObject {
 		return TransitionOpen||TransitionClose||!Texts.isEmpty();
 	}
 	
-	
+	static public boolean isTransition(){
+		return TransitionOpen||TransitionClose ;
+	}
 	
 	
 	
