@@ -23,7 +23,7 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 	public String 	Type;//精灵在精灵编辑器中的类型
 	public String 	Info;//精灵在场景编辑器里的信息
 	public int 		Team ;//精灵敌我判断的标志
-	public LevelManager world;
+	
 	
 	
 	public int HP 		= 100;
@@ -34,6 +34,8 @@ abstract public class Unit extends CSprite implements IState , IParticleLauncher
 	
 	public CParticleSystem Effect;
 	public boolean IsIncline = false;
+	
+	public LevelManager world;
 	
 	
 	public Unit(){
