@@ -207,7 +207,6 @@ public class LevelManager extends CWorld {
 					t0.damage(t1);
 				}
 			}
-		
 		}
 	}
 
