@@ -1,10 +1,9 @@
 package game.unit;
 
-import com.morefuntek.cell.Game.CAnimates;
-import com.morefuntek.cell.Game.CCD;
-import com.morefuntek.cell.Game.CCollides;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.game.ai.*;
+import com.cell.particle.*;
 
 public class UnitTower extends CSprite implements IState {
 

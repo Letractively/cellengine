@@ -1,12 +1,9 @@
 package game.unit;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CCD;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CWayPoint;
-import com.morefuntek.cell.Game.IState;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.game.ai.*;
+import com.cell.particle.*;
 
 public class UnitEnemy extends CSprite implements IState  {
 
@@ -90,7 +87,6 @@ public class UnitEnemy extends CSprite implements IState  {
 				PrewWayPoint = NextWayPoint;
 				NextWayPoint = NextWayPoint.getNextPoint((id+1)%NextWayPoint.getNextCount());
 			}
-			
 		}
 	}
 	public boolean isEndMove(){
@@ -106,7 +102,7 @@ public class UnitEnemy extends CSprite implements IState  {
 		DirectY = NextWayPoint.Y - Y;
 	
 		if(DirectX == 0 && DirectY == 0){
-			setCurrentFrame(2, getCurrentFrame());
+			setCurrentFrame(0, getCurrentFrame());
 		}else if(DirectY < 0 ){
 			setCurrentFrame(0, getCurrentFrame());
 		}else if(DirectY > 0){

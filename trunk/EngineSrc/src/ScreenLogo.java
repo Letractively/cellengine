@@ -2,7 +2,7 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import com.morefuntek.cell.Game.AScreen;
+import com.cell.AScreen;
 
 
 
@@ -19,8 +19,6 @@ final public class ScreenLogo extends AScreen {
     int index = 0 ;
     
     private String[] list = new String[]{
-    		"ScreenMain",
-    		"ScreenMain2",
     		"ScreenTD_Main",
     };
     
@@ -34,15 +32,15 @@ final public class ScreenLogo extends AScreen {
 	public void notifyLogic() {
 		if(isKeyHold(KEY_0)){AScreen.ExitGame = true;}
 		
-		if(isKeyDown(KEY_DOWN)){
+		if(isKeyDown(KEY_8)){
 			index ++;
 			if(index>=list.length-1)index = list.length - 1;
 		}
-		if(isKeyDown(KEY_UP)){
+		if(isKeyDown(KEY_2)){
 			index --;
 			if(index<0)index = 0;
 		}
-		if(isKeyDown(KEY_C)){
+		if(isKeyDown(KEY_5)){
 			if(!isTransition()){
 				ChangeSubScreen(list[index]);
 			}

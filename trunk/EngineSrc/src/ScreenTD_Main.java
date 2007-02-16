@@ -5,15 +5,10 @@ import game.unit.UnitTower;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CImages20;
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.IImages;
-import com.morefuntek.cell.Game.CCamera;
-import com.morefuntek.cell.Game.CMap;
-import com.morefuntek.cell.Game.AScreen;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.CWorld;
-import com.morefuntek.cell.Game.CWorldMini;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.game.ai.*;
+import com.cell.particle.*;
 
 //继承抽象类CScreen并实现其中的方法
 public class ScreenTD_Main extends AScreen {
@@ -23,12 +18,11 @@ public class ScreenTD_Main extends AScreen {
 	CMap 		map;
 	CCamera 	cam;
 	
-	UnitEnemy 	enemys[]	= new UnitEnemy[32];
-	UnitTower	towers[]	= new UnitTower[32];
-	UnitShoot	shoots[]	= new UnitShoot[32];
+	UnitEnemy 	enemys[]	= new UnitEnemy[8];
+	UnitTower	towers[]	= new UnitTower[4];
+	UnitShoot	shoots[]	= new UnitShoot[8];
 	CSprite		point;
 	
-	CWorldMini	worldMini;
 	
 	public ScreenTD_Main(){
 
@@ -38,11 +32,11 @@ public class ScreenTD_Main extends AScreen {
        	FrameDelay = 25;
        	
        	// res
-       	IImages mapTile = new CImages20();
-       	IImages sprTile = new CImages20();
-       	IImages guiTile = new CImages20();
-       	IImages towerTile = new CImages20();
-       	IImages shootTile = new CImages20();
+       	IImages mapTile = new CTiles20();
+       	IImages sprTile = new CTiles20();
+       	IImages guiTile = new CTiles20();
+       	IImages towerTile = new CTiles20();
+       	IImages shootTile = new CTiles20();
        	ResesScript.buildClipImages_MapTile(mapTile);
        	ResesScript.buildClipImages_SprTile(sprTile);
        	ResesScript.buildClipImages_GUITile(guiTile);
@@ -54,7 +48,7 @@ public class ScreenTD_Main extends AScreen {
        	
        	// spr type
        	CSprite enemy ;
-       	switch(Math.abs(Random.nextInt()%8)){
+       	switch(Math.abs(Random.nextInt()%4)){
        	case 0: enemy = ResesScript.createSprite_Enemy00(sprTile);break;
        	case 1: enemy = ResesScript.createSprite_Enemy01(sprTile);break;
        	case 2: enemy = ResesScript.createSprite_Enemy02(sprTile);break;
@@ -77,7 +71,7 @@ public class ScreenTD_Main extends AScreen {
        	
        	// world
        	world = new world_Level00();
-    	((world_Level00)world).Map0000_Map00 = map;// setmap
+    	((world_Level00)world).Map00 = map;// setmap
     	((world_Level00)world).setCamera(cam);//set camera
        	((world_Level00)world).initPath();// init path
        	((world_Level00)world).initUnit();
@@ -109,22 +103,16 @@ public class ScreenTD_Main extends AScreen {
     	world.addSprites(towers);
     	world.addSprite(point);
 
-    	worldMini = new CWorldMini(
-       			world,
-       			cam.getWidth()/2,
-       			cam.getHeight()/4,
-       			2,2,
-       			8+8*16,
-       			0);
+
     	
        	resetTimer();
 	}
 	
 	public void notifyLogic() {
-    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
-        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
-    	if(isKeyDown(KEY_A)){ChangeSubScreen("ScreenLogo");}
-    	if(isKeyDown(KEY_B)){AScreen.ExitGame = true;}
+//    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
+//        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
+//    	if(isKeyDown(KEY_0)){ChangeSubScreen("ScreenLogo");}
+    	if(isKeyDown(KEY_0)){AScreen.ExitGame = true;}
     	
 //    	if(isKeyDown(KEY_0)){
 //    		println("");
@@ -140,7 +128,6 @@ public class ScreenTD_Main extends AScreen {
     	processEnemys();
     	processTowers();
     	processShoots();
-    	processMiniMap();
     	
     	int cdx = point.X - (cam.getX() + cam.getWidth() /2);
     	int cdy = point.Y - (cam.getY() + cam.getHeight()/2);
@@ -155,7 +142,6 @@ public class ScreenTD_Main extends AScreen {
         //clearScreenAndClip(g,0xff000000);
 
         world.render(g);
-        worldMini.render(g, 1, -1 + SCREEN_HEIGHT - worldMini.getHeight());
         
         showFPS(g, 1, 1, 0xffffffff);
 
@@ -178,7 +164,7 @@ public class ScreenTD_Main extends AScreen {
 			
 		}
 		
-    	if(isKeyDown(KEY_C)){
+    	if(isKeyDown(KEY_5)){
     		for(int i=0;i<towers.length;i++){
     			if(!towers[i].Active){
     				int bx = point.X/map.getCellW();
@@ -201,33 +187,33 @@ public class ScreenTD_Main extends AScreen {
     	
     	
     	
-    	if(isKeyDown(KEY_UP)){
+    	if(isKeyDown(KEY_2)){
     		holdTime=10;
     	} 
-    	if(isKeyDown(KEY_DOWN)){
+    	if(isKeyDown(KEY_8)){
     		holdTime=10;
     	}
-    	if(isKeyDown(KEY_LEFT)){
+    	if(isKeyDown(KEY_4)){
     		holdTime=10;
     	}
-		if(isKeyDown(KEY_RIGHT)){
+		if(isKeyDown(KEY_6)){
 			holdTime=10;
 		}
 		
     	if(holdTime<0 || holdTime==10){
-	    	if(isKeyHold(KEY_UP)){
+	    	if(isKeyHold(KEY_2)){
 	    		if(point.Y>0)
 	    			point.tryMove(0, -map.getCellH());
 	    	} 
-	    	if(isKeyHold(KEY_DOWN)){
+	    	if(isKeyHold(KEY_8)){
 	    		if(point.Y<map.getHeight()-map.getCellH())
 	    			point.tryMove(0,  map.getCellH());
 	    	}
-	    	if(isKeyHold(KEY_LEFT)){
+	    	if(isKeyHold(KEY_4)){
 	    		if(point.X>0)
 	    			point.tryMove(-map.getCellW(), 0);
 	    	}
-			if(isKeyHold(KEY_RIGHT)){
+			if(isKeyHold(KEY_6)){
 				if(point.X<map.getWidth()-map.getCellW())
 					point.tryMove( map.getCellW(), 0);
 			}
@@ -274,35 +260,6 @@ public class ScreenTD_Main extends AScreen {
 //       	}
 	}
 	
-	int DColor = 0;
-	public void processMiniMap(){
-		
-		worldMini.X = point.X - worldMini.getWorldWidth()/2;
-		worldMini.Y = point.Y - worldMini.getWorldHeight()/2;
-		
-//		for(int i=0;i<world.getSpriteCount();i++){
-//		
-//		}
-		
-		
-		point.BackColor = 
-			0x7f000000
-			+(DColor<<16) 
-			+(DColor<<8) 
-			+(DColor<<0) 
-			;
-		
-		cam.BackColor = 
-			0x7f000000
-//			+(DColor<<16) 
-			+(DColor<<8) 
-//			+(DColor<<0) 
-			;
-		
-		DColor = CMath.sinTimes256(getTimer()*10%180);
-		if(DColor>0xff)DColor=0xff;
-		
-	}
 }
 
 
