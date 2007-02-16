@@ -1246,8 +1246,8 @@ public class ResesScript {
 			level.SprsTile[0] = "Actor00";    // sprite tile name
 			level.SprsType[0] = "Actor00"; // sprite type
 			level.SprsInfo[0] = "S002_Actor00";     // sprite info form editor
-			level.SprsX[0]    = 27;          // sprite xpos form editor
-			level.SprsY[0]    = 303;          // sprite ypos form editor
+			level.SprsX[0]    = 239;          // sprite xpos form editor
+			level.SprsY[0]    = 90;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
