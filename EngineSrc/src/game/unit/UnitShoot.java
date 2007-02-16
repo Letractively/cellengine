@@ -2,14 +2,10 @@ package game.unit;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.morefuntek.cell.CMath;
-import com.morefuntek.cell.Game.CAnimates;
-import com.morefuntek.cell.Game.CCollides;
-import com.morefuntek.cell.Game.CSprite;
-import com.morefuntek.cell.Game.IState;
-import com.morefuntek.cell.ParticleSystem.CParticle;
-import com.morefuntek.cell.ParticleSystem.CParticleSystem;
-import com.morefuntek.cell.ParticleSystem.IParticleLauncher;
+import com.cell.*;
+import com.cell.game.*;
+import com.cell.game.ai.*;
+import com.cell.particle.*;
 
 public class UnitShoot extends CSprite implements IState,IParticleLauncher{
 //	----------------------------------------------------------------------------------------------------

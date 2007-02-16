@@ -5,8 +5,8 @@
 // <OUTPUT>     ..\res\ResesScript.java
 // 
 
-import com.morefuntek.cell.*;
-import com.morefuntek.cell.Game.*;
+import com.cell.*;
+import com.cell.game.*;
 
 //--------------------------------------------------------------------------------------------------------------
 // resource trunk
@@ -25,7 +25,6 @@ public class ResesScript {
 		stuff.addTile(<X>,<Y>,<W>,<H>);//<INDEX> 
 		#<END CLIP>
 		
-		stuff.gc();
 	}
 	#<END IMAGES> 
 
@@ -42,7 +41,7 @@ public class ResesScript {
 		animates.addPart(0,0,<TILE>,<TRANS>);//<INDEX>
 		#<END SCENE PART>
 		
-	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    animates.setFrames(new int[<SCENE FRAME COUNT>][]);
 	    #<SCENE FRAME>
 	    animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 		#<END SCENE FRAME>
@@ -88,7 +87,7 @@ public class ResesScript {
 		animates.addPart(<X>,<Y>,<TILE>,<TRANS>);//<INDEX>
 		#<END SCENE PART>
 		
-	    animates.setFrame(new int[<SCENE FRAME COUNT>][]);
+	    animates.setFrames(new int[<SCENE FRAME COUNT>][]);
 	    #<SCENE FRAME>
 	    animates.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 		#<END SCENE FRAME>
@@ -103,7 +102,7 @@ public class ResesScript {
 	    collides.addCDLine(<MASK>, <X1>, <Y1>, <X2>, <Y2>);//<TYPE>//<INDEX>
 	    #<END CD PART>
 	    
-	    collides.setFrame(new int[<CD FRAME COUNT>][]);
+	    collides.setFrames(new int[<CD FRAME COUNT>][]);
 	    #<CD FRAME>
 	    collides.setComboFrame(new int[]{<DATA>},<INDEX>);//<INDEX>
 	    #<END CD FRAME>

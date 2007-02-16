@@ -3,10 +3,10 @@ import javax.microedition.lcdui.Canvas;
 import javax.microedition.lcdui.Display;
 import javax.microedition.midlet.MIDlet;
 
-import com.morefuntek.cell.CCanvas20;
-import com.morefuntek.cell.CCanvasNokia;
-import com.morefuntek.cell.CObject;
-import com.morefuntek.cell.Game.AScreen;
+import com.cell.CCanvas20;
+import com.cell.CCanvasNokia;
+import com.cell.CObject;
+import com.cell.AScreen;
 
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
@@ -22,20 +22,20 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 		CObject.IsDebug = true;
 //#endif	
 		
-//#ifdef _NOKIA_UI
-		CObject.IsNokia = true;
-//#else
-		CObject.IsNokia = false;
-//#endif		
+////#ifdef _NOKIA_UI
+//		CObject.IsNokia = true;
+////#else
+//		CObject.IsNokia = false;
+////#endif		
 		
 		System.out.println("Total Memory = "+(Runtime.getRuntime().totalMemory()/1024)+"(K byte)");
 
-		if(CObject.IsNokia){
-			canvas = new CCanvasNokia();
-		}else{
+//		if(CObject.IsNokia){
+//			canvas = new CCanvasNokia();
+//		}else{
 			canvas = new CCanvas20();
 			canvas.setFullScreenMode(true);
-		}
+//		}
 
 		
 		AScreen.SCREEN_WIDTH = canvas.getWidth();
