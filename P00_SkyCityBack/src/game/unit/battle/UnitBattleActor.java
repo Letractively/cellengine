@@ -2,8 +2,9 @@ package game.unit.battle;
 
 import java.util.Vector;
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.CMath;
+import com.cell.game.CSprite;
+import com.cell.game.IState;
 
 public class UnitBattleActor extends CSprite implements IState{
 

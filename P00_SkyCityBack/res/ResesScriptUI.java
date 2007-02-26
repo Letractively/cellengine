@@ -9,8 +9,14 @@
 // <OUTPUT>     ..\[out]\ResesScriptUI.java
 // 
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.CIO;
+import com.cell.CImagesJPhone;
+import com.cell.IImages;
+import com.cell.game.CAnimates;
+import com.cell.game.CCollides;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWayPoint;
 
 public class ResesScriptUI {
 
@@ -23,7 +29,7 @@ public class ResesScriptUI {
 	 
 	// Images : menuTile 
 	final static public IImages createClipImages_menuTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/menuTile.png"),12);
 		
 		 stuff.addTile(0,0,155,129);//0 
@@ -46,7 +52,7 @@ public class ResesScriptUI {
  
 	// Images : menuUITile 
 	final static public IImages createClipImages_menuUITile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/menuUITile.png"),13);
 		
 		 stuff.addTile(0,0,125,19);//0 
@@ -70,7 +76,7 @@ public class ResesScriptUI {
  
 	// Images : opMap_Tile 
 	final static public IImages createClipImages_opMap_Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/opMap_Tile.png"),16);
 		
 		 stuff.addTile(0,0,44,44);//0 

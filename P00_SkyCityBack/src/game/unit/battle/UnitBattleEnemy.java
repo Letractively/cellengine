@@ -3,8 +3,11 @@ package game.unit.battle;
 import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
-import com.cell.*;
-import com.cell.game.*;
+
+import com.cell.CMath;
+import com.cell.game.CSprite;
+import com.cell.game.CWayPoint;
+import com.cell.game.IState;
 
 public class UnitBattleEnemy extends CSprite implements IState{
 

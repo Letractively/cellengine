@@ -4,9 +4,11 @@ import java.util.Vector;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.particle.*;
+import com.cell.CMath;
+import com.cell.game.CWorld;
+import com.cell.particle.CParticle;
+import com.cell.particle.CParticleSystem;
+import com.cell.particle.IParticleLauncher;
 
 public class BattleManager extends CWorld  implements IParticleLauncher{
 

@@ -1,12 +1,13 @@
 package game.unit.world;
 
-import game.unit.battle.UnitBattleActor;
-
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.particle.*;
+import com.cell.CMath;
+import com.cell.game.CSprite;
+import com.cell.game.IState;
+import com.cell.particle.CParticle;
+import com.cell.particle.CParticleSystem;
+import com.cell.particle.IParticleLauncher;
 
 public class UnitWorldActor extends CSprite implements IState , IParticleLauncher {
 
@@ -113,17 +114,18 @@ public class UnitWorldActor extends CSprite implements IState , IParticleLaunche
 			+(DColor/2<<0) 
 			;
 		
-		int dxh = x+CMath.cosTimes256(Direct)*16/256;
-		int dyh = y-CMath.sinTimes256(Direct)*16/256-32;
-		int dx1 = x-CMath.cosTimes256(Direct-15)*8/256;
-		int dy1 = y+CMath.sinTimes256(Direct-15)*8/256-32;
-		int dx2 = x-CMath.cosTimes256(Direct+15)*8/256;
-		int dy2 = y+CMath.sinTimes256(Direct+15)*8/256-32;
+//		int dxh = x+CMath.cosTimes256(Direct)*16/256;
+//		int dyh = y-CMath.sinTimes256(Direct)*16/256-32;
+//		int dx1 = x-CMath.cosTimes256(Direct-15)*8/256;
+//		int dy1 = y+CMath.sinTimes256(Direct-15)*8/256-32;
+//		int dx2 = x-CMath.cosTimes256(Direct+15)*8/256;
+//		int dy2 = y+CMath.sinTimes256(Direct+15)*8/256-32;
+//		g.setColor(color);
+//		
+//		g.fillTriangle(dxh, dyh, dx1, dy1, dx2, dy2);
+		
 		g.setColor(color);
-		
-		g.fillTriangle(dxh, dyh, dx1, dy1, dx2, dy2);
-		
-		
+		g.fillArc(x-16, y-16, 32, 32, Direct-15, 30);
 	}
 
 //	×ªÏò

@@ -1,18 +1,9 @@
-import game.unit.world.UnitWorldActor;
-
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
 import com.cell.AScreen;
 import com.cell.CIO;
-import com.cell.CMath;
-import com.cell.CSoundPlayer;
-import com.cell.IImages;
-import com.cell.game.CCamera;
-import com.cell.game.CMap;
-import com.cell.game.CSprite;
-import com.cell.game.CWorld;
-import com.cell.gui.CTextBox;
+import com.cell.hud.CTextBox;
 
 
 public class ScreenP00_Over extends AScreen {
@@ -47,15 +38,15 @@ public class ScreenP00_Over extends AScreen {
 	Image title;
 	
 	public ScreenP00_Over() {
-		if(GameMIDlet.soundman!=null){
-			GameMIDlet.soundman.destroy();
-		}
+//		if(GameMIDlet.soundman!=null){
+//			GameMIDlet.soundman.destroy();
+//		}
 		
-		try{
-			GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
-			GameMIDlet.soundman.play();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
+//			GameMIDlet.soundman.play();
+//		}catch(Exception err){
+//		}
 		
 		FrameDelay = 20;
 		KeyEnable = true;
@@ -65,7 +56,7 @@ public class ScreenP00_Over extends AScreen {
 		
 		title = CIO.loadImage("/over.png");
 		
-		CTextBox.setTextBox(
+		CTextBox.showTextBox(
 				Text, 
 				null, 
 				0, 
@@ -94,21 +85,21 @@ public class ScreenP00_Over extends AScreen {
 				SCREEN_WIDTH/2-title.getWidth()/2, 
 				0, 
 				0);
-		CTextBox.showTextBox(g);
+		CTextBox.render(g);
 	}
 
 	  
 	public void notifyPause(){ 
-		try{
-			GameMIDlet.soundman.pause();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.pause();
+//		}catch(Exception err){
+//		}
 	}
 	public void notifyResume() {
-		try{
-			GameMIDlet.soundman.resume();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.resume();
+//		}catch(Exception err){
+//		}
 	}
 
 }

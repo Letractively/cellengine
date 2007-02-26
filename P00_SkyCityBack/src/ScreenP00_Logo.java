@@ -1,9 +1,7 @@
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.particle.*;
+import com.cell.AScreen;
 
 
 /**

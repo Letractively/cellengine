@@ -1,6 +1,3 @@
-import java.util.Date;
-import java.util.Hashtable;
-
 import game.unit.battle.UnitBattleActor;
 import game.unit.battle.UnitBattleSub;
 import game.unit.world.UnitWorldActor;
@@ -8,10 +5,16 @@ import game.unit.world.UnitWorldEvent;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.gui.CTextBox;
-import com.cell.particle.*;
+import com.cell.AScreen;
+import com.cell.CIO;
+import com.cell.CMath;
+import com.cell.IImages;
+import com.cell.game.CCamera;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWorld;
+import com.cell.game.CWorldMini;
+import com.cell.hud.CTextBox;
 
 
 public class ScreenP00_World extends AScreen {
@@ -59,14 +62,14 @@ public class ScreenP00_World extends AScreen {
 	
 	public ScreenP00_World(){
 
-		try{
-			if(GameMIDlet.soundman!=null){
-				GameMIDlet.soundman.destroy();
-			}
-			GameMIDlet.soundman = new CSoundPlayer("/BGMmap.mid",CSoundPlayer.TYPE_MIDI,-1);
-			GameMIDlet.soundman.play();
-		}catch(Exception err){
-		}
+//		try{
+//			if(GameMIDlet.soundman!=null){
+//				GameMIDlet.soundman.destroy();
+//			}
+//			GameMIDlet.soundman = new CSoundPlayer("/BGMmap.mid",CSoundPlayer.TYPE_MIDI,-1);
+//			GameMIDlet.soundman.play();
+//		}catch(Exception err){
+//		}
 		
        	IsDebug = false;
 
@@ -174,7 +177,7 @@ public class ScreenP00_World extends AScreen {
                 	//¼ì²â×´Ì¬½øÈë¶¯Ì¬°ïÖú
                 	switch(HelpState){
                 	case 0:
-                		CTextBox.setTextBox(
+                		CTextBox.showTextBox(
             				HelpText[HelpState], 
             				null, 
             				0, 
@@ -184,7 +187,7 @@ public class ScreenP00_World extends AScreen {
                 		break;
                 	case 1:
                 		if(actor.isMaxSpeed()){
-                    		CTextBox.setTextBox(
+                    		CTextBox.showTextBox(
                 				HelpText[HelpState], 
                 				null, 
                 				0, 
@@ -195,7 +198,7 @@ public class ScreenP00_World extends AScreen {
                 		break;
                 	case 2:
                 		if(CMath.cycNum(actor.Direct,0,360)>180){
-                    		CTextBox.setTextBox(
+                    		CTextBox.showTextBox(
                 				HelpText[HelpState], 
                 				null, 
                 				0, 
@@ -206,7 +209,7 @@ public class ScreenP00_World extends AScreen {
                 		break;
                 	case 3:
                 		if( actor.Speed<0 ){
-                    		CTextBox.setTextBox(
+                    		CTextBox.showTextBox(
                 				HelpText[HelpState], 
                 				null, 
                 				0, 
@@ -318,7 +321,7 @@ public class ScreenP00_World extends AScreen {
     		}else{
     			configRender(g);
     		}
-        	CTextBox.showTextBox(g);
+        	CTextBox.render(g);
         }else{
         	int h = (getStringHeight() + 1) * menu.length;
         	int y = SCREEN_HEIGHT/2 - h/2;
@@ -380,16 +383,16 @@ public class ScreenP00_World extends AScreen {
 	public void notifyPause() {
 		Pause = true;
 		menuIndex = 0;
-		try{
-			GameMIDlet.soundman.pause();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.pause();
+//		}catch(Exception err){
+//		}
 	}
 	public void notifyResume() {
-		try{
-			GameMIDlet.soundman.resume();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.resume();
+//		}catch(Exception err){
+//		}
 	}
 	
 	static public void Destory(int cityIndex){

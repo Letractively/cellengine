@@ -1,18 +1,16 @@
-import game.unit.battle.UnitBattleActor;
-import game.unit.battle.UnitBattleSub;
 import game.unit.world.UnitWorldActor;
 
-import java.util.Date;
-
 import javax.microedition.lcdui.Graphics;
-import javax.microedition.lcdui.Image;
-import javax.microedition.lcdui.TextBox;
-import javax.microedition.rms.RecordStore;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.gui.CTextBox;
-import com.cell.particle.*;
+import com.cell.AScreen;
+import com.cell.CMath;
+import com.cell.CSoundPlayer;
+import com.cell.IImages;
+import com.cell.game.CCamera;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWorld;
+import com.cell.hud.CTextBox;
 
 
 public class ScreenP00_Menu extends AScreen {
@@ -51,15 +49,15 @@ public class ScreenP00_Menu extends AScreen {
     
     
 	public ScreenP00_Menu() {
-		if(GameMIDlet.soundman!=null){
-			GameMIDlet.soundman.destroy();
-		}
+//		if(GameMIDlet.soundman!=null){
+//			GameMIDlet.soundman.destroy();
+//		}
 		
-		try{
-			GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
-			GameMIDlet.soundman.play();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
+//			GameMIDlet.soundman.play();
+//		}catch(Exception err){
+//		}
 		
 		FrameDelay = 20;
 		KeyEnable = true;
@@ -168,23 +166,23 @@ public class ScreenP00_Menu extends AScreen {
 			break;
 		}
 		
-		CTextBox.showTextBox(g);
+		CTextBox.render(g);
 		
 		tickTimer();
     }
 
 	  
 	public void notifyPause(){ 
-		try{
-			GameMIDlet.soundman.pause();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.pause();
+//		}catch(Exception err){
+//		}
 	}
 	public void notifyResume() {
-		try{
-			GameMIDlet.soundman.resume();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.resume();
+//		}catch(Exception err){
+//		}
 	}
 
 	
@@ -432,7 +430,7 @@ public class ScreenP00_Menu extends AScreen {
 	
 	public void helpInit(){
 		state = SUB_HELP;
-		CTextBox.setTextBox(helpText,null,1,1,SCREEN_WIDTH-2,SCREEN_HEIGHT-2);
+		CTextBox.showTextBox(helpText,null,1,1,SCREEN_WIDTH-2,SCREEN_HEIGHT-2);
 	}
 	
 	void helpLogic(){
@@ -465,7 +463,7 @@ public class ScreenP00_Menu extends AScreen {
 	public void aboutInit(){
 		state = SUB_ABOUT;
 
-		CTextBox.setTextBox(aboutText,null,1,1,SCREEN_WIDTH-2,SCREEN_HEIGHT-2);
+		CTextBox.showTextBox(aboutText,null,1,1,SCREEN_WIDTH-2,SCREEN_HEIGHT-2);
 	}
 	
 	void aboutLogic(){
@@ -547,21 +545,21 @@ public class ScreenP00_Menu extends AScreen {
 				switch(ConfigSubIndex[ConfigIndex]){
 				case 1:
 					CSoundPlayer.SoundEnable = true;
-					if(GameMIDlet.soundman!=null){
-						GameMIDlet.soundman.destroy();
-					}
-					try{
-						GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
-						GameMIDlet.soundman.play();
-					}catch(Exception err){
-					}
+//					if(GameMIDlet.soundman!=null){
+//						GameMIDlet.soundman.destroy();
+//					}
+//					try{
+//						GameMIDlet.soundman = new CSoundPlayer("/BGMUI.mid",CSoundPlayer.TYPE_MIDI,-1);
+//						GameMIDlet.soundman.play();
+//					}catch(Exception err){
+//					}
 					break;
 				case 2:
-					CSoundPlayer.SoundEnable = false;
-					try{
-						GameMIDlet.soundman.destroy();
-					}catch(Exception err){
-					}
+//					CSoundPlayer.SoundEnable = false;
+//					try{
+//						GameMIDlet.soundman.destroy();
+//					}catch(Exception err){
+//					}
 					break;
 				}
 			}
