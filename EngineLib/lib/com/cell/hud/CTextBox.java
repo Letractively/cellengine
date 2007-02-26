@@ -18,6 +18,7 @@ public class CTextBox extends CObject {
 			);
 	static protected Vector Texts = new Vector();
 	static public int TextColor = 0xff000000;
+	static public boolean IsAlpha = false;
 	
 	static protected int TextX ;
 	static protected int TextY ;
@@ -153,17 +154,26 @@ public class CTextBox extends CObject {
 				TransitionTime = H ;
 				TransitionOpen = false;
 			}
+			if(IsAlpha){
+				g.drawRGB(
+						BodyAlphaColor, 
+						0, 
+						0, 
+						X, 
+						Y+H/2-TransitionTime/2, 
+						W, 
+						TransitionTime,
+						true);
+			}else{
+				g.setColor(BodyColor);
+				g.fillRect(
+						X, 
+						Y+H/2-TransitionTime/2 -1, 
+						W, 
+						TransitionTime -1);
+			}
+
 			
-//			g.setColor(BodyColor);
-			g.drawRGB(
-					BodyAlphaColor, 
-					0, 
-					0, 
-					X, 
-					Y+H/2-TransitionTime/2, 
-					W, 
-					TransitionTime,
-					true);
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -180,16 +190,25 @@ public class CTextBox extends CObject {
 				TransitionTime = H ;
 				TransitionClose = false;
 			}
-//			g.setColor(BodyColor);
-			g.drawRGB(
-					BodyAlphaColor, 
-					0, 
-					0, 
-					X, 
-					Y+H/2- (H-TransitionTime)/2, 
-					W, 
-					(H-TransitionTime),
-					true);
+			if(IsAlpha){
+				g.drawRGB(
+						BodyAlphaColor, 
+						0, 
+						0, 
+						X, 
+						Y+H/2- (H-TransitionTime)/2, 
+						W, 
+						(H-TransitionTime),
+						true);
+			}else{
+				g.setColor(BodyColor);
+				g.fillRect(
+						X, 
+						Y+H/2-(H-TransitionTime)/2 -1, 
+						W, 
+						(H-TransitionTime) -1);
+			}
+
 			g.setColor(BorderColor);
 			g.drawRect(
 					X, 
@@ -204,14 +223,18 @@ public class CTextBox extends CObject {
 		if(!Texts.isEmpty()){
 
 			// body
-//			g.setColor(BodyColor);
-//			g.fillRect(X, Y, W, H);
-			g.drawRGB(
-					BodyAlphaColor, 
-					0, 
-					0, 
-					X, Y, W, H,
-					true);
+			if(IsAlpha){
+				g.drawRGB(
+						BodyAlphaColor, 
+						0, 
+						0, 
+						X, Y, W, H,
+						true);
+			}else{
+				g.setColor(BodyColor);
+				g.fillRect(X, Y, W, H);
+			}
+
 			g.setColor(BorderColor);
 			g.drawRect(X, Y, W-1, H-1);
 			
