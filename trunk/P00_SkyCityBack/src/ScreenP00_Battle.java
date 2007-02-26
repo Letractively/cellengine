@@ -1,18 +1,22 @@
 
-import java.util.Hashtable;
-import java.util.Vector;
-
 import game.unit.battle.BattleManager;
 import game.unit.battle.UnitBattleActor;
 import game.unit.battle.UnitBattleBullet;
-import game.unit.battle.UnitBattleSub;
 import game.unit.battle.UnitBattleEnemy;
+import game.unit.battle.UnitBattleSub;
 import game.unit.world.UnitWorldActor;
+
+import java.util.Hashtable;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.AScreen;
+import com.cell.CMath;
+import com.cell.IImages;
+import com.cell.game.CCamera;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWayPoint;
 
 /**继承抽象类CScreen并实现其中的方法*/
 public class ScreenP00_Battle extends AScreen {
@@ -59,9 +63,9 @@ public class ScreenP00_Battle extends AScreen {
 	//本例中该脚本被定义成一个对象工厂
 	public ScreenP00_Battle(){
 		
-		if(GameMIDlet.soundman!=null){
-			GameMIDlet.soundman.destroy();
-		}
+//		if(GameMIDlet.soundman!=null){
+//			GameMIDlet.soundman.destroy();
+//		}
 		
 		System.out.println("Start Free Memory = "+(Runtime.getRuntime().freeMemory()/1024)+"(K byte)");
 	    
@@ -237,16 +241,16 @@ public class ScreenP00_Battle extends AScreen {
 		Pause = true;
 		menuIndex = 0;
 		
-		try{
-			GameMIDlet.soundman.pause();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.pause();
+//		}catch(Exception err){
+//		}
 	}
 	public void notifyResume() {
-		try{
-			GameMIDlet.soundman.resume();
-		}catch(Exception err){
-		}
+//		try{
+//			GameMIDlet.soundman.resume();
+//		}catch(Exception err){
+//		}
 	}
 
 //	------------------------------------------------------------------------------------------------
@@ -375,41 +379,41 @@ public class ScreenP00_Battle extends AScreen {
 			anyTile = null;
 			mapLayer = null;
 			map = ResesScriptBattle.createMap_01_Map(mapTile, false, true);
-			try{
-				GameMIDlet.soundman = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
-				GameMIDlet.soundman.play();
-			}catch(Exception err){
-			}
+//			try{
+//				GameMIDlet.soundman = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
+//				GameMIDlet.soundman.play();
+//			}catch(Exception err){
+//			}
    		}else if(worldMapType == ResesScriptBattle.map_02_Map){
    			mapTile = ResesScriptBattle.createClipImages_battleMapTile2();
    			anyTile = ResesScriptBattle.createClipImages_battleBGTile();
    			mapLayer = ResesScriptBattle.createSprite_layer(anyTile);
    			map = ResesScriptBattle.createMap_02_Map(mapTile, false, true);
-   			try{
-				GameMIDlet.soundman = new CSoundPlayer("/BGM02.mid",CSoundPlayer.TYPE_MIDI,-1);
-				GameMIDlet.soundman.play();
-			}catch(Exception err){
-			}
+//   			try{
+//				GameMIDlet.soundman = new CSoundPlayer("/BGM02.mid",CSoundPlayer.TYPE_MIDI,-1);
+//				GameMIDlet.soundman.play();
+//			}catch(Exception err){
+//			}
    		}else if(worldMapType == ResesScriptBattle.map_03_Map){
    			mapTile = ResesScriptBattle.createClipImages_battleMapTile3();
 			anyTile = null;
 			mapLayer = null;
 			map = ResesScriptBattle.createMap_03_Map(mapTile, true, true);
-			try{
-				GameMIDlet.soundman = new CSoundPlayer("/BGM03.mid",CSoundPlayer.TYPE_MIDI,-1);
-				GameMIDlet.soundman.play();
-			}catch(Exception err){
-			}
+//			try{
+//				GameMIDlet.soundman = new CSoundPlayer("/BGM03.mid",CSoundPlayer.TYPE_MIDI,-1);
+//				GameMIDlet.soundman.play();
+//			}catch(Exception err){
+//			}
    		}else{
    			mapTile = ResesScriptBattle.createClipImages_battleMapTile1();
 			anyTile = null;
 			mapLayer = null;
 			map = ResesScriptBattle.createMap_01_Map(mapTile, false, true);
-			try{
-				GameMIDlet.soundman = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
-				GameMIDlet.soundman.play();
-			}catch(Exception err){
-			}
+//			try{
+//				GameMIDlet.soundman = new CSoundPlayer("/BGM01.mid",CSoundPlayer.TYPE_MIDI,-1);
+//				GameMIDlet.soundman.play();
+//			}catch(Exception err){
+//			}
 		}
 		world.Height = map.getHeight() - 32;
 		world.addMap(map);

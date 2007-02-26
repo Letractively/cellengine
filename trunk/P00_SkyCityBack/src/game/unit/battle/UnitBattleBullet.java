@@ -5,8 +5,9 @@ package game.unit.battle;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.CMath;
+import com.cell.game.CSprite;
+import com.cell.game.IState;
 
 /**
  * @author yifeizhang

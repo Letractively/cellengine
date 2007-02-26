@@ -9,8 +9,14 @@
 // <OUTPUT>     ..\[out]\ResesScriptBattle.java
 // 
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.CIO;
+import com.cell.CImagesJPhone;
+import com.cell.IImages;
+import com.cell.game.CAnimates;
+import com.cell.game.CCollides;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWayPoint;
 
 public class ResesScriptBattle {
 
@@ -23,7 +29,7 @@ public class ResesScriptBattle {
 	 
 	// Images : battleWeaopnTile 
 	final static public IImages createClipImages_battleWeaopnTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleWeaopnTile.png"),67);
 		
 		 stuff.addTile(0,0,18,3);//0 
@@ -101,7 +107,7 @@ public class ResesScriptBattle {
  
 	// Images : battleEffectTile 
 	final static public IImages createClipImages_battleEffectTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleEffectTile.png"),24);
 		
 		 stuff.addTile(165,27,25,25);//0 
@@ -136,7 +142,7 @@ public class ResesScriptBattle {
  
 	// Images : battleSprTile 
 	final static public IImages createClipImages_battleSprTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleSprTile.png"),57);
 		
 		 stuff.addTile(0,0,27,25);//0 
@@ -204,7 +210,7 @@ public class ResesScriptBattle {
  
 	// Images : battleMapTile1 
 	final static public IImages createClipImages_battleMapTile1(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleMapTile1.png"),34);
 		
 		 stuff.addTile(176,0,16,16);//0 
@@ -249,7 +255,7 @@ public class ResesScriptBattle {
  
 	// Images : battleMapTile2 
 	final static public IImages createClipImages_battleMapTile2(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleMapTile2.png"),13);
 		
 		 stuff.addTile(0,0,16,16);//0 
@@ -273,7 +279,7 @@ public class ResesScriptBattle {
  
 	// Images : battleBGTile 
 	final static public IImages createClipImages_battleBGTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleBGTile.png"),2);
 		
 		 stuff.addTile(0,0,176,23);//0 
@@ -286,7 +292,7 @@ public class ResesScriptBattle {
  
 	// Images : boss1Tile 
 	final static public IImages createClipImages_boss1Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/boss1Tile.png"),7);
 		
 		 stuff.addTile(0,0,46,25);//0 
@@ -304,7 +310,7 @@ public class ResesScriptBattle {
  
 	// Images : boss2Tile 
 	final static public IImages createClipImages_boss2Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/boss2Tile.png"),6);
 		
 		 stuff.addTile(0,0,99,103);//0 
@@ -321,7 +327,7 @@ public class ResesScriptBattle {
  
 	// Images : boss3Tile 
 	final static public IImages createClipImages_boss3Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/boss3Tile.png"),8);
 		
 		 stuff.addTile(0,0,10,13);//0 
@@ -340,7 +346,7 @@ public class ResesScriptBattle {
  
 	// Images : battleMapTile3 
 	final static public IImages createClipImages_battleMapTile3(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleMapTile3.png"),22);
 		
 		 stuff.addTile(0,0,16,16);//0 
@@ -373,7 +379,7 @@ public class ResesScriptBattle {
  
 	// Images : boss4Tile 
 	final static public IImages createClipImages_boss4Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/boss4Tile.png"),2);
 		
 		 stuff.addTile(0,0,78,58);//0 
@@ -386,7 +392,7 @@ public class ResesScriptBattle {
  
 	// Images : boss5Tile 
 	final static public IImages createClipImages_boss5Tile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/boss5Tile.png"),9);
 		
 		 stuff.addTile(17,17,17,8);//0 
@@ -406,7 +412,7 @@ public class ResesScriptBattle {
  
 	// Images : battleUITile 
 	final static public IImages createClipImages_battleUITile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/battleUITile.png"),28);
 		
 		 stuff.addTile(76,9,1,9);//0 

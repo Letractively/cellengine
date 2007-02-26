@@ -2,9 +2,9 @@ package game.unit.world;
 
 import javax.microedition.lcdui.Graphics;
 
-import com.cell.*;
-import com.cell.game.*;
-import com.cell.particle.*;
+import com.cell.CMath;
+import com.cell.game.CSprite;
+import com.cell.game.IState;
 
 public class UnitWorldEvent extends CSprite implements IState {
 

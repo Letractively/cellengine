@@ -9,8 +9,14 @@
 // <OUTPUT>     ..\[out]\ResesScriptWorld.java
 // 
 
-import com.cell.*;
-import com.cell.game.*;
+import com.cell.CIO;
+import com.cell.CImagesJPhone;
+import com.cell.IImages;
+import com.cell.game.CAnimates;
+import com.cell.game.CCollides;
+import com.cell.game.CMap;
+import com.cell.game.CSprite;
+import com.cell.game.CWayPoint;
 
 public class ResesScriptWorld {
 
@@ -23,7 +29,7 @@ public class ResesScriptWorld {
 	 
 	// Images : worldMapTile 
 	final static public IImages createClipImages_worldMapTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/worldMapTile.png"),60);
 		
 		 stuff.addTile(0,0,16,16);//0 
@@ -94,7 +100,7 @@ public class ResesScriptWorld {
  
 	// Images : worldEvtTile 
 	final static public IImages createClipImages_worldEvtTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/worldEvtTile.png"),13);
 		
 		 stuff.addTile(91,97,11,11);//0 
@@ -118,7 +124,7 @@ public class ResesScriptWorld {
  
 	// Images : worldSprTile 
 	final static public IImages createClipImages_worldSprTile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/worldSprTile.png"),40);
 		
 		 stuff.addTile(0,0,19,23);//0 
@@ -169,7 +175,7 @@ public class ResesScriptWorld {
  
 	// Images : worldUITile 
 	final static public IImages createClipImages_worldUITile(){
-		IImages stuff = new CImages20();
+		IImages stuff = new CImagesJPhone();
 		stuff.buildImages(CIO.loadImage("/worldUITile.png"),31);
 		
 		 stuff.addTile(92,32,1,1);//0 

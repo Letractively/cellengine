@@ -1,10 +1,10 @@
 
-import javax.microedition.midlet.*;
-import javax.microedition.lcdui.*;
+import javax.microedition.lcdui.Canvas;
+import javax.microedition.lcdui.Display;
+import javax.microedition.midlet.MIDlet;
 
 import com.cell.AScreen;
-import com.cell.CCanvas20;
-import com.cell.CSoundPlayer;
+import com.cell.CCanvasJPhone;
 
 
 /**
@@ -15,7 +15,7 @@ import com.cell.CSoundPlayer;
  */
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
-	static public CSoundPlayer soundman ;
+//	static public CSoundPlayer soundman ;
 	
 	Canvas canvas ;
 	
@@ -30,18 +30,25 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 //		if(CObject.IsNokia){
 ////			canvas = new CCanvasNokia();
 //		}else{
-		canvas = new CCanvas20();
-		canvas.setFullScreenMode(true);
-		
+//		canvas = new CCanvas20();
+//		canvas.setFullScreenMode(true);
 //		}
+		
+		canvas = new CCanvasJPhone();
 		
 		Display.getDisplay(this).setCurrent(canvas);
 		
 		//得到虚拟屏幕大小
-		AScreen.SCREEN_WIDTH = canvas.getWidth();
-		AScreen.SCREEN_HEIGHT = canvas.getHeight();
-		AScreen.SCREEN_HCENTER = canvas.getWidth()/2;
-		AScreen.SCREEN_VCENTER = canvas.getHeight()/2;
+//		AScreen.SCREEN_WIDTH = canvas.getWidth();
+//		AScreen.SCREEN_HEIGHT = canvas.getHeight();
+//		AScreen.SCREEN_HCENTER = canvas.getWidth()/2;
+//		AScreen.SCREEN_VCENTER = canvas.getHeight()/2;
+		
+		AScreen.SCREEN_WIDTH = 176;
+		AScreen.SCREEN_HEIGHT = 220;
+		AScreen.SCREEN_HCENTER = 176/2;
+		AScreen.SCREEN_VCENTER = 220/2;
+		
 		System.out.println("Screen W = " + AScreen.SCREEN_WIDTH);
 		System.out.println("Screen H = " + AScreen.SCREEN_HEIGHT);
 		
