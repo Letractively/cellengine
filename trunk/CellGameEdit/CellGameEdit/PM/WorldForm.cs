@@ -429,13 +429,21 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             pictureBox1.Refresh();
         }
-        
+        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            //e.
+            //if (e.IsSelected)
+            //{
+            //    Console.WriteLine("e.Iss");
+            //}
+        }
+
         // picturebox1 dst level
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
-            toolStripStatusLabel1.Text = "当前坐标:X=" + (-pictureBox1.Location.X) + ",Y=" + (-pictureBox1.Location.Y)+" ";
+            toolStripStatusLabel1.Text = "当前坐标:X=" + (3-pictureBox1.Location.X) + ",Y=" + (3-pictureBox1.Location.Y)+" ";
             
 
             // draw units
@@ -626,6 +634,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
             
         }
+
+       
+
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
@@ -1075,7 +1086,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                                 32, 32, false, i, 0);
 
                             ToolStripMenuItem pop = new ToolStripMenuItem();
-                            pop.Text = "Anim " + i.ToString();
+                            //pop.Text = "Anim " + i.ToString();
+                            pop.Text = unit.spr.getAnimateName(i);
                             pop.Image = icon;
                             pop.ImageScaling = ToolStripItemImageScaling.None;
 
@@ -1333,6 +1345,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
         }
 
+        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        {
+        }
+
+   
        
 
 
