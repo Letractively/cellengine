@@ -22,9 +22,6 @@ typedef struct tScreen
 	void	(*NotifyResume)();				//恢复事件回掉
 }tScreen;
 
-//屏幕切换列表
-tScreen* ScreenTable;
-
 
 /**游戏中的帧延迟，单位ms，比如预计游戏FPS=30，FrameDelay = 1000/30 = 33*/
 u32	FrameDelay ;//default fps = 50

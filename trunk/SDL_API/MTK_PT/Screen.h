@@ -11,13 +11,10 @@ extern "C" {
 #endif
 
 extern tScreen ScreenLogo;
+extern tScreen ScreenMain;
 
-extern void Logo_Init();
-extern void Logo_Destory();
-extern void Logo_Logic();
-extern void Logo_Render(tGraphics *g);
-extern void Logo_Pause();
-extern void Logo_Resume();
+
+
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus

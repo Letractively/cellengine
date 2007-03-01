@@ -27,10 +27,10 @@ bool		MTK_Init()
     }
 
 	//Init Video System
-	#define SCREEN_BPP   32 
+	#define SCREEN_BPP   16
 	if( SCREEN_WIDTH  < 1)	SCREEN_WIDTH	= 640;
 	if( SCREEN_HEIGHT < 1)	SCREEN_HEIGHT	= 480;
-	SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE );
+	SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_HWSURFACE );
 
 	pScreen = GFX_GetLCDGraphics();
 

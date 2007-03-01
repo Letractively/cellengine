@@ -1,23 +1,12 @@
-#ifndef GAME_UTIL_H_
-#define GAME_UTIL_H_
+#ifndef BLOCK_H_
+#define BLOCK_H_
+
+#include "GameHeader.h"
 
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-
-
-typedef struct tBlock 
-{
-	s16		x;
-	s16		y;
-	s16		w;
-	s16		h;
-
-	u16		imgIndex;
-
-}tBlock;
 
 
 
@@ -29,4 +18,4 @@ typedef struct tBlock
 }
 #endif
 
-#endif /*GAME_UTIL_H_*/
+#endif /*BLOCK_H_*/
