@@ -130,8 +130,10 @@
             this.listView1.DragEnter += new System.Windows.Forms.DragEventHandler(this.listView1_DragEnter);
             this.listView1.DragDrop += new System.Windows.Forms.DragEventHandler(this.listView1_DragDrop);
             this.listView1.SelectedIndexChanged += new System.EventHandler(this.listView1_SelectedIndexChanged);
+            this.listView1.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.listView1_ItemSelectionChanged);
             this.listView1.AfterLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_AfterLabelEdit);
             this.listView1.BeforeLabelEdit += new System.Windows.Forms.LabelEditEventHandler(this.listView1_BeforeLabelEdit);
+            this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
             // 
             // columnHeader2
             // 
@@ -238,7 +240,7 @@
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(35, 17);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(29, 17);
             this.toolStripStatusLabel1.Text = "lable";
             // 
             // toolStrip1
@@ -377,7 +379,7 @@
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(41, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(43, 22);
             this.toolStripLabel1.Text = "每格宽";
             // 
             // toolStripTextBox1
@@ -392,7 +394,7 @@
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(41, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(43, 22);
             this.toolStripLabel2.Text = "每格高";
             // 
             // toolStripTextBox2
@@ -436,7 +438,7 @@
             // toolStripLabel4
             // 
             this.toolStripLabel4.Name = "toolStripLabel4";
-            this.toolStripLabel4.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel4.Size = new System.Drawing.Size(31, 22);
             this.toolStripLabel4.Text = "总宽";
             // 
             // toolStripTextBox3
@@ -448,7 +450,7 @@
             // toolStripLabel5
             // 
             this.toolStripLabel5.Name = "toolStripLabel5";
-            this.toolStripLabel5.Size = new System.Drawing.Size(29, 22);
+            this.toolStripLabel5.Size = new System.Drawing.Size(31, 22);
             this.toolStripLabel5.Text = "总高";
             // 
             // toolStripTextBox4
@@ -514,40 +516,40 @@
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.menuPath.Name = "menuPath";
-            this.menuPath.Size = new System.Drawing.Size(119, 114);
+            this.menuPath.Size = new System.Drawing.Size(123, 114);
             // 
             // toolStripMenuItem3
             // 
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItem3.Text = "单向连接";
             this.toolStripMenuItem3.Click += new System.EventHandler(this.toolStripMenuItem3_Click);
             // 
             // 双向连接ToolStripMenuItem
             // 
             this.双向连接ToolStripMenuItem.Name = "双向连接ToolStripMenuItem";
-            this.双向连接ToolStripMenuItem.Size = new System.Drawing.Size(118, 22);
+            this.双向连接ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.双向连接ToolStripMenuItem.Text = "双向连接";
             this.双向连接ToolStripMenuItem.Click += new System.EventHandler(this.双向连接ToolStripMenuItem_Click);
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItem4.Text = "解开";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
             // toolStripMenuItem1
             // 
             this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItem1.Text = "添加路点";
             this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
             // 
             // toolStripMenuItem2
             // 
             this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(118, 22);
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(122, 22);
             this.toolStripMenuItem2.Text = "删除路点";
             this.toolStripMenuItem2.Click += new System.EventHandler(this.toolStripMenuItem2_Click);
             // 
