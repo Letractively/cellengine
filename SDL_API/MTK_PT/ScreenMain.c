@@ -32,6 +32,13 @@ void Main_Destory()
 void Main_Logic()
 {
 	FrameDelay = 1;
+
+	//按任意键将跳转到ScreenLogo
+	if(SCREEN_IsKeyDown(KEY_ANY))
+	{
+		SCREEN_ChangeScreen(&ScreenTable[0]);
+	}
+
 }
 
 
