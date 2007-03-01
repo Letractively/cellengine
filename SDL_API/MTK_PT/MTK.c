@@ -55,7 +55,7 @@ bool		MTK_Init()
 void		MTK_Quit()
 {
 	//Close the font
-    TTF_CloseFont( font );
+	if( font != NULL ) TTF_CloseFont( font );
     //Quit SDL_ttf
     TTF_Quit();
 	//Close the pScreen
