@@ -233,6 +233,18 @@ public class ResesScript {
 		return stuff;
 	}
 	
+ 
+	// Images : Event 
+	final static public IImages createClipImages_Event(){
+		IImages stuff = new CImages20();
+		stuff.buildImages(CIO.loadImage("/Event.png"),1);
+		
+		 stuff.addTile(0,0,16,32);//0 
+		
+		
+		return stuff;
+	}
+	
 
 
 	//--------------------------------------------------------------------------------------------------------------
@@ -990,6 +1002,102 @@ public class ResesScript {
 	}
 	
 
+	// Sprite : Door //Event
+	
+	final static public CSprite createSprite_Door(IImages tiles){
+
+	    // tiles
+	    CAnimates animates = new CAnimates(0,tiles);
+	    
+		
+	    animates.setFrames(new int[1][]);
+	     animates.setComboFrame(new int[]{},0);//0
+		
+		
+		// cds
+	    CCollides collides = new CCollides(4);
+		 collides.addCDRect(65535, -8, 0, 8 , 48 );//rect//0
+	     collides.addCDRect(65535, 0, 0, 8 , 48 );//rect//1
+	     collides.addCDRect(65535, 0, -8, 48 , 8 );//rect//2
+	     collides.addCDRect(65535, 0, 0, 48 , 8 );//rect//3
+	    
+	    
+	    collides.setFrames(new int[5][]);
+	     collides.setComboFrame(new int[]{0,},0);//0
+	     collides.setComboFrame(new int[]{},1);//1
+	     collides.setComboFrame(new int[]{1,},2);//2
+	     collides.setComboFrame(new int[]{2,},3);//3
+	     collides.setComboFrame(new int[]{3,},4);//4
+	    
+	    
+	    
+		// sprite frame
+		
+		/*
+		String[] frameName = new String[]{
+			"Left",
+"Right",
+"Up",
+"Down",
+
+		};
+		
+		for(int i=0;i<frameName.length;i++){
+			System.out.println(frameName[i]);
+		}
+		*/
+		
+	    int[][] frameAnimate = new int[][]{
+	        {0,},
+{0,},
+{0,},
+{0,},
+
+	    };
+	    int[][] frameCDMap = new int[][]{
+	        {0,},
+{2,},
+{3,},
+{4,},
+
+	    };
+	    int[][] frameCDAtk = new int[][]{
+	        {1,},
+{1,},
+{1,},
+{1,},
+
+	    };
+	    int[][] frameCDDef = new int[][]{
+	        {1,},
+{1,},
+{1,},
+{1,},
+
+	    };
+	    int[][] frameCDExt = new int[][]{
+	        {1,},
+{1,},
+{1,},
+{1,},
+
+	    };
+	
+	    CSprite ret = new CSprite(
+	            animates, 
+	            collides, 
+	            frameAnimate, 
+	            frameCDMap, 
+	            frameCDAtk, 
+	            frameCDDef, 
+	            frameCDExt 
+	            );
+	
+	    return ret;
+	
+	}
+	
+
 	
 
 	//--------------------------------------------------------------------------------------------------------------
@@ -1002,6 +1110,9 @@ public class ResesScript {
 	
  
 	final public static String images_E00_Zombi = "E00_Zombi";
+	
+ 
+	final public static String images_Event = "Event";
 	
 
 
@@ -1018,6 +1129,9 @@ public class ResesScript {
 	
 
 	final public static String spr_e00_zombi = "e00_zombi";
+	
+
+	final public static String spr_Door = "Door";
 	
 
 
@@ -1037,6 +1151,11 @@ public class ResesScript {
  
 		if(key=="E00_Zombi"){
 			return createClipImages_E00_Zombi();
+		}
+	
+ 
+		if(key=="Event"){
+			return createClipImages_Event();
 		}
 	
 
@@ -1067,6 +1186,11 @@ public class ResesScript {
 
 		if(key=="e00_zombi"){
 			return createSprite_e00_zombi(tiles);
+		}
+	
+
+		if(key=="Door"){
+			return createSprite_Door(tiles);
 		}
 	
 
@@ -1127,12 +1251,12 @@ public class ResesScript {
 			//IImages tile ;
 		
 			// Sprite
-			level.SprsTile = new String[8];
-			level.SprsType = new String[8];
-			level.SprsInfo = new String[8];
-			level.SprsX    = new int[8];
-			level.SprsY    = new int[8];
-			// sprite count : 8
+			level.SprsTile = new String[10];
+			level.SprsType = new String[10];
+			level.SprsInfo = new String[10];
+			level.SprsX    = new int[10];
+			level.SprsY    = new int[10];
+			// sprite count : 10
 			 
 			level.SprsTile[0] = "Actor00";    // sprite tile name
 			level.SprsType[0] = "Actor00"; // sprite type
@@ -1154,7 +1278,7 @@ public class ResesScript {
 			 
 			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
 			level.SprsType[2] = "e00_zombi"; // sprite type
-			level.SprsInfo[2] = "e00_";     // sprite info form editor
+			level.SprsInfo[2] = "e00_zombi";     // sprite info form editor
 			level.SprsX[2]    = 320;          // sprite xpos form editor
 			level.SprsY[2]    = 304;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
@@ -1205,13 +1329,31 @@ public class ResesScript {
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
+			 
+			level.SprsTile[8] = "Event";    // sprite tile name
+			level.SprsType[8] = "Door"; // sprite type
+			level.SprsInfo[8] = "Door";     // sprite info form editor
+			level.SprsX[8]    = 640;          // sprite xpos form editor
+			level.SprsY[8]    = 256;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[9] = "Event";    // sprite tile name
+			level.SprsType[9] = "Door"; // sprite type
+			level.SprsInfo[9] = "Door";     // sprite info form editor
+			level.SprsX[9]    = 0;          // sprite xpos form editor
+			level.SprsY[9]    = 240;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
 			
 			
 			// Map
 			 
 			level.MapTile = "MapTile00";    // map tile name
 			level.MapType = "Level_00"; // map type 
-			level.MapInfo = "M000_Level_00";     // map info form editor
+			level.MapInfo = "x0y0";     // map info form editor
 			//level.Map = new Map();
 			
 			
@@ -1236,44 +1378,44 @@ public class ResesScript {
 			//IImages tile ;
 		
 			// Sprite
-			level.SprsTile = new String[6];
-			level.SprsType = new String[6];
-			level.SprsInfo = new String[6];
-			level.SprsX    = new int[6];
-			level.SprsY    = new int[6];
-			// sprite count : 6
+			level.SprsTile = new String[8];
+			level.SprsType = new String[8];
+			level.SprsInfo = new String[8];
+			level.SprsX    = new int[8];
+			level.SprsY    = new int[8];
+			// sprite count : 8
 			 
-			level.SprsTile[0] = "Actor00";    // sprite tile name
-			level.SprsType[0] = "Actor00"; // sprite type
-			level.SprsInfo[0] = "S002_Actor00";     // sprite info form editor
-			level.SprsX[0]    = 239;          // sprite xpos form editor
-			level.SprsY[0]    = 90;          // sprite ypos form editor
+			level.SprsTile[0] = "E00_Zombi";    // sprite tile name
+			level.SprsType[0] = "e00_zombi"; // sprite type
+			level.SprsInfo[0] = "S001_e00_zombi";     // sprite info form editor
+			level.SprsX[0]    = 292;          // sprite xpos form editor
+			level.SprsY[0]    = 303;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
 			 
 			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
 			level.SprsType[1] = "e00_zombi"; // sprite type
-			level.SprsInfo[1] = "S001_e00_zombi";     // sprite info form editor
-			level.SprsX[1]    = 292;          // sprite xpos form editor
-			level.SprsY[1]    = 303;          // sprite ypos form editor
+			level.SprsInfo[1] = "S003_e00_zombi";     // sprite info form editor
+			level.SprsX[1]    = 162;          // sprite xpos form editor
+			level.SprsY[1]    = 271;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
 			 
 			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
 			level.SprsType[2] = "e00_zombi"; // sprite type
-			level.SprsInfo[2] = "S003_e00_zombi";     // sprite info form editor
-			level.SprsX[2]    = 162;          // sprite xpos form editor
-			level.SprsY[2]    = 271;          // sprite ypos form editor
+			level.SprsInfo[2] = "S004_e00_zombi";     // sprite info form editor
+			level.SprsX[2]    = 242;          // sprite xpos form editor
+			level.SprsY[2]    = 303;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
 			 
 			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
 			level.SprsType[3] = "e00_zombi"; // sprite type
-			level.SprsInfo[3] = "S004_e00_zombi";     // sprite info form editor
-			level.SprsX[3]    = 242;          // sprite xpos form editor
+			level.SprsInfo[3] = "S005_e00_zombi";     // sprite info form editor
+			level.SprsX[3]    = 75;          // sprite xpos form editor
 			level.SprsY[3]    = 303;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
@@ -1281,18 +1423,36 @@ public class ResesScript {
 			 
 			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
 			level.SprsType[4] = "e00_zombi"; // sprite type
-			level.SprsInfo[4] = "S005_e00_zombi";     // sprite info form editor
-			level.SprsX[4]    = 75;          // sprite xpos form editor
-			level.SprsY[4]    = 303;          // sprite ypos form editor
+			level.SprsInfo[4] = "S006_e00_zombi";     // sprite info form editor
+			level.SprsX[4]    = 47;          // sprite xpos form editor
+			level.SprsY[4]    = 191;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
 			 
-			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
-			level.SprsType[5] = "e00_zombi"; // sprite type
-			level.SprsInfo[5] = "S006_e00_zombi";     // sprite info form editor
-			level.SprsX[5]    = 47;          // sprite xpos form editor
-			level.SprsY[5]    = 191;          // sprite ypos form editor
+			level.SprsTile[5] = "Event";    // sprite tile name
+			level.SprsType[5] = "Door"; // sprite type
+			level.SprsInfo[5] = "S007_Door";     // sprite info form editor
+			level.SprsX[5]    = 48;          // sprite xpos form editor
+			level.SprsY[5]    = 0;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[6] = "Event";    // sprite tile name
+			level.SprsType[6] = "Door"; // sprite type
+			level.SprsInfo[6] = "S008_Door";     // sprite info form editor
+			level.SprsX[6]    = 0;          // sprite xpos form editor
+			level.SprsY[6]    = 256;          // sprite ypos form editor
+			//if(level.TilesTable.containsKey("abc")){
+			//
+			//}
+			 
+			level.SprsTile[7] = "Event";    // sprite tile name
+			level.SprsType[7] = "Door"; // sprite type
+			level.SprsInfo[7] = "S009_Door";     // sprite info form editor
+			level.SprsX[7]    = 640;          // sprite xpos form editor
+			level.SprsY[7]    = 240;          // sprite ypos form editor
 			//if(level.TilesTable.containsKey("abc")){
 			//
 			//}
@@ -1302,7 +1462,7 @@ public class ResesScript {
 			 
 			level.MapTile = "MapTile00";    // map tile name
 			level.MapType = "Level_01"; // map type 
-			level.MapInfo = "M000_Level_01";     // map info form editor
+			level.MapInfo = "x640y0";     // map info form editor
 			//level.Map = new Map();
 			
 			

@@ -7,11 +7,15 @@ import com.cell.AScreen;
 import com.cell.CIO;
 import com.cell.CSoundPlayer;
 import com.cell.IImages;
+import com.cell.game.CCD;
 import com.cell.game.IState;
 import com.cell.hud.CTextBox;
 
 public class UnitActor extends Unit {
 
+	int WX ;//大地图位置
+	int WY ;//大地图位置
+	
 	Image img_face ;
 	CSoundPlayer snd_damage;
 	
@@ -33,6 +37,8 @@ public class UnitActor extends Unit {
 //}
 	
 	public void update() {
+		WX = world.X + X ;
+		WY = world.Y + Y - 12;
 		input();
 		onAction();
 		onState();
@@ -116,6 +122,13 @@ public class UnitActor extends Unit {
 
 //	-----------------------------------------------------------------------------------------
 
+	public boolean isOnLevel(){
+		return CCD.cdRectPoint(
+				world.X,world.Y,world.Width,world.Height,
+				WX , WY
+				);
+	}
+	
 	boolean turnR = false;
 	boolean turnL = false;
 	boolean turnU = false;

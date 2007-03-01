@@ -17,11 +17,8 @@ final public class GameMIDlet extends MIDlet  implements Runnable{
 	
 	
 	public GameMIDlet() {
-//#ifndef _DEBUG
 		CObject.IsDebug = false;
-//#else
 		CObject.IsDebug = true;
-//#endif	
 		
 		System.out.println("Total Memory = "+(Runtime.getRuntime().totalMemory()/1024)+"(K byte)");
 
