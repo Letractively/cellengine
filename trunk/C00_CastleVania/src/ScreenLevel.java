@@ -26,7 +26,7 @@ public class ScreenLevel extends AScreen {
 	// game world
 	LevelManager 		world;
 	
-	CWorldMini			worldMini;
+//	CWorldMini			worldMini;
 	
 	public ScreenLevel(){
 
@@ -46,16 +46,16 @@ public class ScreenLevel extends AScreen {
        	world.init();
        	
        	
-    	worldMini = new CWorldMini(
-       			world,
-       			world.Camera.getWidth()/2,
-       			world.Camera.getHeight()/4,
-       			2,2,
-       			8+8*16,
-       			20+20*40,
-       			false,
-       			true,
-       			true);
+//    	worldMini = new CWorldMini(
+//       			world,
+//       			world.Camera.getWidth()/2,
+//       			world.Camera.getHeight()/4,
+//       			2,2,
+//       			8+8*16,
+//       			20+20*40,
+//       			false,
+//       			true,
+//       			true);
     	
     	
        	resetTimer();

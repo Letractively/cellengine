@@ -28,6 +28,9 @@ public class LevelManager extends CWorld {
 	public int WindowW;
 	public int WindowH;
 	
+	public int X;
+	public int Y;
+
 	public String[]	SprsTile;
 	public String[]	SprsType;
 	public String[]	SprsInfo;
