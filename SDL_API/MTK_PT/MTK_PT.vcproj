@@ -182,21 +182,25 @@
 				>
 			</File>
 			<File
-				RelativePath=".\ScreenLogo.c"
+				RelativePath=".\Screen.h"
 				>
 			</File>
 			<File
-				RelativePath=".\ScreenLogo.h"
+				RelativePath=".\ScreenLogo.c"
 				>
 			</File>
 			<File
 				RelativePath=".\ScreenMain.c"
 				>
 			</File>
-			<File
-				RelativePath=".\ScreenMain.h"
+			<Filter
+				Name="Block"
 				>
-			</File>
+				<File
+					RelativePath=".\Block.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="MTK"
@@ -235,6 +239,14 @@
 			</File>
 			<File
 				RelativePath=".\GameScreen.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameSprite.h"
+				>
+			</File>
+			<File
+				RelativePath=".\GameTiles.h"
 				>
 			</File>
 			<File
