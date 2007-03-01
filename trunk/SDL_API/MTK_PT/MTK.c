@@ -125,7 +125,10 @@ tImage* 	IMG_CreateImageFormFile(const char * file)
 	}
 	else
 	{
+		u32 hashcode = (u32)(ret);
 		DEBUG_Printf("Load Image : ");
+		DEBUG_Printf("0x%08X",hashcode);
+		DEBUG_Printf(" : ");
 		DEBUG_Printf(file);
 		DEBUG_Printf(" ^_^v\n");
 	}
@@ -164,12 +167,14 @@ void		IMG_Destory(tImage* pImage)
 	//Free the surface
 	if( pImage != NULL )
 	{
+		u32 hashcode = (u32)(pImage);
 		if(pImage->image!=NULL)
 		{
 			SDL_FreeSurface( pImage->image );
 		}
 		free(pImage->graphics);
 		free(pImage);
+		DEBUG_Printf("Kill Image : 0x%08X\n",hashcode);
 	}
 	pImage = NULL;
 }
