@@ -2058,6 +2058,15 @@ namespace CellGameEdit.PM
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
         }
 
+        public string getAnimateName(int index)
+        {
+            if (index >= 0 &&
+                index < listView2.Items.Count)
+            {
+                return listView2.Items[index].Text;
+            }
+            return "(null)";
+        }
 
         private ArrayList animGetCurFrames()
         {
