@@ -13,6 +13,7 @@ import javax.microedition.lcdui.Image;
 
 import com.cell.CObject;
 import com.cell.CSoundPlayer;
+import com.cell.CUtil;
 
 
 
@@ -295,7 +296,7 @@ public class BMSPlayer extends CObject {
             while(p<bms.length){
                 switch(bms[p++]){
                 case '#':
-                    int line = Util.charArrayIndexOf(bms,'\r',p);
+                    int line = CUtil.charArrayIndexOf(bms,'\r',p);
                     for(int i=p;i<line;i++){
                         // header
                         if(headerOK == false){
@@ -347,7 +348,7 @@ public class BMSPlayer extends CObject {
                             }
                             if((kv = setNotes(bms,p,line,NOTE_TYPE_BPM))!=null){
                                 try {
-                                    long nbpm = Util.stringDecimalToInt(kv[1],0,kv[1].length(),1000);
+                                    long nbpm = CUtil.stringDecimalToInt(kv[1],0,kv[1].length(),1000);
                                     notes_bpm.put(kv[0],new Long(nbpm));
                                     println("BPM Note " + kv[0] + " " + nbpm);
                                 } catch (RuntimeException e1) {
@@ -357,7 +358,7 @@ public class BMSPlayer extends CObject {
                             }
                             if((kv = setNotes(bms,p,line,NOTE_TYPE_STOP))!=null){
                                 try {
-                                    long nstop = Util.stringDecimalToInt(kv[1],0,kv[1].length(),1000);
+                                    long nstop = CUtil.stringDecimalToInt(kv[1],0,kv[1].length(),1000);
                                     notes_stop.put(kv[0],new Long(nstop));
                                     println("STOP Note " + kv[0] + " " + nstop);
                                 } catch (RuntimeException e1) {
@@ -389,7 +390,7 @@ public class BMSPlayer extends CObject {
             
             println("BMS file end ! process "+p+"(bytes)");
             
-            setBPM1000(Util.stringDecimalToInt(bpm,0,bpm.length(),1000));
+            setBPM1000(CUtil.stringDecimalToInt(bpm,0,bpm.length(),1000));
             println("BPM = " + BPM);
 
         } catch (RuntimeException e) {
@@ -413,7 +414,7 @@ public class BMSPlayer extends CObject {
     }
 
     private String setHeader(char[] src,int p,int line,char[] HEADER){
-        if(Util.charArrayCMP(
+        if(CUtil.charArrayCMP(
                 src,p,HEADER.length,
                 HEADER,0,HEADER.length)){
             int blank = p+HEADER.length;
@@ -429,7 +430,7 @@ public class BMSPlayer extends CObject {
     
     private String[] setNotes(char[] src,int p,int line,char[] NOTE_TYPE){
         if(line<p+NOTE_TYPE.length+3)return null;
-        if(Util.charArrayCMP(
+        if(CUtil.charArrayCMP(
                 src,p,NOTE_TYPE.length,
                 NOTE_TYPE,0,NOTE_TYPE.length)){
             String kv[] = new String[2];
@@ -448,20 +449,20 @@ public class BMSPlayer extends CObject {
     private int lineCount = 0;
     private int lineBGM = 0;
     private boolean setKey(char[] src,int p,int line,Vector[] des){
-        if (Util.charArrayIsDigit(src,p,5)==5){
-            int m = Util.charArrayIndexOf(src,':',p+5,line-p);
+        if (CUtil.charArrayIsDigit(src,p,5)==5){
+            int m = CUtil.charArrayIndexOf(src,':',p+5,line-p);
             if(m>-1){
-                int type = Util.charArrayDigitToInt(src,p+3,2);
-                if(lineCount<Util.charArrayDigitToInt(src,p,3)){
-                    lineCount = Util.charArrayDigitToInt(src,p,3);
+                int type = CUtil.charArrayDigitToInt(src,p+3,2);
+                if(lineCount<CUtil.charArrayDigitToInt(src,p,3)){
+                    lineCount = CUtil.charArrayDigitToInt(src,p,3);
                     lineBGM = 0;
                 }
-//                CSUtil.print("Type"+src[p+3]+src[p+4]+":");
+//                CSCUtil.print("Type"+src[p+3]+src[p+4]+":");
                 int blank = m+1;
                 while((src[blank]==' ' || src[blank]=='\t') && blank<line){
                     blank++;
                 }
-                int len = Util.charArrayIsWordNum(src,blank,line-blank);
+                int len = CUtil.charArrayIsWordNum(src,blank,line-blank);
                 if(len>=2){
                     len = len - len%2;
                     for(int d=blank;d<blank+len;d+=2){
@@ -472,8 +473,8 @@ public class BMSPlayer extends CObject {
     	                        DivFullNote*F*(d-blank)/len;
     	                    k.type 	= type;
     	                    k.data 	= String.valueOf(src,d,2);
-//	                        CSUtil.print(
-////	                                " " + Util.charArrayDigitToInt(src,p+0,3) +
+//	                        CSCUtil.print(
+////	                                " " + CUtil.charArrayDigitToInt(src,p+0,3) +
 ////	                                " " + (d-blank) +
 //	                                k.data
 //	                                );
@@ -534,7 +535,7 @@ public class BMSPlayer extends CObject {
 
 		                      }
 	                    }else{
-//	                        CSUtil.print("  ");
+//	                        CSCUtil.print("  ");
 	                    }
   	                }
                 }
@@ -618,20 +619,20 @@ public class BMSPlayer extends CObject {
         
 //		control    
         if(setControl(keyBPMBYTE,Position)){
-            int bpm = Util.stringHexToInt((String)((Key)keyBPMBYTE.elementAt(0)).data,0,2);
+            int bpm = CUtil.stringHexToInt((String)((Key)keyBPMBYTE.elementAt(0)).data,0,2);
             setBPM1000(bpm*1000);
             keyBPMBYTE.removeElementAt(0);
             println("BPM Byte = " + BPM);
         }
         if(setControl(keyBPM,Position)){
             String sbpm = (String)notes_bpm.get((String)((Key)keyBPM.elementAt(0)).data);
-            setBPM1000(Util.stringDecimalToInt(sbpm,0,sbpm.length(),1000));
+            setBPM1000(CUtil.stringDecimalToInt(sbpm,0,sbpm.length(),1000));
             keyBPM.removeElementAt(0);
             println("BPM = " + BPM);
         }
         if(setControl(keySTOP,Position)){
             String sstop = (String)notes_stop.get((String)((Key)keySTOP.elementAt(0)).data);
-            StopDuration = F*Util.stringDecimalToInt(sstop,0,sstop.length(),1000);
+            StopDuration = F*CUtil.stringDecimalToInt(sstop,0,sstop.length(),1000);
             keySTOP.removeElementAt(0);
             println("STOP = " + StopDuration);
         }

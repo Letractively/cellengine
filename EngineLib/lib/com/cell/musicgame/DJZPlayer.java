@@ -7,6 +7,8 @@ package com.cell.musicgame;
 
 import java.util.Vector;
 
+import com.cell.CUtil;
+
 /**
  * @author WAZA
  *
@@ -104,26 +106,26 @@ public class DJZPlayer {
         byte[] data = com.cell.CIO.loadFile(DjzFile);
         int P = 0 ;
         
-        int FileSize 	= Util.read32(data, P); P += 4;//文件大小 
-        EndTime 	= Util.read32(data, P); P += 4;//结束时间
+        int FileSize 	= CUtil.read32(data, P); P += 4;//文件大小 
+        EndTime 	= CUtil.read32(data, P); P += 4;//结束时间
         
-        int NoteCount 	= Util.read32(data, P); P += 4;//音符数量
+        int NoteCount 	= CUtil.read32(data, P); P += 4;//音符数量
         Events = new Vector(NoteCount);
         for (int i = 0; i < NoteCount; i++){//音符数据序列
             Note note = new Note();
-            note.time 	= Util.read32(data, P); P += 4;
-            note.pos 	= Util.read8(data, P); P += 1;
-            note.data 	= Util.read8(data, P); P += 1;
+            note.time 	= CUtil.read32(data, P); P += 4;
+            note.pos 	= CUtil.read8(data, P); P += 1;
+            note.data 	= CUtil.read8(data, P); P += 1;
             Events.addElement(note);       
         }
 
-        int MetaCount = Util.read32(data, P); P += 4;//控制数量
+        int MetaCount = CUtil.read32(data, P); P += 4;//控制数量
         Controls = new Vector(MetaCount);
         for (int i = 0; i < MetaCount; i++){//控制数据序列
             Meta meta = new Meta();
-            meta.time 	= Util.read32(data, P); P += 4;
-            meta.type 	= Util.read8(data, P); P += 1;
-            meta.data 	= Util.read32(data, P); P += 4;
+            meta.time 	= CUtil.read32(data, P); P += 4;
+            meta.type 	= CUtil.read8(data, P); P += 1;
+            meta.data 	= CUtil.read32(data, P); P += 4;
             Controls.addElement(meta);       
         }
         
