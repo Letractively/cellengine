@@ -248,6 +248,8 @@ void SCREEN_Run()
 		UsedTime = TIME_GetTicks() - UsedTime;
 		if (UsedTime < FrameDelay) {
 			TIME_Delay(FrameDelay - UsedTime);
+		}else{
+			TIME_Delay(1);
 		}
 
 		Timer ++;
