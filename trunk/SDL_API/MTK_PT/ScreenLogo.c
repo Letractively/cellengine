@@ -38,8 +38,6 @@ void Logo_Destory()
 /*每周期执行一次的逻辑*/
 void Logo_Logic()
 {
-	
-
 	//按任意键将跳转到ScreenMain
 	if(SCREEN_IsKeyDown(KEY_ANY))
 	{
@@ -54,7 +52,7 @@ void Logo_Render(tGraphics *g)
 	//GFX_CleanRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 	//GFX_FillRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,GFX_ToRGB(0,0xff,0));
 
-	// 绘制背景图片
+	// 绘制背景图片,背景之外的地方没有重绘
 	GFX_DrawImage(g,back,0,0,0);
 
 	//绘制图片在指定位置上

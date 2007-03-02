@@ -242,6 +242,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\GameSprite.c"
+				>
+			</File>
+			<File
 				RelativePath=".\GameSprite.h"
 				>
 			</File>
