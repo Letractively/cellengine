@@ -258,6 +258,14 @@
 				>
 			</File>
 		</Filter>
+		<Filter
+			Name="res"
+			>
+			<File
+				RelativePath=".\ResesScript.h"
+				>
+			</File>
+		</Filter>
 		<File
 			RelativePath=".\ReadMe.txt"
 			>

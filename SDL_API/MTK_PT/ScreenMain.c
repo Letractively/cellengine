@@ -1,6 +1,9 @@
 
 #include "Screen.h"
 
+#include "ResesScript.h"
+
+
 extern void Main_Init();
 extern void Main_Destory();
 extern void Main_Logic();
@@ -18,9 +21,31 @@ tScreen ScreenMain =
 	Main_Resume
 };
 
+// img res
 #define BLOCK_COUNT 8
+
 tImage* blocks[BLOCK_COUNT] ;
 tImage* back ;
+tImage* wall ;
+
+// map res
+#define MAP_W 8
+#define MAP_H 8
+
+u16	MapW;
+u16 MapH;
+u8 **MapData;
+
+// spr res
+typedef struct tBlock 
+{
+	u8		type;
+	s16		x;
+	s16		y;
+	u16		w;
+	u16		h;
+}tBlock;
+
 
 void Main_Init()
 {
@@ -29,7 +54,7 @@ void Main_Init()
 	
 	FrameDelay = 1;
 	back = IMG_CreateImageFormFile("img\\back.png");
-
+	wall = IMG_CreateImageFormFile("img\\wall.png");
 	for(i=0;i<BLOCK_COUNT;i++)
 	{
 		sprintf_s(id,sizeof(id),"img\\B%d.png",i);
@@ -46,6 +71,7 @@ void Main_Destory()
 		IMG_Destory(blocks[i]);
 	}
 	IMG_Destory(back);
+	IMG_Destory(wall);
 }
 
 void Main_Logic()
@@ -63,8 +89,8 @@ void Main_Logic()
 
 void Main_Render(tGraphics *g)
 {
-	int i;
-
+	//int i;
+	int x,y;
 	//clear screen
 	//GFX_CleanRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
 	//GFX_FillRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,GFX_ToRGB(0,0xff,0));
@@ -72,15 +98,22 @@ void Main_Render(tGraphics *g)
 	//绘制背景图片
 	GFX_DrawImage(g,back,0,0,0);
 
-	//绘制图片在指定位置
-	for(i=0;i<BLOCK_COUNT;i++)
-	{
-		GFX_DrawImage(g,blocks[i],0,20*i,0);
-	}
+	////绘制图片在指定位置
+	//for(i=0;i<BLOCK_COUNT;i++)
+	//{
+	//	GFX_DrawImage(g,blocks[i],0,20*i,0);
+	//}
 
 	//绘制图片在笔触点上
 	GFX_DrawImage(g,blocks[0],SCREEN_GetPointerX(),SCREEN_GetPointerY(),0);
 
+	for(y=0;y<MAP_H;y++){
+		for(x=0;x<MAP_W;x++){
+			if(MapData[y][x]>0)
+			GFX_DrawImage(g,wall,x*20,y*20,0);
+		}
+	}
+	
 
 	//显示字符串
 	GFX_DrawString(
