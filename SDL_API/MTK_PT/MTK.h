@@ -15,21 +15,23 @@
  *
  * 为了第一阶段项目的快速启动，以下是需要最高优先级需要实现的功能。
  *
- * IMG_CreateImageFormData
+ * MTK_Init
+ * MTK_Quit
+ * MTK_Pause
+ * MTK_Resume
+ *
+ * IMG_CreateImageFormFile
  * IMG_GetWidth
  * IMG_GetHeight
+ * IMG_GetGraphics
  * IMG_Destory
  *
  * GFX_GetLCDGraphics
  * GFX_DrawImage
- * GFX_CleanRect
+ * GFX_FillRect
  * GFX_Destory
  *
  * KEY_QueryEvent
- *
- * SND_PlaySound
- * SND_Stop
- * SND_Destory
  *
  *
  *********************************************************************************************************************************/
@@ -172,7 +174,7 @@ extern tImage* 	IMG_CreateImageFormData(const u8 Data[]);
 * GLOBALS AFFECTED
 *	NIL
 ****************************************************************************/
-extern tImage* 	IMG_CreateImageFormPixel(const tRGB PixelData[], u16 width, u16 height);
+extern tImage* 	IMG_CreateImageFormPixel(tRGB PixelData[], u16 width, u16 height);
 
 
 /*****************************************************************************
