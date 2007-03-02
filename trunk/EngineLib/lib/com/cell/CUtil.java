@@ -472,7 +472,7 @@ public class CUtil extends CObject{
      * <summary> 得到连续阿拉伯数字长度
      * @param str
      * @param start
-     * @param end
+     * @param len
      * @return
      */
     public static int stringIsDigit(String str,int start,int len){
@@ -599,6 +599,21 @@ public class CUtil extends CObject{
         return v*mul+f;
     }
     
+    /**
+     * <summary> 得到key后面紧跟的数字值
+     * @param src
+     * @param key
+     * @return
+     */
+	final static public int stringKeyValue(String src,String key){
+		try{
+			int pos = src.indexOf(key) + key.length();
+			return Integer.parseInt(src.substring(pos, pos+stringIsDigit(src, pos, src.length()-pos)), 10);
+		}catch(Exception err){
+			return -1;
+		}
+	}
+	
 //----------------------------------------------------------------------------------------------------   
     
     /** 
