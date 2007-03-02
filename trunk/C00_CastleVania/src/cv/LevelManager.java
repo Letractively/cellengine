@@ -8,6 +8,7 @@ import javax.microedition.lcdui.Image;
 
 import com.cell.AScreen;
 import com.cell.IImages;
+import com.cell.game.CCD;
 import com.cell.game.CCamera;
 import com.cell.game.CMap;
 import com.cell.game.CSprite;
@@ -15,13 +16,31 @@ import com.cell.game.CWorld;
 import com.cell.hud.CTextBox;
 
 import cv.unit.Unit;
+import cv.unit.UnitActor;
 
 import ResesScript;
 
 
 public class LevelManager extends CWorld {
 	
-	public String WorldName;
+	static public String 	WorldName 	= "Level_00";
+	static public Unit 		Actor;
+	
+
+	// test room scope
+	static public String getRoom(int x, int y){
+		for(int i=ResesScript.WorldRooms.length-1;i>=0;i--){
+			if(CCD.cdRectPoint(
+					ResesScript.WorldRooms[i].X1, 
+					ResesScript.WorldRooms[i].Y1, 
+					ResesScript.WorldRooms[i].X2, 
+					ResesScript.WorldRooms[i].Y2, 
+					x, y)){
+				return ResesScript.WorldNames[i];
+			}
+		}
+		return null;
+	}
 	
 	public int WindowX;
 	public int WindowY;
@@ -47,11 +66,10 @@ public class LevelManager extends CWorld {
 	Vector UnitTeam1 = new Vector();
 	Vector UnitTeam2 = new Vector();
 	
-	public Unit	Actor;
-
+	public boolean 	IsChange	= false;
+	
 	public void init(){
 		try{
-			
 //		 create tile bank
 		IImages tile;
 		Hashtable tileTable = new Hashtable();
@@ -79,15 +97,6 @@ public class LevelManager extends CWorld {
 				Unit ai = (Unit)Class.forName(((String)UnitTable.get(SprsType[i]))).newInstance();
 				Unit.SprStuff = null;
 				
-				ai.Type = SprsType[i];
-				ai.Info = SprsInfo[i];
-				ai.X = SprsX[i];
-				ai.Y = SprsY[i];
-				ai.HPos256 = ai.X * 256 ;
-				ai.VPos256 = ai.Y * 256 ;
-				
-				ai.world = this;
-				
 				switch(ai.Team){
 				case Unit.TEAM_ACTOR:
 					UnitTeam0.addElement(ai);
@@ -100,6 +109,14 @@ public class LevelManager extends CWorld {
 					UnitTeam2.addElement(ai);
 					break;
 				}
+				
+				ai.Type = SprsType[i];
+				ai.Info = SprsInfo[i];
+				ai.X = SprsX[i];
+				ai.Y = SprsY[i];
+				ai.HPos256 = ai.X * 256 ;
+				ai.VPos256 = ai.Y * 256 ;
+				ai.world = this;
 				
 				this.addSprite(ai);
 				
@@ -115,7 +132,18 @@ public class LevelManager extends CWorld {
 			println(SprsType[i] + " -> " + ((String)UnitTable.get(SprsType[i])) + " : " + SprsInfo[i]);
 			
 		}
-
+//		setup actor world pos
+		if( !UnitTeam0.contains(Actor) ){
+			Actor.X -= X;
+			Actor.Y -= Y;
+			Actor.HPos256 = Actor.X * 256 ;
+			Actor.VPos256 = Actor.Y * 256 ;
+			Actor.world = this;
+			UnitTeam0.addElement(Actor);
+			this.addSprite(Actor);
+		}
+		
+		
 //		create map
 		CMap map = ResesScript.createMap(MapType, (IImages)tileTable.get(MapTile), true, false);
 		this.setMap(map);
@@ -140,6 +168,9 @@ public class LevelManager extends CWorld {
 		}
 	}
 
+	public void quit(){
+		
+	}
 	
 	public void update() {
 		if(CTextBox.isShown()){
@@ -150,7 +181,6 @@ public class LevelManager extends CWorld {
 					}
 				}
 			}
-			
 		}else{
 			processCamera();
 			processActorDamage();
@@ -166,17 +196,28 @@ public class LevelManager extends CWorld {
 	
 	
 	private void processCamera(){
+		//ÉãÏó»ú¸úËæ
 		int cdx = Actor.X - (getCamera().getX() + getCamera().getWidth() /2);
     	int cdy = Actor.Y - (getCamera().getY() + getCamera().getHeight()/2);
     	getCamera().mov(cdx/4,cdy/4);
+    	//²âÊÔÊÇ·ñ³öÎÝ
+    	if(!CCD.cdRectPoint(X, Y, X+Width, Y+Height, X+Actor.X, Y+Actor.Y - 12)){
+    		WorldName = getRoom(X+Actor.X, Y+Actor.Y - 12);
+    		if(WorldName!=null){
+    			println("Change Room : " + WorldName);
+    			IsChange = true;
+    		}else{
+    			println("Out Room : ");
+    		}
+    	}
 	}
 	
 	private void processActorDamage(){
 		
+		// ²âÊÔ1¶ÓºÍÖ÷½ÇÅö×²
 		for(int i=UnitTeam1.size()-1;i>=0;i--){
 			Unit t0 = Actor;
 			Unit t1 = (Unit)UnitTeam1.elementAt(i);
-			
 			if( t0.OnScreen && t1.OnScreen && //
 				t0.Active   && t1.Active   ){ //
 				
@@ -195,7 +236,7 @@ public class LevelManager extends CWorld {
 				}
 			}
 		}
-		
+		//  ²âÊÔ2¶ÓºÍÖ÷½ÇÅö×²
 		for(int i=UnitTeam2.size()-1;i>=0;i--){
 			Unit t0 = Actor;
 			Unit t1 = (Unit)UnitTeam2.elementAt(i);

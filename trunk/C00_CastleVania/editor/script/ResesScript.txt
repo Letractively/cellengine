@@ -7,6 +7,7 @@
 // 
 import com.cell.*;
 import com.cell.game.*;
+
 import cv.LevelManager;
 
 public class ResesScript {
@@ -193,18 +194,30 @@ public class ResesScript {
 
 #<LEVEL>
 
-
-	final static public String[] WorldNames = new String[]{
-	#<WORLD> "<NAME>",
-	#<END WORLD>
+	// name const
+	#<WORLD>
+	final public static String world_<NAME> = "<NAME>"; #<END WORLD>
+	
+	// room scopes
+	final static public CCD[] WorldRooms = new CCD[]{
+	#<WORLD> 
+	CCD.createCDRect(0xffffffff, 
+			CUtil.stringKeyValue(#<UNIT MAP> "<NAME>" #<END UNIT MAP>, "x"), 
+			CUtil.stringKeyValue(#<UNIT MAP> "<NAME>" #<END UNIT MAP>, "y"),
+			<WIDTH>, 
+			<HEIGHT>),#<END WORLD>
 	};
 
+	// world names
+	final static public String[] WorldNames = new String[]{
 	#<WORLD> 
-	final public static String world_<NAME> = "<NAME>";
-	#<END WORLD>
-	
+	"<NAME>", #<END WORLD>
+	};
 
-	final static public LevelManager createWorld(String name){
+
+	
+	// create world
+	final static public LevelManager createWorld(){
 		LevelManager level = new LevelManager();
 		
 		// screen size
@@ -213,14 +226,28 @@ public class ResesScript {
 		level.WindowW = 176;
 		level.WindowH = 208;
 		
-		level.WorldName = name;
 	#<WORLD>
 		// World : <NAME>
-		if(name=="<NAME>"){
+		if(level.WorldName=="<NAME>"){
 		
 			// World Size
 			level.Width  = <WIDTH> ;
 			level.Height = <HEIGHT>;
+			
+			// Map
+			#<UNIT MAP> 
+			level.MapTile = "<SUPER>";    // map tile name
+			level.MapType = "<IDENTIFY>"; // map type 
+			level.MapInfo = "<NAME>";     // map info form editor
+			level.X       = CUtil.stringKeyValue("<NAME>","x"); // level x pos
+			level.Y       = CUtil.stringKeyValue("<NAME>","y"); // level y pos
+			CObject.println("<NAME>");
+			CObject.println("Level X = " + level.X );
+			CObject.println("Level Y = " + level.Y );
+			CObject.println("Level W = " + level.Width ); 
+			CObject.println("Level H = " + level.Height);
+			#<END UNIT MAP>
+			
 			
 			// WayPoint
 			// waypoint count : <WAYPOINT COUNT>
@@ -234,33 +261,20 @@ public class ResesScript {
 			#<END WAYPOINT LINK>
 			level.WayPoints = WayPoints;
 			
-			//IImages tile ;
-		
 			// Sprite
+			// sprite count : <UNIT SPRITE COUNT>
 			level.SprsTile = new String[<UNIT SPRITE COUNT>];
 			level.SprsType = new String[<UNIT SPRITE COUNT>];
 			level.SprsInfo = new String[<UNIT SPRITE COUNT>];
 			level.SprsX    = new int[<UNIT SPRITE COUNT>];
 			level.SprsY    = new int[<UNIT SPRITE COUNT>];
-			// sprite count : <UNIT SPRITE COUNT>
 			#<UNIT SPRITE> 
 			level.SprsTile[<INDEX>] = "<SUPER>";    // sprite tile name
 			level.SprsType[<INDEX>] = "<IDENTIFY>"; // sprite type
 			level.SprsInfo[<INDEX>] = "<NAME>";     // sprite info form editor
 			level.SprsX[<INDEX>]    = <X>;          // sprite xpos form editor
 			level.SprsY[<INDEX>]    = <Y>;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
 			#<END UNIT SPRITE>
-			
-			// Map
-			#<UNIT MAP> 
-			level.MapTile = "<SUPER>";    // map tile name
-			level.MapType = "<IDENTIFY>"; // map type 
-			level.MapInfo = "<NAME>";     // map info form editor
-			//level.Map = new Map();
-			#<END UNIT MAP>
 			
 		}
 	#<END WORLD>
