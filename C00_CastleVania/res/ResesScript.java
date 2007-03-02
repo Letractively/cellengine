@@ -10,6 +10,7 @@
 // 
 import com.cell.*;
 import com.cell.game.*;
+
 import cv.LevelManager;
 
 public class ResesScript {
@@ -1204,25 +1205,43 @@ public class ResesScript {
 
 
 
+	// name const
+	
+	final public static String world_Level_00 = "Level_00"; 
 
-	final static public String[] WorldNames = new String[]{
-	 "Level_00",
+	final public static String world_Level_01 = "Level_01"; 
+
 	
- "Level_01",
-	
+	// room scopes
+	final static public CCD[] WorldRooms = new CCD[]{
+	 
+	CCD.createCDRect(0xffffffff, 
+			CUtil.stringKeyValue( "x0y0" , "x"), 
+			CUtil.stringKeyValue( "x0y0" , "y"),
+			640, 
+			320),
+ 
+	CCD.createCDRect(0xffffffff, 
+			CUtil.stringKeyValue( "x640y0" , "x"), 
+			CUtil.stringKeyValue( "x640y0" , "y"),
+			640, 
+			320),
 
 	};
 
+	// world names
+	final static public String[] WorldNames = new String[]{
 	 
-	final public static String world_Level_00 = "Level_00";
-	
+	"Level_00", 
  
-	final public static String world_Level_01 = "Level_01";
-	
+	"Level_01", 
+
+	};
+
 
 	
-
-	final static public LevelManager createWorld(String name){
+	// create world
+	final static public LevelManager createWorld(){
 		LevelManager level = new LevelManager();
 		
 		// screen size
@@ -1231,141 +1250,28 @@ public class ResesScript {
 		level.WindowW = 176;
 		level.WindowH = 208;
 		
-		level.WorldName = name;
 	
 		// World : Level_00
-		if(name=="Level_00"){
+		if(level.WorldName=="Level_00"){
 		
 			// World Size
 			level.Width  = 640 ;
 			level.Height = 320;
-			
-			// WayPoint
-			// waypoint count : 0
-			CWayPoint[] WayPoints = new CWayPoint[0];
-			
-			// waypoint link 
-			
-			level.WayPoints = WayPoints;
-			
-			//IImages tile ;
-		
-			// Sprite
-			level.SprsTile = new String[10];
-			level.SprsType = new String[10];
-			level.SprsInfo = new String[10];
-			level.SprsX    = new int[10];
-			level.SprsY    = new int[10];
-			// sprite count : 10
-			 
-			level.SprsTile[0] = "Actor00";    // sprite tile name
-			level.SprsType[0] = "Actor00"; // sprite type
-			level.SprsInfo[0] = "a00";     // sprite info form editor
-			level.SprsX[0]    = 16;          // sprite xpos form editor
-			level.SprsY[0]    = 288;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
-			level.SprsType[1] = "e00_zombi"; // sprite type
-			level.SprsInfo[1] = "e00_zombi";     // sprite info form editor
-			level.SprsX[1]    = 368;          // sprite xpos form editor
-			level.SprsY[1]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
-			level.SprsType[2] = "e00_zombi"; // sprite type
-			level.SprsInfo[2] = "e00_zombi";     // sprite info form editor
-			level.SprsX[2]    = 320;          // sprite xpos form editor
-			level.SprsY[2]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
-			level.SprsType[3] = "e00_zombi"; // sprite type
-			level.SprsInfo[3] = "e00_zombi";     // sprite info form editor
-			level.SprsX[3]    = 272;          // sprite xpos form editor
-			level.SprsY[3]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
-			level.SprsType[4] = "e00_zombi"; // sprite type
-			level.SprsInfo[4] = "e00_zombi";     // sprite info form editor
-			level.SprsX[4]    = 176;          // sprite xpos form editor
-			level.SprsY[4]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
-			level.SprsType[5] = "e00_zombi"; // sprite type
-			level.SprsInfo[5] = "e00_zombi";     // sprite info form editor
-			level.SprsX[5]    = 464;          // sprite xpos form editor
-			level.SprsY[5]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[6] = "E00_Zombi";    // sprite tile name
-			level.SprsType[6] = "e00_zombi"; // sprite type
-			level.SprsInfo[6] = "e00_zombi";     // sprite info form editor
-			level.SprsX[6]    = 416;          // sprite xpos form editor
-			level.SprsY[6]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[7] = "E00_Zombi";    // sprite tile name
-			level.SprsType[7] = "e00_zombi"; // sprite type
-			level.SprsInfo[7] = "e00_zombi";     // sprite info form editor
-			level.SprsX[7]    = 224;          // sprite xpos form editor
-			level.SprsY[7]    = 304;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[8] = "Event";    // sprite tile name
-			level.SprsType[8] = "Door"; // sprite type
-			level.SprsInfo[8] = "Door";     // sprite info form editor
-			level.SprsX[8]    = 640;          // sprite xpos form editor
-			level.SprsY[8]    = 256;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			 
-			level.SprsTile[9] = "Event";    // sprite tile name
-			level.SprsType[9] = "Door"; // sprite type
-			level.SprsInfo[9] = "Door";     // sprite info form editor
-			level.SprsX[9]    = 0;          // sprite xpos form editor
-			level.SprsY[9]    = 240;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
-			
 			
 			// Map
 			 
 			level.MapTile = "MapTile00";    // map tile name
 			level.MapType = "Level_00"; // map type 
 			level.MapInfo = "x0y0";     // map info form editor
-			//level.Map = new Map();
+			level.X       = CUtil.stringKeyValue("x0y0","x"); // level x pos
+			level.Y       = CUtil.stringKeyValue("x0y0","y"); // level y pos
+			CObject.println("x0y0");
+			CObject.println("Level X = " + level.X );
+			CObject.println("Level Y = " + level.Y );
+			CObject.println("Level W = " + level.Width ); 
+			CObject.println("Level H = " + level.Height);
 			
 			
-		}
-	
-
-		// World : Level_01
-		if(name=="Level_01"){
-		
-			// World Size
-			level.Width  = 640 ;
-			level.Height = 320;
 			
 			// WayPoint
 			// waypoint count : 0
@@ -1375,95 +1281,163 @@ public class ResesScript {
 			
 			level.WayPoints = WayPoints;
 			
-			//IImages tile ;
-		
 			// Sprite
-			level.SprsTile = new String[8];
-			level.SprsType = new String[8];
-			level.SprsInfo = new String[8];
-			level.SprsX    = new int[8];
-			level.SprsY    = new int[8];
-			// sprite count : 8
+			// sprite count : 10
+			level.SprsTile = new String[10];
+			level.SprsType = new String[10];
+			level.SprsInfo = new String[10];
+			level.SprsX    = new int[10];
+			level.SprsY    = new int[10];
 			 
 			level.SprsTile[0] = "E00_Zombi";    // sprite tile name
 			level.SprsType[0] = "e00_zombi"; // sprite type
-			level.SprsInfo[0] = "S001_e00_zombi";     // sprite info form editor
-			level.SprsX[0]    = 292;          // sprite xpos form editor
-			level.SprsY[0]    = 303;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsInfo[0] = "e00_zombi";     // sprite info form editor
+			level.SprsX[0]    = 368;          // sprite xpos form editor
+			level.SprsY[0]    = 304;          // sprite ypos form editor
 			 
 			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
 			level.SprsType[1] = "e00_zombi"; // sprite type
-			level.SprsInfo[1] = "S003_e00_zombi";     // sprite info form editor
-			level.SprsX[1]    = 162;          // sprite xpos form editor
-			level.SprsY[1]    = 271;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsInfo[1] = "e00_zombi";     // sprite info form editor
+			level.SprsX[1]    = 320;          // sprite xpos form editor
+			level.SprsY[1]    = 304;          // sprite ypos form editor
 			 
 			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
 			level.SprsType[2] = "e00_zombi"; // sprite type
-			level.SprsInfo[2] = "S004_e00_zombi";     // sprite info form editor
-			level.SprsX[2]    = 242;          // sprite xpos form editor
-			level.SprsY[2]    = 303;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsInfo[2] = "e00_zombi";     // sprite info form editor
+			level.SprsX[2]    = 272;          // sprite xpos form editor
+			level.SprsY[2]    = 304;          // sprite ypos form editor
 			 
 			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
 			level.SprsType[3] = "e00_zombi"; // sprite type
-			level.SprsInfo[3] = "S005_e00_zombi";     // sprite info form editor
-			level.SprsX[3]    = 75;          // sprite xpos form editor
-			level.SprsY[3]    = 303;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsInfo[3] = "e00_zombi";     // sprite info form editor
+			level.SprsX[3]    = 176;          // sprite xpos form editor
+			level.SprsY[3]    = 304;          // sprite ypos form editor
 			 
 			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
 			level.SprsType[4] = "e00_zombi"; // sprite type
-			level.SprsInfo[4] = "S006_e00_zombi";     // sprite info form editor
-			level.SprsX[4]    = 47;          // sprite xpos form editor
-			level.SprsY[4]    = 191;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsInfo[4] = "e00_zombi";     // sprite info form editor
+			level.SprsX[4]    = 464;          // sprite xpos form editor
+			level.SprsY[4]    = 304;          // sprite ypos form editor
 			 
-			level.SprsTile[5] = "Event";    // sprite tile name
-			level.SprsType[5] = "Door"; // sprite type
-			level.SprsInfo[5] = "S007_Door";     // sprite info form editor
-			level.SprsX[5]    = 48;          // sprite xpos form editor
-			level.SprsY[5]    = 0;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsTile[5] = "E00_Zombi";    // sprite tile name
+			level.SprsType[5] = "e00_zombi"; // sprite type
+			level.SprsInfo[5] = "e00_zombi";     // sprite info form editor
+			level.SprsX[5]    = 416;          // sprite xpos form editor
+			level.SprsY[5]    = 304;          // sprite ypos form editor
 			 
-			level.SprsTile[6] = "Event";    // sprite tile name
-			level.SprsType[6] = "Door"; // sprite type
-			level.SprsInfo[6] = "S008_Door";     // sprite info form editor
-			level.SprsX[6]    = 0;          // sprite xpos form editor
-			level.SprsY[6]    = 256;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsTile[6] = "E00_Zombi";    // sprite tile name
+			level.SprsType[6] = "e00_zombi"; // sprite type
+			level.SprsInfo[6] = "e00_zombi";     // sprite info form editor
+			level.SprsX[6]    = 224;          // sprite xpos form editor
+			level.SprsY[6]    = 304;          // sprite ypos form editor
 			 
 			level.SprsTile[7] = "Event";    // sprite tile name
 			level.SprsType[7] = "Door"; // sprite type
-			level.SprsInfo[7] = "S009_Door";     // sprite info form editor
+			level.SprsInfo[7] = "Door";     // sprite info form editor
 			level.SprsX[7]    = 640;          // sprite xpos form editor
-			level.SprsY[7]    = 240;          // sprite ypos form editor
-			//if(level.TilesTable.containsKey("abc")){
-			//
-			//}
+			level.SprsY[7]    = 256;          // sprite ypos form editor
+			 
+			level.SprsTile[8] = "Event";    // sprite tile name
+			level.SprsType[8] = "Door"; // sprite type
+			level.SprsInfo[8] = "Door";     // sprite info form editor
+			level.SprsX[8]    = 0;          // sprite xpos form editor
+			level.SprsY[8]    = 240;          // sprite ypos form editor
+			 
+			level.SprsTile[9] = "Actor00";    // sprite tile name
+			level.SprsType[9] = "Actor00"; // sprite type
+			level.SprsInfo[9] = "S010_Actor00";     // sprite info form editor
+			level.SprsX[9]    = 28;          // sprite xpos form editor
+			level.SprsY[9]    = 287;          // sprite ypos form editor
 			
+			
+		}
+	
+
+		// World : Level_01
+		if(level.WorldName=="Level_01"){
+		
+			// World Size
+			level.Width  = 640 ;
+			level.Height = 320;
 			
 			// Map
 			 
 			level.MapTile = "MapTile00";    // map tile name
 			level.MapType = "Level_01"; // map type 
 			level.MapInfo = "x640y0";     // map info form editor
-			//level.Map = new Map();
+			level.X       = CUtil.stringKeyValue("x640y0","x"); // level x pos
+			level.Y       = CUtil.stringKeyValue("x640y0","y"); // level y pos
+			CObject.println("x640y0");
+			CObject.println("Level X = " + level.X );
+			CObject.println("Level Y = " + level.Y );
+			CObject.println("Level W = " + level.Width ); 
+			CObject.println("Level H = " + level.Height);
+			
+			
+			
+			// WayPoint
+			// waypoint count : 0
+			CWayPoint[] WayPoints = new CWayPoint[0];
+			
+			// waypoint link 
+			
+			level.WayPoints = WayPoints;
+			
+			// Sprite
+			// sprite count : 8
+			level.SprsTile = new String[8];
+			level.SprsType = new String[8];
+			level.SprsInfo = new String[8];
+			level.SprsX    = new int[8];
+			level.SprsY    = new int[8];
+			 
+			level.SprsTile[0] = "E00_Zombi";    // sprite tile name
+			level.SprsType[0] = "e00_zombi"; // sprite type
+			level.SprsInfo[0] = "S001_e00_zombi";     // sprite info form editor
+			level.SprsX[0]    = 292;          // sprite xpos form editor
+			level.SprsY[0]    = 303;          // sprite ypos form editor
+			 
+			level.SprsTile[1] = "E00_Zombi";    // sprite tile name
+			level.SprsType[1] = "e00_zombi"; // sprite type
+			level.SprsInfo[1] = "S003_e00_zombi";     // sprite info form editor
+			level.SprsX[1]    = 162;          // sprite xpos form editor
+			level.SprsY[1]    = 271;          // sprite ypos form editor
+			 
+			level.SprsTile[2] = "E00_Zombi";    // sprite tile name
+			level.SprsType[2] = "e00_zombi"; // sprite type
+			level.SprsInfo[2] = "S004_e00_zombi";     // sprite info form editor
+			level.SprsX[2]    = 242;          // sprite xpos form editor
+			level.SprsY[2]    = 303;          // sprite ypos form editor
+			 
+			level.SprsTile[3] = "E00_Zombi";    // sprite tile name
+			level.SprsType[3] = "e00_zombi"; // sprite type
+			level.SprsInfo[3] = "S005_e00_zombi";     // sprite info form editor
+			level.SprsX[3]    = 75;          // sprite xpos form editor
+			level.SprsY[3]    = 303;          // sprite ypos form editor
+			 
+			level.SprsTile[4] = "E00_Zombi";    // sprite tile name
+			level.SprsType[4] = "e00_zombi"; // sprite type
+			level.SprsInfo[4] = "S006_e00_zombi";     // sprite info form editor
+			level.SprsX[4]    = 47;          // sprite xpos form editor
+			level.SprsY[4]    = 191;          // sprite ypos form editor
+			 
+			level.SprsTile[5] = "Event";    // sprite tile name
+			level.SprsType[5] = "Door"; // sprite type
+			level.SprsInfo[5] = "S007_Door";     // sprite info form editor
+			level.SprsX[5]    = 48;          // sprite xpos form editor
+			level.SprsY[5]    = 0;          // sprite ypos form editor
+			 
+			level.SprsTile[6] = "Event";    // sprite tile name
+			level.SprsType[6] = "Door"; // sprite type
+			level.SprsInfo[6] = "S008_Door";     // sprite info form editor
+			level.SprsX[6]    = 0;          // sprite xpos form editor
+			level.SprsY[6]    = 256;          // sprite ypos form editor
+			 
+			level.SprsTile[7] = "Event";    // sprite tile name
+			level.SprsType[7] = "Door"; // sprite type
+			level.SprsInfo[7] = "S009_Door";     // sprite info form editor
+			level.SprsX[7]    = 640;          // sprite xpos form editor
+			level.SprsY[7]    = 240;          // sprite ypos form editor
 			
 			
 		}

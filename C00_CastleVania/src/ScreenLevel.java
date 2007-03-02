@@ -18,11 +18,13 @@ import com.cell.game.CWorld;
 import com.cell.game.CWorldMini;
 
 import cv.LevelManager;
+import cv.unit.Unit;
 import cv.unit.UnitActor;
 
 
 public class ScreenLevel extends AScreen {
 
+	
 	// game world
 	LevelManager 		world;
 	
@@ -35,8 +37,21 @@ public class ScreenLevel extends AScreen {
     
        	FrameDelay = 40;
 
+//       	// actor
+//       	if(LevelManager.Actor==null){
+//       		IImages tiles = ResesScript.createClipImages_Actor00();
+//    		Unit.SprStuff = ResesScript.createSprite_Actor00(tiles);
+//    		LevelManager.Actor = new UnitActor();
+//    		Unit.SprStuff = null;
+//    		LevelManager.Actor.Type = "";
+//    		LevelManager.Actor.Info = "";
+//    		LevelManager.Actor.X = 29;
+//    		LevelManager.Actor.Y = 261;
+//    		println("createActor X="+LevelManager.Actor.X+" Y="+LevelManager.Actor.Y);
+//       	}
+		
        	// world
-       	world = ResesScript.createWorld("Level_01");
+       	world = ResesScript.createWorld();
        	
        	Hashtable AITable = new Hashtable();
        	AITable.put(ResesScript.spr_Actor00, "cv.unit.UnitActor");
@@ -70,10 +85,12 @@ public class ScreenLevel extends AScreen {
     	if(isKeyDown(KEY_0)){IsDebug = !IsDebug;}
     	
     	
-
-    	
 		world.update();
   
+		if(world.IsChange){
+			ChangeSubScreen("ScreenLevel");
+		}
+		
         tickTimer();
         
     }
