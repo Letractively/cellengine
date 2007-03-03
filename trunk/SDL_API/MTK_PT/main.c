@@ -69,9 +69,9 @@ int main( int argc, char* args[] )
 	//ScreenTable = table;
 
 	// init SubSystem
-	SCREEN_WIDTH	= 240;
-	SCREEN_HEIGHT	= 320;
-	TEXT_SIZE		= 16;
+	//SCREEN_WIDTH	= 240;
+	//SCREEN_HEIGHT	= 320;
+	//TEXT_SIZE		= 16;
 	if( SCREEN_Init() == false )return 1;    
 	printf("Screen W = %d\n",SCREEN_WIDTH);
 	printf("Screen H = %d\n",SCREEN_HEIGHT);
