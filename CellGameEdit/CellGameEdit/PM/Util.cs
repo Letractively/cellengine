@@ -13,7 +13,7 @@ namespace CellGameEdit.PM
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += array[i] + ",";
+                ret += array[i].ToString() + ",";
             }
             return ret;
         }
@@ -23,7 +23,7 @@ namespace CellGameEdit.PM
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += array[i] + ",";
+                ret += array[i].ToString() + ",";
             }
             return ret;
         }
@@ -33,7 +33,7 @@ namespace CellGameEdit.PM
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += array[i] + ",";
+                ret += array[i].ToString() + ",";
             }
             return ret;
         }
