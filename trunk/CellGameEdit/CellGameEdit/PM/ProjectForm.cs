@@ -278,44 +278,51 @@ namespace CellGameEdit.PM
         {
             string script = src.Substring(0, src.Length);
 
-            // build resource trunk
-            string resource = Util.getTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
-            if (resource != null)
+            try
             {
-                bool fix = false;
-                do
+                // build resource trunk
+                string resource = Util.getTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
+                if (resource != null)
                 {
-                    fix = false;
-                    string images = fillScriptSub(resource, "#<IMAGES>", "#<END IMAGES>", FormsImages);
-                    if (images != null) { resource = images; fix = true; }
+                    bool fix = false;
+                    do
+                    {
+                        fix = false;
+                        string images = fillScriptSub(resource, "#<IMAGES>", "#<END IMAGES>", FormsImages);
+                        if (images != null) { resource = images; fix = true; }
 
-                    string map = fillScriptSub(resource, "#<MAP>", "#<END MAP>", FormsMap);
-                    if (map != null) { resource = map; fix = true; }
+                        string map = fillScriptSub(resource, "#<MAP>", "#<END MAP>", FormsMap);
+                        if (map != null) { resource = map; fix = true; }
 
-                    string sprite = fillScriptSub(resource, "#<SPRITE>", "#<END SPRITE>", FormsSprite);
-                    if (sprite != null) { resource = sprite; fix = true; }
+                        string sprite = fillScriptSub(resource, "#<SPRITE>", "#<END SPRITE>", FormsSprite);
+                        if (sprite != null) { resource = sprite; fix = true; }
 
-                } while (fix);
+                    } while (fix);
+                }
+                resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
+                script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
             }
-            resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
-            script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
+            catch (Exception err) { MessageBox.Show(err.Message); }
 
             //build world trunk
-            string level = Util.getTrunk(script, "#<LEVEL>", "#<END LEVEL>");
-            if (level != null)
+            try
             {
-                bool fix = false;
-                do
+                string level = Util.getTrunk(script, "#<LEVEL>", "#<END LEVEL>");
+                if (level != null)
                 {
-                    fix = false;
-                    string world = fillScriptSub(level, "#<WORLD>", "#<END WORLD>", FormsWorld);
-                    if (world != null) { level = world; fix = true; }
+                    bool fix = false;
+                    do
+                    {
+                        fix = false;
+                        string world = fillScriptSub(level, "#<WORLD>", "#<END WORLD>", FormsWorld);
+                        if (world != null) { level = world; fix = true; }
 
-                } while (fix);
+                    } while (fix);
+                }
+                level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
+                script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
             }
-            level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
-            script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
-
+            catch (Exception err) { MessageBox.Show(err.Message); }
 
             return script;
         }
