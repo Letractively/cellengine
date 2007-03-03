@@ -144,7 +144,7 @@ tImage* 	IMG_CreateImageFormData(const u8 Data[])
 }
 
 
-tImage* 	IMG_CreateImageFormPixel(const tRGB PixelData[], u16 width, u16 height)
+tImage* 	IMG_CreateImageFormPixel(tRGB PixelData[], u16 width, u16 height)
 {
 	return NULL;
 }
@@ -420,8 +420,8 @@ void		GFX_DrawString(tGraphics* pG, const char* str, s16 x, s16 y, tRGB color )
 		SDL_Color		c = {color.r, color.g, color.b, color.dummy};
 		SDL_Rect		rect = {x, y, 0, 0};
 		SDL_Surface		*text = TTF_RenderText_Solid( font, str, c );
-
 		SDL_BlitSurface(text, NULL, pG->graphics, &rect);
+		SDL_FreeSurface(text);
 	}
 }
 
@@ -431,9 +431,12 @@ u16			GFX_GetStringWidth(char* str)
 	//Generate the message surface
 	if(font != NULL)
 	{
+		u16 w;
 		SDL_Color		c = {0,0,0,0};
 		SDL_Surface		*text = TTF_RenderText_Solid( font, str, c );
-		return text->w;
+		w = text->w;
+		SDL_FreeSurface(text);
+		return w;
 	}else
 	{
 		return -1;
@@ -446,9 +449,12 @@ u16			GFX_GetStringHeight(char* str)
 	//Generate the message surface
 	if(font != NULL)
 	{
+		u16 h;
 		SDL_Color		c = {0,0,0,0};
 		SDL_Surface		*text = TTF_RenderText_Solid( font, str, c );
-		return text->h;
+		h = text->h;
+		SDL_FreeSurface(text);
+		return h;
 	}else
 	{
 		return -1;
