@@ -22,19 +22,9 @@ tScreen ScreenMain =
 };
 
 // img res
-#define BLOCK_COUNT 8
-
-tImage* blocks[BLOCK_COUNT] ;
 tImage* back ;
-tImage* wall ;
 
-// map res
-#define MAP_W 8
-#define MAP_H 8
 
-u16	MapW;
-u16 MapH;
-u8 **MapData;
 
 // spr res
 typedef struct tBlock 
@@ -46,83 +36,42 @@ typedef struct tBlock
 	u16		h;
 }tBlock;
 
+bool TouchBlock(tBlock *b1, tBlock *b2)
+{	
+	if (b2->x+b2->w <= b1->x)		return false;
+	if (b1->x >= b2->x+b2->w)		return false;
+	if (b2->y+b2->h <= b1->y)		return false;
+	if (b1->y >= b2->y+b2->h)		return false;
+	return true;
+}
 
+
+
+/***************************************************************************************************/
 void Main_Init()
 {
-	int i;
-	char id[32] ;
-	
 	FrameDelay = 1;
 	back = IMG_CreateImageFormFile("img\\back.png");
-	wall = IMG_CreateImageFormFile("img\\wall.png");
-	for(i=0;i<BLOCK_COUNT;i++)
-	{
-		sprintf_s(id,sizeof(id),"img\\B%d.png",i);
-		blocks[i] = IMG_CreateImageFormFile(id);
-	}
+	
 
 }
 
 void Main_Destory()
 {
-	int i;
-	for(i=0;i<BLOCK_COUNT;i++)
-	{
-		IMG_Destory(blocks[i]);
-	}
 	IMG_Destory(back);
-	IMG_Destory(wall);
 }
 
 void Main_Logic()
 {
 	FrameDelay = 1;
-
-	//按任意键将跳转到ScreenLogo
-	if(SCREEN_IsKeyDown(KEY_ANY))
-	{
-		SCREEN_ChangeScreen(&ScreenLogo);
-	}
-
 }
 
 
 void Main_Render(tGraphics *g)
 {
-	//int i;
-	int x,y;
 	//clear screen
-	//GFX_CleanRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT);
-	//GFX_FillRect(g,0,0,SCREEN_WIDTH,SCREEN_HEIGHT,GFX_ToRGB(0,0xff,0));
-
 	//绘制背景图片
 	GFX_DrawImage(g,back,0,0,0);
-
-	////绘制图片在指定位置
-	//for(i=0;i<BLOCK_COUNT;i++)
-	//{
-	//	GFX_DrawImage(g,blocks[i],0,20*i,0);
-	//}
-
-	//绘制图片在笔触点上
-	GFX_DrawImage(g,blocks[0],SCREEN_GetPointerX(),SCREEN_GetPointerY(),0);
-
-	for(y=0;y<MAP_H;y++){
-		for(x=0;x<MAP_W;x++){
-			if(MapData[y][x]>0)
-			GFX_DrawImage(g,wall,x*20,y*20,0);
-		}
-	}
-	
-
-	//显示字符串
-	GFX_DrawString(
-		g,
-		"Press Any Key !",
-		SCREEN_WIDTH /2-GFX_GetStringWidth("Press Any Key !")/2,
-		SCREEN_HEIGHT/2-GFX_GetStringHeight("Press Any Key !")/2,
-		GFX_ToRGB(0,0xff,0)
-		);
 
 	//显示FPS
 	SCREEN_ShowFPS(g);
