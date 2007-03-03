@@ -464,8 +464,8 @@ namespace CellGameEdit.PM
                         string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
 
                         senceFrames[i] = Util.replaceKeywordsScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>",
-                            new string[] { "<INDEX>", "<DATA>" },
-                            new string[] { i.ToString(), DATA }
+                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                            new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
                             );
                     }
                     string temp = Util.replaceSubTrunksScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
@@ -522,8 +522,8 @@ namespace CellGameEdit.PM
                         string DATA = Util.toTextArray((int[])(collides.frameGetFrame(i).ToArray(typeof(int))));
 
                         cdFrames[i] = Util.replaceKeywordsScript(sprite, "#<CD FRAME>", "#<END CD FRAME>",
-                            new string[] { "<INDEX>", "<DATA>" },
-                            new string[] { i.ToString(), DATA }
+                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                            new string[] { i.ToString(), collides.frameGetFrame(i).Count.ToString(), DATA }
                             );
                     }
                     string temp = Util.replaceSubTrunksScript(sprite, "#<CD FRAME>", "#<END CD FRAME>", cdFrames);
@@ -560,7 +560,13 @@ namespace CellGameEdit.PM
                     outFrameCDDef += "{" + Util.toTextArray(frameCDDef[i]) + "},\r\n";
                 for (int i = 0; i < frameCDExt.Length; i++)
                     outFrameCDExt += "{" + Util.toTextArray(frameCDExt[i]) + "},\r\n";
-               
+
+                int[] frameCounts = new int[frameName.Length];
+                for (int i = 0; i < frameAnimate.Length; i++)
+                    frameCounts[i] = frameAnimate[i].Length;
+                String outFrameCounts = Util.toTextArray(frameCounts);
+
+
                 sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
                     new string[] { 
                     "<NAME>", 
@@ -569,6 +575,8 @@ namespace CellGameEdit.PM
                     "<SCENE FRAME COUNT>" ,
                     "<CD PART COUNT>",
                     "<CD FRAME COUNT>",
+                        "<ANIMATE COUNT>",
+                        "<FRAME COUNTS>",
                     "<FRAME NAME>",
                     "<FRAME ANIMATE>",
                     "<FRAME CD MAP>",
@@ -583,6 +591,8 @@ namespace CellGameEdit.PM
                     animates.frameGetCount().ToString(),
                     AllFrame.getCDCount().ToString(),
                     collides.frameGetCount().ToString(),
+                        frameAnimate.Length.ToString(),
+                        outFrameCounts,
                     outFrameName,
                     outFrameAnimate,
                     outFrameCDMap,

@@ -49,6 +49,7 @@
          <SCENE FRAME COUNT>
          #<SCENE FRAME> 
              <INDEX> 
+             <DATA SIZE>
              <DATA>
          #<END SCENE FRAME>
 
@@ -74,18 +75,19 @@
          <NAME> 
          <IMAGES NAME>
          <SCENE PART COUNT>
-	   #<SCENE PART> 
+		#<SCENE PART> 
              <INDEX> 
              <TILE>
              <X> 
              <Y> 
              <TRANS>
-	   #<END SCENE PART> 
+		#<END SCENE PART> 
 		
-         <SCENE FRAME COUNT>  
+       <SCENE FRAME COUNT>  
 	   #<SCENE FRAME> 
-             <INDEX> 
-	       <DATA> 
+			<INDEX> 
+			<DATA SIZE>
+			<DATA> 
 	   #<END SCENE FRAME> 
 
          <CD PART COUNT> 
@@ -103,9 +105,13 @@
 
          <CD FRAME COUNT>
          #<CD FRAME> 
-             <INDEX>
-	       <DATA>
+            <INDEX>
+            <DATA SIZE>
+			<DATA>
 	   #<END CD FRAME> 
+	    
+	    <ANIMATE COUNT>
+	    <FRAME COUNTS>
 	    
 	   <FRAME NAME>
 	   <FRAME ANIMATE>

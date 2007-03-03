@@ -508,8 +508,8 @@ namespace CellGameEdit.PM
                         string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
 
                         senceFrames[i] = Util.replaceKeywordsScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>",
-                            new string[] { "<INDEX>", "<DATA>" },
-                            new string[] { i.ToString(), DATA }
+                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                            new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
                             );
                     }
                     string temp = Util.replaceSubTrunksScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
