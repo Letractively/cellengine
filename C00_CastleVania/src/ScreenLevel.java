@@ -11,6 +11,7 @@ import com.cell.CImagesJPhone;
 import com.cell.CMath;
 import com.cell.CTilesJPhone;
 import com.cell.IImages;
+import com.cell.game.CCD;
 import com.cell.game.CCamera;
 import com.cell.game.CMap;
 import com.cell.game.CSprite;
@@ -24,11 +25,10 @@ import cv.unit.UnitActor;
 
 public class ScreenLevel extends AScreen {
 
-	
 	// game world
 	LevelManager 		world;
-	
 //	CWorldMini			worldMini;
+	
 	
 	public ScreenLevel(){
 
@@ -58,7 +58,7 @@ public class ScreenLevel extends AScreen {
        	AITable.put(ResesScript.spr_e00_zombi, "cv.unit.UnitZombi");
        	world.UnitTable = AITable;
        	
-       	world.init();
+       	world.initLevel();
        	
        	
 //    	worldMini = new CWorldMini(
@@ -87,7 +87,7 @@ public class ScreenLevel extends AScreen {
     	
 		world.update();
   
-		if(world.IsChange){
+		if(world.IsChangeRoom){
 			ChangeSubScreen("ScreenLevel");
 		}
 		
