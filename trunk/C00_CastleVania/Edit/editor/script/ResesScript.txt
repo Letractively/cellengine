@@ -3,7 +3,7 @@
 // CastleVania Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     ..\res\ResesScript.java
+// <OUTPUT>     ..\..\res\ResesScript.java
 // 
 import com.cell.*;
 import com.cell.game.*;
@@ -201,11 +201,12 @@ public class ResesScript {
 	// room scopes
 	final static public CCD[] WorldRooms = new CCD[]{
 	#<WORLD> 
-	CCD.createCDRect(0xffffffff, 
-			CUtil.stringKeyValue(#<UNIT MAP> "<NAME>" #<END UNIT MAP>, "x"), 
-			CUtil.stringKeyValue(#<UNIT MAP> "<NAME>" #<END UNIT MAP>, "y"),
+		CCD.createCDRect(0xffffffff, 
+			CUtil.stringKeyValue(#<UNIT MAP> "<MAP NAME>" #<END UNIT MAP>, "x"), 
+			CUtil.stringKeyValue(#<UNIT MAP> "<MAP NAME>" #<END UNIT MAP>, "y"),
 			<WIDTH>, 
-			<HEIGHT>),#<END WORLD>
+			<HEIGHT>),
+	#<END WORLD>
 	};
 
 	// world names
@@ -238,10 +239,10 @@ public class ResesScript {
 			#<UNIT MAP> 
 			level.MapTile = "<SUPER>";    // map tile name
 			level.MapType = "<IDENTIFY>"; // map type 
-			level.MapInfo = "<NAME>";     // map info form editor
-			level.X       = CUtil.stringKeyValue("<NAME>","x"); // level x pos
-			level.Y       = CUtil.stringKeyValue("<NAME>","y"); // level y pos
-			CObject.println("<NAME>");
+			level.MapInfo = "<MAP NAME>";     // map info form editor
+			level.X       = CUtil.stringKeyValue("<MAP NAME>","x"); // level x pos
+			level.Y       = CUtil.stringKeyValue("<MAP NAME>","y"); // level y pos
+			CObject.println("<MAP NAME>");
 			CObject.println("Level X = " + level.X );
 			CObject.println("Level Y = " + level.Y );
 			CObject.println("Level W = " + level.Width ); 
@@ -271,7 +272,7 @@ public class ResesScript {
 			#<UNIT SPRITE> 
 			level.SprsTile[<INDEX>] = "<SUPER>";    // sprite tile name
 			level.SprsType[<INDEX>] = "<IDENTIFY>"; // sprite type
-			level.SprsInfo[<INDEX>] = "<NAME>";     // sprite info form editor
+			level.SprsInfo[<INDEX>] = "<SPR NAME>";     // sprite info form editor
 			level.SprsX[<INDEX>]    = <X>;          // sprite xpos form editor
 			level.SprsY[<INDEX>]    = <Y>;          // sprite ypos form editor
 			#<END UNIT SPRITE>

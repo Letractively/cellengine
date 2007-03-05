@@ -48,16 +48,15 @@ public class LevelManager extends CWorld {
 	public Hashtable UnitTable ;
 	
 	
-	Hashtable TileTable ;
-	
-	
 	Vector UnitTeam0 = new Vector();
 	Vector UnitTeam1 = new Vector();
 	Vector UnitTeam2 = new Vector();
+	Hashtable TileTable = new Hashtable();
 	
 	public boolean 	IsChangeRoom	= false;
 	public boolean 	IsChangeLevel	= false;
 
+	
 	// test room scope
 	public String getRoom(int x, int y){
 		for(int i=ResesScript.WorldRooms.length-1;i>=0;i--){
