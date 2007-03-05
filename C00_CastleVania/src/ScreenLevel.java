@@ -26,7 +26,7 @@ import cv.unit.UnitActor;
 public class ScreenLevel extends AScreen {
 
 	// game world
-	LevelManager 		world;
+	static LevelManager world;
 //	CWorldMini			worldMini;
 	
 	
@@ -60,6 +60,7 @@ public class ScreenLevel extends AScreen {
        	
        	world.initLevel();
        	
+       	world.initRoom();
        	
 //    	worldMini = new CWorldMini(
 //       			world,

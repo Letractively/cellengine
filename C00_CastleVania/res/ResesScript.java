@@ -6,7 +6,7 @@
 // CastleVania Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     ..\res\ResesScript.java
+// <OUTPUT>     ..\..\res\ResesScript.java
 // 
 import com.cell.*;
 import com.cell.game.*;
@@ -1334,23 +1334,26 @@ public class ResesScript {
 	// room scopes
 	final static public CCD[] WorldRooms = new CCD[]{
 	 
-	CCD.createCDRect(0xffffffff, 
+		CCD.createCDRect(0xffffffff, 
 			CUtil.stringKeyValue( "x320y0" , "x"), 
 			CUtil.stringKeyValue( "x320y0" , "y"),
 			640, 
 			320),
+	
  
-	CCD.createCDRect(0xffffffff, 
+		CCD.createCDRect(0xffffffff, 
 			CUtil.stringKeyValue( "x960y0" , "x"), 
 			CUtil.stringKeyValue( "x960y0" , "y"),
 			640, 
 			320),
+	
  
-	CCD.createCDRect(0xffffffff, 
+		CCD.createCDRect(0xffffffff, 
 			CUtil.stringKeyValue( "x0y0" , "x"), 
 			CUtil.stringKeyValue( "x0y0" , "y"),
 			320, 
 			320),
+	
 
 	};
 
