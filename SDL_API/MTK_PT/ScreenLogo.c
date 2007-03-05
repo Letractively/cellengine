@@ -41,7 +41,7 @@ void Logo_Logic()
 	//按任意键将跳转到ScreenMain
 	if(SCREEN_IsKeyDown(KEY_ANY))
 	{
-		SCREEN_ChangeScreen(&ScreenMain);
+		SCREEN_ChangeScreen(&ScreenMenu);
 	}
 }
 

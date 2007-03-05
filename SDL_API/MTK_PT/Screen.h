@@ -5,6 +5,7 @@
 
 #include "GameHeader.h"
 
+
 /* Set up for C function definitions, even when using C++ */
 #ifdef __cplusplus
 extern "C" {
@@ -12,9 +13,10 @@ extern "C" {
 
 extern tScreen ScreenLogo;
 extern tScreen ScreenMain;
+extern tScreen ScreenMenu;
 
-
-
+// gobal var
+extern u16 curWorld;
 
 /* Ends C function definitions when using C++ */
 #ifdef __cplusplus

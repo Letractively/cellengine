@@ -3,9 +3,9 @@
 
 // gobal
 
-TTF_Font *font ;
-SDL_Event event;
-
+TTF_Font	*font ;
+SDL_Event	event;
+tRGB		keycolor = {0,0xff,0,0xff};
 
 /********************************************************************************************************************/
 
@@ -27,7 +27,7 @@ bool		MTK_Init()
     }
 
 	//Init Video System
-	#define SCREEN_BPP   16
+	#define SCREEN_BPP   32
 	if( SCREEN_WIDTH  < 1)	SCREEN_WIDTH	= 640;
 	if( SCREEN_HEIGHT < 1)	SCREEN_HEIGHT	= 480;
 	SDL_SetVideoMode( SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_HWSURFACE );
@@ -100,7 +100,7 @@ tImage* 	IMG_CreateImageFormFile(const char * file)
 			if( optimizedImage != NULL )
 			{
 				//Map the color key
-				Uint32 colorkey = SDL_MapRGB( optimizedImage->format, 0xff, 0, 0xff );
+				Uint32 colorkey = SDL_MapRGB( optimizedImage->format, keycolor.r, keycolor.g, keycolor.b );
 	            
 				//Set all pixels of color R 0, G 0xFF, B 0xFF to be transparent
 				SDL_SetColorKey( optimizedImage, SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey );
@@ -233,7 +233,7 @@ tGraphics* 	GFX_GetLCDGraphics(void)
 		g->graphics = SDL_GetVideoSurface();
 
 		//Map the color key
-		colorkey = SDL_MapRGB( g->graphics->format, 0xff, 0, 0xff );
+		colorkey = SDL_MapRGB( g->graphics->format, keycolor.r, keycolor.g, keycolor.b );
 	            
 		//Set all pixels of color R 0, G 0xFF, B 0xFF to be transparent
 		SDL_SetColorKey( g->graphics, SDL_RLEACCEL | SDL_SRCCOLORKEY, colorkey );
