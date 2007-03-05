@@ -222,7 +222,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string NAME = ((Unit)maps[i]).id;
                         string SUPER = ((Unit)maps[i]).map.super.id;
                         map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" ,"<SUPER>"},
+                               new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" ,"<SUPER>"},
                                new string[] { NAME, ID, i.ToString(), X, Y, SUPER });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
@@ -252,7 +252,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                         string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<SUPER>" },
+                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<SUPER>" },
                                new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, SUPER });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);

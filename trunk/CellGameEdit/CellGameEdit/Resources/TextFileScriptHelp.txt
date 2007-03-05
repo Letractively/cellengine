@@ -19,6 +19,7 @@
 
  #<RESOURCE>           /* 资源数据 */ 
 
+	 <RES IMAGES COUNT>
      #<IMAGES>         /* 图片组数据 */
          <NAME>         /* 该图片组的名称 */
          <COUNT>        /* 该图片组包含的图块数量 */
@@ -31,6 +32,7 @@
          #<END CLIP>  /* 图片切块数据块结束 */
      #<END IMAGES>    /* 图片组数据块  结束 */
 
+	<RES MAP COUNT>
      #<MAP>
          <NAME> 
          <IMAGES NAME>
@@ -70,7 +72,8 @@
          <FLAG MATRIX>
 
      #<END MAP> 
-	
+     
+	<RES SPRITE COUNT>
      #<SPRITE> 
          <NAME> 
          <IMAGES NAME>
@@ -127,13 +130,14 @@
 
  #<LEVEL> 
 	
+	<LEVEL WORLD COUNT>
      #<WORLD> 
          <NAME>
   
 	   <UNIT MAP COUNT> 
-	   #< UNIT MAP  
+	   #<UNIT MAP>
              <INDEX>   
-             <NAME>
+             <MAP NAME>
              <IDENTIFY>  
              <X> 
              <Y> 
@@ -143,15 +147,15 @@
          <UNIT SPRITE COUNT> 
          #<UNIT SPRITE> 
              <INDEX>
-             <NAME>
+             <SPR NAME>
              <IDENTIFY>  
              <ANIMATE ID>
              <X> 
              <Y> 
              <SUPER>
-         #< END UNIT SPRITE> 
+         #<END UNIT SPRITE> 
 		
-         WAYPOINT COUNT 
+         <WAYPOINT COUNT> 
          #<WAYPOINT>  
              <INDEX> 
              <X> 

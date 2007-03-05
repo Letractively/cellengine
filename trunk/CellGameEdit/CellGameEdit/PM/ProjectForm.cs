@@ -231,6 +231,11 @@ namespace CellGameEdit.PM
         //ArrayList ScriptsSprite = new ArrayList();
         //ArrayList ScriptsWorld = new ArrayList();
 
+        ArrayList FormsImages = new ArrayList();
+        ArrayList FormsMap = new ArrayList();
+        ArrayList FormsSprite = new ArrayList();
+        ArrayList FormsWorld = new ArrayList();
+
         public string fillScriptSub(string src, string start, string end, ArrayList forms)
         {
             string script = src.Substring(0, src.Length);
@@ -299,7 +304,9 @@ namespace CellGameEdit.PM
 
                     } while (fix);
                 }
-                resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>", null, null);
+                resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>",
+                    new string[] { "<RES IMAGES COUNT>", "<RES MAP COUNT>", "<RES SPRITE COUNT>" },
+                    new string[] { FormsImages.Count.ToString(), FormsMap.Count.ToString(), FormsSprite.Count.ToString()});
                 script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
             }
             catch (Exception err) { MessageBox.Show(err.Message); }
@@ -319,7 +326,9 @@ namespace CellGameEdit.PM
 
                     } while (fix);
                 }
-                level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>", null, null);
+                level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>",
+                    new string[] { "<LEVEL WORLD COUNT>" },
+                    new string[] { FormsWorld.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
             }
             catch (Exception err) { MessageBox.Show(err.Message); }
@@ -328,10 +337,7 @@ namespace CellGameEdit.PM
         }
 
 
-        ArrayList FormsImages = new ArrayList();
-        ArrayList FormsMap = new ArrayList();
-        ArrayList FormsSprite = new ArrayList();
-        ArrayList FormsWorld = new ArrayList();
+   
 
         public void initForms()
         {
