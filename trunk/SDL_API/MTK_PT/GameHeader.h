@@ -9,8 +9,9 @@
 
 #include "MTK.h"
 
-#include "GameScreen.h"
 #include "GameUtil.h"
+#include "GameScreen.h"
+#include "GameSprite.h"
 
 #endif /*GAME_HEADER_H_*/
 

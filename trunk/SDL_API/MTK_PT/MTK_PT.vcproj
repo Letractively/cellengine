@@ -193,14 +193,10 @@
 				RelativePath=".\ScreenMain.c"
 				>
 			</File>
-			<Filter
-				Name="Block"
+			<File
+				RelativePath=".\ScreenMenu.c"
 				>
-				<File
-					RelativePath=".\Block.h"
-					>
-				</File>
-			</Filter>
+			</File>
 		</Filter>
 		<Filter
 			Name="MTK"
@@ -250,7 +246,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\GameTiles.h"
+				RelativePath=".\GameUtil.c"
 				>
 			</File>
 			<File
@@ -261,6 +257,10 @@
 		<Filter
 			Name="res"
 			>
+			<File
+				RelativePath=".\MenuScript.h"
+				>
+			</File>
 			<File
 				RelativePath=".\ResesScript.h"
 				>
