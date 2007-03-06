@@ -19,15 +19,16 @@ import com.cell.game.CWorld;
 import com.cell.game.CWorldMini;
 
 import cv.LevelManager;
+import cv.ResesScript;
 import cv.unit.Unit;
 import cv.unit.UnitActor;
 
 
 public class ScreenLevel extends AScreen {
 
-	// game world
+//	 game world
+	static String		worldName;
 	static LevelManager world;
-//	CWorldMini			worldMini;
 	static Hashtable 	aiTable;
 	
 	public ScreenLevel(){
@@ -49,14 +50,18 @@ public class ScreenLevel extends AScreen {
 //       	}
 		
        	// world
-       	world = ResesScript.createWorld();
        	
-       	Hashtable AITable = new Hashtable();
-       	AITable.put(ResesScript.spr_Actor00, "cv.unit.UnitActor");
-       	AITable.put(ResesScript.spr_e00_zombi, "cv.unit.UnitZombi");
-       	world.UnitTable = AITable;
-       	
-       	world.initLevel();
+       	if(aiTable == null){
+       		aiTable = new Hashtable();
+           	//aiTable.put(ResesScript.spr_Actor00, "cv.unit.UnitActor");
+           	//aiTable.put(ResesScript.spr_e00_zombi, "cv.unit.UnitZombi");
+       	}
+       	if(world   == null){
+       		world = new LevelManager(new ResesLevel00());
+       		//ResesScript.createWorld("WorldName",world);
+       		world.UnitTable = aiTable;
+       		world.initLevel();
+       	}
        	
        	world.initRoom();
        	
@@ -83,12 +88,13 @@ public class ScreenLevel extends AScreen {
 
     	if(isKeyDown(KEY_0)){IsDebug = !IsDebug;}
     	
-    	
-		world.update();
-  
-		if(world.IsChangeRoom){
-			ChangeSubScreen("ScreenLevel");
-		}
+    	if(world!=null){
+    		world.update();
+    		if(world.IsChangeRoom){
+    			ChangeSubScreen("ScreenLevel");
+    		}
+    	}
+		
 		
         tickTimer();
         
@@ -97,7 +103,9 @@ public class ScreenLevel extends AScreen {
 	public void notifyRender(Graphics g) {
         //clearScreenAndClip(g,0xff000000);
 
-        world.render(g);
+		if(world!=null){
+			world.render(g);
+		}
 //        worldMini.render(g, 1, -1 + SCREEN_HEIGHT - worldMini.getHeight());
         
         showFPS(g, 1, 1, 0xffffffff);

@@ -3,14 +3,14 @@
 // CastleVania Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     ..\..\res\ResesScript.java
+// <OUTPUT>     ..\..\res\ResesLevel00.java
 // 
 import com.cell.*;
 import com.cell.game.*;
 
 import cv.LevelManager;
 
-public class ResesScript {
+public class ResesLevel00 {
 
 //--------------------------------------------------------------------------------------------------------------
 // resource trunk
@@ -218,8 +218,10 @@ public class ResesScript {
 
 	
 	// create world
-	final static public LevelManager createWorld(){
+	final static public LevelManager createWorld(String name){
 		LevelManager level = new LevelManager();
+		
+		level.WorldName = name;
 		
 		// screen size
 		level.WindowX = 0;
