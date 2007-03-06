@@ -18,21 +18,22 @@ import com.cell.hud.CTextBox;
 import cv.unit.Unit;
 import cv.unit.UnitActor;
 
-import ResesScript;
 
 
 public class LevelManager extends CWorld {
+	
+	ResesScript 	res;
+	
+	static public int WindowX = 0;
+	static public int WindowY = 0;
+	static public int WindowW = AScreen.SCREEN_WIDTH;
+	static public int WindowH = AScreen.SCREEN_HEIGHT;
 	
 	public String 	WorldName 	= "Entry";
 	public Unit 	Actor;
 	public int 		ActorX;
 	public int 		ActorY;
 
-	public int WindowX;
-	public int WindowY;
-	public int WindowW;
-	public int WindowH;
-	
 	public int X;
 	public int Y;
 
@@ -47,16 +48,18 @@ public class LevelManager extends CWorld {
 	public String MapInfo;
 	public Hashtable UnitTable ;
 	
+	public boolean 	IsChangeRoom	= false;
+	public boolean 	IsChangeLevel	= false;
+
+	public CCD[] WorldRooms ;
+	public String[] WorldNames ;
 	
 	Vector UnitTeam0 = new Vector();
 	Vector UnitTeam1 = new Vector();
 	Vector UnitTeam2 = new Vector();
 	Hashtable TileTable = new Hashtable();
 	
-	public boolean 	IsChangeRoom	= false;
-	public boolean 	IsChangeLevel	= false;
-
-	public LevelManager(){
+	public LevelManager(ResesScript res){
 //		setup actor world pos
 		if( !UnitTeam0.contains(Actor) ){
 			Actor.X = ActorX - X;
@@ -76,7 +79,7 @@ public class LevelManager extends CWorld {
 			for(int i=0;i<SprsTile.length;i++){
 				tile = (IImages)TileTable.get(SprsTile[i]);
 				if( tile == null ){
-					tile = ResesScript.createImages(SprsTile[i]);
+					tile = res.createImages(SprsTile[i]);
 					TileTable.put(SprsTile[i], tile);
 					println(" create tile : " + SprsTile[i]);
 				}
@@ -84,7 +87,7 @@ public class LevelManager extends CWorld {
 			if(MapTile!=null){
 				tile = (IImages)TileTable.get(MapTile);
 				if( tile == null ){
-					tile = ResesScript.createImages(MapTile);
+					tile = res.createImages(MapTile);
 					TileTable.put(MapTile, tile);
 					println(" create tile : " + MapTile);
 				}
@@ -99,7 +102,7 @@ public class LevelManager extends CWorld {
 	public void initRoom(){
 //		create sprs 	
 		for(int i=0;i<SprsType.length;i++){
-			CSprite spr = ResesScript.createSprite(SprsType[i],(IImages)TileTable.get(SprsTile[i]));
+			CSprite spr = res.createSprite(SprsType[i],(IImages)TileTable.get(SprsTile[i]));
 
 			try{
 				Unit.SprStuff = spr;
@@ -143,14 +146,11 @@ public class LevelManager extends CWorld {
 
 		
 //		create map
-		CMap map = ResesScript.createMap(MapType, (IImages)TileTable.get(MapTile), true, false);
+		CMap map = res.createMap(MapType, (IImages)TileTable.get(MapTile), true, false);
 		this.setMap(map);
 		
 //		create camera
-		WindowX = 0;
-		WindowY = 0;
-		WindowW = AScreen.SCREEN_WIDTH;
-		WindowH = AScreen.SCREEN_HEIGHT;
+
 		
 		CCamera camera = new CCamera(
 				WindowX,
@@ -263,14 +263,14 @@ public class LevelManager extends CWorld {
 	
 	// test room scope
 	public String getRoom(int x, int y){
-		for(int i=ResesScript.WorldRooms.length-1;i>=0;i--){
+		for(int i=WorldRooms.length-1;i>=0;i--){
 			if(CCD.cdRectPoint(
-					ResesScript.WorldRooms[i].X1, 
-					ResesScript.WorldRooms[i].Y1, 
-					ResesScript.WorldRooms[i].X2, 
-					ResesScript.WorldRooms[i].Y2, 
+					WorldRooms[i].X1, 
+					WorldRooms[i].Y1, 
+					WorldRooms[i].X2, 
+					WorldRooms[i].Y2, 
 					x, y)){
-				return ResesScript.WorldNames[i];
+				return WorldNames[i];
 			}
 		}
 		return null;
