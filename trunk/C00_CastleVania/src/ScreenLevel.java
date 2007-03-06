@@ -28,13 +28,11 @@ public class ScreenLevel extends AScreen {
 	// game world
 	static LevelManager world;
 //	CWorldMini			worldMini;
-	
+	static Hashtable 	aiTable;
 	
 	public ScreenLevel(){
 
-		
        	IsDebug = false;
-    
        	FrameDelay = 40;
 
 //       	// actor
