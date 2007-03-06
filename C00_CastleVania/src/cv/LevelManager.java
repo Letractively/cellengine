@@ -56,22 +56,19 @@ public class LevelManager extends CWorld {
 	public boolean 	IsChangeRoom	= false;
 	public boolean 	IsChangeLevel	= false;
 
-	
-	// test room scope
-	public String getRoom(int x, int y){
-		for(int i=ResesScript.WorldRooms.length-1;i>=0;i--){
-			if(CCD.cdRectPoint(
-					ResesScript.WorldRooms[i].X1, 
-					ResesScript.WorldRooms[i].Y1, 
-					ResesScript.WorldRooms[i].X2, 
-					ResesScript.WorldRooms[i].Y2, 
-					x, y)){
-				return ResesScript.WorldNames[i];
-			}
+	public LevelManager(){
+//		setup actor world pos
+		if( !UnitTeam0.contains(Actor) ){
+			Actor.X = ActorX - X;
+			Actor.Y = ActorY - Y;
+			Actor.HPos256 = Actor.X * 256 ;
+			Actor.VPos256 = Actor.Y * 256 ;
+			Actor.world = this;
+			UnitTeam0.addElement(Actor);
+			this.addSprite(Actor);
 		}
-		return null;
 	}
-	
+
 	public void initLevel(){
 		try{
 //		 	create tile bank
@@ -92,6 +89,7 @@ public class LevelManager extends CWorld {
 					println(" create tile : " + MapTile);
 				}
 			}
+
 		}catch(Exception err){
 			println(err.getMessage());
 			err.printStackTrace();
@@ -111,9 +109,6 @@ public class LevelManager extends CWorld {
 				switch(ai.Team){
 				case Unit.TEAM_ACTOR:
 					UnitTeam0.addElement(ai);
-					Actor = ai;
-					ActorX = X;
-					ActorY = Y;
 					break;
 				case Unit.TEAM_ENEMY:
 					UnitTeam1.addElement(ai);
@@ -142,20 +137,10 @@ public class LevelManager extends CWorld {
 				this.addSprite(spr);
 				print("Error : " + err.getMessage() + " : ");
 			}
-			println(SprsType[i] + " -> " + ((String)UnitTable.get(SprsType[i])) + " : " + SprsInfo[i]);
-			
-		}
-//		setup actor world pos
-		if( !UnitTeam0.contains(Actor) ){
-			Actor.X = ActorX - X;
-			Actor.Y = ActorY - Y;
-			Actor.HPos256 = Actor.X * 256 ;
-			Actor.VPos256 = Actor.Y * 256 ;
-			Actor.world = this;
-			UnitTeam0.addElement(Actor);
-			this.addSprite(Actor);
+			println(SprsType[i] + " -> " + ((String)UnitTable.get(SprsType[i])) + " : " + SprsInfo[i]);	
 		}
 		
+
 		
 //		create map
 		CMap map = ResesScript.createMap(MapType, (IImages)TileTable.get(MapTile), true, false);
@@ -274,6 +259,21 @@ public class LevelManager extends CWorld {
 				getCamera().getWidth(), 
 				getCamera().getHeight()/4
 				);
+	}
+	
+	// test room scope
+	public String getRoom(int x, int y){
+		for(int i=ResesScript.WorldRooms.length-1;i>=0;i--){
+			if(CCD.cdRectPoint(
+					ResesScript.WorldRooms[i].X1, 
+					ResesScript.WorldRooms[i].Y1, 
+					ResesScript.WorldRooms[i].X2, 
+					ResesScript.WorldRooms[i].Y2, 
+					x, y)){
+				return ResesScript.WorldNames[i];
+			}
+		}
+		return null;
 	}
 	
 }
