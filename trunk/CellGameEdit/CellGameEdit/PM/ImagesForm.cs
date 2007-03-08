@@ -91,6 +91,19 @@ namespace CellGameEdit.PM
                 ArrayList output = (ArrayList)info.GetValue("output", typeof(ArrayList));
                 ArrayList outX = (ArrayList)info.GetValue("outX", typeof(ArrayList));
                 ArrayList outY = (ArrayList)info.GetValue("outY", typeof(ArrayList));
+                ArrayList outK;
+                try
+                {
+                    outK = (ArrayList)info.GetValue("outK", typeof(ArrayList));
+                }
+                catch (Exception err) 
+                { 
+                    outK = new ArrayList();
+                    for (int i = 0; i < output.Count; i++)
+                    {
+                        outK.Add(false);
+                    }
+                }
                 dstImages = new ArrayList();
 
                 for (int i = 0; i < output.Count; i++)
@@ -100,15 +113,17 @@ namespace CellGameEdit.PM
                         String name = (String)output[i];
                         int x = (int)outX[i];
                         int y = (int)outY[i];
+                        Boolean kill = (Boolean)outK[i];
+
                         Image img;
 
-                   
                         System.IO.MemoryStream ms = new System.IO.MemoryStream(System.IO.File.ReadAllBytes(ProjectForm.workSpace+name));
                         System.Drawing.Image dimg = System.Drawing.Image.FromStream(ms);
 
                         img = new Image(dimg);
                         img.x = x;
                         img.y = y;
+                        img.killed = kill;
 
                         pictureBox2.Width = Math.Max(pictureBox2.Width, img.x + img.getWidth());
                         pictureBox2.Height = Math.Max(pictureBox2.Height, img.y + img.getHeight() + 1);
@@ -164,7 +179,8 @@ namespace CellGameEdit.PM
                 ArrayList output = new ArrayList();
                 ArrayList outX = new ArrayList();
                 ArrayList outY = new ArrayList();
-               
+                ArrayList outK = new ArrayList();
+
                 String dir =  "\\" + this.id;
                 //if (System.IO.Directory.Exists(ProjectForm.workSpace + dir))
                 //{
@@ -191,18 +207,21 @@ namespace CellGameEdit.PM
                         output.Add(name);
                         outX.Add(img.x);
                         outY.Add(img.y);
+                        outK.Add(img.killed);
                     }
                     catch (Exception err)
                     {
                         output.Add("");
                         outX.Add(0);
                         outY.Add(0);
+                        outK.Add(false);
                         Console.WriteLine(this.id + " : " + err.Message);
                     }
                 }
                 info.AddValue("output", output);
                 info.AddValue("outX", outX);
                 info.AddValue("outY", outY);
+                info.AddValue("outK",outK);
             }
             catch (Exception err)
             {
@@ -215,6 +234,7 @@ namespace CellGameEdit.PM
            
         }
 
+       
 
         public void SaveAllImages(String dir,String type,Boolean tile,Boolean group)
         {
@@ -252,10 +272,9 @@ namespace CellGameEdit.PM
                         Graphics g = outputImage.getGraphics();
                         for (int i = 0; i < getDstImageCount(); i++)
                         {
-                            if (getDstImage(i) != null)
-                            {
-                                g.drawImage(getDstImage(i), getDstImage(i).x, getDstImage(i).y, 0);
-                            }
+                            if (getDstImage(i) == null || getDstImage(i).killed) continue;
+                            g.drawImage(getDstImage(i), getDstImage(i).x, getDstImage(i).y, 0);
+                            
                         }
                         //
                         outputImage.getDImage().Save(dir + "\\" + this.id + "." + type, format);
@@ -271,13 +290,9 @@ namespace CellGameEdit.PM
                     }
                     for (int i = 0; i < getDstImageCount(); i++)
                     {
-                        if (getDstImage(i) == null) continue;
+                        if (getDstImage(i) == null || getDstImage(i).killed) continue;
                         try
                         {
-                            //Image outputImage = Image.createImage(getDstImage(i).getWidth(), getDstImage(i).getHeight());
-                            //Graphics g = outputImage.getGraphics();
-                            //g.drawImage(getDstImage(i), 0, 0, 0);
-                            //outputImage.getDImage().Save( tileDir + i + "." + type, format);
                             getDstImage(i).getDImage().Save(tileDir + i + "." + type, format);
                         }
                         catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.Message); }
@@ -412,6 +427,27 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
          
         }
 
+        public void addDst(Image img)
+        {
+            for (int i = 0; i < dstImages.Count; i++)
+            {
+                if (getDstImage(i).killed)
+                {
+                    dstImages[i] = img;
+                    // save to src pic
+                    String dir = "\\" + this.id;
+                    String name = dir + "\\tile_" + i.ToString() + ".png";
+                    if (System.IO.File.Exists(ProjectForm.workSpace + name))
+                    {
+                        System.IO.File.Delete(ProjectForm.workSpace + name);
+                    }
+                    getDstImage(i).dimg.Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
+                    return;
+                }
+            }
+            dstImages.Add(img);
+        }
+
         public void addDirImages()
         {
             OpenFileDialog openFileDialog1 = new OpenFileDialog();
@@ -427,7 +463,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         Image img = Image.createImage(openFileDialog1.FileNames[i]);
                         img.x = 0;
                         img.y = pictureBox2.Height / dstSize - 1;
-                        dstImages.Add(img);
+                        addDst(img);
 
                         pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
                         pictureBox2.Height += (img.getHeight() * dstSize);
@@ -457,7 +493,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         0);
                     img.x = 0;
                     img.y = pictureBox2.Height/dstSize - 1;
-                    dstImages.Add(img);
+                    addDst(img);
 
                     pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
                     pictureBox2.Height += (img.getHeight() * dstSize);
@@ -491,7 +527,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                                     0);
                                 img.x = x * (CellW);
                                 img.y = y * (CellH) + pictureBox2.Height/dstSize - 1;
-                                dstImages.Add(img);
+                                addDst(img);
                             }
 
                         }
@@ -561,7 +597,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
             for (int i = 0; i < getDstImageCount(); i++)
             {
-                if (getDstImage(i) != null && i!=index)
+                if (getDstImage(i) != null && getDstImage(i).killed==false && i!=index )
                 {
                     System.Drawing.Rectangle dst = new System.Drawing.Rectangle(
                        getDstImage(i).x,
@@ -648,9 +684,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     if (System.IO.File.Exists(ProjectForm.workSpace + name))
                     {
                         System.IO.File.Delete(ProjectForm.workSpace + name);
-                        changed.dimg.Save(ProjectForm.workSpace + name,System.Drawing.Imaging.ImageFormat.Png);
                     }
-                   
+                    changed.dimg.Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
                 }
             }
             catch (Exception err) {
@@ -660,7 +695,10 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
         }
 
-
+        public void delDstImage(int index)
+        {
+            getDstImage(index).killed = true;
+        }
 
         public void renderSrcImage(Graphics g, int x, int y)
         {
@@ -673,9 +711,15 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
             for (int i = 0; i < getDstImageCount(); i++)
             {
-                if (getDstImage(i) != null)
+                if (getDstImage(i) != null && getDstImage(i).killed == false)
                 {
                     g.drawImage(getDstImage(i), x + getDstImage(i).x * dstSize, y + getDstImage(i).y * dstSize, 0, 0, dstSize);
+                    if (toolStripButton13.Checked)
+                    {
+                        g.setColor(0x7fffffff);
+                        g.drawRect(x + getDstImage(i).x * dstSize, y + getDstImage(i).y * dstSize, getDstImage(i).getWidth() * dstSize, getDstImage(i).getHeight() * dstSize);
+                    }
+                
                 }
             }
         }
@@ -781,21 +825,21 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
             if (toolStripButton2.Checked)
             {
-                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
-                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
+                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width ) * srcSize, (srcRect.Height ) * srcSize);
+                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width ) * srcSize, (srcRect.Height ) * srcSize);
             }
             else if (toolStripButton3.Checked)
             {
-                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
+                dg.FillRectangle(brush, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width ) * srcSize, (srcRect.Height ) * srcSize);
                 for (int x = srcRect.X; x < srcRect.X + srcRect.Width; x += CellW)
                 {
-                    dg.DrawLine(System.Drawing.Pens.White, x * srcSize, srcRect.Y * srcSize, x * srcSize, srcRect.Y * srcSize + (srcRect.Height-1) * srcSize );
+                    dg.DrawLine(System.Drawing.Pens.White, x * srcSize, srcRect.Y * srcSize, x * srcSize, srcRect.Y * srcSize + (srcRect.Height) * srcSize );
                 }
                 for (int y = srcRect.Y; y < srcRect.Y + srcRect.Height; y += CellH)
                 {
-                    dg.DrawLine(System.Drawing.Pens.White, srcRect.X * srcSize, y * srcSize, srcRect.X * srcSize + (srcRect.Width -1) * srcSize, y * srcSize);
+                    dg.DrawLine(System.Drawing.Pens.White, srcRect.X * srcSize, y * srcSize, srcRect.X * srcSize + (srcRect.Width ) * srcSize, y * srcSize);
                 }
-                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width - 1) * srcSize, (srcRect.Height - 1) * srcSize);
+                dg.DrawRectangle(pen, srcRect.X * srcSize, srcRect.Y * srcSize, (srcRect.Width ) * srcSize, (srcRect.Height ) * srcSize);
             }
         }
 
@@ -981,13 +1025,27 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
 
-            e.Graphics.FillRectangle(brush, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width - 1) * dstSize, (dstRect.Height - 1) * dstSize);
-            e.Graphics.DrawRectangle(pen, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width - 1) * dstSize, (dstRect.Height - 1) * dstSize);
+            e.Graphics.FillRectangle(brush, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width ) * dstSize, (dstRect.Height ) * dstSize);
+            e.Graphics.DrawRectangle(pen, dstRect.X * dstSize, dstRect.Y * dstSize, (dstRect.Width ) * dstSize, (dstRect.Height ) * dstSize);
         }
-
+        // change image
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
             changeDstImage(dstSelectIndex);
+            dstRect.X = getDstImage(dstSelectIndex).x;
+            dstRect.Y = getDstImage(dstSelectIndex).y;
+            dstRect.Width = getDstImage(dstSelectIndex).getWidth();
+            dstRect.Height = getDstImage(dstSelectIndex).getHeight();
+            pictureBox2.Refresh();
+        }
+        // del image
+        private void toolStripButton12_Click(object sender, EventArgs e)
+        {
+            delDstImage(dstSelectIndex);
+            dstRect.X = 0;
+            dstRect.Y = 0;
+            dstRect.Width = 1;
+            dstRect.Height = 1;
             pictureBox2.Refresh();
         }
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
@@ -998,7 +1056,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 System.Drawing.Rectangle dst = new System.Drawing.Rectangle(0, 0, 1, 1);
                 for (int i = 0; i < getDstImageCount(); i++)
                 {
-                    if (getDstImage(i) != null)
+                    if (getDstImage(i) != null && getDstImage(i).killed==false)
                     {
                         dst.X = getDstImage(i).x;
                         dst.Y = getDstImage(i).y;
@@ -1129,6 +1187,13 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 pictureBox2.BackColor = MyDialog.Color;
             }
         }
+
+        private void toolStripButton13_Click(object sender, EventArgs e)
+        {
+            pictureBox2.Refresh();
+        }
+
+  
 
 
 

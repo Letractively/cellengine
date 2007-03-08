@@ -55,6 +55,7 @@ public class Graphics
 
 	public void drawImage(javax.microedition.lcdui.Image img, int x, int y, int anchor)
 	{
+		if (img.killed) return;
 		dg.DrawImage(img.dimg,
 			new System.Drawing.RectangleF(x , y , img.getWidth() , img.getHeight() ),
 			new System.Drawing.RectangleF(0, 0, img.getWidth() , img.getHeight() ),
@@ -70,15 +71,14 @@ public class Graphics
 		int anchor,
 		float scale)
 	{
+		if (img.killed) return;
 		img.dimg.RotateFlip(transform);
+
 		dg.DrawImage(img.dimg,
-			new System.Drawing.RectangleF(x, y, img.getWidth() * scale, img.getHeight() * scale),
+			new System.Drawing.RectangleF(x + scale / 2, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
 			new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
 			System.Drawing.GraphicsUnit.Pixel
 			);
-
-		
-
 
 		switch (transform)
 		{
@@ -113,6 +113,7 @@ public class Graphics
 		System.Drawing.RotateFlipType transform,
 		int anchor)
 	{
+		if (img.killed) return;
 		img.dimg.RotateFlip(transform);
 		dg.DrawImage(img.dimg,
 			new System.Drawing.RectangleF(x , y , img.getWidth() , img.getHeight() ),
@@ -153,6 +154,7 @@ public class Graphics
 
 	public void drawRegion(javax.microedition.lcdui.Image src, int x_src, int y_src, int width, int height, int transform, int x_dest, int y_dest, int anchor)
 	{
+		if (src.killed) return;
 		System.Drawing.RotateFlipType rt = System.Drawing.RotateFlipType.RotateNoneFlipNone;
 		switch(transform)
 		{
