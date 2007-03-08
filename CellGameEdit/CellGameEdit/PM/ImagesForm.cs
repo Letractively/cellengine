@@ -216,37 +216,75 @@ namespace CellGameEdit.PM
         }
 
 
-        public void SaveAllImages(String dir)
+        public void SaveAllImages(String dir,String type,Boolean tile,Boolean group)
         {
             try
             {
-                int outW = 0;
-                int outH = 0;
-                for (int i = 0; i < getDstImageCount(); i++)
+                System.Drawing.Imaging.ImageFormat format = null;
+                //
+                if (type.Equals("png", StringComparison.CurrentCultureIgnoreCase))
+                    format = System.Drawing.Imaging.ImageFormat.Png;
+                if (type.Equals("bmp", StringComparison.CurrentCultureIgnoreCase))
+                    format = System.Drawing.Imaging.ImageFormat.Bmp;
+                if (type.Equals("jpg", StringComparison.CurrentCultureIgnoreCase))
+                    format = System.Drawing.Imaging.ImageFormat.Jpeg;
+                if (type.Equals("gif", StringComparison.CurrentCultureIgnoreCase))
+                    format = System.Drawing.Imaging.ImageFormat.Gif;
+
+                if (format == null)return;
+                        
+                try
                 {
-                    if (getDstImage(i) != null)
+                    if (group)
                     {
-                        outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
-                        outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
+                        int outW = 0;
+                        int outH = 0;
+                        for (int i = 0; i < getDstImageCount(); i++)
+                        {
+                            if (getDstImage(i) != null)
+                            {
+                                outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
+                                outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
+                            }
+                        }
+
+                        Image outputImage = Image.createImage(outW, outH);
+                        Graphics g = outputImage.getGraphics();
+                        for (int i = 0; i < getDstImageCount(); i++)
+                        {
+                            if (getDstImage(i) != null)
+                            {
+                                g.drawImage(getDstImage(i), getDstImage(i).x, getDstImage(i).y, 0);
+                            }
+                        }
+                        //
+                        outputImage.getDImage().Save(dir + "\\" + this.id + "." + type, format);
                     }
                 }
-
-                Image outputImage = Image.createImage(outW, outH);
-                Graphics g = outputImage.getGraphics();
-                for (int i = 0; i < getDstImageCount(); i++)
+                catch (Exception err) { Console.WriteLine(this.id + " : save group : " + err.Message); }
+                if (tile)
                 {
-                    if (getDstImage(i) != null)
+                    String tileDir = dir + "\\" + this.id + "\\" ;
+                    if (!System.IO.Directory.Exists(tileDir))
                     {
-                        g.drawImage(getDstImage(i), getDstImage(i).x, getDstImage(i).y, 0);
+                        System.IO.Directory.CreateDirectory(tileDir);
+                    }
+                    for (int i = 0; i < getDstImageCount(); i++)
+                    {
+                        if (getDstImage(i) == null) continue;
+                        try
+                        {
+                            //Image outputImage = Image.createImage(getDstImage(i).getWidth(), getDstImage(i).getHeight());
+                            //Graphics g = outputImage.getGraphics();
+                            //g.drawImage(getDstImage(i), 0, 0, 0);
+                            //outputImage.getDImage().Save( tileDir + i + "." + type, format);
+                            getDstImage(i).getDImage().Save(tileDir + i + "." + type, format);
+                        }
+                        catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.Message); }
                     }
                 }
-                outputImage.getDImage().Save(dir + "\\" + this.id + ".png", System.Drawing.Imaging.ImageFormat.Png);
-
             }
-            catch (Exception err)
-            {
-                Console.WriteLine(this.id + " : " + err.Message);
-            }
+            catch (Exception err){Console.WriteLine(this.id + " : " + err.Message);}
             
         }
 
@@ -273,12 +311,13 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             sw.WriteLine("    stuff.gc();");
             sw.WriteLine("}");
 
-            SaveAllImages(ProjectForm.workSpace);
+            SaveAllImages(ProjectForm.workSpace,"png",false,true);
 
         }
 
 
-        public void OutputCustom(String script, System.IO.StringWriter output, String outDir)
+        public void OutputCustom(String script, System.IO.StringWriter output, String outDir,
+            String imageType,bool imageTile,bool imageTileData,bool imageGroup,bool imageGroupData)
         {
             try
             {
@@ -325,7 +364,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
                 output.WriteLine(images);
 
-                SaveAllImages(outDir);
+                SaveAllImages(outDir,imageType,imageTile,imageGroup);
                
             }
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
