@@ -9,6 +9,8 @@ Project("{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}") = "CellLib", "CellLib\CellLib.
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "CellGameEditor Setup", "CellGameEditor Setup\CellGameEditor Setup.vdproj", "{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CellTools", "CellTools\CellTools.csproj", "{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,16 @@ Global
 		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|Any CPU.ActiveCfg = Release
 		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|Mixed Platforms.ActiveCfg = Release
 		{E2C72A44-F7E2-4DC0-BBB2-C0F5D48D44BF}.Release|x86.ActiveCfg = Release
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{1402F6FD-8A89-4FC3-B3A1-92AF1D8A2EE0}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

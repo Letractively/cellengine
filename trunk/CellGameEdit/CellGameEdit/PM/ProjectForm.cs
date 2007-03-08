@@ -19,12 +19,12 @@ namespace CellGameEdit.PM
     public partial class ProjectForm : Form , ISerializable
     {
  
-        
-
-
         static public String workSpace = "";
 
-        
+
+        //<IMAGE TILE>
+        //<IMAGE GROUP>
+        //<IMAGE DATA>
 
         TreeNode nodeReses;
         TreeNode nodeLevels;
@@ -171,6 +171,14 @@ namespace CellGameEdit.PM
         string OutputName ;
         string OutputDir ;
 
+        string ImageType;			/* 输出图片格式 默认(*.png) */
+
+        Boolean ImageTile;
+        Boolean ImageTileData;
+
+        Boolean ImageGroup;
+        Boolean ImageGroupData;
+
         public void OutputCustom(String fileName)
         {
             try
@@ -190,13 +198,32 @@ namespace CellGameEdit.PM
                     string ret = new string(new char[] { '\r', '\n' });
 
                     // build command
-                    OutputName = workSpace + "\\" + Util.getCommandScript(script, "<OUTPUT>");
-                    OutputDir = System.IO.Path.GetDirectoryName(OutputName);
-
+                    OutputName =  Util.getCommandScript(script, "<OUTPUT>");
+                    try{
+                        if (System.IO.Path.IsPathRooted(OutputName))
+                        {
+                            OutputDir = System.IO.Path.GetDirectoryName(OutputName);
+                        }
+                        else
+                        {
+                            OutputDir = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputName);
+                        }
+                    }catch(Exception err){
+                        OutputDir = System.IO.Path.GetDirectoryName(workSpace);
+                    }
                     if (!System.IO.Directory.Exists(OutputDir))
                     {
                         System.IO.Directory.CreateDirectory(OutputDir);
                     }
+
+                    OutputName = OutputDir + "\\" + System.IO.Path.GetFileName(OutputName);
+
+                    ImageType = Util.getCommandScript(script, "<IMAGE TYPE>");
+                    ImageTile = Util.getCommandScript(script, "<IMAGE TILE>").Equals("true",StringComparison.CurrentCultureIgnoreCase);
+                    ImageTileData = Util.getCommandScript(script, "<IMAGE TILE DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                    ImageGroup = Util.getCommandScript(script, "<IMAGE GROUP>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                    ImageGroupData = Util.getCommandScript(script, "<IMAGE GROUP DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+
 
                     script = fillScriptNode(script);
 
@@ -213,8 +240,7 @@ namespace CellGameEdit.PM
                         encoding
                         );
 
-                    Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");   
-                    
+                    Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");
                 }
                 else
                 {
@@ -252,7 +278,8 @@ namespace CellGameEdit.PM
                     //
                     if (forms[i].GetType().Equals(typeof(ImagesForm)))
                     {
-                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDir);
+                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDir,
+                            ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
 
                     }
                     if (forms[i].GetType().Equals(typeof(MapForm)))
