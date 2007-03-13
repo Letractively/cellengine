@@ -15,24 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_392DBA9F081147579EDE6C90EC2F278B"
-        "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_392DBA9F081147579EDE6C90EC2F278B"
-        "OwnerKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_392DBA9F081147579EDE6C90EC2F278B"
-        "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
         "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
         "MsmSig" = "8:_UNDEFINED"
@@ -57,6 +39,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_ED1930C2BCF44CE392EBF462433E72B2"
+        "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED1930C2BCF44CE392EBF462433E72B2"
+        "OwnerKey" = "8:_56FAD1FEE5B3D866A623C539F8985721"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED1930C2BCF44CE392EBF462433E72B2"
+        "OwnerKey" = "8:_ECC05CED057BBCF223CD7D1E5CD1BF88"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_70BA54391A194B2385F85D2824EEFD9F"
         "MsmSig" = "8:_UNDEFINED"
@@ -76,7 +76,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_392DBA9F081147579EDE6C90EC2F278B"
+        "OwnerKey" = "8:_ED1930C2BCF44CE392EBF462433E72B2"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -120,7 +120,7 @@
         "IsDebugOnly" = "11:FALSE"
         "IsReleaseOnly" = "11:TRUE"
         "OutputFilename" = "8:Release\\CellGameEditor Setup.msi"
-        "PackageFilesAs" = "3:4"
+        "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
         "Compression" = "3:3"
@@ -133,11 +133,21 @@
             {
             "Enabled" = "11:TRUE"
             "PromptEnabled" = "11:TRUE"
-            "PrerequisitesLocation" = "2:1"
+            "PrerequisitesLocation" = "2:2"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
                 "Items"
                 {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.JSharp.2.0"
+                    {
+                    "Name" = "8:Microsoft Visual J# .NET Redistributable Package 2.0"
+                    "ProductCode" = "8:Microsoft.JSharp.2.0"
+                    }
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:Microsoft.Net.Framework.2.0"
+                    {
+                    "Name" = "8:.NET Framework 2.0"
+                    "ProductCode" = "8:Microsoft.Net.Framework.2.0"
+                    }
                 }
             }
         }
@@ -882,7 +892,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_392DBA9F081147579EDE6C90EC2F278B"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_ED1930C2BCF44CE392EBF462433E72B2"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -901,7 +911,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_70BA54391A194B2385F85D2824EEFD9F"
             {
-            "SourcePath" = "8:..\\CellGameEdit\\obj\\Debug\\CellGameEdit.exe"
+            "SourcePath" = "8:..\\CellGameEdit\\obj\\Release\\CellGameEdit.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_20B99A68A7054F33BECD412A813C4CB0"
