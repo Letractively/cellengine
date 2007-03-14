@@ -25,10 +25,7 @@ public class ScreenTD_Main extends AScreen {
 	
 	
 	public ScreenTD_Main(){
-
-		
        	IsDebug = false;
-    
        	FrameDelay = 25;
        	
        	// res
@@ -58,6 +55,7 @@ public class ScreenTD_Main extends AScreen {
         CSprite tower = ResesScript.createSprite_Tower(towerTile);
         CSprite point = ResesScript.createSprite_Point(guiTile);
         CSprite shoot = ResesScript.createSprite_Shoot(shootTile);
+        
        	// camera 
        	cam = new CCamera(0,0,
        			SCREEN_WIDTH,
