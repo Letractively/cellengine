@@ -1,3 +1,6 @@
+import java.util.Vector;
+
+import game.unit.Unit;
 import game.unit.UnitEnemy;
 import game.unit.UnitShoot;
 import game.unit.UnitTower;
@@ -9,6 +12,156 @@ import com.cell.*;
 import com.cell.game.*;
 import com.cell.game.ai.*;
 import com.cell.particle.*;
+
+class WeatherRain extends CObject implements IParticleLauncher {
+	final static public int Div = 256 ;
+	//
+	final public int TYPE_LIPPER	= 0;
+	final public int TYPE_RAINDROP	= 1;
+	
+	int WindSpeed = Div * 2;
+	int Gravity = Div * 16 ;
+	
+	int Width = 176 ;
+	int Height = 208 ;
+
+	CWorld world;
+	
+	public WeatherRain(CWorld world){
+		this.world 	= world;
+		this.Width 	= world.getCamera().getWidth() ;
+		this.Height = world.getCamera().getHeight() ;
+	}
+	
+	public void particleTerminated(CParticle particle, int id) {
+		
+	}
+	
+	public void particleEmitted(CParticle particle, int id) {
+		particle.Color = 0xffffffff;
+		particle.Timer = 0;
+		particle.Category = Math.abs(Random.nextInt()%2);
+		
+		particle.X*=Div;
+		particle.Y*=Div;
+		
+		switch(particle.Category){
+		case TYPE_RAINDROP:
+			particle.TerminateTime = 32;
+			particle.X += Math.abs(Random.nextInt()) % Width * Div;
+			particle.Y += Random.nextInt() % Height * Div;
+			
+			particle.SpeedX = WindSpeed;
+			particle.SpeedY = Gravity;
+			particle.AccX = WindSpeed;
+			particle.AccY = Gravity;
+			break;
+		case TYPE_LIPPER:
+			particle.TerminateTime = 8;
+			particle.X += Math.abs(Random.nextInt()) % Width * Div;
+			particle.Y += Math.abs(Random.nextInt()) % Height * Div;
+			break;
+		}
+
+	}
+
+	public void particleAffected(CParticle particle, int id) {
+		switch(particle.Category){
+		case TYPE_RAINDROP:
+			particle.Y += particle.SpeedY;
+			particle.X += particle.SpeedX;
+			break;
+		case TYPE_LIPPER:
+			break;
+		}
+
+	}
+	
+	public void particleRender(Graphics g, CParticle particle, int id) {
+		
+		int X = world.toScreenPosX(particle.X/Div) ;
+		int Y = world.toScreenPosY(particle.Y/Div) ;
+
+		// color
+		g.setColor(particle.Color);
+		
+		switch(particle.Category){
+		case TYPE_RAINDROP:
+			int X2 = world.toScreenPosX((particle.X+particle.AccX)/Div);
+			int Y2 = world.toScreenPosY((particle.Y+particle.AccY)/Div);
+			g.drawLine(X, Y, X2, Y2);
+			break;
+		case TYPE_LIPPER:
+			int size = particle.Timer ;
+			g.drawArc(X - size/2, Y - size/2/2, size, size/2, 0, 360);
+			break;
+		}
+
+		
+	}
+}
+
+class WeatherSnow extends CObject implements IParticleLauncher  {
+
+	final static public int Div = 256 ;
+	//
+	int SizeScope = Div * 4 ;
+	int WaveScope = Div * 1 ;
+	
+	int WindSpeed = Div * 1;
+	int Gravity = Div * 2 ;
+	
+	int Width = 176 ;
+	int Height = 208 ;
+
+	CWorld world;
+	
+	public WeatherSnow(CWorld world){
+		this.world 	= world;
+		this.Width 	= world.getCamera().getWidth() ;
+		this.Height = world.getCamera().getHeight() ;
+	}
+	
+	public void particleTerminated(CParticle particle, int id) {
+		
+	}
+	
+	public void particleEmitted(CParticle particle, int id) {
+		particle.TerminateTime = 32;
+		particle.Color = 0xffffffff;
+		particle.Timer = 0;
+		
+		particle.X*=Div;
+		particle.Y*=Div;
+		
+		particle.X += Math.abs(Random.nextInt() % Width ) * Div ;
+		particle.Y += Math.abs(Random.nextInt() % Height) * Div ;
+		
+		particle.SpeedX = WindSpeed + Math.abs(Random.nextInt())%WaveScope;
+		particle.SpeedY = Gravity + Math.abs(Random.nextInt())%Gravity;
+
+	}
+
+	public void particleAffected(CParticle particle, int id) {
+		particle.Y += particle.SpeedY;
+		particle.X += particle.SpeedX;
+
+	}
+	
+	public void particleRender(Graphics g, CParticle particle, int id) {
+		int size = 4 ;
+		int X = world.toScreenPosX(particle.X / Div) ;
+		int Y = world.toScreenPosY(particle.Y / Div) ;
+
+		// color
+		g.setColor(particle.Color);
+		g.fillArc(X - size/2, Y - size/2, size, size, 0, 360);
+
+		
+		
+	}
+
+}
 
 //继承抽象类CScreen并实现其中的方法
 public class ScreenTD_Main extends AScreen {
@@ -23,6 +176,12 @@ public class ScreenTD_Main extends AScreen {
 	UnitShoot	shoots[]	= new UnitShoot[32];
 	CSprite		point;
 	
+//	Vector Enemys ;
+//	Vector Towers ;
+//	Vector Shoots ;
+	int particleCount = 128;
+	int spawnCount = 2;
+	CParticleSystem weather;
 	
 	public ScreenTD_Main(){
        	IsDebug = false;
@@ -33,33 +192,21 @@ public class ScreenTD_Main extends AScreen {
        	IImages sprTile = ResesScript.createClipImages_SprTile();
        	IImages guiTile = ResesScript.createClipImages_GUITile();
        	IImages towerTile = ResesScript.createClipImages_TowerTile();
-       	IImages shootTile = ResesScript.createClipImages_ShootTile();
+       	IImages shootTile = ResesScript.createClipImages_EffectTile();
        	
        	// map type
        	map = ResesScript.createMap_Map00(mapTile, false, false);
        	
        	// spr type
-       	CSprite enemy ;
-       	switch(Math.abs(Random.nextInt()%4)){
-       	case 0: enemy = ResesScript.createSprite_Enemy00(sprTile);break;
-       	case 1: enemy = ResesScript.createSprite_Enemy01(sprTile);break;
-       	case 2: enemy = ResesScript.createSprite_Enemy02(sprTile);break;
-       	case 3: enemy = ResesScript.createSprite_Enemy03(sprTile);break;
-       	case 4: enemy = ResesScript.createSprite_Enemy04(sprTile);break;
-       	case 5: enemy = ResesScript.createSprite_Enemy05(sprTile);break;
-       	case 6: enemy = ResesScript.createSprite_Enemy06(sprTile);break;
-       	case 7: enemy = ResesScript.createSprite_Enemy07(sprTile);break;
-       	default: enemy = ResesScript.createSprite_Enemy00(sprTile);break;
-       	}
-       	
+       	CSprite enemy = ResesScript.createSprite_Enemy00(sprTile);
         CSprite tower = ResesScript.createSprite_Tower(towerTile);
         CSprite point = ResesScript.createSprite_Point(guiTile);
-        CSprite shoot = ResesScript.createSprite_Shoot(shootTile);
+        CSprite shoot = ResesScript.createSprite_Weaopns(shootTile);
         
        	// camera 
        	cam = new CCamera(0,0,
        			SCREEN_WIDTH,
-       			SCREEN_WIDTH,
+       			SCREEN_HEIGHT,
        			map,true,0);
        	
        	// world
@@ -72,22 +219,15 @@ public class ScreenTD_Main extends AScreen {
        	
        	for(int i=0;i<enemys.length;i++){
        		enemys[i] = new UnitEnemy(enemy);
-       		enemys[i].Active = false;
-       		enemys[i].Visible = false;
        		enemys[i].Y = -32 - i*32;
        	}
        	for(int i=0;i<towers.length;i++){
        		towers[i] = new UnitTower(tower);
-       		towers[i].Active = false;
-       		towers[i].Visible = false;
        	}
        	for(int i=0;i<shoots.length;i++){
        		shoots[i] = new UnitShoot(shoot);
-       		shoots[i].Active = false;
-       		shoots[i].Visible = false;
-       		shoots[i].Priority = 1024;
        	}
-       	
+       	Unit.Effects = shoot;
        	this.point = point;
     	
        	world.addSprites(shoots);
@@ -95,16 +235,32 @@ public class ScreenTD_Main extends AScreen {
     	world.addSprites(towers);
     	world.addSprite(point);
 
-
-    	
+    	//随机天气类型
+    	IParticleLauncher launcher;
+//		if(Math.abs(Random.nextInt())%2==0){
+			launcher = new WeatherRain(world);
+//		}else{
+//			launcher = new WeatherSnow(world);
+//		}
+		//粒子
+		CParticle[] particles = new CParticle[particleCount];
+		for(int i=0;i<particles.length;i++){
+       		particles[i] = new CParticle();
+       	}
+       	weather = new CParticleSystem(
+       			particles,
+       			launcher
+       			);
+       	
        	resetTimer();
 	}
 	
 	public void notifyLogic() {
-//    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
-//        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
-//    	if(isKeyDown(KEY_0)){ChangeSubScreen("ScreenLogo");}
-    	if(isKeyDown(KEY_0)){AScreen.ExitGame = true;}
+    	if(isKeyDown(KEY_STAR)) {FrameDelay --;}
+        if(isKeyDown(KEY_SHARP)){FrameDelay ++;}
+    	if(isKeyDown(KEY_0)){ChangeSubScreen("ScreenLogo");}
+    	
+//    	if(isKeyDown(KEY_0)){AScreen.ExitGame = true;}
     	
 //    	if(isKeyDown(KEY_0)){
 //    		println("");
@@ -117,15 +273,20 @@ public class ScreenTD_Main extends AScreen {
 //    	}
     	
     	processPoint();
-    	processEnemys();
     	processTowers();
     	processShoots();
+    	processEnemys();
+    	
+    	
     	
     	int cdx = point.X - (cam.getX() + cam.getWidth() /2);
     	int cdy = point.Y - (cam.getY() + cam.getHeight()/2);
     	cam.mov(cdx/4,cdy/4);
 		world.update();
   
+		weather.spawn(spawnCount, 0, cam.getX(), cam.getY());
+		weather.update();
+		
         tickTimer();
         
     }
@@ -134,6 +295,8 @@ public class ScreenTD_Main extends AScreen {
         //clearScreenAndClip(g,0xff000000);
 
         world.render(g);
+        
+        weather.render(g);
         
         showFPS(g, 1, 1, 0xffffffff);
 

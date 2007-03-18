@@ -5,7 +5,7 @@ import com.cell.game.*;
 import com.cell.game.ai.*;
 import com.cell.particle.*;
 
-public class UnitTower extends CSprite implements IState {
+public class UnitTower extends Unit  {
 
 	
 	int state		= -1;
@@ -15,7 +15,7 @@ public class UnitTower extends CSprite implements IState {
 		super.setState(this);
 	}
 
-	public void update() {
+	public void unitUpdate() {
 		switch(state){
 		case STATE_BUILD:
 			if(!isEndBuild()){
@@ -58,10 +58,10 @@ public class UnitTower extends CSprite implements IState {
 		tryMove(sx-X, sy-Y);
 
 	}
-	public boolean isEndBuild(){
+	boolean isEndBuild(){
 		return true;
 	}
-	public void onBuild(){
+	void onBuild(){
 	}
 
 //	----------------------------------------------------------------------------------------------------
@@ -92,7 +92,9 @@ public class UnitTower extends CSprite implements IState {
 						shoots[i].startMissile(
 								X+collides.getCD(0).X1,
 								Y+collides.getCD(0).Y1,
-								enemys[id]);
+								enemys[id],
+								Math.abs(Random.nextInt())%UnitShoot.TYPE53_FIRE
+								);
 						break;
 					}
 				}
@@ -101,10 +103,10 @@ public class UnitTower extends CSprite implements IState {
 		}
 		
 	}
-	public boolean isEndAttack(){
+	boolean isEndAttack(){
 		return AttackTime>=AttackForzenTime;
 	}
-	public void onAttack(){
+	void onAttack(){
 		AttackTime++;
 	}
 //	----------------------------------------------------------------------------------------------------
@@ -119,10 +121,10 @@ public class UnitTower extends CSprite implements IState {
 		
 		DefenceTime = DefenceMaxTime;
 	}
-	public boolean isEndDefence(){
+	boolean isEndDefence(){
 		return DefenceTime<0;
 	}
-	public void onDefence(){
+	void onDefence(){
 		DefenceTime--;
 	}
 }
