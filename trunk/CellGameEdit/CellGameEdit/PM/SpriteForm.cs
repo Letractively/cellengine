@@ -726,7 +726,7 @@ namespace CellGameEdit.PM
                 System.Drawing.Rectangle dst = new System.Drawing.Rectangle(0, 0, 1, 1);
                 for (int i = 0; i < srcGetCount(); i++)
                 {
-                    if (srcGetImage(i) != null)
+                    if (srcGetImage(i) != null && srcGetImage(i).killed == false)
                     {
                         dst.X = srcGetImage(i).x * srcScale;
                         dst.Y = srcGetImage(i).y * srcScale;

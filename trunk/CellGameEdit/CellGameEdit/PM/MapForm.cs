@@ -1164,7 +1164,7 @@ namespace CellGameEdit.PM
                 System.Drawing.Rectangle dst = new System.Drawing.Rectangle(0, 0, 1, 1);
                 for (int i = 0; i < getTileCount(); i++)
                 {
-                    if (getTileImage(i) != null)
+                    if (getTileImage(i) != null && getTileImage(i).killed == false)
                     {
                         dst.X = getTileImage(i).x;
                         dst.Y = getTileImage(i).y;
