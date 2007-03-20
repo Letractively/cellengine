@@ -261,7 +261,7 @@ namespace CellGameEdit.PM
                         int outH = 0;
                         for (int i = 0; i < getDstImageCount(); i++)
                         {
-                            if (getDstImage(i) != null)
+                            if (getDstImage(i) != null && !getDstImage(i).killed)
                             {
                                 outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
                                 outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
