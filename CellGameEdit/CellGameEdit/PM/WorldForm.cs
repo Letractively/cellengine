@@ -9,17 +9,22 @@ using System.Collections;
 using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters;
+using System.IO;
 
 using javax.microedition.lcdui;
 
 namespace CellGameEdit.PM
 {
     [Serializable]
-    public partial class WorldForm : Form , ISerializable
+    public partial class WorldForm : Form, ISerializable
     {
         public String id;
+        public StringBuilder Data = new StringBuilder();
+
         Hashtable UnitList;
         ArrayList WayPoints;
+        ArrayList Regions;
+
         int CellW = 16;
         int CellH = 16;
 
@@ -30,10 +35,12 @@ namespace CellGameEdit.PM
             toolStripTextBox2.Text = CellH.ToString();
 
             id = name;
-            
+
             UnitList = new Hashtable();
             WayPoints = new ArrayList();
+            Regions = new ArrayList();
         }
+
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected WorldForm(SerializationInfo info, StreamingContext context)
         {
@@ -46,16 +53,32 @@ namespace CellGameEdit.PM
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
-              
-                WayPoints = (ArrayList)info.GetValue("WayPoints", typeof(ArrayList));
-                
+                // waypoint
+                try
+                {
+                    WayPoints = (ArrayList)info.GetValue("WayPoints", typeof(ArrayList));
+                }
+                catch (Exception err)
+                {
+                    WayPoints = new ArrayList();
+                }
+                // region
+                try
+                {
+                    Regions = (ArrayList)info.GetValue("Regions", typeof(ArrayList));
+                }
+                catch (Exception err)
+                {
+                    Regions = new ArrayList();
+                }
+                // unit
                 ArrayList Units = (ArrayList)info.GetValue("Units", typeof(ArrayList));
-                for (int i = 0; i < Units.Count;i++ )
+                for (int i = 0; i < Units.Count; i++)
                 {
                     try
                     {
                         Unit unit = ((Unit)Units[i]);
-                        ListViewItem item = new ListViewItem(new String[] { unit.id , unit.animID.ToString()});
+                        ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
                         listView1.Items.Add(item);
                         UnitList.Add(item, unit);
                         pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
@@ -70,6 +93,21 @@ namespace CellGameEdit.PM
 
                 pictureBox1.Width = (int)info.GetValue("Width", typeof(int));
                 pictureBox1.Height = (int)info.GetValue("Height", typeof(int));
+
+                try
+                {
+                    CellW = (int)info.GetValue("CellW", typeof(int));
+                    CellH = (int)info.GetValue("CellH", typeof(int));
+                }
+                catch (Exception err) { }
+
+                try
+                {
+                    Data.Append((String)info.GetValue("Data", typeof(String)));
+                }
+                catch (Exception err)
+                {
+                }
             }
             catch (Exception err)
             {
@@ -86,8 +124,10 @@ namespace CellGameEdit.PM
 
                 info.AddValue("WayPoints", WayPoints);
 
+                info.AddValue("Regions", Regions);
+
                 ArrayList Units = new ArrayList();
-                for (int i = 0; i < listView1.Items.Count;i++ )
+                for (int i = 0; i < listView1.Items.Count; i++)
                 {
                     try
                     {
@@ -103,13 +143,19 @@ namespace CellGameEdit.PM
                         Console.WriteLine(this.id + " : " + err.Message);
                     }
                 }
-                info.AddValue("Units", Units );
-                info.AddValue("UnitList", UnitList );
+                info.AddValue("Units", Units);
+                info.AddValue("UnitList", UnitList);
 
-                info.AddValue("Width",pictureBox1.Width);
+                info.AddValue("Width", pictureBox1.Width);
                 info.AddValue("Height", pictureBox1.Height);
 
-            }catch(Exception err){
+                info.AddValue("CellW", CellW);
+                info.AddValue("CellH", CellH);
+
+                info.AddValue("Data", this.Data.ToString());
+            }
+            catch (Exception err)
+            {
                 Console.WriteLine(this.id + " : " + err.Message);
             }
         }
@@ -129,9 +175,9 @@ namespace CellGameEdit.PM
                 try
                 {
                     Unit unit = ((Unit)UnitList[item]);
-                    sw.WriteLine("public C"+unit.type+" "+unit.id+";");
-                    sw.WriteLine("private int " + unit.id + "_X = "+unit.x+";");
-                    sw.WriteLine("private int " + unit.id + "_Y = "+unit.y+";");
+                    sw.WriteLine("public C" + unit.type + " " + unit.id + ";");
+                    sw.WriteLine("private int " + unit.id + "_X = " + unit.x + ";");
+                    sw.WriteLine("private int " + unit.id + "_Y = " + unit.y + ";");
                 }
                 catch (Exception err)
                 {
@@ -144,15 +190,39 @@ namespace CellGameEdit.PM
             sw.WriteLine("public void initPath()");//
             sw.WriteLine("{");//
             sw.WriteLine("    WayPoints = new CWayPoint[" + WayPoints.Count + "];");//
-foreach (WayPoint p in WayPoints){try{if (p != null){//
-            sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "] = new CWayPoint(" + (p.rect.X + p.rect.Width / 2) + "," + (p.rect.Y + p.rect.Height / 2) + ");");//
-}}catch (Exception err){Console.WriteLine(this.id + " : " + err.Message);}}//
+            foreach (WayPoint p in WayPoints)
+            {
+                try
+                {
+                    if (p != null)
+                    {//
+                        sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "] = new CWayPoint(" + (p.rect.X + p.rect.Width / 2) + "," + (p.rect.Y + p.rect.Height / 2) + ");");//
+                    }
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            }//
             sw.WriteLine("");//
-foreach (WayPoint p in WayPoints) {try{if (p != null){//
-foreach (WayPoint l in p.link){try{if (l != null){//
-            sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "].link(WayPoints[" + WayPoints.IndexOf(l) + "]);");//
-}}catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }}//
-}}catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }}//
+            foreach (WayPoint p in WayPoints)
+            {
+                try
+                {
+                    if (p != null)
+                    {//
+                        foreach (WayPoint l in p.link)
+                        {
+                            try
+                            {
+                                if (l != null)
+                                {//
+                                    sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "].link(WayPoints[" + WayPoints.IndexOf(l) + "]);");//
+                                }
+                            }
+                            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                        }//
+                    }
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            }//
             sw.WriteLine("}");// way point end
 
             // units
@@ -165,7 +235,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     Unit unit = ((Unit)UnitList[item]);
                     if (unit.type.Equals("Map"))
                     {
-                        sw.WriteLine("    addMap("+unit.id+");");
+                        sw.WriteLine("    addMap(" + unit.id + ");");
                     }
                     else
                     {
@@ -201,11 +271,12 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     try
                     {
                         Unit unit = ((Unit)UnitList[item]);
-                        if(unit.type == "Map") maps.Add(unit);
+                        if (unit.type == "Map") maps.Add(unit);
                         if (unit.type == "Sprite") sprs.Add(unit);
                         unit.id = item.Text;
 
-                    }catch (Exception err) { }
+                    }
+                    catch (Exception err) { }
                 }
 
                 bool fix = false;
@@ -221,9 +292,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string ID = ((Unit)maps[i]).map.id;
                         string NAME = ((Unit)maps[i]).id;
                         string SUPER = ((Unit)maps[i]).map.super.id;
+                        string MAP_DATA = ((Unit)maps[i]).Data.ToString();
                         map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>" ,"<SUPER>"},
-                               new string[] { NAME, ID, i.ToString(), X, Y, SUPER });
+                               new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<SUPER>", "<MAP DATA>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, SUPER, MAP_DATA });
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
                     if (temp == null)
@@ -235,7 +307,6 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         fix = true;
                         world = temp;
                     }
-
                 } while (fix);
 
                 // sprs
@@ -249,11 +320,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string ID = ((Unit)sprs[i]).spr.id;
                         string NAME = ((Unit)sprs[i]).id;
                         string SUPER = ((Unit)sprs[i]).spr.super.id;
-
                         string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
+                        string SPR_DATA = ((Unit)sprs[i]).Data.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<SUPER>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, SUPER });
+                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>", "<SUPER>","<SPR DATA>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, SUPER ,SPR_DATA});
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
                     if (temp == null)
@@ -277,8 +348,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         string X = (p.rect.X + p.rect.Width / 2) + "";
                         string Y = (p.rect.Y + p.rect.Height / 2) + "";
                         wp[i] = Util.replaceKeywordsScript(world, "#<WAYPOINT>", "#<END WAYPOINT>",
-                               new string[] { "<INDEX>", "<X>", "<Y>", },
-                               new string[] { i.ToString(), X, Y, });
+                               new string[] { "<INDEX>", "<X>", "<Y>", "<PATH DATA>" },
+                               new string[] { i.ToString(), X, Y, p.Data.ToString()});
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<WAYPOINT>", "#<END WAYPOINT>", wp);
                     if (temp == null)
@@ -336,20 +407,53 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     }
                 } while (fix);
 
+                // regions 
+                do
+                {
+                    String[] region = new string[Regions.Count];
+                    for (int i = 0; i < region.Length; i++)
+                    {
+                        Region r = ((Region)Regions[i]);
+                        string X = (r.rect.X) + "";
+                        string Y = (r.rect.Y) + "";
+                        string W = (r.rect.Width) + "";
+                        string H = (r.rect.Height) + "";
+                        region[i] = Util.replaceKeywordsScript(world, "#<REGION>", "#<END REGION>",
+                               new string[] { "<INDEX>", "<X>", "<Y>", "<W>","<H>", "<REGION DATA>"},
+                               new string[] { i.ToString(), X, Y, W, H, r.Data.ToString() });
+                    }
+                    string temp = Util.replaceSubTrunksScript(world, "#<REGION>", "#<END REGION>", region);
+                    if (temp == null)
+                    {
+                        fix = false;
+                    }
+                    else
+                    {
+                        fix = true;
+                        world = temp;
+                    }
+                } while (fix);
+
                 // world key words
                 world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
                     new string[] { 
                         "<NAME>", 
+                        "<DATA>",
                         "<WIDTH>",
                         "<HEIGHT>",
+                        "<GRID W>",
+                        "<GRID H>",
                         "<UNIT MAP COUNT>" ,
                         "<UNIT SPRITE COUNT>",
                         "<WAYPOINT COUNT>"
                     },
                     new string[] { 
                         this.id, 
+                        this.Data.ToString(),
                         pictureBox1.Width.ToString(),
                         pictureBox1.Height.ToString(),
+                        CellW.ToString(),
+                        CellH.ToString(),
                         maps.Count.ToString(),
                         sprs.Count.ToString(),
                         WayPoints.Count.ToString()
@@ -388,7 +492,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 MapForm map = ((MapForm)e.Data.GetData(typeof(MapForm)));
 
-                Unit unit = new Unit(map, "M" + (listView1.Items.Count).ToString("d3")+"_");
+                Unit unit = new Unit(map, "M" + (listView1.Items.Count).ToString("d3") + "_");
                 ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
 
                 listView1.Items.Add(item);
@@ -407,7 +511,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 SpriteForm spr = ((SpriteForm)e.Data.GetData(typeof(SpriteForm)));
 
-                Unit unit = new Unit(spr, "S" + (listView1.Items.Count).ToString("d3")+"_");
+                Unit unit = new Unit(spr, "S" + (listView1.Items.Count).ToString("d3") + "_");
                 ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
 
                 listView1.Items.Add(item);
@@ -443,10 +547,45 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             javax.microedition.lcdui.Graphics g = new javax.microedition.lcdui.Graphics(e.Graphics);
 
-            toolStripStatusLabel1.Text = "当前坐标:X=" + (3-pictureBox1.Location.X) + ",Y=" + (3-pictureBox1.Location.Y)+" ";
-            
+            toolStripStatusLabel1.Text = "当前坐标:X=" + (3 - pictureBox1.Location.X) + ",Y=" + (3 - pictureBox1.Location.Y) + " ";
 
-            // draw units
+
+            drawUnits(g);
+            drawWayPoints(g);
+            drawRegions(g);
+
+            // draw net grid
+            if (toolStripButton12.Checked)
+            {
+                g.setColor(0x80, 0xff, 0xff, 0xff);
+
+                int sx = -pictureBox1.Location.X / CellW;
+                int sy = -pictureBox1.Location.Y / CellH;
+                int sw = panel1.Width / CellW + 1;
+                int sh = panel1.Height / CellH + 1;
+
+                for (int bx = sx; bx < sx + sw; bx++)
+                {
+                    g.drawLine(
+                       bx * CellW,
+                       sy * CellH,
+                       bx * CellW,
+                       sy * CellH + sh * CellH);
+                }
+                for (int by = sy; by < sy + sh; by++)
+                {
+                    g.drawLine(
+                        sx * CellW,
+                        by * CellH,
+                        sx * CellW + sw * CellW,
+                        by * CellH);
+                }
+            }
+
+        }
+
+        private void drawUnits(javax.microedition.lcdui.Graphics g)
+        { // draw units
             if (toolStripButton7.Checked || toolStripButton8.Checked)
             {
                 foreach (ListViewItem item in listView1.Items)
@@ -486,8 +625,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                                             unit.render(
                                                g,
                                                new System.Drawing.Rectangle(
-                                                    -pictureBox1.Location.X-x,
-                                                    -pictureBox1.Location.Y-y,
+                                                    -pictureBox1.Location.X - x,
+                                                    -pictureBox1.Location.Y - y,
                                                     panel1.Width,
                                                     panel1.Height
                                                ),
@@ -548,7 +687,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     }
                 }
             }
-            // draw way points
+        }
+        private void drawWayPoints(javax.microedition.lcdui.Graphics g)
+        { // draw way points
             if (toolStripButton9.Checked)
             {
                 foreach (WayPoint p in WayPoints)
@@ -557,8 +698,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     {
                         p.Render(g);
                         g.setColor(0xff, 0, 0, 0);
-                        e.Graphics.DrawString(
-                            WayPoints.IndexOf(p).ToString(),
+                        g.dg.DrawString(
+                            "p" + WayPoints.IndexOf(p).ToString(),
                             this.Font,
                             System.Drawing.Brushes.Black,
                             p.rect.X + p.rect.Width + 1,
@@ -568,7 +709,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         {
                             toolStripStatusLabel1.Text +=
                                 "Point:" +
-                                "X=" + (p.rect.X + p.rect.Width / 2) +
+                                " X=" + (p.rect.X + p.rect.Width / 2) +
                                 ",Y=" + (p.rect.Y + p.rect.Height / 2)
                             ;
                         }
@@ -604,51 +745,53 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                          );
                 }
             }
-
-            if (toolStripButton12.Checked)
+        }
+        private void drawRegions(javax.microedition.lcdui.Graphics g)
+        {
+            if (toolStripButton17.Checked)
             {
-                g.setColor(0x80, 0xff, 0xff, 0xff);
-
-
-                int sx = -pictureBox1.Location.X / CellW;
-                int sy = -pictureBox1.Location.Y / CellH;
-                int sw = panel1.Width / CellW + 1;
-                int sh = panel1.Height / CellH + 1;
-
-                for (int bx = sx; bx < sx + sw; bx++)
+                foreach (Region r in Regions)
                 {
-                    g.drawLine(
-                       bx * CellW,
-                       sy * CellH,
-                       bx * CellW,
-                       sy * CellH + sh * CellH);
-                }
-                for (int by = sy; by < sy + sh; by++)
-                {
-                    g.drawLine(
-                        sx * CellW,
-                        by * CellH,
-                        sx * CellW + sw * CellW,
-                        by * CellH);
+                    if (r != null)
+                    {
+                        r.Render(g);
+                        g.setColor(0xff, 0, 0, 0);
+                        g.dg.DrawString(
+                            "r"+Regions.IndexOf(r).ToString(),
+                            this.Font,
+                            System.Drawing.Brushes.Black,
+                            r.rect.X,
+                            r.rect.Y - this.Font.Height - 1);
+
+                        if (r.isCheck || r.isSub)
+                        {
+                            toolStripStatusLabel1.Text +=
+                                "Region:" +
+                                " X=" + (r.rect.X) +
+                                ",Y=" + (r.rect.Y) +
+                                ",W=" + (r.rect.Width) +
+                                ",H=" + (r.rect.Height)
+                            ;
+                        }
+
+                    }
                 }
             }
-            
+
         }
-
-       
-
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
+                #region unit
                 foreach (ListViewItem item in listView1.SelectedItems)
                 {
                     if (item.Checked == true)
                     {
                         Unit unit = ((Unit)UnitList[item]);
 
-                        if (unit.type == "Sprite")
+                        //if (unit.type == "Sprite")
                         {
                             if (!toolStripButton11.Checked)
                             {
@@ -660,13 +803,13 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                             }
                             else
                             {
-                                unit.x = e.X - e.X % CellW ;
-                                unit.y = e.Y - e.Y % CellH ;
+                                unit.x = e.X - e.X % CellW;
+                                unit.y = e.Y - e.Y % CellH;
 
                                 if (unit.x < 0) unit.x = 0;
                                 if (unit.y < 0) unit.y = 0;
                             }
-                           
+
 
                             pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
                             pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
@@ -675,7 +818,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         }
                     }
 
-                } 
+                }
+                #endregion
+
+                #region waypoint
                 foreach (WayPoint p in WayPoints)
                 {
                     if (p != null && p.isCheck)
@@ -691,8 +837,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         }
                         else
                         {
-                            p.rect.X = e.X - e.X % CellW ;
-                            p.rect.Y = e.Y - e.Y % CellH ;
+                            p.rect.X = e.X - e.X % CellW;
+                            p.rect.Y = e.Y - e.Y % CellH;
 
                             if (p.rect.X < 0) p.rect.X = 0;
                             if (p.rect.Y < 0) p.rect.Y = 0;
@@ -706,18 +852,80 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         toolStripTextBox3.Text = pictureBox1.Width.ToString();
                         toolStripTextBox4.Text = pictureBox1.Height.ToString();
                     }
-                   
+
                 }
+                #endregion
+
+                #region region
+                foreach (Region r in Regions)
+                {
+                    if (r != null && r.isCheck && !r.isSub)
+                    {
+                        if (!toolStripButton11.Checked)
+                        {
+                            r.rect.X = e.X - selectedRegionPX;
+                            r.rect.Y = e.Y - selectedRegionPY;
+
+                            if (r.rect.X < 0) r.rect.X = 0;
+                            if (r.rect.Y < 0) r.rect.Y = 0;
+                        }
+                        else
+                        {
+                            r.rect.X = e.X - e.X % CellW;
+                            r.rect.Y = e.Y - e.Y % CellH;
+
+                            if (r.rect.X < 0) r.rect.X = 0;
+                            if (r.rect.Y < 0) r.rect.Y = 0;
+                        }
+                        pictureBox1.Width = Math.Max(r.rect.X + r.rect.Width, pictureBox1.Width);
+                        pictureBox1.Height = Math.Max(r.rect.Y + r.rect.Height, pictureBox1.Height);
+                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
+                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                    }
+
+                    if (r != null && r.isSub && !r.isCheck)
+                    {
+                        if (!toolStripButton11.Checked)
+                        {
+                            if (e.X - r.rect.X > 0) r.rect.Width = e.X - r.rect.X;
+                            else r.rect.Width = 1;
+                            if (e.Y - r.rect.Y > 0) r.rect.Height = e.Y - r.rect.Y;
+                            else r.rect.Height = 1;
+                        }
+                        else
+                        {
+                            if (e.X % CellW - r.rect.X > 0) r.rect.Width = e.X % CellW - r.rect.X;
+                            else r.rect.Width = 1;
+                            if (e.Y % CellH - r.rect.Y > 0) r.rect.Height = e.Y % CellH - r.rect.Y;
+                            else r.rect.Height = 1;
+                        }
+                        pictureBox1.Width = Math.Max(r.rect.X + r.rect.Width, pictureBox1.Width);
+                        pictureBox1.Height = Math.Max(r.rect.Y + r.rect.Height, pictureBox1.Height);
+                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
+                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                    }
+                }
+                #endregion
+
+
                 pictureBox1.Refresh();
             }
-            
+
         }
 
-        Unit selectedUnit;
+
         int dx = 0;
         int dy = 0;
+
+        Unit selectedUnit;
+
         WayPoint selectedWayPoint;
         WayPoint popedWayPoint;
+
+        int selectedRegionPX;
+        int selectedRegionPY;
+        Region selectedRegion;
+
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
             dx = e.X;
@@ -725,75 +933,18 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             try
             {
-                if (e.Button == MouseButtons.Left)
+                #region pointUnit
+                // 是定位指令
+                if (e.Button == MouseButtons.Left && toolStripButton14.Checked == true)
                 {
-                    // dis select
-                    if (toolStripButton14.Checked == false)
+                    // map
+                    if (toolStripButton7.Checked)
                     {
-                        selectedUnit = null;
-                        for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                        if (listView1.SelectedItems.Count > 0  )
                         {
-                            listView1.Items[i].Selected = false;
-                        }
-
-                        popedWayPoint = null;
-                        selectedWayPoint = null;
-
-                        foreach (WayPoint p in WayPoints)
-                        {
-                            if (p != null)
+                            Unit unit = ((Unit)UnitList[listView1.SelectedItems[0]]);
+                            if (unit.map != null)
                             {
-                                p.isCheck = false;
-                            }
-                        }
-
-
-                        bool isChecked = false;
-
-                        //select unit
-                        if (isChecked == false && toolStripButton8.Checked)
-                        {
-                            for (int i = listView1.Items.Count - 1; i >= 0; i--)
-                            {
-                                Unit unit = ((Unit)UnitList[listView1.Items[i]]);
-                                if (new Rectangle(unit.x - unit.w / 2, unit.y - unit.h / 2, unit.w, unit.h).Contains(e.X, e.Y))
-                                {
-                                    isChecked = true;
-                                    listView1.Items[i].Selected = true;
-                                    selectedUnit = unit;
-                                    pictureBox1.Refresh();
-                                    break;
-                                }
-                            }
-                        }
-                        //select way point
-                        if (isChecked == false && toolStripButton9.Checked)
-                        {
-                            foreach (WayPoint p in WayPoints)
-                            {
-                                if (p != null)
-                                {
-                                    if (p.rect.Contains(e.X, e.Y))
-                                    {
-                                        isChecked = true;
-                                        p.isCheck = true;
-                                        selectedWayPoint = p;
-                                        pictureBox1.Refresh();
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    else
-                    {
-                        //select unit
-                        if (toolStripButton8.Checked)
-                        {
-                            if (listView1.SelectedItems.Count > 0)
-                            {
-                                Unit unit = ((Unit)UnitList[listView1.SelectedItems[0]]);
                                 if (listView1.SelectedItems[0].Checked)
                                 {
                                     unit.x = e.X;
@@ -801,59 +952,248 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                                 }
                             }
                         }
-                        //select way point
-                        if (toolStripButton9.Checked)
+                    }
+                    //select unit
+                    if (toolStripButton8.Checked)
+                    {
+                        if (listView1.SelectedItems.Count > 0)
                         {
-                            if (selectedWayPoint != null)
+                            Unit unit = ((Unit)UnitList[listView1.SelectedItems[0]]);
+                            if (unit.spr != null)
                             {
-                                selectedWayPoint.rect.X = e.X - selectedWayPoint.rect.Width / 2;
-                                selectedWayPoint.rect.Y = e.Y - selectedWayPoint.rect.Height / 2;
+                                if (listView1.SelectedItems[0].Checked)
+                                {
+                                    unit.x = e.X;
+                                    unit.y = e.Y;
+                                }
                             }
                         }
                     }
-
-                    
+                    //select way point
+                    if (toolStripButton9.Checked)
+                    {
+                        if (selectedWayPoint != null)
+                        {
+                            selectedWayPoint.rect.X = e.X - selectedWayPoint.rect.Width / 2;
+                            selectedWayPoint.rect.Y = e.Y - selectedWayPoint.rect.Height / 2;
+                        }
+                    }
+                    //select region
+                    if (toolStripButton17.Checked)
+                    {
+                        if (selectedRegion != null)
+                        {
+                            selectedRegion.rect.X = e.X;
+                            selectedRegion.rect.Y = e.Y;
+                        }
+                    }
                 }
+                #endregion
 
-                if (e.Button == MouseButtons.Right && toolStripButton9.Checked)
+                #region selectUnit
+                //不是定位指令
+                if (e.Button == MouseButtons.Left && toolStripButton14.Checked == false)
                 {
-                    popedWayPoint = null;
+                    selectedUnit = null;
+                    for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                    {
+                        listView1.Items[i].Selected = false;
+                    }
 
+                    popedWayPoint = null;
+                    selectedWayPoint = null;
                     foreach (WayPoint p in WayPoints)
                     {
                         if (p != null)
                         {
-                            if (p.rect.Contains(e.X, e.Y))
-                            {
-                                popedWayPoint = p;
+                            p.isCheck = false;
+                        }
+                    }
 
-                                break;
+                    selectedRegion = null;
+                    foreach (Region r in Regions)
+                    {
+                        if (r != null)
+                        {
+                            r.isCheck = false;
+                            r.isSub = false;
+                        }
+                    }
+
+                    bool isChecked = false;
+                    //select unit
+                    if (isChecked == false && (toolStripButton7.Checked || toolStripButton8.Checked))
+                    {
+                        for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                        {
+                            Unit unit = ((Unit)UnitList[listView1.Items[i]]);
+                            if (unit.map != null && toolStripButton7.Checked ||
+                                unit.spr != null && toolStripButton8.Checked)
+                            {
+                                if (new Rectangle(unit.x - unit.w / 2, unit.y - unit.h / 2, unit.w, unit.h).Contains(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    listView1.Items[i].Selected = true;
+                                    selectedUnit = unit;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //select way point
+                    if (isChecked == false && toolStripButton9.Checked)
+                    {
+                        foreach (WayPoint p in WayPoints)
+                        {
+                            if (p != null)
+                            {
+                                if (p.rect.Contains(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    p.isCheck = true;
+                                    selectedWayPoint = p;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    // select regions
+                    if (isChecked == false && toolStripButton17.Checked)
+                    {
+                        foreach (Region r in Regions)
+                        {
+                            if (r != null)
+                            {
+                                if (r.select(e.X, e.Y))
+                                {
+                                    r.isSub = false;
+                                    r.isCheck = true;
+                                    selectedRegionPX = e.X - r.rect.X;
+                                    selectedRegionPY = e.Y - r.rect.Y;
+
+                                    isChecked = true;
+                                    selectedRegion = r;
+                                }
+                                if (r.selectSub(e.X, e.Y))
+                                {
+                                    r.isSub = true;
+                                    r.isCheck = false;
+
+                                    isChecked = true;
+                                    selectedRegion = r;
+                                }
+                                if (isChecked) break;
+                            }
+                        }
+                    }
+                }
+                #endregion
+
+                #region popUnit
+                if (e.Button == MouseButtons.Right)
+                {
+                    selectedUnit = null;
+                    for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                    {
+                        listView1.Items[i].Selected = false;
+                    }
+
+                    popedWayPoint = null;
+
+                    selectedRegion = null;
+                    foreach (Region r in Regions)
+                    {
+                        if (r != null)
+                        {
+                            r.isCheck = false;
+                            r.isSub = false;
+                        }
+                    }
+
+                    bool isChecked = false;
+                    //select unit
+                    if (isChecked == false && (toolStripButton7.Checked || toolStripButton8.Checked))
+                    {
+                        for (int i = listView1.Items.Count - 1; i >= 0; i--)
+                        {
+                            Unit unit = ((Unit)UnitList[listView1.Items[i]]);
+                            if (unit.map != null && toolStripButton7.Checked ||
+                                unit.spr != null && toolStripButton8.Checked)
+                            {
+                                if (new Rectangle(unit.x - unit.w / 2, unit.y - unit.h / 2, unit.w, unit.h).Contains(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    listView1.Items[i].Selected = true;
+                                    selectedUnit = unit;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    //select way point
+                    if (isChecked == false && toolStripButton9.Checked)
+                    {
+                        foreach (WayPoint p in WayPoints)
+                        {
+                            if (p != null)
+                            {
+                                if (p.rect.Contains(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    p.isCheck = true;
+                                    popedWayPoint = p;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    // select regions
+                    if (isChecked == false && toolStripButton17.Checked)
+                    {
+                        foreach (Region r in Regions)
+                        {
+                            if (r != null)
+                            {
+                                if (r.select(e.X, e.Y))
+                                {
+                                    isChecked = true;
+                                    r.isCheck = true;
+                                    selectedRegion = r;
+                                    break;
+                                }
                             }
                         }
                     }
 
-                    if (popedWayPoint == null)
+                    //弹出菜单
+                    if (selectedUnit != null && toolStripButton8.Checked)
                     {
-                        menuPath.Items[0].Enabled = false;
-                        menuPath.Items[1].Enabled = false;
-                        menuPath.Items[2].Enabled = false;
-                        menuPath.Items[3].Enabled = true;
-                        menuPath.Items[4].Enabled = false;
+                        menuUnit.Opacity = 0.8;
+                        menuUnit.Show(pictureBox1, e.Location);
+                    }
+                    else if (popedWayPoint != null && toolStripButton9.Checked)
+                    {
+                        menuPath.Opacity = 0.8;
+                        menuPath.Show(pictureBox1, e.Location);
+                    }
+                    else if (selectedRegion != null && toolStripButton17.Checked)
+                    {
+                        menuRegion.Opacity = 0.8;
+                        menuRegion.Show(pictureBox1, e.Location);
                     }
                     else
                     {
-                        menuPath.Items[0].Enabled = true;
-                        menuPath.Items[1].Enabled = true;
-                        menuPath.Items[2].Enabled = true;
-                        menuPath.Items[3].Enabled = false;
-                        menuPath.Items[4].Enabled = true;
+                        menuWorld.Opacity = 0.8;
+                        menuWorld.Show(pictureBox1, e.Location);
                     }
-
-                    menuPath.Opacity = 0.5;
-                    menuPath.Show(pictureBox1, e.Location);
-
                 }
-            }catch(Exception err){}
+
+
+
+
+                #endregion
+            }
+            catch (Exception err) { }
             pictureBox1.Refresh();
 
         }
@@ -931,13 +1271,13 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
             if (listView1.SelectedItems.Count > 0)
             {
-                if (listView1.Items.IndexOf(listView1.SelectedItems[listView1.SelectedItems.Count-1]) < listView1.Items.Count - 1 )
+                if (listView1.Items.IndexOf(listView1.SelectedItems[listView1.SelectedItems.Count - 1]) < listView1.Items.Count - 1)
                 {
                     ListViewItem item = listView1.Items[listView1.Items.IndexOf(listView1.SelectedItems[listView1.SelectedItems.Count - 1]) + 1];
 
                     listView1.Items.Remove(item);
 
-                    listView1.Items.Insert(listView1.Items.IndexOf(listView1.SelectedItems[0]) , item);
+                    listView1.Items.Insert(listView1.Items.IndexOf(listView1.SelectedItems[0]), item);
 
                     pictureBox1.Refresh();
                 }
@@ -949,17 +1289,37 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         }
 
-        //add way point
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
-        {
-          // menuPath.SourceControl
 
-            WayPoint p = new WayPoint(dx,dy);
+        #region menuWorld
+        // add way point command
+        private void 路点ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // menuPath.SourceControl
+            WayPoint p = new WayPoint(dx, dy);
             WayPoints.Add(p);
 
             pictureBox1.Refresh();
-
         }
+        // add region command
+        private void 区域ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // menuPath.SourceControl
+            Region p = new Region(dx, dy);
+            Regions.Add(p);
+
+            pictureBox1.Refresh();
+        }
+        // open world data editor
+        private void 场景数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DataEdit dataEdit = new DataEdit(Data);
+            dataEdit.MdiParent = this.MdiParent;
+            dataEdit.Text = "DataEdit(" + this.id + ")";
+            dataEdit.Show();
+        }
+        #endregion
+
+        #region menuPath
         // del way point
         private void toolStripMenuItem2_Click(object sender, EventArgs e)
         {
@@ -968,6 +1328,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             popedWayPoint.DisLinkAll();
             WayPoints.Remove(popedWayPoint);
+
+            foreach(WayPoint p in WayPoints){
+                p.DisLink(popedWayPoint);
+            }
 
             pictureBox1.Refresh();
         }
@@ -990,6 +1354,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             pictureBox1.Refresh();
         }
+
         // dislink way point
         private void toolStripMenuItem4_Click(object sender, EventArgs e)
         {
@@ -1001,6 +1366,74 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             pictureBox1.Refresh();
         }
 
+        private void 路点数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (popedWayPoint == null) return;
+
+            DataEdit dataEdit = new DataEdit(popedWayPoint.Data);
+            dataEdit.MdiParent = this.MdiParent;
+            dataEdit.Text = "DataEdit(" + this.id + ".WayPoint[" + WayPoints.IndexOf(popedWayPoint) + "])";
+            dataEdit.Show();
+        }
+        #endregion
+
+        #region menuUnit
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (ListViewItem item in listView1.SelectedItems)
+                {
+                    if (listView1.Items.Contains(item))
+                    {
+                        listView1.Items.Remove(item);
+                        UnitList.Remove(item);
+
+                        pictureBox1.Refresh();
+                        break;
+                    }
+                }
+            }
+            catch (Exception err) { }
+        }
+
+        private void 单位数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataEdit dataEdit = new DataEdit(((Unit)UnitList[listView1.SelectedItems[0]]).Data);
+                dataEdit.MdiParent = this.MdiParent;
+                dataEdit.Text = "DataEdit(" + this.id + ".Unit[" + ((Unit)UnitList[listView1.SelectedItems[0]]).id + "])";
+                dataEdit.Show();
+            }
+            catch (Exception err) { }
+        }
+
+        #endregion
+
+        #region menuRegion
+        //del
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            if (selectedRegion == null) return;
+            Regions.Remove(selectedRegion);
+            pictureBox1.Refresh();
+        }
+        //data
+        private void toolStripMenuItem5_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DataEdit dataEdit = new DataEdit(selectedRegion.Data);
+                dataEdit.MdiParent = this.MdiParent;
+                dataEdit.Text = "DataEdit(" + this.id + ".Region[" + Regions.IndexOf(selectedRegion) + "])";
+                dataEdit.Show();
+            }
+            catch (Exception err) { }
+        }
+
+        #endregion
+
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
@@ -1010,6 +1443,10 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             pictureBox1.Refresh();
         }
         private void toolStripButton9_Click(object sender, EventArgs e)
+        {
+            pictureBox1.Refresh();
+        }
+        private void toolStripButton17_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
         }
@@ -1058,9 +1495,11 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
                     //listView1.Items[e.Item].SubItems[1].
                 }
-                
-            }catch(Exception err){
-                Console.WriteLine(this.id + " Unit Lable Error : "+err.Message);
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " Unit Lable Error : " + err.Message);
             }
         }
 
@@ -1118,7 +1557,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     }
                 }
                 pictureBox1.Refresh();
-            }catch(Exception err){}
+            }
+            catch (Exception err) { }
         }
 
         // center map block
@@ -1296,7 +1736,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             }
 
-           
+
             MapMini mini = new MapMini(image);
             mini.Show();
         }
@@ -1309,7 +1749,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                Cell.Util.stringDigitToInt(x, 0, x.Length) >= 1)
             {
                 pictureBox1.Width = Cell.Util.stringDigitToInt(x, 0, x.Length);
-                
+
             }
             else
             {
@@ -1322,7 +1762,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             if (Cell.Util.stringIsDigit(y, 0, y.Length) >= y.Length &&
                 Cell.Util.stringDigitToInt(y, 0, y.Length) >= 1)
             {
-                pictureBox1.Height =  Cell.Util.stringDigitToInt(y, 0, y.Length);
+                pictureBox1.Height = Cell.Util.stringDigitToInt(y, 0, y.Length);
             }
             else
             {
@@ -1331,7 +1771,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 return;
             }
 
-          
+
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -1349,15 +1789,143 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         {
         }
 
-   
        
 
 
-       
 
-       
 
-       
+
+
+
+
+
+
+
+
+
+
+
+
+
+    }
+
+    [Serializable]
+    public partial class Region : ISerializable
+    {
+        // serial
+        public StringBuilder Data = new StringBuilder();
+        public bool isCheck = false;
+        public bool isSub = false;
+
+        public System.Drawing.Rectangle rect;
+
+        public Region(int x, int y)
+        {
+            rect = new Rectangle(x - 8, y - 8, 16, 16);
+        }
+
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        protected Region(SerializationInfo info, StreamingContext context)
+        {
+            try
+            {
+                rect = new Rectangle(
+                    (int)info.GetValue("X", typeof(int)),
+                    (int)info.GetValue("Y", typeof(int)),
+                    (int)info.GetValue("W", typeof(int)),
+                    (int)info.GetValue("H", typeof(int))
+                    );
+                Data.Append((String)info.GetValue("Data", typeof(String)));
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Region : " + err.Message);
+            }
+        }
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            try
+            {
+                info.AddValue("X", rect.X);
+                info.AddValue("Y", rect.Y);
+                info.AddValue("W", rect.Width);
+                info.AddValue("H", rect.Height);
+                info.AddValue("Data", Data.ToString());
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Region : " + err.Message);
+            }
+        }
+
+        public bool select(int x, int y)
+        {
+            if (rect.Contains(x, y))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool selectSub(int x, int y)
+        {
+            System.Drawing.Rectangle s_rect = new System.Drawing.Rectangle(rect.Right - 4, rect.Bottom - 4, 4, 4);
+            if (s_rect.Contains(x, y))
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public void Render(javax.microedition.lcdui.Graphics g)
+        {
+            try
+            {
+                if (isCheck)
+                {
+                    g.setColor(0xff, 0xff, 0xff, 0xff);
+                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                    g.setColor(0x20, 0, 0xff, 0);
+                    g.fillRect(rect.X, rect.Y, rect.Width, rect.Height);
+                }
+                else
+                {
+                    g.setColor(0xff, 0, 0xff, 0);
+                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                }
+
+                //System.Drawing.Rectangle[] s_rect = new Rectangle[4];
+                //s_rect[0] = new System.Drawing.Rectangle(rect.Left - 2, rect.Top - 2, 5, 5);
+                //s_rect[1] = new System.Drawing.Rectangle(rect.Left - 2, rect.Bottom - 2, 5, 5);
+                //s_rect[2] = new System.Drawing.Rectangle(rect.Right - 2, rect.Top - 2, 5, 5);
+                //s_rect[3] = new System.Drawing.Rectangle(rect.Right - 2, rect.Bottom - 2, 5, 5);
+
+
+
+                if (isCheck)
+                {
+                    System.Drawing.Rectangle s_rect = new System.Drawing.Rectangle(rect.Right - 4, rect.Bottom - 4, 4, 4);
+                    g.setColor(0x80, 0xff, 0xff, 0xff);
+                    g.drawRect(s_rect.X, s_rect.Y, s_rect.Width, s_rect.Height);
+                }
+                if (isSub)
+                {
+                    System.Drawing.Rectangle s_rect = new System.Drawing.Rectangle(rect.Right - 4, rect.Bottom - 4, 4, 4);
+                    g.setColor(0xff, 0xff, 0xff, 0xff);
+                    g.drawRect(s_rect.X, s_rect.Y, s_rect.Width, s_rect.Height);
+                }
+
+
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Region : " + err.Message);
+            }
+
+        }
+
     }
 
 
@@ -1366,26 +1934,34 @@ foreach (WayPoint l in p.link){try{if (l != null){//
     public partial class WayPoint : ISerializable
     {
         // serial
+        public StringBuilder Data = new StringBuilder();
         public bool isCheck = false;
         public System.Drawing.Rectangle rect;
 
         public ArrayList link = new ArrayList();
 
-        public WayPoint(int x,int y)
+        public WayPoint(int x, int y)
         {
-            rect = new Rectangle(x,y,5,5);
+            rect = new Rectangle(x, y, 5, 5);
         }
+
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected WayPoint(SerializationInfo info, StreamingContext context)
         {
             try
             {
                 rect = new Rectangle(
-                    (int)info.GetValue("X", typeof(int)), 
+                    (int)info.GetValue("X", typeof(int)),
                     (int)info.GetValue("Y", typeof(int)),
-                    5,5
+                    5, 5
                     );
                 link = (ArrayList)info.GetValue("link", typeof(ArrayList));
+
+                try
+                {
+                    Data.Append((String)info.GetValue("Data", typeof(String)));
+                }
+                catch (Exception err) { }
             }
             catch (Exception err)
             {
@@ -1400,8 +1976,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 info.AddValue("X", rect.X);
                 info.AddValue("Y", rect.Y);
                 info.AddValue("link", link);
+                info.AddValue("Data", Data.ToString());
             }
-            catch(Exception err)
+            catch (Exception err)
             {
                 Console.WriteLine("Path : " + err.Message);
             }
@@ -1433,7 +2010,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 this.link.Add(point);
             }
-           
+
             return true;
         }
 
@@ -1445,7 +2022,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             {
                 this.link.Remove(point);
             }
-          
+
             return true;
         }
 
@@ -1508,7 +2085,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         px[2] = dx - (float)Math.Cos(angle + Math.PI / 12) * 10;
                         py[2] = dy - (float)Math.Sin(angle + Math.PI / 12) * 10;
 
-                       
+
 
                         if (isCheck)
                         {
@@ -1536,14 +2113,14 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                         }
 
                         //float degree = Math.Atan();
-                        
+
                     }
                 }
 
 
 
-               
-                
+
+
             }
             catch (Exception err)
             {
@@ -1551,14 +2128,17 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             }
 
         }
-    
+
     }
+
 
     [Serializable]
     public partial class Unit : ISerializable
     {
+
         static public int frameID = 0;
 
+        public StringBuilder Data = new StringBuilder();
         public String id = "null";
         public String type = "null";
 
@@ -1566,15 +2146,15 @@ foreach (WayPoint l in p.link){try{if (l != null){//
         public MapForm map = null;
 
         public int animID = 0;
-        
-        public int x=0;
-        public int y=0;
-        public int w=8;
-        public int h=8;
+
+        public int x = 0;
+        public int y = 0;
+        public int w = 8;
+        public int h = 8;
         //public 
 
 
-        public Unit(SpriteForm spr,String no)
+        public Unit(SpriteForm spr, String no)
         {
             this.id = no + spr.id;
             this.spr = spr;
@@ -1585,9 +2165,9 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
             this.type = "Sprite";
 
-            
+
         }
-        public Unit(MapForm map,String no)
+        public Unit(MapForm map, String no)
         {
             this.id = no + map.id;
             this.map = map;
@@ -1595,6 +2175,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             this.h = 10;
             this.type = "Map";
         }
+
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected Unit(SerializationInfo info, StreamingContext context)
         {
@@ -1621,12 +2202,18 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     spr = (SpriteForm)info.GetValue("spr", typeof(SpriteForm));
                     this.type = "Sprite";
                 }
+
+                try
+                {
+                    Data.Append((String)info.GetValue("Data", typeof(String)));
+                }
+                catch (Exception err) { }
             }
             catch (Exception err)
             {
                 Console.WriteLine("Unit:" + err.Message);
             }
-            
+
 
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -1637,7 +2224,7 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                 info.AddValue("id", id);
                 info.AddValue("x", x);
                 info.AddValue("y", y);
-                info.AddValue("animID",animID);
+                info.AddValue("animID", animID);
                 try
                 {
                     info.AddValue("map", map);
@@ -1648,6 +2235,8 @@ foreach (WayPoint l in p.link){try{if (l != null){//
                     info.AddValue("spr", spr);
                 }
                 catch (Exception err) { }
+
+                info.AddValue("Data", Data.ToString());
             }
             catch (Exception err)
             {
@@ -1657,11 +2246,12 @@ foreach (WayPoint l in p.link){try{if (l != null){//
 
         public bool isKilled()
         {
-            if ( spr == null && map == null ||
-                (spr != null && spr.IsDisposed) || 
+            if (spr == null && map == null ||
+                (spr != null && spr.IsDisposed) ||
                 (map != null && map.IsDisposed) /*||
                 (spr != null && spr.Enabled) || 
-                (map != null && map.Enabled)*/  )
+                (map != null && map.Enabled)*/
+                                                )
             {
                 return true;
             }
@@ -1695,49 +2285,43 @@ foreach (WayPoint l in p.link){try{if (l != null){//
             Boolean debug)
         {
 
-            if (spr != null )
+            if (spr != null)
             {
-               
                 spr.Render(g, x, y, debug, animID, frameID);
-
-                if (selected)
-                {
-                    g.setColor(0xff, 0xff, 0xff, 0xff);
-                    g.drawRect(x - w / 2, y - h / 2, w, h);
-                    g.drawLine(x, y - h, x, y + h);
-                    g.drawLine(x + w, y, x - w, y);
-
-                    if (select)
-                    {
-                        g.setColor(0xff, 0xff, 0xff, 0xff);
-                        g.drawRect(x - w / 2, y - h / 2, w, h);
-                        g.drawLine(x, y - h, x, y + h);
-                        g.drawLine(x + w, y, x - w, y);
-                    }
-                }
-                else
-                {
-                    if (select)
-                    {
-                        g.setColor(0xff, 0xff, 0xff, 0xff);
-                        g.drawRect(x - w / 2, y - h / 2, w, h);
-                    }
-                }
-
-                
-               
             }
             else if (map != null)
             {
                 map.Render(g, x, y, scope, false, debug, true, frameID);
             }
 
-            
 
-           
-            
+            if (selected)
+            {
+                g.setColor(0xff, 0xff, 0xff, 0xff);
+                g.drawRect(x - w / 2, y - h / 2, w, h);
+                g.drawLine(x, y - h, x, y + h);
+                g.drawLine(x + w, y, x - w, y);
 
-        }   
+                if (select)
+                {
+                    g.setColor(0xff, 0xff, 0xff, 0xff);
+                    g.drawRect(x - w / 2, y - h / 2, w, h);
+                    g.drawLine(x, y - h, x, y + h);
+                    g.drawLine(x + w, y, x - w, y);
+                }
+            }
+            else
+            {
+                if (select)
+                {
+                    g.setColor(0xff, 0xff, 0xff, 0xff);
+                    g.drawRect(x - w / 2, y - h / 2, w, h);
+                }
+            }
+
+
+
+        }
 
 
     }

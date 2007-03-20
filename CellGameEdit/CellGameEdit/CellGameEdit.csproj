@@ -19,6 +19,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -52,6 +53,12 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="HelpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpForm.Designer.cs">
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Output.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -63,6 +70,12 @@
     </Compile>
     <Compile Include="MapMini.Designer.cs">
       <DependentUpon>MapMini.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PM\DataEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\DataEdit.Designer.cs">
+      <DependentUpon>DataEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="PM\SpriteForm.cs">
       <SubType>Form</SubType>
@@ -116,6 +129,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="HelpForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HelpForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Output.resx">
       <SubType>Designer</SubType>
       <DependentUpon>Output.cs</DependentUpon>
@@ -123,6 +140,10 @@
     <EmbeddedResource Include="MapMini.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MapMini.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\DataEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DataEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PM\SpriteForm.resx">
       <SubType>Designer</SubType>
@@ -392,6 +413,7 @@
     <None Include="Resources\Image68.bmp" />
     <None Include="Resources\Image69.bmp" />
     <None Include="Resources\TextFileScriptHelp.txt" />
+    <None Include="Resources\Image70.bmp" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

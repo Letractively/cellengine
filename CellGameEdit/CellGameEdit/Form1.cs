@@ -354,6 +354,12 @@ namespace CellGameEdit
             about.ShowDialog();
         }
 
+        private void toolStripMenuItem7_Click(object sender, EventArgs e)
+        {
+            HelpForm help = new HelpForm();
+            help.ShowDialog();
+        }
+
       
 
      

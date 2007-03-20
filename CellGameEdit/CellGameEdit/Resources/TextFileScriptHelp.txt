@@ -62,7 +62,7 @@
          <CD PART COUNT>
          #<CD PART>
              <INDEX>
-             <TYPE>
+             <TYPE>  rect / line 
              <MASK>
              <X1> 
              <Y1>
@@ -100,7 +100,7 @@
          <CD PART COUNT> 
 	   #<CD PART> 
              <INDEX>
-	       <TYPE> 
+	       <TYPE> rect / line 
 	       <MASK> 
              <X1>
              <Y1> 
@@ -136,12 +136,18 @@
 	
 	<LEVEL WORLD COUNT>
      #<WORLD> 
+     
          <NAME>
+         <DATA> /*场景数据*/
+		 <GRID W>
+         <GRID H>
+  
   
 	   <UNIT MAP COUNT> 
 	   #<UNIT MAP>
              <INDEX>   
              <MAP NAME>
+             <MAP DATA>		/*地图数据*/
              <IDENTIFY>  
              <X> 
              <Y> 
@@ -152,6 +158,7 @@
          #<UNIT SPRITE> 
              <INDEX>
              <SPR NAME>
+             <SPR DATA>		/*精灵数据*/
              <IDENTIFY>  
              <ANIMATE ID>
              <X> 
@@ -161,7 +168,8 @@
 		
          <WAYPOINT COUNT> 
          #<WAYPOINT>  
-             <INDEX> 
+             <INDEX>
+             <PATH DATA> /*路点数据*/
              <X> 
              <Y> 
          #<END WAYPOINT> 
@@ -171,6 +179,16 @@
              <START>
              <END> 
          #<END WAYPOINT LINK> 
+         
+         <REGION COUNT> 
+         #<REGION>  
+             <INDEX> 
+             <REGION DATA> /*区域数据*/
+             <X> 
+             <Y> 
+             <W>
+             <H>
+         #<END REGION> 
 	 
      #<END WORLD> 
      

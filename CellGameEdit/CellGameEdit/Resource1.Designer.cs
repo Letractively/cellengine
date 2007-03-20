@@ -543,6 +543,13 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Bitmap Image70 {
+            get {
+                object obj = ResourceManager.GetObject("Image70", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Image8 {
             get {
                 object obj = ResourceManager.GetObject("Image8", resourceCulture);
@@ -568,12 +575,12 @@ namespace CellGameEdit {
         ///     有如下约定
         ///     #&lt;DATA&gt;
         ///          data[&lt;INDEX&gt;] = &lt;DATAS&gt;;
-        ///     #&lt;&lt;END DATA&gt;
+        ///     #&lt;END DATA&gt;
         ///     并且程序里和&lt;DATA&gt;对应的有3个数据块，那么最后生成的数据是
         ///     data[0] = ....;
         ///     data[1] = ....;
         ///     data[2] = ....;
-        ///------------------------------- [字符串的其余部分被截断]&quot;; 的本地化字符串。
+        ///-------------------------------- [字符串的其余部分被截断]&quot;; 的本地化字符串。
         /// </summary>
         internal static string TextFileScriptHelp {
             get {
