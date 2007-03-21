@@ -36,7 +36,7 @@
             this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.richTextBox1.Location = new System.Drawing.Point(0, 0);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(389, 317);
+            this.richTextBox1.Size = new System.Drawing.Size(318, 268);
             this.richTextBox1.TabIndex = 0;
             this.richTextBox1.Text = "";
             // 
@@ -44,9 +44,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(389, 317);
+            this.ClientSize = new System.Drawing.Size(318, 268);
             this.Controls.Add(this.richTextBox1);
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "DataEdit";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "DataEdit";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.DataEdit_FormClosed);
             this.ResumeLayout(false);
