@@ -17,6 +17,7 @@
  指令列表：
  <OUTPUT>               /* 后面跟输出的文件名(绝对目录或者当前工作空间的相对目录) */
  
+ <IMAGE OUTPUT>			/* 图片输出位置*/
  <IMAGE TYPE>			/* 输出图片格式 默认(png bmp gif jpg) */
  <IMAGE TILE>			/* 散图输出 开启(true) */
  <IMAGE GROUP>			/* 整图输出 开启(true) */

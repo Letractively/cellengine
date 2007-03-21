@@ -168,8 +168,10 @@ namespace CellGameEdit.PM
 
         }
 
+        
         string OutputName ;
         string OutputDir ;
+        string OutputDirImage;
 
         string ImageType;			/* 输出图片格式 默认(*.png) */
 
@@ -215,14 +217,44 @@ namespace CellGameEdit.PM
                     {
                         System.IO.Directory.CreateDirectory(OutputDir);
                     }
-
                     OutputName = OutputDir + "\\" + System.IO.Path.GetFileName(OutputName);
 
-                    ImageType = Util.getCommandScript(script, "<IMAGE TYPE>");
-                    ImageTile = Util.getCommandScript(script, "<IMAGE TILE>").Equals("true",StringComparison.CurrentCultureIgnoreCase);
-                    ImageTileData = Util.getCommandScript(script, "<IMAGE TILE DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
-                    ImageGroup = Util.getCommandScript(script, "<IMAGE GROUP>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
-                    ImageGroupData = Util.getCommandScript(script, "<IMAGE GROUP DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                    // out image
+                    OutputDirImage = Util.getCommandScript(script, "<IMAGE OUTPUT>");
+                    if (OutputDirImage == "") OutputDirImage = null;
+                    try
+                    {
+                        if (System.IO.Path.IsPathRooted(OutputDirImage))
+                        {
+                            OutputDirImage = System.IO.Path.GetDirectoryName(OutputDirImage);
+                        }
+                        else
+                        {
+                            OutputDirImage = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputDirImage);
+                        }
+                        if (!System.IO.Directory.Exists(OutputDirImage))
+                        {
+                            System.IO.Directory.CreateDirectory(OutputDirImage);
+                        }
+                        ImageType = Util.getCommandScript(script, "<IMAGE TYPE>");
+                        ImageTile = Util.getCommandScript(script, "<IMAGE TILE>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                        ImageTileData = Util.getCommandScript(script, "<IMAGE TILE DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                        ImageGroup = Util.getCommandScript(script, "<IMAGE GROUP>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                        ImageGroupData = Util.getCommandScript(script, "<IMAGE GROUP DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                    }
+                    catch (Exception err)
+                    {
+                        OutputDirImage = System.IO.Path.GetDirectoryName(workSpace);
+                        ImageType = "";
+                        ImageTile = false;
+                        ImageTileData = false;
+                        ImageGroup = false;
+                        ImageGroupData = false;
+                    }
+                   
+
+
+                    
 
 
                     script = fillScriptNode(script);
@@ -278,7 +310,7 @@ namespace CellGameEdit.PM
                     //
                     if (forms[i].GetType().Equals(typeof(ImagesForm)))
                     {
-                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDir,
+                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDirImage,
                             ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
 
                     }

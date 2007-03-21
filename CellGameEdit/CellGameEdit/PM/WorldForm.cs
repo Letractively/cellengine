@@ -101,6 +101,9 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err) { }
 
+                toolStripTextBox1.Text = CellW.ToString();
+                toolStripTextBox2.Text = CellH.ToString();
+
                 try
                 {
                     Data.Append((String)info.GetValue("Data", typeof(String)));
@@ -894,9 +897,9 @@ namespace CellGameEdit.PM
                         }
                         else
                         {
-                            if (e.X % CellW - r.rect.X > 0) r.rect.Width = e.X % CellW - r.rect.X;
+                            if ((e.X - e.X % CellW) - r.rect.X > 0) r.rect.Width = (e.X - e.X % CellW) - r.rect.X;
                             else r.rect.Width = 1;
-                            if (e.Y % CellH - r.rect.Y > 0) r.rect.Height = e.Y % CellH - r.rect.Y;
+                            if ((e.Y - e.Y % CellH) - r.rect.Y > 0) r.rect.Height = (e.Y - e.Y % CellH) - r.rect.Y;
                             else r.rect.Height = 1;
                         }
                         pictureBox1.Width = Math.Max(r.rect.X + r.rect.Width, pictureBox1.Width);
