@@ -1,4 +1,6 @@
 
+import game.unit.Unit;
+
 import javax.microedition.lcdui.Graphics;
 import javax.microedition.lcdui.Image;
 
@@ -27,6 +29,9 @@ final public class ScreenLogo extends AScreen {
 		KeyEnable = true;
 		LogicEnable = true;
 		RenderEnable = true;
+	}
+	
+	public void notifyDestroy(){
 	}
 
 	public void notifyLogic() {
