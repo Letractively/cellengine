@@ -68,26 +68,27 @@ public class CTiles20 extends CObject implements IImages {
 		}
 	}
 
-	public Image getSrcImage(){
-		return TileImage;
-	}
-	
-	
-	/**
-	 * override 方法
-	 * @see com.morefuntek.cell.IImages#getImage(int)
-	 */
-	public Image getImage(int index){
-		return Tiles[index];
-	}
+//	public Image getSrcImage(){
+//		return TileImage;
+//	}
+//	
+//	
+//	/**
+//	 * override 方法
+//	 * @see com.morefuntek.cell.IImages#getImage(int)
+//	 */
+//	public Image getImage(int index){
+//		return Tiles[index];
+//	}
 	
 	/**
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getKeyColor(int, int)
 	 */
 	public int getPixel(int index, int x, int y){
+		if(Tiles[index]==null)return 0;
 		int[] c = new int[1];
-		getImage(index).getRGB(c, 0, 1, x, y, 1, 1);
+		Tiles[index].getRGB(c, 0, 1, x, y, 1, 1);
 		return c[0];
 	}
 	
@@ -96,6 +97,7 @@ public class CTiles20 extends CObject implements IImages {
 	 * @see com.morefuntek.cell.IImages#getWidth(int)
 	 */
 	public int getWidth(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getWidth();
 	}
 
@@ -104,6 +106,7 @@ public class CTiles20 extends CObject implements IImages {
 	 * @see com.morefuntek.cell.IImages#getHeight(int)
 	 */
 	public int getHeight(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getHeight();
 	}
 
@@ -139,7 +142,7 @@ public class CTiles20 extends CObject implements IImages {
 	public boolean addTile() {
 		if (CurIndex < Count) {
 			if (TileImage == null) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
+				Tiles[CurIndex] = null;
 			} else {
 				Tiles[CurIndex] = TileImage;
 			}
@@ -170,7 +173,7 @@ public class CTiles20 extends CObject implements IImages {
 			int TileHeight) {
 		if (CurIndex < Count) {
 			if (TileWidth <= 0 || TileHeight <= 0) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
+				Tiles[CurIndex] = null;
 			} else {
 				Tiles[CurIndex] = Image.createImage(
 						TileImage, 

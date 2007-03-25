@@ -67,19 +67,19 @@ public interface IImages {
 	 */
 	public void buildImages(Image srcImage,int count);
 
-	/**
-	 * 按照序号得到图片对象
-	 * @param index
-	 * @return 
-	 */
-	public Image getSrcImage();
-	
-	/**
-	 * 得到子图片
-	 * @param index
-	 * @return
-	 */
-	public Image getImage(int index);
+//	/**
+//	 * 按照序号得到图片对象
+//	 * @param index
+//	 * @return 
+//	 */
+//	public Image getSrcImage();
+//	
+//	/**
+//	 * 得到子图片
+//	 * @param index
+//	 * @return
+//	 */
+//	public Image getImage(int index);
 	
 	/**
 	 * @param index

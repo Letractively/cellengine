@@ -74,25 +74,26 @@ public class CTilesJPhone extends CObject implements IImages {
 		}
 	}
 
-	public Image getSrcImage(){
-		return TileImage;
-	}
-	
-	
-	/**
-	 * override 方法
-	 * @see com.morefuntek.cell.IImages#getImage(int)
-	 */
-	public Image getImage(int index){
-		return Tiles[index];
-	}
+//	public Image getSrcImage(){
+//		return TileImage;
+//	}
+//	
+//	
+//	/**
+//	 * override 方法
+//	 * @see com.morefuntek.cell.IImages#getImage(int)
+//	 */
+//	public Image getImage(int index){
+//		return Tiles[index];
+//	}
 	
 	/**
 	 * override 方法
 	 * @see com.morefuntek.cell.IImages#getKeyColor(int, int)
 	 */
 	public int getPixel(int index, int x, int y){
-		Graphics g = getImage(index).getGraphics();
+		if(Tiles[index]==null)return 0;
+		Graphics g = Tiles[index].getGraphics();
 		int c = GraphicsUtil.getPixel(g, x, y);
 		return c;
 	}
@@ -102,6 +103,7 @@ public class CTilesJPhone extends CObject implements IImages {
 	 * @see com.morefuntek.cell.IImages#getWidth(int)
 	 */
 	public int getWidth(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getWidth();
 	}
 
@@ -110,6 +112,7 @@ public class CTilesJPhone extends CObject implements IImages {
 	 * @see com.morefuntek.cell.IImages#getHeight(int)
 	 */
 	public int getHeight(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getHeight();
 	}
 
@@ -145,7 +148,7 @@ public class CTilesJPhone extends CObject implements IImages {
 	public boolean addTile() {
 		if (CurIndex < Count) {
 			if (TileImage == null) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
+				Tiles[CurIndex] = null;
 			} else {
 				Tiles[CurIndex] = TileImage;
 			}
@@ -175,7 +178,7 @@ public class CTilesJPhone extends CObject implements IImages {
 	public boolean addTile(int TileX, int TileY, int TileWidth, int TileHeight) {
 		if (CurIndex < Count) {
 			if (TileWidth <= 0 || TileHeight <= 0) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
+				Tiles[CurIndex] = null;
 			} else {
 //				Tiles[CurIndex] = Image.createImage(
 //						TileImage, 

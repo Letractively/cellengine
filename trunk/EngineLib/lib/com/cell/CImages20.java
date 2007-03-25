@@ -68,17 +68,17 @@ public class CImages20 extends CObject implements IImages {
 		TileH = new short[Count];
 	}
 
-	/**
-	 * override 方法
-	 * @see com.cell.IImages#getImage(int)
-	 */
-	public Image getSrcImage(){
-		return srcImage;
-	}
-	
-	public Image getImage(int index){
-		return srcImage;
-	}
+//	/**
+//	 * override 方法
+//	 * @see com.cell.IImages#getImage(int)
+//	 */
+//	public Image getSrcImage(){
+//		return srcImage;
+//	}
+//	
+//	public Image getImage(int index){
+//		return srcImage;
+//	}
 	
 	/**
 	 * override 方法
@@ -142,8 +142,8 @@ public class CImages20 extends CObject implements IImages {
 			if (TileWidth <= 0 || TileHeight <= 0) {
 				this.TileX[CurIndex] = (short)0;
 				this.TileY[CurIndex] = (short)0;
-				this.TileW[CurIndex] = (short)1;
-				this.TileH[CurIndex] = (short)1;
+				this.TileW[CurIndex] = (short)0;
+				this.TileH[CurIndex] = (short)0;
 			} else {
 				this.TileX[CurIndex] = (short)TileX;
 				this.TileY[CurIndex] = (short)TileY;
