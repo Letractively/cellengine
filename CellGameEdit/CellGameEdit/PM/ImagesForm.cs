@@ -125,8 +125,11 @@ namespace CellGameEdit.PM
                         img.y = y;
                         img.killed = kill;
 
-                        pictureBox2.Width = Math.Max(pictureBox2.Width, img.x + img.getWidth());
-                        pictureBox2.Height = Math.Max(pictureBox2.Height, img.y + img.getHeight() + 1);
+                        if (!img.killed)
+                        {
+                            pictureBox2.Width = Math.Max(pictureBox2.Width, img.x + img.getWidth());
+                            pictureBox2.Height = Math.Max(pictureBox2.Height, img.y + img.getHeight() + 1);
+                        }
 
                         dstImages.Add(img);
                     }
@@ -346,10 +349,10 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     {
                         if (getDstImage(i) != null)
                         {
-                            string X = getDstImage(i).x.ToString();
-                            string Y = getDstImage(i).y.ToString();
-                            string W = getDstImage(i).getWidth().ToString();
-                            string H = getDstImage(i).getHeight().ToString();
+                            string X = getDstImage(i).killed ? "0" : getDstImage(i).x.ToString();
+                            string Y = getDstImage(i).killed ? "0" : getDstImage(i).y.ToString();
+                            string W = getDstImage(i).killed ? "0" : getDstImage(i).getWidth().ToString();
+                            string H = getDstImage(i).killed ? "0" : getDstImage(i).getHeight().ToString();
 
                             clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
                                 new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
@@ -973,7 +976,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 int outH = 0;
                 for (int i = 0; i < getDstImageCount(); i++)
                 {
-                    if (getDstImage(i) != null)
+                    if (getDstImage(i) != null && !getDstImage(i).killed)
                     {
                         outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
                         outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
@@ -1001,7 +1004,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 int outH = 0;
                 for (int i = 0; i < getDstImageCount(); i++)
                 {
-                    if (getDstImage(i) != null)
+                    if (getDstImage(i) != null && !getDstImage(i).killed)
                     {
                         outW = Math.Max(outW, getDstImage(i).x + getDstImage(i).getWidth());
                         outH = Math.Max(outH, getDstImage(i).y + getDstImage(i).getHeight());
