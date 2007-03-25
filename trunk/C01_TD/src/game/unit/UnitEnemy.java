@@ -12,10 +12,15 @@ public class UnitEnemy extends Unit {
 	public UnitEnemy(CSprite stuff){
 		super(stuff);
 		super.setState(this);
+		
+		Visible = true;
+		Active  = false;
+		
+		
 	}
 	
 	
-	public void unitUpdate() {
+	public void update() {
 		switch(state){
 		case STATE_HOLD:
 			if(!isEndHold()){
@@ -31,13 +36,20 @@ public class UnitEnemy extends Unit {
 				startMove(NextWayPoint);
 			}
 			break;
+		case STATE_DEAD:
+			if (!isEndDead()) {
+				onDead();
+			} else {
+				state = -1;
+			}
+			break;
 		}
 		
 	}
 	
 //	---------------------------------------------------------------------------------------
 //	hold
-	final public int STATE_HOLD 	= 1;
+	final public int STATE_HOLD 	= 0;
 	public int HoldTime = 100;
 	public void startHold(){
 		state = STATE_HOLD;
@@ -56,7 +68,7 @@ public class UnitEnemy extends Unit {
 	
 //	------------------------------------------------------------------------------------
 //	patrol
-	final public int STATE_MOVE 	= 0;
+	final public int STATE_MOVE 	= 1;
 	public CWayPoint NextWayPoint;
 	private CWayPoint PrewWayPoint;
 	public int MaxSpeed = 1 ;
@@ -115,6 +127,26 @@ public class UnitEnemy extends Unit {
 	
 	
 //	------------------------------------------------------------------------------------
-//	swing
+//	dead
+
+//	---------------------------------------------------------------------------------------------------------
+//	Íê½á×´Ì¬
+	final public int STATE_DEAD	= 2;
+	
+	public void startDead(){
+		state = STATE_DEAD;
+//		EffectSpawn(EFFECT_ATTACK_ICE,X,Y,null);
+		EffectSpawn(EFFECT_MONEY, X, Y, "+" + 100);
+		println("Dead");
+	}
+	void onDead(){
+	}
+	boolean isEndDead(){
+		Active = false;
+		Visible = false;
+		return true;
+	}
+	
+	
 
 }

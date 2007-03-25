@@ -15,7 +15,7 @@ public class UnitTower extends Unit  {
 		super.setState(this);
 	}
 
-	public void unitUpdate() {
+	public void update() {
 		switch(state){
 		case STATE_BUILD:
 			if(!isEndBuild()){
@@ -83,18 +83,16 @@ public class UnitTower extends Unit  {
 				for(int j=0;j<enemys.length;j++){
 					int id = (j + start) % enemys.length;  
 					if( enemys[id].Active==true && 
-						CCD.cdRect(
+						CCD.cdRectPoint(
 							X-AttackScope, Y-AttackScope, 
 							X+AttackScope, Y+AttackScope, 
-							enemys[id].X-AttackScope, enemys[id].Y-AttackScope, 
-							enemys[id].X+AttackScope, enemys[id].Y+AttackScope)
+							enemys[id].X, enemys[id].Y)
 							){
-						shoots[i].startMissile(
+						shoots[i].startFire(
+								Math.abs(Random.nextInt())%UnitShoot.TYPE53_FIRE,
 								X+collides.getCD(0).X1,
 								Y+collides.getCD(0).Y1,
-								enemys[id],
-								Math.abs(Random.nextInt())%UnitShoot.TYPE53_FIRE
-								);
+								enemys[id]);
 						break;
 					}
 				}

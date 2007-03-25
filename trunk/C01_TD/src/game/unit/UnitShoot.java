@@ -12,6 +12,7 @@ public class UnitShoot extends Unit {
 //	基本
 	static final public int TYPE_NONE			= -1;
 	
+	/*TODO 子弹列表，对应编辑器Shoots*/
 	static final public int TYPE00_ARROW		= 0;//
 	static final public int TYPE01_ARROW		= 1;
 	static final public int TYPE02_ARROW		= 2;
@@ -21,9 +22,9 @@ public class UnitShoot extends Unit {
 	static final public int TYPE12_ICE			= 5;
 	static final public int TYPE13_ICE			= 6;
 	
-	static final public int TYPE21_FIRE		= 7;
-	static final public int TYPE22_FIRE		= 8;
-	static final public int TYPE23_FIRE		= 9;
+	static final public int TYPE21_FIRE			= 7;
+	static final public int TYPE22_FIRE			= 8;
+	static final public int TYPE23_FIRE			= 9;
 	
 	static final public int TYPE30_ARROW		= 10;//
 	static final public int TYPE31_ARROW		= 11;
@@ -34,31 +35,30 @@ public class UnitShoot extends Unit {
 	static final public int TYPE42_ICE			= 15;
 	static final public int TYPE43_ICE			= 16;
 	
-	static final public int TYPE51_FIRE		= 17;
-	static final public int TYPE52_FIRE		= 18;
-	static final public int TYPE53_FIRE		= 19;
+	static final public int TYPE51_FIRE			= 17;
+	static final public int TYPE52_FIRE			= 18;
+	static final public int TYPE53_FIRE			= 19;
 	
 	/**类型*/
 	private int TYPE = 0;
-	
+	private int state = -1;
 	
 	public boolean Penetrable = false;
 	
+
 	
+
 	public UnitShoot(CSprite stuff){
 		super(stuff);
 		setState(this);
 		Priority = 1024;
 	}
-	public void render(Graphics g, int x, int y) {
-		super.render(g, x, y);
-	}
-	public void unitUpdate(){
+	
+	public void update(){
 		// main state machine
 		switch (state) {
 		case STATE_MISSILE:
 			if (!isEndMissile()) {
-				EffectSpawn(EFFECT_TAIL_FIRE,X,Y);
 				onMissile();
 			} else {
 				startTerminate(X, Y);
@@ -66,7 +66,6 @@ public class UnitShoot extends Unit {
 			break;
 		case STATE_SLUG:
 			if (!isEndSlug()) {
-				EffectSpawn(EFFECT_TAIL_FIRE,X,Y);
 				onSlug();
 			} else {
 				startTerminate(X, Y);
@@ -85,14 +84,50 @@ public class UnitShoot extends Unit {
 		}	
 			
 	}
-
+	
+	public void startFire(int type,int sx,int sy,Unit target){
+		switch(type){
+		case TYPE00_ARROW:
+		case TYPE01_ARROW:
+		case TYPE02_ARROW:
+		case TYPE03_ARROW:
+		
+		case TYPE11_ICE:
+		case TYPE12_ICE:
+		case TYPE13_ICE:
+		
+		case TYPE21_FIRE:
+		case TYPE22_FIRE:
+		case TYPE23_FIRE:
+			startMissile(sx,sy,target,type);
+			break;
+			
+		case TYPE30_ARROW:
+		case TYPE31_ARROW:
+		case TYPE32_ARROW:
+		case TYPE33_ARROW:
+		
+		case TYPE41_ICE:
+		case TYPE42_ICE:
+		case TYPE43_ICE:
+		
+		case TYPE51_FIRE:
+		case TYPE52_FIRE:
+		case TYPE53_FIRE:
+			startDst(sx, sy, target.X, target.Y, type);
+			break;
+		}
+		
+	}
+	
 
 
 //	----------------------------------------------------------------------------------------------------
 //	状态
-	int state = -1;
+	
+	
 	final public int STATE_NONE			= 	-1;
-	public void startNone(){
+	void startNone(){
 		this.Active = false;
 		this.Visible = false;
 		state = STATE_NONE;
@@ -112,9 +147,9 @@ public class UnitShoot extends Unit {
 	final public int STATE_SLUG			= 1;
 	int SlugX;
 	int SlugY;
-	int SlugMaxSpeed = 2;
-	public void startDst(int sx,int sy,int dx,int dy,int type){
-		state = STATE_MISSILE;
+	int SlugMaxSpeed = 4;
+	void startDst(int sx,int sy,int dx,int dy,int type){
+		state = STATE_SLUG;
 		Active = true;
 		Visible = true;
 		
@@ -133,12 +168,16 @@ public class UnitShoot extends Unit {
 		setCurrentFrame(type, 0);
 	}
 	boolean isEndSlug(){
-		return CCD.cdRectPoint(
+		if( CCD.cdRectPoint(
 				SlugX-SlugMaxSpeed, 
 				SlugY-SlugMaxSpeed,
 				SlugX+SlugMaxSpeed, 
 				SlugY+SlugMaxSpeed,
-				X, Y);
+				X, Y))
+		{
+			return true;
+		}
+		return false;
 	}
 	void onSlug(){
 		int dx = SlugX - X;
@@ -166,21 +205,21 @@ public class UnitShoot extends Unit {
 		}
 		
 //		tryMove(dx-X, dy-Y);
-		
+		EffectSpawn(EFFECT_TAIL_SWORD,X,Y,null);
 		nextCycFrame();
 		
 	}
 //	---------------------------------------------------------------------------------------------------------
 //	单体攻击
 	final public int STATE_MISSILE		= 2;
-	CSprite MissileHandle				= null;
-	int MissileMaxSpeed					= 2;
-	public void startMissile(int sx,int sy,CSprite handle,int type){
+	Unit MissileTarget					= null;
+	int MissileMaxSpeed					= 4;
+	void startMissile(int sx,int sy,Unit target,int type){
 		state = STATE_MISSILE;
 		Active = true;
 		Visible = true;
 		
-		MissileHandle = handle;
+		MissileTarget = target;
 		
 		SpeedX256 = 0; 
 		SpeedY256 = 0;
@@ -191,21 +230,26 @@ public class UnitShoot extends Unit {
 		X = sx;
 		Y = sy;
 //		tryMove(sx-X, sy-Y);
-		
 		setCurrentFrame(type, 0);
 	}
 	boolean isEndMissile(){
-		return !MissileHandle.Active || 
-			CCD.cdRectPoint(
-					MissileHandle.X-MissileMaxSpeed, 
-					MissileHandle.Y-MissileMaxSpeed,
-					MissileHandle.X+MissileMaxSpeed, 
-					MissileHandle.Y+MissileMaxSpeed,
-					X, Y);
+		if( MissileTarget==null || !MissileTarget.Active )
+			return true;
+		if(CCD.cdRectPoint(
+					MissileTarget.X-MissileMaxSpeed, 
+					MissileTarget.Y-MissileMaxSpeed,
+					MissileTarget.X+MissileMaxSpeed, 
+					MissileTarget.Y+MissileMaxSpeed,
+					X, Y))
+		{
+			MissileTarget.HP -= HP;
+			return true;
+		}
+		return false;
 	}
 	void onMissile(){
-		int dx = MissileHandle.X - X;
-		int dy = MissileHandle.Y - Y;
+		int dx = MissileTarget.X - X;
+		int dy = MissileTarget.Y - Y;
 		int bx = Math.abs(dx)*256/MissileMaxSpeed;
 		int by = Math.abs(dy)*256/MissileMaxSpeed;
 		int d = Math.max(bx,by);
@@ -219,18 +263,18 @@ public class UnitShoot extends Unit {
 			HPos256 += SpeedX256 ; 
 			X = HPos256/256;
 		}else{
-			X = MissileHandle.X;
+			X = MissileTarget.X;
 		}
 		
 		if(Math.abs(dy)>MissileMaxSpeed){
 			VPos256 += SpeedY256 ; 
 			Y = VPos256/256;
 		}else{
-			Y = MissileHandle.Y;
+			Y = MissileTarget.Y;
 		}
 		
 //		tryMove(dx-X, dy-Y);
-		
+		EffectSpawn(EFFECT_TAIL_FIRE,X,Y,null);
 		nextCycFrame();
 	}
 //	---------------------------------------------------------------------------------------------------------
@@ -238,7 +282,7 @@ public class UnitShoot extends Unit {
 //	---------------------------------------------------------------------------------------------------------
 //	完结状态
 	final public int STATE_TERMINATE	= 3;
-	public void startTerminate(int sx,int sy){
+	void startTerminate(int sx,int sy){
 		state = STATE_TERMINATE;
 		Active = true;
 		Visible = true;
@@ -246,7 +290,7 @@ public class UnitShoot extends Unit {
 		X = sx;
 		Y = sy;
 //		tryMove(sx-X, sy-Y);
-		
+		EffectSpawn(EFFECT_ATTACK_FIRE,X,Y,null);
 		setCurrentFrame(STATE_TERMINATE, 0);
 	}
 	void onTerminate(){

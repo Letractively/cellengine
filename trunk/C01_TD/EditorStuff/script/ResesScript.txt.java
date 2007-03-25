@@ -2,7 +2,8 @@
 // CastleVania Script v0.0.0
 // 
 // 指定文件输出
-// <OUTPUT>     ..\res\ResesScript.java
+// <OUTPUT>     	..\res\ResesScript.java
+// <IMAGE OUTPUT>	..\res\
 // <IMAGE TYPE>			png
 // <IMAGE TILE>			false
 // <IMAGE GROUP>		true
