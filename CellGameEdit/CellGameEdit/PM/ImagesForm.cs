@@ -1141,9 +1141,10 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 MessageBox.Show("Tile容量不能为0！");
                 return null;
             }
+           
             for (int i = 0; i < dstImages.Count; i++)
             {
-                if (((Image)dstImages[i]) == null) continue;
+                if (((Image)dstImages[i]) == null || ((Image)dstImages[i]).killed) continue;
                 if (((Image)dstImages[i]).getWidth() != CellW ||
                     ((Image)dstImages[i]).getHeight() != CellH)
                 {
