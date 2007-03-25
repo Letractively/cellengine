@@ -437,14 +437,18 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 if (getDstImage(i).killed)
                 {
                     dstImages[i] = img;
-                    // save to src pic
-                    String dir = "\\" + this.id;
-                    String name = dir + "\\tile_" + i.ToString() + ".png";
-                    if (System.IO.File.Exists(ProjectForm.workSpace + name))
+                    try
                     {
-                        System.IO.File.Delete(ProjectForm.workSpace + name);
+                        // save to src pic
+                        String dir = "\\" + this.id;
+                        String name = dir + "\\tile_" + i.ToString() + ".png";
+                        if (System.IO.File.Exists(ProjectForm.workSpace + name))
+                        {
+                            System.IO.File.Delete(ProjectForm.workSpace + name);
+                        }
+                        getDstImage(i).dimg.Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
                     }
-                    getDstImage(i).dimg.Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
+                    catch (Exception err) { }
                     return;
                 }
             }
