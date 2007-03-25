@@ -84,6 +84,7 @@ public class CParticleSystem {
 				Particles[i].Category = category;
 				Particles[i].X = x;
 				Particles[i].Y = y;
+				Particles[i].Timer = 0;
 				Launcher.particleEmitted(Particles[i],i);
 				c++;		
 			}

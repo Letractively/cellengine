@@ -197,23 +197,25 @@ public class CWorld extends CObject {
 //#endif
 
 			for(int i=0;i<Sprs.size();i++){
-				if(CCD.cdRect(
-					((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
-					((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
-					((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
-					((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_bottom, 
-					Camera.X, 
-					Camera.Y, 
-					Camera.X + Camera.getWidth(), 
-					Camera.Y + Camera.getHeight()
-					)){
-					((CSprite)Sprs.elementAt(i)).OnScreen = true;
-				}else{
-					((CSprite)Sprs.elementAt(i)).OnScreen = false;
+				if (((CSprite)Sprs.elementAt(i)).Visible){
+					if(CCD.cdRect(
+						((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_left, 
+						((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_top, 
+						((CSprite)Sprs.elementAt(i)).X + ((CSprite)Sprs.elementAt(i)).animates.w_right, 
+						((CSprite)Sprs.elementAt(i)).Y + ((CSprite)Sprs.elementAt(i)).animates.w_bottom, 
+						Camera.X, 
+						Camera.Y, 
+						Camera.X + Camera.getWidth(), 
+						Camera.Y + Camera.getHeight()
+						)){
+						((CSprite)Sprs.elementAt(i)).OnScreen = true;
+					}else{
+						((CSprite)Sprs.elementAt(i)).OnScreen = false;
+					}
+					((CSprite)Sprs.elementAt(i)).render(g,
+							((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
+							((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
 				}
-				((CSprite)Sprs.elementAt(i)).render(g,
-						((CSprite)Sprs.elementAt(i)).X-Camera.X+Camera.WindowX,
-						((CSprite)Sprs.elementAt(i)).Y-Camera.Y+Camera.WindowY);
 			}
 			
 			g.setClip(cx,cy,cw,ch);

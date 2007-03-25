@@ -79,7 +79,12 @@ abstract public class AScreen extends CObject {
 	 * @param g 
 	 */
 	abstract public void notifyRender(Graphics g);
-
+	/**
+	 * main release call back : call back when screen is disposing </br>
+	 * 游戏渲染,执行渲染的回掉方法，每帧被执行一次
+	 * @param g 
+	 */
+	abstract public void notifyDestroy();
 	//--------------------------------------------------------------------------------------------------------------------
 	
 	/**当前是否在进行屏幕切换*/
@@ -259,19 +264,21 @@ abstract public class AScreen extends CObject {
 	static public void TryChangeSubSreen() {
 	    if (NextScreenClassName!=null && isTransitionOut()){
 	    	try {
-		    	CurSubScreen = null;
-		    	
-		    	System.gc();
-				Thread.sleep(1);
-			
+	    		if(CurSubScreen!=null){
+	    			CurSubScreen.notifyDestroy();
+			    	CurSubScreen = null;
+			    	System.gc();
+					Thread.sleep(1);
+	    		}
+	    		
 				CurSubScreen = (AScreen)((Class.forName(NextScreenClassName)).newInstance());
-			
 		    	KeyEnable = true;
 				LogicEnable = true;
 		    	setTransitionIn();
 		    	NextScreenClassName = null;
+		    	
 	    	} catch (Exception e) {
-	    		System.out.println(e.getMessage());
+	    		e.printStackTrace();
 				ExitGame = true;
 			}
 		}

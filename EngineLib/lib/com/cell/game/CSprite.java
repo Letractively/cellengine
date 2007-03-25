@@ -952,9 +952,7 @@ public class CSprite extends CUnit {
 	 */
 	public void render(Graphics g,int x,int y) {
 		if (OnScreen){
-			if (Visible) {
 				animates.render(g,FrameAnimate[CurAnimate][CurFrame],x,y);
-			}
 //#ifdef _DEBUG
 			if (Active && IsDebug){
 				collides.render(g,FrameCDMap[CurAnimate][CurFrame],x,y,0xff00ff00);

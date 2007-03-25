@@ -27,21 +27,20 @@ public class CParticle {
 	/**Terminate time*/
 	public int TerminateTime = -1;
 	/**timer*/
-	public int Timer = 0;
+	public int Timer 	= 0;
 	
 	// physical
-	public int X = 0;
-	public int Y = 0;
-	public int SpeedX = 0;
-	public int SpeedY = 0;
-	public int AccX = 0;
-	public int AccY = 0;
+	public int X 		= 0;
+	public int Y 		= 0;
+	public int SpeedX 	= 0;
+	public int SpeedY 	= 0;
+	public int AccX 	= 0;
+	public int AccY 	= 0;
 	
 	// surface
 	public int Color = 0;
-	
-	public int Data = 0;
-	
+	public int 		Data 		= 0;
+	public Object 	Element 	= null;
 	
 	public boolean isTerminate(){
 		return Timer > TerminateTime;
