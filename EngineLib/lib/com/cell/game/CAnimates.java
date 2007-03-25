@@ -139,26 +139,26 @@ public class CAnimates extends CGroup{
 	public IImages getImages(){
 		return images;
 	}
-	/**
-	 * Get image form construct images reference</br>
-	 * 从当前的images里得到image
-	 * @param index index of construct images 
-	 * @return image
-	 */
-	public Image getImage(int index){
-		return images.getImage(index);
-	}
-	
-	/**
-	 * Get image form specify frame id and part id</br>
-	 * 指定帧号和该帧中的部件号得到图片
-	 * @param frame frame id within animates</br> 帧号
-	 * @param sub part id within frame</br>部件号
-	 * @return image
-	 */
-	public Image getFrameImage(int frame,int sub){
-		return images.getImage(STileID[Frames[frame][sub]]);
-	}
+//	/**
+//	 * Get image form construct images reference</br>
+//	 * 从当前的images里得到image
+//	 * @param index index of construct images 
+//	 * @return image
+//	 */
+//	public Image getImage(int index){
+//		return images.getImage(index);
+//	}
+//	
+//	/**
+//	 * Get image form specify frame id and part id</br>
+//	 * 指定帧号和该帧中的部件号得到图片
+//	 * @param frame frame id within animates</br> 帧号
+//	 * @param sub part id within frame</br>部件号
+//	 * @return image
+//	 */
+//	public Image getFrameImage(int frame,int sub){
+//		return images.getImage(STileID[Frames[frame][sub]]);
+//	}
 	
 	/**
 	 * Draw one frame with specify frame id</br>

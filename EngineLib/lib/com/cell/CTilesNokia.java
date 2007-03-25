@@ -22,7 +22,7 @@ import com.nokia.mid.ui.DirectUtils;
  * @author yifeizhang
  * IImages的Nokia实现
  */
-public class CImagesNokia extends CObject implements IImages {
+public class CTilesNokia extends CObject implements IImages {
 	
 	/** TILE块的个数 */
 	protected int Count = 0;
@@ -74,24 +74,25 @@ public class CImagesNokia extends CObject implements IImages {
 		}
 	}
 
-	/**
-	 * 按照序号得到图片对象
-	 * @param index
-	 * @return 
-	 */
-	final public Image getSrcImage(){
-		return Tiles[0];
-	}
-	
-	public Image getImage(int index){
-		return Tiles[0];
-	}
+//	/**
+//	 * 按照序号得到图片对象
+//	 * @param index
+//	 * @return 
+//	 */
+//	final public Image getSrcImage(){
+//		return Tiles[0];
+//	}
+//	
+//	public Image getImage(int index){
+//		return Tiles[index];
+//	}
 	
 	/**
 	 * override 方法
 	 * @see com.cell.IImages#getRGBFormPixcel(int, int)
 	 */
 	public int getPixel(int index, int x,int y){
+		if(Tiles[index]==null)return 0;
 		int[] c = new int[1];
 //		Image k = getImage(index);
 //		k.getRGB(c, 
@@ -110,6 +111,7 @@ public class CImagesNokia extends CObject implements IImages {
 	 * @return 宽度
 	 */
 	final public int getWidth(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getWidth();
 	}
 
@@ -121,6 +123,7 @@ public class CImagesNokia extends CObject implements IImages {
 	 * @return 高度
 	 */
 	final public int getHeight(int Index) {
+		if(Tiles[Index]==null)return 0;
 		return Tiles[Index].getHeight();
 	}
 
@@ -154,11 +157,7 @@ public class CImagesNokia extends CObject implements IImages {
 	 */
 	final public boolean addTile() {
 		if (CurIndex < Count) {
-			if (TileImage == null) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
-			} else {
-				Tiles[CurIndex] = TileImage;
-			}
+			Tiles[CurIndex] = TileImage;
 			CurIndex++;
 		}
 		if (CurIndex >= Count) {
@@ -186,14 +185,12 @@ public class CImagesNokia extends CObject implements IImages {
 			int TileHeight) {
 		if (CurIndex < Count) {
 			if (TileWidth <= 0 || TileHeight <= 0) {
-				Tiles[CurIndex] = Image.createImage(1, 1);
+				Tiles[CurIndex] = null;
 			} else {
-				
 				Image img = DirectUtils.createImage(TileWidth,TileHeight,0x00ff00ff);
 			    DirectGraphics dg = DirectUtils.getDirectGraphics(img.getGraphics());
 			    dg.drawImage(TileImage,-TileX,-TileY,0,0);
 			    Tiles[CurIndex] = img;
-				
 			}
 			CurIndex++;
 		}
@@ -243,13 +240,16 @@ public class CImagesNokia extends CObject implements IImages {
 	 * @see com.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int)
 	 */
 	final public void render(Graphics g, int Index, int PosX, int PosY) {//	不可选择对齐方式,不可旋转
-		
+		if(Tiles[Index]!=null){
 			g.drawImage(//
 					Tiles[Index], //
 					PosX,//
 					PosY,//
 					Graphics.TOP | Graphics.LEFT//
 			);
+		}else{
+			println("Null Tile at " + Index);
+		}
 		
 	}
 
@@ -259,14 +259,16 @@ public class CImagesNokia extends CObject implements IImages {
 	 * @see com.cell.IImages#render(javax.microedition.lcdui.Graphics, int, int, int, int)
 	 */
 	final public void render(Graphics g, int Index, int PosX, int PosY, int Style) {
-		
+		if(Tiles[Index]!=null){
 		    DirectUtils.getDirectGraphics(g).drawImage(
 		    		Tiles[Index],
 		    		PosX,
 		    		PosY,
 		    		0,
 		    		TRANS_TABLE[Style]);
-		
+		}else{
+			println("Null Tile at " + Index);
+		}
 	}
 
 }
