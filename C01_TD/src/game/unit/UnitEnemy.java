@@ -16,7 +16,6 @@ public class UnitEnemy extends Unit {
 		Visible = true;
 		Active  = false;
 		
-		
 	}
 	
 	
@@ -71,7 +70,7 @@ public class UnitEnemy extends Unit {
 	final public int STATE_MOVE 	= 1;
 	public CWayPoint NextWayPoint;
 	private CWayPoint PrewWayPoint;
-	public int MaxSpeed = 1 ;
+	public int MaxSpeed = 256 ;
 	
 	public void startMove(CWayPoint next){
 		state = STATE_MOVE;
@@ -89,17 +88,17 @@ public class UnitEnemy extends Unit {
 				NextWayPoint = NextWayPoint.getNextPoint((id+1)%NextWayPoint.getNextCount());
 			}
 		}
+		
+		HPos256 = (X<<8);
+		VPos256 = (Y<<8);
 	}
 	boolean isEndMove(){
-		return CCD.cdRectPoint(
-				X - MaxSpeed, Y - MaxSpeed, 
-				X + MaxSpeed, Y + MaxSpeed, 
-				NextWayPoint.X , NextWayPoint.Y );
+		return X==NextWayPoint.X && Y==NextWayPoint.Y ;
 	}
 	
 	void onMove(){
-		DirectX = NextWayPoint.X - X;
-		DirectY = NextWayPoint.Y - Y;
+		DirectX = (NextWayPoint.X<<8) - HPos256;
+		DirectY = (NextWayPoint.Y<<8) - VPos256;
 	
 		if(DirectX == 0 && DirectY == 0){
 			setCurrentFrame(0, getCurrentFrame());
@@ -113,16 +112,17 @@ public class UnitEnemy extends Unit {
 			setCurrentFrame(1, getCurrentFrame());
 		}
 		
-		nextCycFrame();
-		
 		int dx = (DirectX==0 ? 0 : (DirectX>0 ? MaxSpeed : -MaxSpeed));
 		int dy = (DirectY==0 ? 0 : (DirectY>0 ? MaxSpeed : -MaxSpeed));
+		if(MaxSpeed>Math.abs(DirectX))dx = DirectX;
+		if(MaxSpeed>Math.abs(DirectY))dy = DirectY;
 		
-		if(Math.abs(dx)>Math.abs(DirectX))dx = DirectX;
-		if(Math.abs(dy)>Math.abs(DirectY))dy = DirectY;
+		HPos256+=dx;
+		VPos256+=dy;
 		
-		tryMove(dx, dy);
-
+		tryMove((HPos256>>8)-X, (VPos256>>8)-Y);
+		
+		nextCycFrame();
 	}
 	
 	

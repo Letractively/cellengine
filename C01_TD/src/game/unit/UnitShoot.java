@@ -43,9 +43,9 @@ public class UnitShoot extends Unit {
 	private int TYPE = 0;
 	private int state = -1;
 	
-	public boolean Penetrable = false;
+	//public boolean Penetrable = false;
 	
-
+	public boolean Slash = false;
 	
 
 	public UnitShoot(CSprite stuff){
@@ -64,13 +64,13 @@ public class UnitShoot extends Unit {
 				startTerminate(X, Y);
 			}
 			break;
-		case STATE_SLUG:
-			if (!isEndSlug()) {
-				onSlug();
-			} else {
-				startTerminate(X, Y);
-			}
-			break;
+//		case STATE_SLUG:
+//			if (!isEndSlug()) {
+//				onSlug();
+//			} else {
+//				startTerminate(X, Y);
+//			}
+//			break;
 		case STATE_TERMINATE:
 			if (!isEndTerminate()) {
 				onTerminate();
@@ -99,8 +99,8 @@ public class UnitShoot extends Unit {
 		case TYPE21_FIRE:
 		case TYPE22_FIRE:
 		case TYPE23_FIRE:
-			startMissile(sx,sy,target,type);
-			break;
+//			startMissile(sx,sy,target,type);
+//			break;
 			
 		case TYPE30_ARROW:
 		case TYPE31_ARROW:
@@ -114,7 +114,8 @@ public class UnitShoot extends Unit {
 		case TYPE51_FIRE:
 		case TYPE52_FIRE:
 		case TYPE53_FIRE:
-			startDst(sx, sy, target.X, target.Y, type);
+			startMissile(sx,sy,target,type);
+//			startDst(sx, sy, target.X, target.Y, type);
 			break;
 		}
 		
@@ -124,14 +125,12 @@ public class UnitShoot extends Unit {
 
 //	----------------------------------------------------------------------------------------------------
 //	状态
-	
-	
 	final public int STATE_NONE			= 	-1;
 	void startNone(){
 		this.Active = false;
 		this.Visible = false;
 		state = STATE_NONE;
-		Penetrable = false;
+		Slash = false;
 	}
 	boolean isEndNone(){
 		return !Active;
@@ -143,89 +142,93 @@ public class UnitShoot extends Unit {
 //	---------------------------------------------------------------------------------------------------------
 //	---------------------------------------------------------------------------------------------------------
 //	----------------------------------------------------------------------------------------------------
-//	多重攻击
-	final public int STATE_SLUG			= 1;
-	int SlugX;
-	int SlugY;
-	int SlugMaxSpeed = 4;
-	void startDst(int sx,int sy,int dx,int dy,int type){
-		state = STATE_SLUG;
-		Active = true;
-		Visible = true;
-		
-		SlugX = dx;
-		SlugY = dy;
-		
-		SpeedX256 = 0; 
-		SpeedY256 = 0;
-		
-		HPos256 = sx * 256 ; 
-		VPos256 = sy * 256 ; 
-		
-		X = sx;
-		Y = sy;
-		
-		setCurrentFrame(type, 0);
-	}
-	boolean isEndSlug(){
-		if( CCD.cdRectPoint(
-				SlugX-SlugMaxSpeed, 
-				SlugY-SlugMaxSpeed,
-				SlugX+SlugMaxSpeed, 
-				SlugY+SlugMaxSpeed,
-				X, Y))
-		{
-			return true;
-		}
-		return false;
-	}
-	void onSlug(){
-		int dx = SlugX - X;
-		int dy = SlugY - Y;
-		int bx = Math.abs(dx)*256/SlugMaxSpeed;
-		int by = Math.abs(dy)*256/SlugMaxSpeed;
-		int d = Math.max(bx,by);
-		
-		if(d!=0){
-			SpeedX256 =  dx * 256 * 256 / d ;
-			SpeedY256 =  dy * 256 * 256 / d ;
-		}
-		
-		if(Math.abs(dx)>SlugMaxSpeed){
-			HPos256 += SpeedX256 ; 
-			X = HPos256/256;
-		}else{
-			X = SlugX;
-		}
-		if(Math.abs(dy)>SlugMaxSpeed){
-			VPos256 += SpeedY256 ; 
-			Y = VPos256/256;
-		}else{
-			Y = SlugY;
-		}
-		
-//		tryMove(dx-X, dy-Y);
-		EffectSpawn(EFFECT_TAIL_SWORD,X,Y,null);
-		nextCycFrame();
-		
-	}
+////	多重攻击
+//	final public int STATE_SLUG			= 1;
+//	int SlugX;
+//	int SlugY;
+//	int SlugMaxSpeed = 4;
+//	void startDst(int sx,int sy,int dx,int dy,int type){
+//		state = STATE_SLUG;
+//		Active = true;
+//		Visible = true;
+//		
+//		SlugX = dx;
+//		SlugY = dy;
+//		
+//		SpeedX256 = 0; 
+//		SpeedY256 = 0;
+//		
+//		HPos256 = sx * 256 ; 
+//		VPos256 = sy * 256 ; 
+//		
+//		X = sx;
+//		Y = sy;
+//		
+//		setCurrentFrame(type, 0);
+//	}
+//	boolean isEndSlug(){
+//		if( CCD.cdRectPoint(
+//				SlugX-SlugMaxSpeed, 
+//				SlugY-SlugMaxSpeed,
+//				SlugX+SlugMaxSpeed, 
+//				SlugY+SlugMaxSpeed,
+//				X, Y))
+//		{
+//			return true;
+//		}
+//		return false;
+//	}
+//	void onSlug(){
+//		int dx = SlugX - X;
+//		int dy = SlugY - Y;
+//		int bx = Math.abs(dx)*256/SlugMaxSpeed;
+//		int by = Math.abs(dy)*256/SlugMaxSpeed;
+//		int d = Math.max(bx,by);
+//		
+//		if(d!=0){
+//			SpeedX256 =  dx * 256 * 256 / d ;
+//			SpeedY256 =  dy * 256 * 256 / d ;
+//		}
+//		
+//		if(Math.abs(dx)>SlugMaxSpeed){
+//			HPos256 += SpeedX256 ; 
+//			X = HPos256/256;
+//		}else{
+//			X = SlugX;
+//		}
+//		if(Math.abs(dy)>SlugMaxSpeed){
+//			VPos256 += SpeedY256 ; 
+//			Y = VPos256/256;
+//		}else{
+//			Y = SlugY;
+//		}
+//		
+////		tryMove(dx-X, dy-Y);
+//		EffectSpawn(EFFECT_TAIL_SWORD,X,Y,null);
+//		nextCycFrame();
+//		
+//	}
 //	---------------------------------------------------------------------------------------------------------
 //	单体攻击
 	final public int STATE_MISSILE		= 2;
 	Unit MissileTarget					= null;
 	int MissileMaxSpeed					= 4;
+	int DstX;
+	int DstY;
 	void startMissile(int sx,int sy,Unit target,int type){
 		state = STATE_MISSILE;
 		Active = true;
 		Visible = true;
 		
 		MissileTarget = target;
+		DstX = target.X;
+		DstY = target.Y;
 		
 		SpeedX256 = 0; 
 		SpeedY256 = 0;
 		
-		HPos256 = sx * 256 ; 
-		VPos256 = sy * 256 ; 
+		HPos256 = (sx<<8) ; 
+		VPos256 = (sy<<8) ; 
 		
 		X = sx;
 		Y = sy;
@@ -233,8 +236,11 @@ public class UnitShoot extends Unit {
 		setCurrentFrame(type, 0);
 	}
 	boolean isEndMissile(){
-		if( MissileTarget==null || !MissileTarget.Active )
-			return true;
+		if( MissileTarget==null || !MissileTarget.Active ){
+			if(DstX == X && DstY == Y){
+				return true;
+			}
+		}
 		if(CCD.cdRectPoint(
 					MissileTarget.X-MissileMaxSpeed, 
 					MissileTarget.Y-MissileMaxSpeed,
@@ -248,29 +254,33 @@ public class UnitShoot extends Unit {
 		return false;
 	}
 	void onMissile(){
-		int dx = MissileTarget.X - X;
-		int dy = MissileTarget.Y - Y;
-		int bx = Math.abs(dx)*256/MissileMaxSpeed;
-		int by = Math.abs(dy)*256/MissileMaxSpeed;
+		if( MissileTarget!=null && MissileTarget.Active ){
+			DstX = MissileTarget.X;
+			DstY = MissileTarget.Y;
+		}
+		int dx = DstX - X;
+		int dy = DstY - Y;
+		int bx = (Math.abs(dx)<<8)/MissileMaxSpeed;
+		int by = (Math.abs(dy)<<8)/MissileMaxSpeed;
 		int d = Math.max(bx,by);
 		
 		if(d!=0){
-			SpeedX256 = dx * 256 * 256 / d ;
-			SpeedY256 = dy * 256 * 256 / d ;
+			SpeedX256 = (dx<<16) / d ;
+			SpeedY256 = (dy<<16) / d ;
 		}
 		
 		if(Math.abs(dx)>MissileMaxSpeed){
 			HPos256 += SpeedX256 ; 
-			X = HPos256/256;
+			X = (HPos256>>8);
 		}else{
-			X = MissileTarget.X;
+			X = DstX;
 		}
 		
 		if(Math.abs(dy)>MissileMaxSpeed){
 			VPos256 += SpeedY256 ; 
-			Y = VPos256/256;
+			Y = (VPos256>>8);
 		}else{
-			Y = MissileTarget.Y;
+			Y = DstY;
 		}
 		
 //		tryMove(dx-X, dy-Y);

@@ -24,8 +24,8 @@ public class ScreenTD_Main extends AScreen {
 	CCamera 		cam;
 	
 	UnitEnemy 	enemys[]	= new UnitEnemy[32];
-	UnitTower	towers[]	= new UnitTower[16];
-	UnitShoot	shoots[]	= new UnitShoot[32];
+	UnitTower	towers[]	= new UnitTower[128];
+	UnitShoot	shoots[]	= new UnitShoot[128];
 	CSprite		point;
 	
 //	Vector Enemys ;
@@ -248,7 +248,7 @@ public class ScreenTD_Main extends AScreen {
 		boolean tag = false;
 		for(int i=0;i<enemys.length;i++){
 			if(enemys[i].Active){
-				if(enemys[i].HP<0){
+				if(enemys[i].HP<=0){
 					enemys[i].startDead();
 				}
 				tag = true;
@@ -280,7 +280,7 @@ public class ScreenTD_Main extends AScreen {
 		for(int i=0;i<enemys.length;i++){
        		enemys[i].Y = -32 - i*32;
        		enemys[i].X = 0;
-       		enemys[i].HP = 100;
+       		enemys[i].HP = 1000;
        		enemys[i].Active = true;
        		enemys[i].Visible = true;
        		
