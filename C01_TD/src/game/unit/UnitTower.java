@@ -68,7 +68,7 @@ public class UnitTower extends Unit  {
 //	attack
 	final int STATE_ATTACK		= 1;
 	int AttackScope				= 100;
-	int AttackForzenTime 		= 100;
+	int AttackForzenTime 		= 10;
 	int AttackTime				= 1000;
 	public void startAttack(UnitEnemy[] enemys,UnitShoot[] shoots){
 		if(!isEndAttack())return;

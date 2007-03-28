@@ -70,7 +70,7 @@ public class UnitEnemy extends Unit {
 	final public int STATE_MOVE 	= 1;
 	public CWayPoint NextWayPoint;
 	private CWayPoint PrewWayPoint;
-	public int MaxSpeed = 256 ;
+	public int MaxSpeed = 100 ;
 	
 	public void startMove(CWayPoint next){
 		state = STATE_MOVE;

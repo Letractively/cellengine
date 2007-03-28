@@ -212,7 +212,7 @@ public class UnitShoot extends Unit {
 //	µ¥ΜεΉ¥»χ
 	final public int STATE_MISSILE		= 2;
 	Unit MissileTarget					= null;
-	int MissileMaxSpeed					= 4;
+	int MissileMaxSpeed					= 8;
 	int DstX;
 	int DstY;
 	void startMissile(int sx,int sy,Unit target,int type){
@@ -249,6 +249,7 @@ public class UnitShoot extends Unit {
 					X, Y))
 		{
 			MissileTarget.HP -= HP;
+			EffectSpawn(EFFECT_DAMAGE_SWORD,MissileTarget.X,MissileTarget.Y,null);
 			return true;
 		}
 		return false;
