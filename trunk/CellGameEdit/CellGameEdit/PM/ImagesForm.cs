@@ -243,6 +243,8 @@ namespace CellGameEdit.PM
         {
             try
             {
+                System.Drawing.Imaging.EncoderParameters param = null;
+                System.Drawing.Imaging.ImageCodecInfo info = null;
                 System.Drawing.Imaging.ImageFormat format = null;
                 //
                 if (type.Equals("png", StringComparison.CurrentCultureIgnoreCase))
@@ -254,6 +256,8 @@ namespace CellGameEdit.PM
                 if (type.Equals("gif", StringComparison.CurrentCultureIgnoreCase))
                     format = System.Drawing.Imaging.ImageFormat.Gif;
 
+                //info.
+                
                 if (format == null)return;
                         
                 try
@@ -297,6 +301,7 @@ namespace CellGameEdit.PM
                         try
                         {
                             getDstImage(i).getDImage().Save(tileDir + i + "." + type, format);
+
                         }
                         catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.Message); }
                     }

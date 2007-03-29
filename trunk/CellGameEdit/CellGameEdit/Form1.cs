@@ -224,11 +224,24 @@ namespace CellGameEdit
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (prjForm != null && prjForm.Visible == false)
+            if (prjForm != null)
             {
-                prjForm.Dispose();
-                prjForm = null;
+                if (prjForm.Visible == false)
+                {
+                    prjForm.Dispose();
+                    prjForm = null;
+                }
+                else
+                {
+                    this.Text = ProjectForm.workSpace;
+                }
             }
+            else
+            {
+                this.Text = "Cell Game Edit";
+            }
+
+            
         }
 
         private void 显示输出ToolStripMenuItem_Click(object sender, EventArgs e)
