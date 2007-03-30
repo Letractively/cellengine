@@ -1638,6 +1638,7 @@ namespace CellGameEdit.PM
                 }
             }
 
+            dstBoxFocus();
         }
 
         private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
@@ -1668,6 +1669,14 @@ namespace CellGameEdit.PM
 
         }
 
+
+        private void pictureBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
+        {
+
+        }
+
+
+
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
             ColorDialog MyDialog = new ColorDialog();
@@ -1684,6 +1693,23 @@ namespace CellGameEdit.PM
             dstRefersh();
         }
 
+        private void dstBoxFocus()
+        {
+            if (this.panel2.Focused == false)
+            {
+                this.panel2.Focus();
+
+                //try
+                //{
+                //    panel2.HorizontalScroll.Value   = panel2.HorizontalScroll.Maximum / 2 - panel2.Width / 2;
+                //    panel2.VerticalScroll.Value     = panel2.VerticalScroll.Maximum / 2 - panel2.Height / 2;
+
+                //    panel2.Refresh();
+                //}
+                //catch (Exception err) { }
+
+            }
+        }
         
 
 // frames
@@ -2216,7 +2242,6 @@ namespace CellGameEdit.PM
         
         
         }
-
 
 
 

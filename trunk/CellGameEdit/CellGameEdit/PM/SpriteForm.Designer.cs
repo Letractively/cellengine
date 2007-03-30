@@ -351,6 +351,7 @@
             this.pictureBox2.Size = new System.Drawing.Size(235, 240);
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.PreviewKeyDown += new System.Windows.Forms.PreviewKeyDownEventHandler(this.pictureBox2_PreviewKeyDown);
             this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDown);
             this.pictureBox2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseMove);
             this.pictureBox2.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox2_Paint);
@@ -647,7 +648,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 21);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(183, 318);
+            this.tabPage2.Size = new System.Drawing.Size(144, 318);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "组合判定";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -677,7 +678,7 @@
             // splitContainer7.Panel2
             // 
             this.splitContainer7.Panel2.Controls.Add(this.listView4);
-            this.splitContainer7.Size = new System.Drawing.Size(177, 312);
+            this.splitContainer7.Size = new System.Drawing.Size(138, 312);
             this.splitContainer7.SplitterDistance = 176;
             this.splitContainer7.TabIndex = 1;
             // 
@@ -911,7 +912,7 @@
             this.listView4.HideSelection = false;
             this.listView4.Location = new System.Drawing.Point(0, 0);
             this.listView4.Name = "listView4";
-            this.listView4.Size = new System.Drawing.Size(177, 132);
+            this.listView4.Size = new System.Drawing.Size(138, 132);
             this.listView4.TabIndex = 0;
             this.listView4.UseCompatibleStateImageBehavior = false;
             this.listView4.View = System.Windows.Forms.View.Details;
@@ -1482,7 +1483,7 @@
             this.toolStripButton29.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton29.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton29.Name = "toolStripButton29";
-            this.toolStripButton29.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton29.Size = new System.Drawing.Size(23, 13);
             this.toolStripButton29.Text = "上移";
             this.toolStripButton29.Click += new System.EventHandler(this.toolStripButton29_Click);
             // 
@@ -1493,7 +1494,7 @@
             this.toolStripButton30.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.toolStripButton30.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButton30.Name = "toolStripButton30";
-            this.toolStripButton30.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton30.Size = new System.Drawing.Size(23, 13);
             this.toolStripButton30.Text = "下移";
             this.toolStripButton30.Click += new System.EventHandler(this.toolStripButton30_Click);
             // 
