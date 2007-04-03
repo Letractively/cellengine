@@ -39,12 +39,15 @@ namespace CellGameEdit.PM
             InitializeComponent();
 
            // formGroup = new ArrayList();
-            formTable = new Hashtable();
-            nodeReses = new TreeNode("资源");
-            nodeLevels = new TreeNode("场景");
+            formTable       = new Hashtable();
+            nodeReses       = new TreeNode("资源");
+            nodeObjects     = new TreeNode("脚本");
+            nodeLevels      = new TreeNode("场景");
+            
 
             nodeReses.ContextMenuStrip = this.resMenu;
             nodeLevels.ContextMenuStrip = this.levelMenu;
+
 
             treeView1.Nodes.Add(nodeReses);
             treeView1.Nodes.Add(nodeLevels);

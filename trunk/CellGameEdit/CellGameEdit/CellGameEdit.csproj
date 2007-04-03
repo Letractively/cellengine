@@ -77,6 +77,12 @@
     <Compile Include="PM\DataEdit.Designer.cs">
       <DependentUpon>DataEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="PM\EventEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\EventEdit.Designer.cs">
+      <DependentUpon>EventEdit.cs</DependentUpon>
+    </Compile>
     <Compile Include="PM\SpriteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +150,10 @@
     <EmbeddedResource Include="PM\DataEdit.resx">
       <SubType>Designer</SubType>
       <DependentUpon>DataEdit.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\EventEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EventEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PM\SpriteForm.resx">
       <SubType>Designer</SubType>
@@ -414,6 +424,8 @@
     <None Include="Resources\Image69.bmp" />
     <None Include="Resources\TextFileScriptHelp.txt" />
     <None Include="Resources\Image70.bmp" />
+    <None Include="Resources\TextEventList.txt" />
+    <None Include="Resources\TextCommandList.txt" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
