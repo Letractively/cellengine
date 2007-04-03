@@ -197,7 +197,7 @@ namespace CellGameEdit.PM
                     {
                         Image img = getDstImage(i);
 
-                        String name = dir + "\\tile_" + i.ToString() + ".png";
+                        String name = dir + "\\tiles\\" + i.ToString() + ".png";
                         if (System.IO.File.Exists(ProjectForm.workSpace + name))
                         {
                             //System.IO.File.Delete(ProjectForm.workSpace + name);

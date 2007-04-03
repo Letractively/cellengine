@@ -28,6 +28,8 @@ namespace CellGameEdit.PM
 
         TreeNode nodeReses;
         TreeNode nodeLevels;
+        //TreeNode nodeObjects;
+
 
         //ArrayList formGroup;
         Hashtable formTable;
@@ -41,7 +43,7 @@ namespace CellGameEdit.PM
            // formGroup = new ArrayList();
             formTable       = new Hashtable();
             nodeReses       = new TreeNode("资源");
-            nodeObjects     = new TreeNode("脚本");
+            //nodeObjects     = new TreeNode("脚本");
             nodeLevels      = new TreeNode("场景");
             
 
@@ -69,6 +71,7 @@ namespace CellGameEdit.PM
             nodeReses = (TreeNode)info.GetValue("nodeReses", typeof(TreeNode));
             nodeLevels = (TreeNode)info.GetValue("nodeLevels", typeof(TreeNode));
             //formGroup = (ArrayList)info.GetValue("formGroup", typeof(ArrayList));
+
             formTable = (Hashtable)info.GetValue("formTable", typeof(Hashtable));
 
             nodeReses.ContextMenuStrip = this.resMenu;
@@ -93,7 +96,21 @@ namespace CellGameEdit.PM
 
             treeView1.ExpandAll();
 
-            
+
+            //// load
+            //try
+            //{
+            //    SoapFormatter formatter = new SoapFormatter();
+            //    Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
+            //    prjForm = (ProjectForm)formatter.Deserialize(stream);
+            //    stream.Close();
+            //    prjForm.MdiParent = this;
+            //    prjForm.Show();
+            //}
+            //catch (Exception err)
+            //{
+            //    MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
+            //}
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -104,10 +121,14 @@ namespace CellGameEdit.PM
            // info.AddValue("formGroup", formGroup);
             info.AddValue("nodeReses", nodeReses);
             info.AddValue("nodeLevels", nodeLevels);
+
             info.AddValue("formTable", formTable);
-            
-          
+
+
+
+           
         }
+
         public void Output()
         {
             RefreshNodeName();
