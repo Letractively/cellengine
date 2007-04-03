@@ -10,6 +10,8 @@ using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Runtime.Serialization.Formatters.Soap;
 
+using System.Threading;
+
 using CellGameEdit.PM;
 
 namespace CellGameEdit
@@ -161,28 +163,88 @@ namespace CellGameEdit
             }
         }
 
+        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void 显示输出ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Output output = new Output();
+            output.MdiParent = this;
+            output.Show();
+        }
+
+        private void 文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+ 
+        //input script
+        private void 脚本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.Title = "选择脚本文件";
+                openFileDialog1.Filter = "Txt files (*.txt)|*.txt|All files (*.*)|*.*";
+                openFileDialog1.RestoreDirectory = true;
+                openFileDialog1.Multiselect = false;
+
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    String name = System.IO.Path.GetFileName(openFileDialog1.FileName);
+                    String src = System.IO.Path.GetDirectoryName(openFileDialog1.FileName) + "\\";
+                    String dst = Application.StartupPath + "\\script\\";
+
+                    System.IO.File.Copy(src + name, dst + name, true);
+                }
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("脚本导入错误：" + err.Message);
+            }
+        }
+        // del script
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String name = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
+
+                if (File.Exists(name))
+                {
+                    if (MessageBox.Show(
+                        "确认删除\"" + toolStripComboBox1.Text + "\"？",
+                        "Wanning",
+                        MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Warning,
+                        MessageBoxDefaultButton.Button2
+                        ) == DialogResult.OK)
+                    {
+                        System.IO.File.Delete(name);
+                        toolStripComboBox1.Text = "";
+                        toolStripComboBox1.Items.Clear();
+                    }
+                }
 
 
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("脚本删除错误：" + err.Message);
+            }
+        }
 
+
+        // out put script
         private void javaToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (prjForm != null && prjForm.Visible)
             {
                 prjForm.Output();
             }
-        }
-
-        private void 自定义脚本ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                if (prjForm != null && prjForm.Visible && toolStripComboBox1.SelectedItem != null)
-                {
-                    String dir = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
-                    prjForm.OutputCustom(dir);
-                }
-            }
-            catch (Exception err) { Console.WriteLine(err.Message); }
         }
 
         private void toolStripComboBox1_DropDown(object sender, EventArgs e)
@@ -215,101 +277,6 @@ namespace CellGameEdit
             }
            
             
-        }
-
-        private void 退出ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            if (prjForm != null)
-            {
-                if (prjForm.Visible == false)
-                {
-                    prjForm.Dispose();
-                    prjForm = null;
-                }
-                else
-                {
-                    this.Text = ProjectForm.workSpace;
-                }
-            }
-            else
-            {
-                this.Text = "Cell Game Edit";
-            }
-
-            
-        }
-
-        private void 显示输出ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Output output = new Output();
-            output.MdiParent = this;
-            output.Show();
-        }
-
-        private void 文件ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        //input script
-        private void 脚本ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            try
-            {
-                OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                openFileDialog1.Title = "选择脚本文件";
-                openFileDialog1.Filter = "Txt files (*.txt)|*.txt|All files (*.*)|*.*";
-                openFileDialog1.RestoreDirectory = true;
-                openFileDialog1.Multiselect = false;
-
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
-                {
-                    String name = System.IO.Path.GetFileName(openFileDialog1.FileName);
-                    String src = System.IO.Path.GetDirectoryName(openFileDialog1.FileName)+"\\";
-                    String dst = Application.StartupPath + "\\script\\";
-                    
-                    System.IO.File.Copy(src+name,dst+name,true);
-                }
-            }
-            catch (Exception err)
-            {
-                MessageBox.Show("脚本导入错误："+err.Message);
-            }
-        }
-        // del script
-        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                String name = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
-
-                if (File.Exists(name))
-                {
-                    if (MessageBox.Show(
-                        "确认删除\""+toolStripComboBox1.Text+"\"？", 
-                        "Wanning", 
-                        MessageBoxButtons.OKCancel, 
-                        MessageBoxIcon.Warning, 
-                        MessageBoxDefaultButton.Button2
-                        ) == DialogResult.OK)
-                    {
-                        System.IO.File.Delete(name);
-                        toolStripComboBox1.Text = "";
-                        toolStripComboBox1.Items.Clear();
-                    }
-                }
-
-               
-            }
-            catch (Exception err) {
-                MessageBox.Show("脚本删除错误：" + err.Message);
-            }
         }
 
         private void 当前工程脚本ToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -348,36 +315,104 @@ namespace CellGameEdit
             }
         }
 
-        private void outputLocalProjectScript(object sender, EventArgs e)
-        {
-            try
-            {
-                if (prjForm != null && prjForm.Visible)
-                {
-                    String dir = ProjectForm.workSpace + "\\script\\" + ((ToolStripMenuItem)sender).Text;
-                    prjForm.OutputCustom(dir);
-                }
-            }
-            catch (Exception err) { Console.WriteLine(err.Message); }
-        }
+
+
 
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 about = new AboutBox1();
             about.ShowDialog();
         }
-
+        //help
         private void toolStripMenuItem7_Click(object sender, EventArgs e)
         {
             HelpForm help = new HelpForm();
             help.ShowDialog();
         }
 
-      
-
-     
 
 
+        //output
+        Thread outputThread;
+        String outputDir;
+        void OutputCustom()
+        {
+            prjForm.OutputCustom(outputDir);
+        }
+
+        private void 自定义脚本ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (prjForm != null && prjForm.Visible && toolStripComboBox1.SelectedItem != null)
+                {
+                    outputDir = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
+                    outputThread = new Thread(new ThreadStart(OutputCustom));
+                    outputThread.Start();
+                    this.progressBar1.Value = 0;
+                }
+            }
+            catch (Exception err) { Console.WriteLine(err.Message); }
+        }
+
+        private void outputLocalProjectScript(object sender, EventArgs e)
+        {
+            try
+            {
+                if (prjForm != null && prjForm.Visible)
+                {
+                    outputDir = ProjectForm.workSpace + "\\script\\" + ((ToolStripMenuItem)sender).Text;
+                    outputThread = new Thread(new ThreadStart(OutputCustom));
+                    outputThread.Start();
+                    this.progressBar1.Value = 0;
+                }
+            }
+            catch (Exception err) { Console.WriteLine(err.Message); }
+        }
+
+
+
+        // update
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (prjForm != null)
+            {
+                if (outputThread != null)
+                {
+                    if (!outputThread.IsAlive)
+                    {
+                        outputThread.Abort();
+                        outputThread = null;
+                        this.progressBar1.Value = this.progressBar1.Maximum;
+                    }
+                    else
+                    {
+                        if (this.progressBar1.Value < this.progressBar1.Maximum / 2)
+                        {
+                            this.progressBar1.Increment(1);
+                        }
+                    }
+                }
+                else
+                {
+                    if (prjForm.Visible == false)
+                    {
+                        prjForm.Dispose();
+                        prjForm = null;
+                    }
+                    else
+                    {
+                        this.Text = ProjectForm.workSpace;
+                    }
+                }
+            }
+            else
+            {
+                this.Text = "Cell Game Edit";
+            }
+
+
+        }
 
 
 
