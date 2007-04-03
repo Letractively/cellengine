@@ -565,6 +565,50 @@ namespace CellGameEdit {
         }
         
         /// <summary>
+        ///   查找类似  的本地化字符串。
+        /// </summary>
+        internal static string TextCommandList {
+            get {
+                return ResourceManager.GetString("TextCommandList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   查找类似 
+        ///
+        ////*精灵单位事件类型*/
+        ///SPR_Enter
+        ///SPR_Leave
+        ///SPR_Hold
+        ///SPR_Update
+        ///
+        ////*地图单位事件*/
+        ///MAP_Enter
+        ///MAP_Leave
+        ///MAP_Hold
+        ///MAP_Update
+        ///
+        ////*路点事件*/
+        ///POINT_Enter
+        ///POINT_Leave
+        ///POINT_Hold
+        ///POINT_Update
+        ///
+        ////*区域事件*/
+        ///REGION_Enter
+        ///REGION_Leave
+        ///REGION_Hold
+        ///REGION_Update
+        ///
+        /// 的本地化字符串。
+        /// </summary>
+        internal static string TextEventList {
+            get {
+                return ResourceManager.GetString("TextEventList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   查找类似 --------------------------------------------------------------------------------------------------------------
         ///指令说明
         ///--------------------------------------------------------------------------------------------------------------

@@ -31,8 +31,8 @@ namespace CellGameEdit.PM
         public WorldForm(String name)
         {
             InitializeComponent();
-            toolStripTextBox1.Text = CellW.ToString();
-            toolStripTextBox2.Text = CellH.ToString();
+            numericUpDown1.Value = CellW;
+            numericUpDown2.Value = CellH;
 
             id = name;
 
@@ -45,8 +45,8 @@ namespace CellGameEdit.PM
         protected WorldForm(SerializationInfo info, StreamingContext context)
         {
             InitializeComponent();
-            toolStripTextBox1.Text = CellW.ToString();
-            toolStripTextBox2.Text = CellH.ToString();
+            numericUpDown1.Value = CellW;
+            numericUpDown2.Value = CellH;
 
             UnitList = new Hashtable();
 
@@ -101,9 +101,10 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err) { }
 
-                toolStripTextBox1.Text = CellW.ToString();
-                toolStripTextBox2.Text = CellH.ToString();
-
+                numericUpDown1.Value = CellW;
+                numericUpDown2.Value = CellH;
+                numericUpDown3.Value = pictureBox1.Width;
+                numericUpDown4.Value = pictureBox1.Height;
                 try
                 {
                     Data.Append((String)info.GetValue("Data", typeof(String)));
@@ -484,8 +485,10 @@ namespace CellGameEdit.PM
 
         private void WorldForm_Shown(object sender, EventArgs e)
         {
-            toolStripTextBox3.Text = pictureBox1.Width.ToString();
-            toolStripTextBox4.Text = pictureBox1.Height.ToString();
+            numericUpDown1.Value = CellW;
+            numericUpDown2.Value = CellH;
+            numericUpDown3.Value = pictureBox1.Width;
+            numericUpDown4.Value = pictureBox1.Height;
         }
 
         // list view1 map list
@@ -507,8 +510,10 @@ namespace CellGameEdit.PM
                 CellW = map.CellW;
                 CellH = map.CellH;
 
-                toolStripTextBox1.Text = CellW.ToString();
-                toolStripTextBox2.Text = CellH.ToString();
+                numericUpDown1.Value = CellW;
+                numericUpDown2.Value = CellH;
+                numericUpDown3.Value = pictureBox1.Width;
+                numericUpDown4.Value = pictureBox1.Height;
             }
             if ((SpriteForm)e.Data.GetData(typeof(SpriteForm)) != null)
             {
@@ -816,8 +821,10 @@ namespace CellGameEdit.PM
 
                             pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
                             pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
-                            toolStripTextBox3.Text = pictureBox1.Width.ToString();
-                            toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                            numericUpDown1.Value = CellW;
+                            numericUpDown2.Value = CellH;
+                            numericUpDown3.Value = pictureBox1.Width;
+                            numericUpDown4.Value = pictureBox1.Height;
                         }
                     }
 
@@ -852,8 +859,10 @@ namespace CellGameEdit.PM
 
                         pictureBox1.Width = Math.Max(p.rect.X + p.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(p.rect.Y + p.rect.Height, pictureBox1.Height);
-                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
-                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                        numericUpDown1.Value = CellW;
+                        numericUpDown2.Value = CellH;
+                        numericUpDown3.Value = pictureBox1.Width;
+                        numericUpDown4.Value = pictureBox1.Height;
                     }
 
                 }
@@ -882,8 +891,10 @@ namespace CellGameEdit.PM
                         }
                         pictureBox1.Width = Math.Max(r.rect.X + r.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(r.rect.Y + r.rect.Height, pictureBox1.Height);
-                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
-                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                        numericUpDown1.Value = CellW;
+                        numericUpDown2.Value = CellH;
+                        numericUpDown3.Value = pictureBox1.Width;
+                        numericUpDown4.Value = pictureBox1.Height;
                     }
 
                     if (r != null && r.isSub && !r.isCheck)
@@ -904,8 +915,10 @@ namespace CellGameEdit.PM
                         }
                         pictureBox1.Width = Math.Max(r.rect.X + r.rect.Width, pictureBox1.Width);
                         pictureBox1.Height = Math.Max(r.rect.Y + r.rect.Height, pictureBox1.Height);
-                        toolStripTextBox3.Text = pictureBox1.Width.ToString();
-                        toolStripTextBox4.Text = pictureBox1.Height.ToString();
+                        numericUpDown1.Value = CellW;
+                        numericUpDown2.Value = CellH;
+                        numericUpDown3.Value = pictureBox1.Width;
+                        numericUpDown4.Value = pictureBox1.Height;
                     }
                 }
                 #endregion
@@ -1584,35 +1597,6 @@ namespace CellGameEdit.PM
             //pictureBox1.Refresh();
         }
 
-        private void toolStripTextBox1_Leave(object sender, EventArgs e)
-        {
-            if (Cell.Util.stringIsDigit(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= toolStripTextBox1.Text.Length &&
-                Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= 1)
-            {
-                CellW = Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length);
-                pictureBox1.Refresh();
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox1.Focus();
-            }
-        }
-        private void toolStripTextBox2_Leave(object sender, EventArgs e)
-        {
-            if (Cell.Util.stringIsDigit(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= toolStripTextBox2.Text.Length &&
-              Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= 1)
-            {
-                CellH = Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length);
-                pictureBox1.Refresh();
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox2.Focus();
-            }
-
-        }
         //minimap
         private void toolStripButton13_Click(object sender, EventArgs e)
         {
@@ -1744,39 +1728,7 @@ namespace CellGameEdit.PM
             mini.Show();
         }
 
-        //fix world size
-        private void toolStripButton15_Click(object sender, EventArgs e)
-        {
-            string x = toolStripTextBox3.Text;
-            if (Cell.Util.stringIsDigit(x, 0, x.Length) >= x.Length &&
-               Cell.Util.stringDigitToInt(x, 0, x.Length) >= 1)
-            {
-                pictureBox1.Width = Cell.Util.stringDigitToInt(x, 0, x.Length);
-
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox3.Focus();
-                return;
-            }
-
-            string y = toolStripTextBox4.Text;
-            if (Cell.Util.stringIsDigit(y, 0, y.Length) >= y.Length &&
-                Cell.Util.stringDigitToInt(y, 0, y.Length) >= 1)
-            {
-                pictureBox1.Height = Cell.Util.stringDigitToInt(y, 0, y.Length);
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox4.Focus();
-                return;
-            }
-
-
-        }
-
+        // main update
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (!this.Visible) return;
@@ -1788,13 +1740,27 @@ namespace CellGameEdit.PM
             }
         }
 
-        private void listView1_MouseDown(object sender, MouseEventArgs e)
+        // fix cell and world size
+        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
+            CellW = (int)numericUpDown1.Value;
+            pictureBox1.Refresh();
         }
-
-       
-
-
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            CellH = (int)numericUpDown2.Value;
+            pictureBox1.Refresh();
+        }
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Width = (int)numericUpDown3.Value;
+            pictureBox1.Refresh();
+        }
+        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+            pictureBox1.Height = (int)numericUpDown4.Value;
+            pictureBox1.Refresh();
+        }
 
 
 
@@ -1930,7 +1896,6 @@ namespace CellGameEdit.PM
         }
 
     }
-
 
 
     [Serializable]
@@ -2328,4 +2293,35 @@ namespace CellGameEdit.PM
 
 
     }
+
+
+    [Serializable]
+    public partial class Event : ISerializable
+    {
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        protected Event(SerializationInfo info, StreamingContext context)
+        {
+            try
+            {
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Unit:" + err.Message);
+            }
+        }
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            try
+            {
+
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine("Event:" + err.Message);
+            }
+        }
+
+    }
+
 }
