@@ -14,6 +14,7 @@ import com.cell.game.*;
 import com.cell.game.ai.*;
 import com.cell.particle.*;
 
+//#define __WEATHER 
 
 //继承抽象类CScreen并实现其中的方法
 public class ScreenTD_Main extends AScreen {
@@ -24,16 +25,19 @@ public class ScreenTD_Main extends AScreen {
 	CCamera 		cam;
 	
 	UnitEnemy 	enemys[]	= new UnitEnemy[32];
-	UnitTower	towers[]	= new UnitTower[128];
+	UnitTower	towers[]	= new UnitTower[32];
 	UnitShoot	shoots[]	= new UnitShoot[128];
 	CSprite		point;
 	
 //	Vector Enemys ;
 //	Vector Towers ;
 //	Vector Shoots ;
+	
+//#ifdef __WEATHER	
 	int particleCount = 128;
 	int spawnCount = 2;
 	CParticleSystem weather;
+//#endif
 	
 	public ScreenTD_Main(){
        	IsDebug = false;
@@ -89,6 +93,7 @@ public class ScreenTD_Main extends AScreen {
     	world.addSprites(towers);
     	world.addSprite(point);
 
+//#ifdef __WEATHER	
     	//随机天气类型
     	IParticleLauncher launcher;
 //		if(Math.abs(Random.nextInt())%2==0){
@@ -105,6 +110,7 @@ public class ScreenTD_Main extends AScreen {
        			particles,
        			launcher
        			);
+//#endif
        	
        	resetTimer();
 	}
@@ -141,9 +147,11 @@ public class ScreenTD_Main extends AScreen {
     	int cdy = point.Y - (cam.getY() + cam.getHeight()/2);
     	cam.mov(cdx/4,cdy/4);
 		world.update();
-  
-		weather.spawn(spawnCount, 0, cam.getX(), cam.getY());
+		
+//#ifdef __WEATHER  
+//		weather.spawn(spawnCount, 0, cam.getX(), cam.getY());
 		weather.update();
+//#endif	
 		
         tickTimer();
         
@@ -153,9 +161,9 @@ public class ScreenTD_Main extends AScreen {
         //clearScreenAndClip(g,0xff000000);
 
         world.render(g);
-        
+//#ifdef __WEATHER       
         weather.render(g);
-        
+//#endif
         showFPS(g, 1, 1, 0xffffffff);
 
        
@@ -277,15 +285,22 @@ public class ScreenTD_Main extends AScreen {
 	
 	
 	void resetEnemy(){
-		for(int i=0;i<enemys.length;i++){
-       		enemys[i].Y = -32 - i*32;
-       		enemys[i].X = 0;
-       		enemys[i].HP = 1000;
-       		enemys[i].Active = true;
-       		enemys[i].Visible = true;
-       		
-       		enemys[i].startMove(world.WayPoints[0]);
+//		初始所有敌人
+		for(int i=enemys.length-1;i>=0;i--){
+       		enemys[i].Y 		= -32 - i*32;
+       		enemys[i].X 		= 0;
+       		enemys[i].HP_MAX 	= enemys[i].HP_MAX*2;
+       		enemys[i].HP 		= enemys[i].HP_MAX;
+       		enemys[i].startMove(world.WayPoints[0],512);
        	}
+//		打乱敌人顺序
+		for(int i=enemys.length-1;i>=0;i--){
+       		int pos 		= Math.abs(Random.nextInt()%enemys.length);
+       		UnitEnemy temp 	= enemys[i];
+       		enemys[i] 		= enemys[pos];
+       		enemys[pos] 	= temp;
+       	}
+		
 	}
 	
 }

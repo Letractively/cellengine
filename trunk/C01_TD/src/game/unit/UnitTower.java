@@ -67,7 +67,7 @@ public class UnitTower extends Unit  {
 //	----------------------------------------------------------------------------------------------------
 //	attack
 	final int STATE_ATTACK		= 1;
-	int AttackScope				= 100;
+	int AttackRange				= 100;
 	int AttackForzenTime 		= 10;
 	int AttackTime				= 1000;
 	public void startAttack(UnitEnemy[] enemys,UnitShoot[] shoots){
@@ -76,23 +76,24 @@ public class UnitTower extends Unit  {
 		Active = true;
 		Visible = true;
 		AttackTime = 0;
-		
-		for(int i=0;i<shoots.length;i++){
+		//找到活动子弹
+		for(int i=shoots.length-1;i>=0;i--){
 			if(shoots[i].Active==false){
-				int start = Math.abs(Random.nextInt()%enemys.length);
-				for(int j=0;j<enemys.length;j++){
-					int id = (j + start) % enemys.length;  
-					if( enemys[id].Active==true && 
+				//找到敌人
+				for(int j=enemys.length-1;j>=0;j--){
+					if( enemys[j].Active==true && 
 						CCD.cdRectPoint(
-							X-AttackScope, Y-AttackScope, 
-							X+AttackScope, Y+AttackScope, 
-							enemys[id].X, enemys[id].Y)
+							X-AttackRange, Y-AttackRange, 
+							X+AttackRange, Y+AttackRange, 
+							enemys[j].X, enemys[j].Y)
 							){
 						shoots[i].startFire(
+								//TODO: set fire type
 								Math.abs(Random.nextInt())%UnitShoot.TYPE53_FIRE,
 								X+collides.getCD(0).X1,
 								Y+collides.getCD(0).Y1,
-								enemys[id]);
+								enemys,
+								j);
 						break;
 					}
 				}

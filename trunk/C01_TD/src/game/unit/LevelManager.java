@@ -3,6 +3,7 @@ package game.unit;
 import javax.microedition.lcdui.Graphics;
 
 import com.cell.CMath;
+import com.cell.game.CCD;
 import com.cell.game.CSprite;
 import com.cell.game.CWorld;
 import com.cell.game.IState;
@@ -19,7 +20,7 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 			particles[i] = new CParticle();
 		}
 		ParticleSystem = new CParticleSystem(particles, this);
-		
+
 	}
 	
 	public void render(Graphics g) {
@@ -39,6 +40,8 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 	
 	int 	EffectType;
 	String 	EffectText;
+	int		EffectColor;
+	
 	CParticleSystem ParticleSystem;
 	
 	
@@ -63,7 +66,7 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 		particle.Element		= null;
 		
 		
-		int angle = Random.nextInt();
+		int angle = Math.abs(Random.nextInt());
 
 		switch(particle.Category){
 		case TYPE_HOLD:
@@ -72,15 +75,15 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 			
 		case TYPE_EXP:
 			particle.TerminateTime 	= Effects.getFrameCount(particle.Data);
-			particle.SpeedX = CMath.sinTimes256(id*10 + angle)*4;
-			particle.SpeedY = CMath.cosTimes256(id*10 + angle)*4;
-			particle.AccX = -CMath.sinTimes256(id*10 + angle)/8;
-			particle.AccY = -CMath.cosTimes256(id*10 + angle)/8;
+			particle.SpeedX = CMath.sinTimes256(angle)*(angle%4);
+			particle.SpeedY = CMath.cosTimes256(angle)*(angle%4);
+			particle.AccX = -particle.SpeedX/particle.TerminateTime;
+			particle.AccY = -particle.SpeedY/particle.TerminateTime;
 			break;
 		case TYPE_RAISE:
 			particle.TerminateTime 	= Effects.getFrameCount(particle.Data);
-			particle.X += CMath.sinTimes256(id*10 + angle)*16;
-			particle.Y += CMath.cosTimes256(id*10 + angle)*16;
+			particle.X += CMath.sinTimes256(angle)*16;
+			particle.Y += CMath.cosTimes256(angle)*16;
 			particle.AccY = -Gravity;
 			break;
 			
@@ -93,7 +96,7 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 			particle.Element		= EffectText;
 			particle.TerminateTime 	= 16;
 			particle.SpeedY			= -256;
-			particle.Color 			= 0xffffff00;
+			particle.Color 			= EffectColor;
 			break;
 			
 		}
@@ -104,11 +107,26 @@ public class LevelManager extends CWorld implements IParticleLauncher{
 		particle.SpeedY += particle.AccY;
 		particle.Y += particle.SpeedY;
 		particle.X += particle.SpeedX;
-	
+		
 	}
 	public void particleRender(Graphics g, CParticle particle, int id) {
-		int X = toScreenPosX(particle.X/Div);
-		int Y = toScreenPosY(particle.Y/Div);
+		int X = particle.X/Div;
+		int Y = particle.Y/Div;
+		
+		if(!CCD.cdRectPoint(
+				Camera.getX(), 
+				Camera.getY(), 
+				Camera.getX()+Camera.getWidth(), 
+				Camera.getY()+Camera.getHeight(), 
+				X, 
+				Y)){
+			particle.Timer = particle.TerminateTime;
+			return ;
+		}
+		
+		X = toScreenPosX(X);
+		Y = toScreenPosY(Y);
+		
 		try{
 			if(particle.Element!=null){
 				g.setColor(particle.Color);

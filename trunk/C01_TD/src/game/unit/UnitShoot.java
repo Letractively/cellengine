@@ -40,18 +40,20 @@ public class UnitShoot extends Unit {
 	static final public int TYPE53_FIRE			= 19;
 	
 	/**类型*/
-	private int TYPE = 0;
+	private int Type = 0;
 	private int state = -1;
 	
 	//public boolean Penetrable = false;
+	/**是否溅射伤害*/
+	public boolean 	Splash 			= true;
+	/**溅射范围*/
+	public int 		SplashRange 	= 100;
 	
-	public boolean Slash = false;
-	
-
 	public UnitShoot(CSprite stuff){
 		super(stuff);
 		setState(this);
 		Priority = 1024;
+		HP = 10+Random.nextInt()%10;
 	}
 	
 	public void update(){
@@ -85,8 +87,79 @@ public class UnitShoot extends Unit {
 			
 	}
 	
-	public void startFire(int type,int sx,int sy,Unit target){
-		switch(type){
+//	得到致命攻击比率
+	public boolean getIsCriticalDamage(){
+		switch(Type){
+		case TYPE01_ARROW:return Math.abs(Random.nextInt())%100<10;
+		case TYPE02_ARROW:return Math.abs(Random.nextInt())%100<20;
+		case TYPE03_ARROW:return Math.abs(Random.nextInt())%100<30;
+		
+		case TYPE31_ARROW:return Math.abs(Random.nextInt())%100<10;
+		case TYPE32_ARROW:return Math.abs(Random.nextInt())%100<20;
+		case TYPE33_ARROW:return Math.abs(Random.nextInt())%100<30;
+		}
+		return false;
+	}
+	
+	//得到减速比率
+	public int getSlowRate(){
+		switch(Type){
+		case TYPE11_ICE:return 20;
+		case TYPE12_ICE:return 40;
+		case TYPE13_ICE:return 60;
+		case TYPE41_ICE:return 20;
+		case TYPE42_ICE:return 40;
+		case TYPE43_ICE:return 60;
+		}
+		return 0;
+	}
+	//得到减速时间
+	public int getSlowTime(){
+		switch(Type){
+		case TYPE11_ICE:return 2*AScreen.FrameDelay;
+		case TYPE12_ICE:return 4*AScreen.FrameDelay;
+		case TYPE13_ICE:return 8*AScreen.FrameDelay;
+		case TYPE41_ICE:return 2*AScreen.FrameDelay;
+		case TYPE42_ICE:return 4*AScreen.FrameDelay;
+		case TYPE43_ICE:return 8*AScreen.FrameDelay;
+		}
+		return 0;
+	}
+	
+	//得到持续减血比率
+	public int getInjureRate(){
+		switch(Type){
+		
+		case TYPE21_FIRE:return 5;
+		case TYPE22_FIRE:return 10;
+		case TYPE23_FIRE:return 15;
+
+		case TYPE51_FIRE:return 5;
+		case TYPE52_FIRE:return 10;
+		case TYPE53_FIRE:return 15;
+		}
+		return 0;
+	}
+	
+	//得到持续减血时间
+	public int getInjureTime(){
+		switch(Type){
+		case TYPE21_FIRE:return 5*AScreen.FrameDelay;
+		case TYPE22_FIRE:return 10*AScreen.FrameDelay;
+		case TYPE23_FIRE:return 15*AScreen.FrameDelay;
+
+		case TYPE51_FIRE:return 5*AScreen.FrameDelay;
+		case TYPE52_FIRE:return 10*AScreen.FrameDelay;
+		case TYPE53_FIRE:return 15*AScreen.FrameDelay;
+		}
+		return 0;
+	}
+	
+	public void startFire(int type,int sx,int sy,UnitEnemy[] targets,int targetID){
+		Type = type;
+		
+		
+		switch(Type){
 		case TYPE00_ARROW:
 		case TYPE01_ARROW:
 		case TYPE02_ARROW:
@@ -99,8 +172,8 @@ public class UnitShoot extends Unit {
 		case TYPE21_FIRE:
 		case TYPE22_FIRE:
 		case TYPE23_FIRE:
-//			startMissile(sx,sy,target,type);
-//			break;
+			startMissile(sx,sy,targets,targetID,Type);
+			break;
 			
 		case TYPE30_ARROW:
 		case TYPE31_ARROW:
@@ -114,8 +187,9 @@ public class UnitShoot extends Unit {
 		case TYPE51_FIRE:
 		case TYPE52_FIRE:
 		case TYPE53_FIRE:
-			startMissile(sx,sy,target,type);
-//			startDst(sx, sy, target.X, target.Y, type);
+			Splash 			= true;
+			SplashRange 	= 32;
+			startMissile(sx,sy,targets,targetID,Type);
 			break;
 		}
 		
@@ -130,7 +204,7 @@ public class UnitShoot extends Unit {
 		this.Active = false;
 		this.Visible = false;
 		state = STATE_NONE;
-		Slash = false;
+		Splash = false;
 	}
 	boolean isEndNone(){
 		return !Active;
@@ -211,18 +285,20 @@ public class UnitShoot extends Unit {
 //	---------------------------------------------------------------------------------------------------------
 //	单体攻击
 	final public int STATE_MISSILE		= 2;
-	Unit MissileTarget					= null;
+	UnitEnemy[] MissileTargets				= null;
+	int MissileTargetID					= -1;
 	int MissileMaxSpeed					= 8;
 	int DstX;
 	int DstY;
-	void startMissile(int sx,int sy,Unit target,int type){
+	void startMissile(int sx, int sy, UnitEnemy[] targets, int targetID, int type){
 		state = STATE_MISSILE;
 		Active = true;
 		Visible = true;
 		
-		MissileTarget = target;
-		DstX = target.X;
-		DstY = target.Y;
+		MissileTargets = targets;
+		MissileTargetID = targetID;
+		DstX = MissileTargets[MissileTargetID].X;
+		DstY = MissileTargets[MissileTargetID].Y;
 		
 		SpeedX256 = 0; 
 		SpeedY256 = 0;
@@ -236,28 +312,46 @@ public class UnitShoot extends Unit {
 		setCurrentFrame(type, 0);
 	}
 	boolean isEndMissile(){
-		if( MissileTarget==null || !MissileTarget.Active ){
+		if( !MissileTargets[MissileTargetID].Active ){
 			if(DstX == X && DstY == Y){
 				return true;
 			}
 		}
 		if(CCD.cdRectPoint(
-					MissileTarget.X-MissileMaxSpeed, 
-					MissileTarget.Y-MissileMaxSpeed,
-					MissileTarget.X+MissileMaxSpeed, 
-					MissileTarget.Y+MissileMaxSpeed,
-					X, Y))
+				X-MissileMaxSpeed, 
+				Y-MissileMaxSpeed,
+				X+MissileMaxSpeed, 
+				Y+MissileMaxSpeed,
+				DstX, 
+				DstY))
 		{
-			MissileTarget.HP -= HP;
-			EffectSpawn(EFFECT_DAMAGE_SWORD,MissileTarget.X,MissileTarget.Y,null);
+			/*TODO : 敌人被直接打中*/
+			MissileTargets[MissileTargetID].directDamage(this);
+			/*TODO : 敌人被溅射到*/
+			if(Splash){
+				for(int i=MissileTargets.length-1;i>=0;i--){
+					if(MissileTargets[i].Active && i!=MissileTargetID)
+					if(CCD.cdRectPoint(
+							X-SplashRange, 
+							Y-SplashRange,
+							X+SplashRange, 
+							Y+SplashRange,
+							MissileTargets[i].X, 
+							MissileTargets[i].Y)){
+						MissileTargets[i].splashDamage(this);
+					}
+				}
+			}
+			
+			EffectSpawn(EFFECT_DAMAGE_SWORD,MissileTargets[MissileTargetID].X,MissileTargets[MissileTargetID].Y,null, 0);
 			return true;
 		}
 		return false;
 	}
 	void onMissile(){
-		if( MissileTarget!=null && MissileTarget.Active ){
-			DstX = MissileTarget.X;
-			DstY = MissileTarget.Y;
+		if( MissileTargets[MissileTargetID]!=null && MissileTargets[MissileTargetID].Active ){
+			DstX = MissileTargets[MissileTargetID].X;
+			DstY = MissileTargets[MissileTargetID].Y;
 		}
 		int dx = DstX - X;
 		int dy = DstY - Y;
@@ -285,7 +379,7 @@ public class UnitShoot extends Unit {
 		}
 		
 //		tryMove(dx-X, dy-Y);
-		EffectSpawn(EFFECT_TAIL_FIRE,X,Y,null);
+//		EffectSpawn(EFFECT_TAIL_FIRE,X,Y,null);
 		nextCycFrame();
 	}
 //	---------------------------------------------------------------------------------------------------------
@@ -294,6 +388,7 @@ public class UnitShoot extends Unit {
 //	完结状态
 	final public int STATE_TERMINATE	= 3;
 	void startTerminate(int sx,int sy){
+		Type = -1;
 		state = STATE_TERMINATE;
 		Active = true;
 		Visible = true;
@@ -301,7 +396,7 @@ public class UnitShoot extends Unit {
 		X = sx;
 		Y = sy;
 //		tryMove(sx-X, sy-Y);
-		EffectSpawn(EFFECT_ATTACK_FIRE,X,Y,null);
+		EffectSpawn(EFFECT_ATTACK_FIRE,X,Y,null, 0);
 		setCurrentFrame(STATE_TERMINATE, 0);
 	}
 	void onTerminate(){
