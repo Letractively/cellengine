@@ -24,7 +24,8 @@ abstract public class Unit extends CSprite  implements IState {
 	
 	public LevelManager world;
 	
-	public int HP = 100;
+	
+	public int HP 		= 100;
 
 	
 	public Unit(CSprite stuff) {
@@ -51,9 +52,13 @@ abstract public class Unit extends CSprite  implements IState {
 	
 	final public int EFFECT_MONEY			= 12;
 	
-	public void EffectSpawn(int type,int x,int y,String text){
+	
+	final public int EFFECT_CRITICAL		= 100;
+	
+	public void EffectSpawn(int type,int x,int y,String text, int color){
 		world.EffectType = type;
 		world.EffectText = text;
+		world.EffectColor = color;
 		
 		switch(type){
 		case EFFECT_DAMAGE_SWORD:
@@ -74,6 +79,9 @@ abstract public class Unit extends CSprite  implements IState {
 			
 		case EFFECT_MONEY:
 			world.ParticleSystem.spawn(1, world.TYPE_SINGLE_UP, x, y);
+			world.ParticleSystem.spawn(1, world.TYPE_TEXT, 		x, y);
+			break;
+		case EFFECT_CRITICAL:
 			world.ParticleSystem.spawn(1, world.TYPE_TEXT, 		x, y);
 			break;
 		default:

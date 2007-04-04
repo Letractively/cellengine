@@ -8,18 +8,21 @@ import com.cell.CCanvasNokia;
 import com.cell.CObject;
 import com.cell.AScreen;
 
+//#define _DEBUG
+
+
 final public class GameMIDlet extends MIDlet  implements Runnable{
 	
 	Canvas canvas ;
 
 //------------------------------------------------------------------------------------------
-	
+
 	
 	public GameMIDlet() {
-//#ifndef _DEBUG
-		CObject.IsDebug = false;
-//#else
+//#ifdef _DEBUG
 		CObject.IsDebug = true;
+//#else
+//		CObject.IsDebug = false;
 //#endif	
 		
 ////#ifdef _NOKIA_UI
