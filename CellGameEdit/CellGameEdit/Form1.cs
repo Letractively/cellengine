@@ -125,7 +125,20 @@ namespace CellGameEdit
                    
                 }
 
-              
+                //try
+                //{
+                //    OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                //    openFileDialog1.Filter = "CPJ files (*.cpj)|*.cpj";
+                //    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                //    {
+                        
+                //    }
+                //}
+                //catch (Exception err)
+                //{
+                //}
+
+
             }
             else
             {
@@ -387,7 +400,7 @@ namespace CellGameEdit
                     }
                     else
                     {
-                        if (this.progressBar1.Value < this.progressBar1.Maximum / 2)
+                        if (this.progressBar1.Value < this.progressBar1.Maximum - 10)
                         {
                             this.progressBar1.Increment(1);
                         }
