@@ -653,6 +653,19 @@ namespace CellGameEdit.PM
                 this.treeView1.SelectedNode.ExpandAll();
                 form.MdiParent = this.MdiParent;
                 form.Show();
+
+                try
+                {
+                    String dir = workSpace + "\\" + form.id;
+                    if (System.IO.Directory.Exists(dir))
+                    {
+                        System.IO.Directory.Delete(dir,true);
+                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show(err.TargetSite+":"+err.Message);
+                }
                 break;
             }
 
