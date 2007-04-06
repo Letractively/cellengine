@@ -188,10 +188,10 @@ namespace CellGameEdit.PM
                 //    System.IO.Directory.Delete(ProjectForm.workSpace + dir, true);
                 //}
                 System.IO.Directory.CreateDirectory(ProjectForm.workSpace + dir);
-                System.IO.File.SetAttributes(
-                    ProjectForm.workSpace + dir,
-                    System.IO.FileAttributes.Hidden
-                    );
+                //System.IO.File.SetAttributes(
+                //    ProjectForm.workSpace + dir,
+                //    System.IO.FileAttributes.Hidden
+                //    );
 
                 for (int i = 0; i < dstImages.Count;i++ )
                 {
@@ -207,10 +207,10 @@ namespace CellGameEdit.PM
                         else
                         {
                             img.getDImage().Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
-                            System.IO.File.SetAttributes(
-                               ProjectForm.workSpace + name,
-                               System.IO.FileAttributes.Hidden
-                               );
+                            //System.IO.File.SetAttributes(
+                            //   ProjectForm.workSpace + name,
+                            //   System.IO.FileAttributes.Hidden
+                            //   );
                         }
                         output.Add(name);
                         outX.Add(img.x);
