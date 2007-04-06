@@ -20,7 +20,7 @@ namespace CellGameEdit.PM
     {
  
         static public String workSpace = "";
-
+        static public String workName = "";
 
         //<IMAGE TILE>
         //<IMAGE GROUP>

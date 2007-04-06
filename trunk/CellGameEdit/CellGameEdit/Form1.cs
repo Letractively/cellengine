@@ -33,7 +33,7 @@ namespace CellGameEdit
             string dir = System.IO.Path.GetDirectoryName(file);
 
             ProjectForm.workSpace = dir;
-
+            ProjectForm.workName = file;
             SoapFormatter formatter = new SoapFormatter();
             Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
             prjForm = (ProjectForm)formatter.Deserialize(stream);
@@ -57,6 +57,7 @@ namespace CellGameEdit
             }
         }
 
+        //------------------------------------------------------------------------------------------------------------------------------------------------
 
         private void 文件ToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
         {
@@ -67,30 +68,30 @@ namespace CellGameEdit
         {
             if (prjForm == null || prjForm.Visible == false)
             {
-                FolderBrowserDialog dir = new FolderBrowserDialog();
-                dir.ShowNewFolderButton = true;
-                dir.Description = "新建工程文件夹";
+                //FolderBrowserDialog dir = new FolderBrowserDialog();
+               // dir.ShowNewFolderButton = true;
+                //dir.Description = "新建工程文件夹";
 
-                if (dir.ShowDialog() == DialogResult.OK)
-                {
-                    if (System.IO.File.Exists(dir.SelectedPath + "\\Project.cpj"))
-                    {
-                        MessageBox.Show("已经存在一个工程文件 Project.cpj");
-                    }
-                    else
-                    {
+                //if (dir.ShowDialog() == DialogResult.OK)
+                //{
+                    //if (System.IO.File.Exists(dir.SelectedPath + "\\Project.cpj"))
+                    //{
+                    //    MessageBox.Show("已经存在一个工程文件 Project.cpj");
+                    //}
+                    //else
+                    //{
 
-                        System.IO.Directory.CreateDirectory(dir.SelectedPath);
-                        System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
+                    //    System.IO.Directory.CreateDirectory(dir.SelectedPath);
+                     //   System.IO.Directory.CreateDirectory(dir.SelectedPath + "\\script");
                         
-                        ProjectForm.workSpace = dir.SelectedPath;
-
+                        ProjectForm.workSpace = "";
+                        ProjectForm.workName = "";
                         prjForm = new ProjectForm();
                         prjForm.MdiParent = this;
                         prjForm.Show();
-                    }
+                    //}
                    
-                }
+                //}
             }
             else
             {
@@ -101,42 +102,57 @@ namespace CellGameEdit
         {
             if (prjForm == null || prjForm.Visible == false)
             {
-                FolderBrowserDialog dir = new FolderBrowserDialog();
-                dir.ShowNewFolderButton = false;
-                dir.Description = "打开包含(Project.cpj)的工程文件夹";
+                //FolderBrowserDialog dir = new FolderBrowserDialog();
+                //dir.ShowNewFolderButton = false;
+                //dir.Description = "打开包含(Project.cpj)的工程文件夹";
 
-                if (dir.ShowDialog() == DialogResult.OK)
-                {
-                    try
-                    {
-                        ProjectForm.workSpace = dir.SelectedPath;
-
-                        SoapFormatter formatter = new SoapFormatter();
-                        Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
-                        prjForm = (ProjectForm)formatter.Deserialize(stream);
-                        stream.Close();
-                        prjForm.MdiParent = this;
-                        prjForm.Show();
-                    }
-                    catch (Exception err)
-                    {
-                        MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
-                    }
-                   
-                }
-
-                //try
+                //if (dir.ShowDialog() == DialogResult.OK)
                 //{
-                //    OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                //    openFileDialog1.Filter = "CPJ files (*.cpj)|*.cpj";
-                //    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                //    try
                 //    {
-                        
+                //        ProjectForm.workSpace = dir.SelectedPath;
+
+                //        SoapFormatter formatter = new SoapFormatter();
+                //        Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
+                //        prjForm = (ProjectForm)formatter.Deserialize(stream);
+                //        stream.Close();
+                //        prjForm.MdiParent = this;
+                //        prjForm.Show();
                 //    }
+                //    catch (Exception err)
+                //    {
+                //        MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
+                //    }
+                   
                 //}
-                //catch (Exception err)
-                //{
-                //}
+
+                try
+                {
+                    OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                    openFileDialog1.Filter = "CPJ files (*.cpj)|*.cpj";
+                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        try
+                        {
+                            ProjectForm.workSpace = System.IO.Path.GetDirectoryName(openFileDialog1.FileName);
+                            ProjectForm.workName = openFileDialog1.FileName;
+
+                            SoapFormatter formatter = new SoapFormatter();
+                            Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                            prjForm = (ProjectForm)formatter.Deserialize(stream);
+                            stream.Close();
+                            prjForm.MdiParent = this;
+                            prjForm.Show();
+                        }
+                        catch (Exception err)
+                        {
+                            MessageBox.Show(err.StackTrace+":"+err.Message);
+                        }
+                    }
+                }
+                catch (Exception err)
+                {
+                }
 
 
             }
@@ -151,11 +167,24 @@ namespace CellGameEdit
             if (prjForm != null && prjForm.Visible == true)
             {
                 try {
-                    SoapFormatter formatter = new SoapFormatter();
-                    Stream stream = new FileStream(ProjectForm.workSpace + "\\Project.cpj", FileMode.Create, FileAccess.Write, FileShare.None);
-                    formatter.Serialize(stream, prjForm);
-                    stream.Close(); 
 
+                    if (ProjectForm.workName == "")
+                    {
+                        SaveFileDialog sfd = new SaveFileDialog();
+                        sfd.Filter = "CPJ files (*.cpj)|*.cpj";
+                        if (sfd.ShowDialog() == DialogResult.OK)
+                        {
+                            ProjectForm.workSpace = System.IO.Path.GetDirectoryName(sfd.FileName);
+                            ProjectForm.workName = sfd.FileName;
+                        }
+                    }
+                    if (ProjectForm.workName != "")
+                    {
+                        SoapFormatter formatter = new SoapFormatter();
+                        Stream stream = new FileStream(ProjectForm.workName, FileMode.Create, FileAccess.Write, FileShare.None);
+                        formatter.Serialize(stream, prjForm);
+                        stream.Close(); 
+                    }
                 }
                 catch(Exception err){
                     MessageBox.Show("目录错误 "+err.Message);
@@ -192,7 +221,8 @@ namespace CellGameEdit
         {
 
         }
- 
+
+        //------------------------------------------------------------------------------------------------------------------------------------------------
         //input script
         private void 脚本ToolStripMenuItem_Click(object sender, EventArgs e)
         {
