@@ -1254,11 +1254,11 @@ namespace CellGameEdit.PM
                 //
                     if (sender.Equals(toolStripButton8))
                     {
-                        toolStripDropDownButton2.Enabled = true;
+                        //toolStripDropDownButton2.Enabled = true;
                     }
                     else
                     {
-                        toolStripDropDownButton2.Enabled = false;
+                        //toolStripDropDownButton2.Enabled = false;
                     }
                     //if (sender.Equals(toolStripButton10))
                     //{
@@ -1586,8 +1586,21 @@ namespace CellGameEdit.PM
                 {
                     if (dstRect.Contains(e.Location))
                     {
+                        try
+                        {
+                            //contextMenuStrip1.Items.Clear();
+                            //contextMenuStrip1.Items.
+                            //contextMenuStrip1.Items.AddRange(toolStripDropDownButton2.DropDownItems);
+                            contextMenuStrip1.Opacity = 0.5;
+                            contextMenuStrip1.Show(pictureBox2,e.Location);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(err.StackTrace);
+                        }
                         //ClipMenu = new ContextMenuStrip();
-                        toolStripDropDownButton2.DropDown.Show(e.Location);
+                        //toolStripDropDownButton2.DropDown.Show(pictureBox2, e.Location);
+                        
                         //toolStripDropDownButton2.
                     }
                     //e.Graphics.FillRectangle(brush, dstRect);
@@ -1859,6 +1872,7 @@ namespace CellGameEdit.PM
                 }
             }
         }
+
 
   
 
