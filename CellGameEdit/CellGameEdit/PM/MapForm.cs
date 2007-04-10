@@ -85,10 +85,12 @@ namespace CellGameEdit.PM
         int dstQX = 0;
         int dstQY = 0;
         System.Drawing.Rectangle dstRect;
-        int[][] dstClipTile;
-        int[][] dstClipTag;
-        int[][] dstClipAnim;
-        int[][] dstClipFlip;
+
+        public static ImagesForm clipSuper;
+        public static int[][] dstClipTile;
+        public static int[][] dstClipTag;
+        public static int[][] dstClipAnim;
+        public static int[][] dstClipFlip;
 
         int animCount = 0;
         int curAnimate = -1;
@@ -833,6 +835,7 @@ namespace CellGameEdit.PM
 
             if (xcount <= 0 || ycount <= 0) return;
 
+            clipSuper = this.super;
             dstClipTile = new int[ycount][];
             dstClipTag = new int[ycount][];
             dstClipAnim = new int[ycount][];
@@ -858,7 +861,8 @@ namespace CellGameEdit.PM
         }
         private void paseDst()
         {
-           
+            if (clipSuper != this.super) return;
+
             int sbx = dstRect.X / CellW;
             int sby = dstRect.Y / CellH;
             int xcount = dstRect.Width / CellW;
@@ -905,13 +909,20 @@ namespace CellGameEdit.PM
         {
             if (by < MatrixAnim.Length && bx < MatrixAnim[by].Length)
             {
-                if (toolStripButton22.Checked)
+                if (index > 0 && index < listView1.Items.Count)
                 {
-                    MatrixAnim[by][bx] = -index;
+                    if (toolStripButton22.Checked)
+                    {
+                        MatrixAnim[by][bx] = -index;
+                    }
+                    else
+                    {
+                        MatrixAnim[by][bx] = index;
+                    }
                 }
                 else
                 {
-                    MatrixAnim[by][bx] = index;
+                    MatrixAnim[by][bx] = 0;
                 }
                 
             }
@@ -1405,7 +1416,7 @@ namespace CellGameEdit.PM
 
 
 
-            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff));
+            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x40, 0xff, 0xff, 0xff)).Brush;
 
 
@@ -1571,6 +1582,17 @@ namespace CellGameEdit.PM
             }
             if (e.Button == MouseButtons.Right)
             {
+                if (toolStripButton8.Checked)
+                {
+                    if (dstRect.Contains(e.Location))
+                    {
+                        //ClipMenu = new ContextMenuStrip();
+                        toolStripDropDownButton2.DropDown.Show(e.Location);
+                        //toolStripDropDownButton2.
+                    }
+                    //e.Graphics.FillRectangle(brush, dstRect);
+                    //e.Graphics.DrawRectangle(pen, dstRect.X, dstRect.Y, dstRect.Width - 1, dstRect.Height - 1);
+                }
                 if (toolStripButton9.Checked)
                 {
                     
