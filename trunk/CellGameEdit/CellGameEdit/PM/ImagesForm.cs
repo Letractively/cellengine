@@ -207,10 +207,6 @@ namespace CellGameEdit.PM
                         else
                         {
                             img.getDImage().Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
-                            //System.IO.File.SetAttributes(
-                            //   ProjectForm.workSpace + name,
-                            //   System.IO.FileAttributes.Hidden
-                            //   );
                         }
                         output.Add(name);
                         outX.Add(img.x);
@@ -440,6 +436,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
          
         }
 
+
         public void addDst(Image img)
         {
             for (int i = 0; i < dstImages.Count; i++)
@@ -450,8 +447,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     try
                     {
                         // save to src pic
-                        String dir = "\\" + this.id;
-                        String name = dir + "\\tile_" + i.ToString() + ".png";
+                        String name = "\\tiles\\" + this.id + "\\" + i.ToString() + ".tile";
                         if (System.IO.File.Exists(ProjectForm.workSpace + name))
                         {
                             System.IO.File.Delete(ProjectForm.workSpace + name);
@@ -567,13 +563,6 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             if (index >= dstImages.Count || index < 0) return null;
             return (((Image)(dstImages[index])));
         }
-
-        public string getDstImagePath(int index)
-        {
-            if (index >= dstImages.Count || index < 0) return null;
-            return "\\" + this.id + "\\tile_" + index.ToString() + ".png";
-        }
-
 
         public int getDstImageCount()
         {
@@ -696,8 +685,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     pictureBox2.Height = Math.Max(pictureBox2.Height, changed.getHeight() * dstSize);
 
                     // save to src pic
-                    String dir = "\\" + this.id;
-                    String name = dir + "\\tile_" + index.ToString() + ".png";
+                    String name = "\\tiles\\" + this.id + "\\" + index.ToString() + ".tile";
                     if (System.IO.File.Exists(ProjectForm.workSpace + name))
                     {
                         System.IO.File.Delete(ProjectForm.workSpace + name);
