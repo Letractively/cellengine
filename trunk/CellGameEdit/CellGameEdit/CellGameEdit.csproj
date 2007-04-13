@@ -426,6 +426,7 @@
     <None Include="Resources\Image70.bmp" />
     <None Include="Resources\TextEventList.txt" />
     <None Include="Resources\TextCommandList.txt" />
+    <None Include="Resources\Image71.bmp" />
     <Content Include="script\ResesScript.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
