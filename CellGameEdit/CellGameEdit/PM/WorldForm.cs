@@ -525,8 +525,8 @@ namespace CellGameEdit.PM
                 listView1.Items.Add(item);
                 UnitList.Add(item, unit);
 
-                unit.x = -pictureBox1.Location.X + panel1.Width / 2;
-                unit.y = -pictureBox1.Location.Y + panel1.Height / 2;
+                unit.x = -pictureBox1.Location.X /*+ panel1.Width / 2*/;
+                unit.y = -pictureBox1.Location.Y /*+ panel1.Height / 2*/;
             }
 
             pictureBox1.Refresh();
@@ -1013,6 +1013,10 @@ namespace CellGameEdit.PM
                     selectedUnit = null;
                     for (int i = listView1.Items.Count - 1; i >= 0; i--)
                     {
+                        if (toolStripButton15.Checked)
+                        {
+                            listView1.Items[i].Checked = false;
+                        }
                         listView1.Items[i].Selected = false;
                     }
 
@@ -1050,6 +1054,10 @@ namespace CellGameEdit.PM
                                 {
                                     isChecked = true;
                                     listView1.Items[i].Selected = true;
+                                    if (toolStripButton15.Checked)
+                                    {
+                                        listView1.Items[i].Checked = true;
+                                    }
                                     selectedUnit = unit;
                                     break;
                                 }

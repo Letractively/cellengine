@@ -550,6 +550,13 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Bitmap Image71 {
+            get {
+                object obj = ResourceManager.GetObject("Image71", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Image8 {
             get {
                 object obj = ResourceManager.GetObject("Image8", resourceCulture);
@@ -565,7 +572,28 @@ namespace CellGameEdit {
         }
         
         /// <summary>
-        ///   查找类似  的本地化字符串。
+        ///   查找类似 
+        ///
+        ///
+        ////*世界控制指令*/
+        ///WORLD_
+        ///
+        ////*精灵单位控制指令*/
+        ///SPR_SetPos
+        ///SPR_Move
+        ///
+        ////*地图单位控制指令*/
+        ///MAP_
+        ///
+        ////*路点控制指令*/
+        ///POINT_SetPos
+        ///POINT_Move
+        ///
+        ////*区域控制指令*/
+        ///REGION_SetPos
+        ///REGION_Move
+        ///REGION_Resize
+        /// 的本地化字符串。
         /// </summary>
         internal static string TextCommandList {
             get {
@@ -575,6 +603,10 @@ namespace CellGameEdit {
         
         /// <summary>
         ///   查找类似 
+        ///
+        ///
+        ////*世界事件*/
+        ///WORLD_Update
         ///
         ////*精灵单位事件类型*/
         ///SPR_Enter

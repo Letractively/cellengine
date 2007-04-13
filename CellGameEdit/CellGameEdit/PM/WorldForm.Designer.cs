@@ -56,6 +56,7 @@
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton10 = new System.Windows.Forms.ToolStripButton();
@@ -68,10 +69,10 @@
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton16 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton13 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuPath = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.双向连接ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -439,6 +440,7 @@
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
+            this.toolStripButton15,
             this.toolStripButton14,
             this.toolStripButton2,
             this.toolStripButton10,
@@ -463,7 +465,9 @@
             // 
             // toolStripButton1
             // 
+            this.toolStripButton1.Checked = true;
             this.toolStripButton1.CheckOnClick = true;
+            this.toolStripButton1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
             this.toolStripButton1.Image = global::CellGameEdit.Resource1.Image69;
             this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -472,6 +476,17 @@
             this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton1.Text = "显示选择框";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.CheckOnClick = true;
+            this.toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton15.Image = global::CellGameEdit.Resource1.Image71;
+            this.toolStripButton15.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton15.Text = "自动选择单位";
             // 
             // toolStripButton14
             // 
@@ -603,11 +618,6 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
-            // 
             // toolStripButton16
             // 
             this.toolStripButton16.CheckOnClick = true;
@@ -639,6 +649,11 @@
             this.toolStripButton13.Size = new System.Drawing.Size(23, 22);
             this.toolStripButton13.Text = "显示小地图";
             this.toolStripButton13.Click += new System.EventHandler(this.toolStripButton13_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(6, 25);
             // 
             // menuPath
             // 
@@ -879,5 +894,6 @@
         private System.Windows.Forms.NumericUpDown numericUpDown3;
         private System.Windows.Forms.NumericUpDown numericUpDown2;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.ToolStripButton toolStripButton15;
     }
 }
