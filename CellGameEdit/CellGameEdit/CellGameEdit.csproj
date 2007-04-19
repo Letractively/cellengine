@@ -427,13 +427,9 @@
     <None Include="Resources\TextEventList.txt" />
     <None Include="Resources\TextCommandList.txt" />
     <None Include="Resources\Image71.bmp" />
-    <Content Include="script\ResesScript.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="script\ResesScriptHelp.txt" />
-    <Content Include="script\ResesScriptSK.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="script\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
