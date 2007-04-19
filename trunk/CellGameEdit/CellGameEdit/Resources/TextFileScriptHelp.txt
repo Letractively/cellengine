@@ -1,7 +1,7 @@
---------------------------------------------------------------------------------------------------------------
-指令说明
---------------------------------------------------------------------------------------------------------------
- 格式： 
+//--------------------------------------------------------------------------------------------------------------
+//指令说明
+//--------------------------------------------------------------------------------------------------------------
+格式： 
  所有指令名称由一对<>尖括号包围，#<代表数据块，
  该脚本是对最后生成数据格式的一种约定。
    例如：
@@ -13,185 +13,206 @@
      data[0] = ....;
      data[1] = ....;
      data[2] = ....;
---------------------------------------------------------------------------------------------------------------     
- 指令列表：
- <OUTPUT>               /* 后面跟输出的文件名(绝对目录或者当前工作空间的相对目录) */
+
+//--------------------------------------------------------------------------------------------------------------     
+//指令列表：
+//--------------------------------------------------------------------------------------------------------------     
+
+<OUTPUT>           /* 后面跟输出的文件名(绝对目录或者当前工作空间的相对目录) */
  
- <IMAGE OUTPUT>			/* 图片输出位置*/
- <IMAGE TYPE>			/* 输出图片格式 默认(png bmp gif jpg) */
- <IMAGE TILE>			/* 散图输出 开启(true) */
- <IMAGE GROUP>			/* 整图输出 开启(true) */
+<IMAGE OUTPUT>     /* 图片输出目录(绝对目录或者当前工作空间的相对目录) */
+<IMAGE TYPE>       /* 输出图片格式(png bmp gif jpg) */
+<IMAGE TILE>       /* 散图输出 开启(true) */
+<IMAGE GROUP>      /* 整图输出 开启(true) */
 
- #<RESOURCE>           /* 资源数据 */ 
+//--------------------------------------------------------------------------------------------------------------     
+#<RESOURCE>            /* 资源数据块 开始 */ 
+//--------------------------------------------------------------------------------------------------------------
 
-	 <RES IMAGES COUNT>
-     #<IMAGES>         /* 图片组数据 */
-         <NAME>         /* 该图片组的名称 */
-         <COUNT>        /* 该图片组包含的图块数量 */
-	   #<CLIP>          /* 每一个图片块的数据，每一个定义了每个图块在原图中的范围 */ 
-             <INDEX>    /* 当前是第几块 */
-             <X>        /* 当前Clip位置的 X */ 
-             <Y>        /* 当前Clip位置的 Y */ 
-             <W>        /* 当前Clip的 宽 */ 
-             <H>        /* 当前Clip的 高 */ 
-         #<END CLIP>  /* 图片切块数据块结束 */
-     #<END IMAGES>    /* 图片组数据块  结束 */
+    <RES IMAGES COUNT>     /*(int) 资源里总共的图片组数量 */
 
-	<RES MAP COUNT>
-     #<MAP>
-         <NAME> 
-         <IMAGES NAME>
-         <X COUNT> 
-         <Y COUNT> 
-         <CELL W> 
-         <CELL H> 
-
-         <SCENE PART COUNT> 
-         #<SCENE PART>
-             <INDEX>
-             <TILE>
-             <TRANS> 
-         #<END SCENE PART> 
-
-         <SCENE FRAME COUNT>
-         #<SCENE FRAME> 
-             <INDEX> 
-             <DATA SIZE>
-             <DATA>
-         #<END SCENE FRAME>
-
-         <CD PART COUNT>
-         #<CD PART>
-             <INDEX>
-             <TYPE>  rect / line 
-             <MASK>
-             <X1> 
-             <Y1>
-             <X2> 
-             <Y2>
-             <W>
-             <H> 
-         #<END CD PART> 
-
-         <TILE MATRIX>
-         <FLAG MATRIX>
-
-     #<END MAP> 
-     
-	<RES SPRITE COUNT>
-     #<SPRITE> 
-         <NAME> 
-         <IMAGES NAME>
-         <SCENE PART COUNT>
-		#<SCENE PART> 
-             <INDEX> 
-             <TILE>
-             <X> 
-             <Y> 
-             <TRANS>
-		#<END SCENE PART> 
-		
-       <SCENE FRAME COUNT>  
-	   #<SCENE FRAME> 
-			<INDEX> 
-			<DATA SIZE>
-			<DATA> 
-	   #<END SCENE FRAME> 
-
-         <CD PART COUNT> 
-	   #<CD PART> 
-             <INDEX>
-	       <TYPE> rect / line 
-	       <MASK> 
-             <X1>
-             <Y1> 
-             <X2> 
-             <Y2> 
-             <W> 
-             <H> 
-	   #<END CD PART> 
-
-         <CD FRAME COUNT>
-         #<CD FRAME> 
-            <INDEX>
-            <DATA SIZE>
-			<DATA>
-	   #<END CD FRAME> 
-	    
-	    <ANIMATE COUNT>
-	    <FRAME COUNTS>
-	    
-	   <FRAME NAME>
-	   <FRAME ANIMATE>
-	   <FRAME CD MAP>
-	   <FRAME CD ATK>
-	   <FRAME CD DEF>
-       <FRAME CD EXT>
+    #<IMAGES>              /* 图片组数据块 开始 */
+    
+        <NAME>                 /*(str) 该图片组的名称 */
+        <COUNT>                /*(int) 该图片组包含的图块数量，包含空图 */
         
-     #<END SPRITE> 
-	
- #<END RESOURCE> 
-  
+        #<CLIP>                /* 每一个图片块的数据，每一个定义了每个图块在原图中的范围 */ 
+            <INDEX>                /*(int) 当前是第几块 */
+            <X>                    /*(int) 当前Clip在整图位置的 X */ 
+            <Y>                    /*(int) 当前Clip在整图位置的 Y */ 
+            <W>                    /*(int) 当前Clip的 宽 */ 
+            <H>                    /*(int) 当前Clip的 高 */ 
+        #<END CLIP>            /* 图片切块数据块结束 */
+        
+    #<END IMAGES>          /* 图片组数据块  结束 */
+     
+//--------------------------------------------------------------------------------------------------------------
 
- #<LEVEL> 
-	
-	<LEVEL WORLD COUNT>
-     #<WORLD> 
+    <RES MAP COUNT>        /*(int) 资源里总共的地图数量 */
+    
+    #<MAP>                 /* 地图数据块 开始 */
+    
+        <NAME>                 /*(str) 该地图 名字 */
+        <IMAGES NAME>          /*(str) 该地图 使用的图片组名字 */
+        <X COUNT>              /*(int) 该地图 水平格子数量 */
+        <Y COUNT>              /*(int) 该地图 垂直格子数量 */
+        <CELL W>               /*(int) 该地图 每格宽度 */
+        <CELL H>               /*(int) 该地图 每格高度 */
+
+        <SCENE PART COUNT>     /*(int) 该地图 帧部件数量 */
+        #<SCENE PART>          /* 帧部件 开始 */
+            <INDEX>                /*(int) 该部件 号码 */
+            <TILE>                 /*(int) 该部件 图片索引 */
+            <TRANS>                /*(int) 该部件 图片翻转方式 */        
+        #<END SCENE PART>      /* 帧部件 结束 */
+
+        <SCENE FRAME COUNT>    /*(int) 该地图 帧数量 */
+        #<SCENE FRAME>         /* 帧 开始 */
+            <INDEX>                /*(int) 该帧 号码 */
+            <DATA SIZE>            /*(int) 该帧 组合部件数量 */
+            <DATA>                 /*(int)[] 该帧 组合部件数组（分隔符为","）*/
+        #<END SCENE FRAME>     /* 帧 结束 */
+
+        <CD PART COUNT>        /*(int) 该地图 碰撞部件数量 */
+        #<CD PART>             /* 碰撞部件 开始 */
+            <INDEX>                /*(int) 该部件 号码 */
+            <TYPE>                 /*(str) 该部件 类型（"rect" 或 "line"） */
+            <MASK>                 /*(int32) 该部件 判定值 */
+            <X1>                   /*(int) 该部件 第一点 X位置 （矩形左上角点 或 线的第一点）*/
+            <Y1>                   /*(int) 该部件 第一点 Y位置 （矩形左上角点 或 线的第一点）*/
+            <X2>                   /*(int) 该部件 第二点 X位置 （矩形右下角点 或 线的第二点）*/
+            <Y2>                   /*(int) 该部件 第二点 Y位置 （矩形右下角点 或 线的第二点）*/
+            <W>                    /*(int) 该部件 宽（快速排斥矩形）*/
+            <H>                    /*(int) 该部件 高（快速排斥矩形）*/
+        #<END CD PART>         /* 碰撞部件 结束 */
+
+        <TILE MATRIX>          /*(int)[][] 地图图象二维数组 格式为 matrix[y count][x count] = {x0y0,x1y0,x2y0,...},{x0y1,x1y1,x2y1,...},... 数据为帧号码 */
+        <FLAG MATRIX>          /*(int)[][] 地图碰撞二维数组 格式为 matrix[y count][x count] = {x0y0,x1y0,x2y0,...},{x0y1,x1y1,x2y1,...},... 数据为碰撞部件号码 */
+
+    #<END MAP>             /* 地图数据块 结束 */
      
-         <NAME>
-         <DATA> /*场景数据*/
-		 <GRID W>
-         <GRID H>
-  
-  
-	   <UNIT MAP COUNT> 
-	   #<UNIT MAP>
-             <INDEX>   
-             <MAP NAME>
-             <MAP DATA>		/*地图数据*/
-             <IDENTIFY>  
-             <X> 
-             <Y> 
-             <SUPER>
-         #<END UNIT MAP> 
-		
-         <UNIT SPRITE COUNT> 
-         #<UNIT SPRITE> 
-             <INDEX>
-             <SPR NAME>
-             <SPR DATA>		/*精灵数据*/
-             <IDENTIFY>  
-             <ANIMATE ID>
-             <X> 
-             <Y> 
-             <SUPER>
-         #<END UNIT SPRITE> 
-		
-         <WAYPOINT COUNT> 
-         #<WAYPOINT>  
-             <INDEX>
-             <PATH DATA> /*路点数据*/
-             <X> 
-             <Y> 
-         #<END WAYPOINT> 
-		
-         #<WAYPOINT LINK> 
-             <INDEX> 
-             <START>
-             <END> 
-         #<END WAYPOINT LINK> 
+ //--------------------------------------------------------------------------------------------------------------
+    
+    <RES SPRITE COUNT>     /*(int) 资源里总共的精灵数量 */
+    
+    #<SPRITE>              /* 精灵数据块 开始 */
+    
+        <NAME>                 /*(str) 该精灵 名字 */
+        <IMAGES NAME>          /*(str) 该精灵 使用的图片组名字 */
+        
+        <SCENE PART COUNT>     /*(int) 该精灵 帧部件数量 */    
+        #<SCENE PART>          /* 帧部件 开始 */
+            <INDEX>                /*(int) 该部件 号码 */
+            <TILE>                 /*(int) 该部件 图片索引 */
+            <X>                    /*(int) 该部件 X位置 */
+            <Y>                    /*(int) 该部件 Y位置 */
+            <TRANS>                /*(int) 该部件 图片翻转方式 */        
+        #<END SCENE PART>      /* 帧部件 结束 */
+
+        <SCENE FRAME COUNT>    /*(int) 该精灵 帧数量 */
+        #<SCENE FRAME>         /* 帧 开始 */
+            <INDEX>                /*(int) 该帧 号码*/
+            <DATA SIZE>            /*(int) 该帧 组合部件数量*/
+            <DATA>                 /*(int)[] 该帧 组合部件数组（分隔符为","）*/
+        #<END SCENE FRAME>     /* 帧 结束 */
+
+        <CD PART COUNT>        /*(int) 该精灵 碰撞部件数量 */
+        #<CD PART>             /* 碰撞部件 开始 */
+            <INDEX>                /*(int) 该部件 号码 */
+            <TYPE>                 /*(str) 该部件 类型（"rect" 或 "line"） */
+            <MASK>                 /*(int32) 该部件 判定值*/
+            <X1>                   /*(int) 该部件 第一点 X位置 （矩形左上角点 或 线的第一点）*/
+            <Y1>                   /*(int) 该部件 第一点 Y位置 （矩形左上角点 或 线的第一点）*/
+            <X2>                   /*(int) 该部件 第二点 X位置 （矩形右下角点 或 线的第二点） */
+            <Y2>                   /*(int) 该部件 第二点 Y位置 （矩形右下角点 或 线的第二点）*/
+            <W>                    /*(int) 该部件 宽（快速排斥矩形）*/
+            <H>                    /*(int) 该部件 高（快速排斥矩形）*/
+        #<END CD PART>         /* 碰撞部件 结束 */
+
+        <CD FRAME COUNT>       /*(int) 该精灵 碰撞帧数量 */
+        #<CD FRAME>            /* 碰撞帧 开始 */
+            <INDEX>                /*(int) 该碰撞帧 号码*/
+            <DATA SIZE>            /*(int) 该碰撞帧 组合部件数量*/
+            <DATA>                 /*(int)[] 该碰撞帧 组合部件数组（分隔符为","）*/
+        #<END CD FRAME>        /* 碰撞帧 结束 */
+        
+        <ANIMATE COUNT>        /*(int) 该精灵 动画数量 */
+        <FRAME COUNTS>         /*(int)[] 该精灵 每个动画帧数量数组（分隔符为","）*/
+        <FRAME NAME>           /*(str)[] 该精灵 每个动画的名字数组（分隔符为","）*/
+        <FRAME ANIMATE>        /*(int)[][] 该精灵 图片动画序列二维数组 格式为 frame[animate count][frame] = {a0f0,a0f1,a0f2,...},{a1f0,a1f1,a1f2,...},...数据为帧号码*/
+        <FRAME CD MAP>         /*(int)[][] 该精灵 地图碰撞序列二维数组 格式为 frame[animate count][frame] = {a0f0,a0f1,a0f2,...},{a1f0,a1f1,a1f2,...},...数据为碰撞帧号码*/
+        <FRAME CD ATK>         /*(int)[][] 该精灵 攻击碰撞序列二维数组 格式为 frame[animate count][frame] = {a0f0,a0f1,a0f2,...},{a1f0,a1f1,a1f2,...},...数据为碰撞帧号码*/
+        <FRAME CD DEF>         /*(int)[][] 该精灵 防御碰撞序列二维数组 格式为 frame[animate count][frame] = {a0f0,a0f1,a0f2,...},{a1f0,a1f1,a1f2,...},...数据为碰撞帧号码*/
+        <FRAME CD EXT>         /*(int)[][] 该精灵 其他碰撞序列二维数组 格式为 frame[animate count][frame] = {a0f0,a0f1,a0f2,...},{a1f0,a1f1,a1f2,...},...数据为碰撞帧号码*/
+        
+     #<END SPRITE>         /* 精灵数据块 结束 */
+     
+//--------------------------------------------------------------------------------------------------------------
+#<END RESOURCE>        /* 资源数据块 结束 */ 
+//--------------------------------------------------------------------------------------------------------------
+
+
+//--------------------------------------------------------------------------------------------------------------
+#<LEVEL>               /* 关卡数据块 开始*/
+//--------------------------------------------------------------------------------------------------------------
+    
+    <LEVEL WORLD COUNT>    /*(int) 总共场景数量 */
+    
+    #<WORLD>               /* 场景数据块 开始 */
+        <NAME>                 /*(str) 该场景 名字 */
+        <DATA>                 /*(str) 该场景 数据 */
+        <GRID W>               /*(int) 该场景 网格宽 */
+        <GRID H>               /*(int) 该场景 网格高 */
+        
+        <UNIT MAP COUNT>       /*(int) 该场景 包含的地图数量 */    
+        #<UNIT MAP>            /* 场景地图 开始 */
+            <INDEX>                /*(int) 当前地图 号码 */
+            <MAP NAME>             /*(str) 当前地图 类型名字 */
+            <MAP DATA>             /*(str) 当前地图 数据 */
+            <IDENTIFY>             /*(str) 当前地图 标识 */
+            <X>                    /*(int) 当前地图 场景中X位置 */
+            <Y>                    /*(int) 当前地图 场景中Y位置 */
+            <SUPER>                /*(str) 当前地图 用的图片组 */
+        #<END UNIT MAP>        /* 场景地图 结束 */
+        
+        <UNIT SPRITE COUNT>    /*(int) 该场景 包含的精灵数量 */     
+        #<UNIT SPRITE>         /* 场景精灵 开始 */
+            <INDEX>                /*(int) 当前精灵 号码 */
+            <SPR NAME>             /*(str) 当前精灵 类型名字 */
+            <SPR DATA>             /*(str) 当前精灵 数据 */
+            <IDENTIFY>             /*(str) 当前精灵 标识 */
+            <ANIMATE ID>           /*(int) 当前精灵 动画号 */
+            <X>                    /*(int) 当前精灵 场景中X位置 */
+            <Y>                    /*(int) 当前精灵 场景中Y位置 */
+            <SUPER>                /*(str) 当前精灵 用的图片组 */
+        #<END UNIT SPRITE>     /* 场景精灵 结束*/
+        
+        <WAYPOINT COUNT>       /*(int) 该场景 包含的路点数量 */     
+        #<WAYPOINT>            /* 路点数据 开始 */
+            <INDEX>                /*(int) 该路点 号码 */
+            <PATH DATA>            /*(str) 该路点 数据 */
+            <X>                    /*(int) 该路点 场景中X位置*/
+            <Y>                    /*(int) 该路点 场景中Y位置*/
+        #<END WAYPOINT>        /* 路点数据 结束*/ 
+        
+        #<WAYPOINT LINK>       /* 路径数据 开始*/
+            <INDEX>                /*(int) 该路径 号码*/
+            <START>                /*(int) 该路径 起始路点号码*/
+            <END>                  /*(int) 该路径 结束路点号码*/
+        #<END WAYPOINT LINK>   /* 路径数据 结束*/
          
-         <REGION COUNT> 
-         #<REGION>  
-             <INDEX> 
-             <REGION DATA> /*区域数据*/
-             <X> 
-             <Y> 
-             <W>
-             <H>
-         #<END REGION> 
-	 
-     #<END WORLD> 
+        <REGION COUNT>         /*(int) 该场景 包含的区域数量 */
+        #<REGION>              /* 区域数据 开始 */
+            <INDEX>                /*(int) 该区域 号码 */
+            <REGION DATA>          /*(str) 该区域 数据 */
+            <X>                    /*(int) 该区域 在场景中X位置 */
+            <Y>                    /*(int) 该区域 在场景中Y位置 */
+            <W>                    /*(int) 该区域 宽*/
+            <H>                    /*(int) 该区域 高*/
+        #<END REGION>          /* 区域数据 结束 */
      
- #<END LEVEL> 
---------------------------------------------------------------------------------------------------------------
+    #<END WORLD>           /* 场景数据块 结束 */
+     
+//--------------------------------------------------------------------------------------------------------------
+#<END LEVEL>           /* 关卡数据块 结束*/ 
+//--------------------------------------------------------------------------------------------------------------
