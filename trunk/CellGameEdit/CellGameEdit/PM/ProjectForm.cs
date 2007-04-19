@@ -28,7 +28,7 @@ namespace CellGameEdit.PM
 
         TreeNode nodeReses;
         TreeNode nodeLevels;
-        //TreeNode nodeObjects;
+        TreeNode nodeObjects;
 
 
         //ArrayList formGroup;
@@ -42,16 +42,19 @@ namespace CellGameEdit.PM
 
            // formGroup = new ArrayList();
             formTable       = new Hashtable();
+
             nodeReses       = new TreeNode("资源");
-            //nodeObjects     = new TreeNode("脚本");
+            nodeObjects     = new TreeNode("对象");
             nodeLevels      = new TreeNode("场景");
             
 
             nodeReses.ContextMenuStrip = this.resMenu;
+            nodeObjects.ContextMenuStrip = this.objMenu;
             nodeLevels.ContextMenuStrip = this.levelMenu;
 
 
             treeView1.Nodes.Add(nodeReses);
+            treeView1.Nodes.Add(nodeObjects);
             treeView1.Nodes.Add(nodeLevels);
 
             treeView1.ExpandAll();
@@ -70,11 +73,18 @@ namespace CellGameEdit.PM
 
             nodeReses = (TreeNode)info.GetValue("nodeReses", typeof(TreeNode));
             nodeLevels = (TreeNode)info.GetValue("nodeLevels", typeof(TreeNode));
+            try
+            {
+                nodeObjects = (TreeNode)info.GetValue("nodeObjects", typeof(TreeNode));
+            }catch(Exception err){
+                nodeObjects = new TreeNode("对象");
+            }
             //formGroup = (ArrayList)info.GetValue("formGroup", typeof(ArrayList));
 
             formTable = (Hashtable)info.GetValue("formTable", typeof(Hashtable));
 
             nodeReses.ContextMenuStrip = this.resMenu;
+            nodeObjects.ContextMenuStrip = this.objMenu;
             nodeLevels.ContextMenuStrip = this.levelMenu;
 
 
@@ -91,7 +101,13 @@ namespace CellGameEdit.PM
             {
                 node.ContextMenuStrip = this.subMenu;
             }
+            foreach (TreeNode node in nodeObjects.Nodes)
+            {
+                node.ContextMenuStrip = this.subMenu;
+            }
+
             treeView1.Nodes.Add(nodeReses);
+            treeView1.Nodes.Add(nodeObjects);
             treeView1.Nodes.Add(nodeLevels);
 
             treeView1.ExpandAll();
@@ -118,15 +134,13 @@ namespace CellGameEdit.PM
         {
             RefreshNodeName();
 
-           // info.AddValue("formGroup", formGroup);
-            info.AddValue("nodeReses", nodeReses);
-            info.AddValue("nodeLevels", nodeLevels);
-
-            info.AddValue("formTable", formTable);
-
-
-
            
+                // info.AddValue("formGroup", formGroup);
+                info.AddValue("nodeReses", nodeReses);
+                info.AddValue("nodeObjects", nodeObjects);
+                info.AddValue("nodeLevels", nodeLevels);
+                info.AddValue("formTable", formTable);
+
         }
 
         public void Output()
@@ -522,7 +536,8 @@ namespace CellGameEdit.PM
                     if (formTable[key].GetType().Equals(typeof(ImagesForm)) ||
                         formTable[key].GetType().Equals(typeof(SpriteForm)) ||
                         formTable[key].GetType().Equals(typeof(MapForm))    ||
-                        formTable[key].GetType().Equals(typeof(WorldForm)) )
+                        formTable[key].GetType().Equals(typeof(WorldForm))  ||
+                        formTable[key].GetType().Equals(typeof(ObjectForm)))
                     {
                         return (Form)formTable[key];
                     }
@@ -702,6 +717,37 @@ namespace CellGameEdit.PM
 
         }
 #endregion
+
+#region objMenu
+        private void 添加对象ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String name = "unamed_Object";
+            TextDialog nameDialog = new TextDialog(name);
+            while (nameDialog.ShowDialog() == DialogResult.OK)
+            {
+                name = nameDialog.getText();
+                if (treeView1.SelectedNode.Nodes.ContainsKey(name))
+                {
+                    MessageBox.Show("已经有　" + name + " 这个名字了");
+                    continue;
+                }
+
+                ObjectForm form = new ObjectForm(name);
+                TreeNode node = new TreeNode(name);
+                node.Name = name;
+                formTable.Add(node, form);
+
+                node.ContextMenuStrip = this.subMenu;
+                this.treeView1.SelectedNode.Nodes.Add(node);
+                this.treeView1.SelectedNode.ExpandAll();
+                form.MdiParent = this.MdiParent;
+                form.Show();
+                break;
+            }
+        }
+
+#endregion
+
         //------------------------------------------------------------------------------------------------------------------------------------
         
 #region tileMenu
@@ -834,7 +880,6 @@ namespace CellGameEdit.PM
         }
 
 #endregion
-
 
 
 
