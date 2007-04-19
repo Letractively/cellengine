@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+using System.Collections;
+using System.Runtime.Serialization;
+using System.Security.Permissions;
+using System.Runtime.Serialization.Formatters;
+using System.IO;
+
+namespace CellGameEdit.PM
+{
+    [Serializable]
+    public partial class ObjectForm : Form, ISerializable
+    {
+        public ObjectForm(String name)
+        {
+            InitializeComponent();
+        }
+
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        protected ObjectForm(SerializationInfo info, StreamingContext context)
+        {
+            InitializeComponent();
+        }
+
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
+        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+
+        }
+
+        private void ObjectForm_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void ObjectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.Hide();
+            }
+        }
+
+
+    }
+}

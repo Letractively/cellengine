@@ -181,9 +181,29 @@ namespace CellGameEdit
                     if (ProjectForm.workName != "")
                     {
                         SoapFormatter formatter = new SoapFormatter();
-                        Stream stream = new FileStream(ProjectForm.workName, FileMode.Create, FileAccess.Write, FileShare.None);
-                        formatter.Serialize(stream, prjForm);
-                        stream.Close(); 
+                        Stream stream = new MemoryStream();
+                        try
+                        {
+                            formatter.Serialize(stream, prjForm);
+
+                            FileStream fs = new FileStream(ProjectForm.workName, FileMode.Create, FileAccess.Write, FileShare.None);
+                            stream.Seek(0,SeekOrigin.Begin);
+                            while(true){
+                                int data = stream.ReadByte();
+                                if(data>0){
+                                    fs.WriteByte((byte)data);
+                                }else{
+                                    break;
+                                }
+                            }
+
+                            fs.Close();
+                        }
+                        catch (Exception err)
+                        {
+                            MessageBox.Show(err.StackTrace);
+                        }
+                        stream.Close();
                     }
                 }
                 catch(Exception err){
@@ -194,6 +214,64 @@ namespace CellGameEdit
             {
             }
 
+        }
+
+        private void 另存为toolStripMenuItem8_Click(object sender, EventArgs e)
+        {
+            if (prjForm != null && prjForm.Visible == true)
+            {
+                try
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Filter = "CPJ files (*.cpj)|*.cpj";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        ProjectForm.workSpace = System.IO.Path.GetDirectoryName(sfd.FileName);
+                        ProjectForm.workName = sfd.FileName;
+
+                        //
+                        if (ProjectForm.workName != "")
+                        {
+                            SoapFormatter formatter = new SoapFormatter();
+                            Stream stream = new MemoryStream();
+                            try
+                            {
+                                formatter.Serialize(stream, prjForm);
+
+                                FileStream fs = new FileStream(ProjectForm.workName, FileMode.Create, FileAccess.Write, FileShare.None);
+                                stream.Seek(0, SeekOrigin.Begin);
+                                while (true)
+                                {
+                                    int data = stream.ReadByte();
+                                    if (data > 0)
+                                    {
+                                        fs.WriteByte((byte)data);
+                                    }
+                                    else
+                                    {
+                                        break;
+                                    }
+                                }
+
+                                fs.Close();
+                            }
+                            catch (Exception err)
+                            {
+                                MessageBox.Show(err.StackTrace);
+                            }
+                            stream.Close();
+                        }
+                        //
+                    }
+                }
+                catch (Exception err)
+                {
+                    MessageBox.Show("目录错误 " + err.Message);
+                }
+            }
+            else
+            {
+            }
         }
 
         private void 关闭ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -456,6 +534,8 @@ namespace CellGameEdit
 
 
         }
+
+
 
 
 
