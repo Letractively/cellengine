@@ -130,7 +130,7 @@ namespace CellGameEdit.PM
                     }
                     catch (Exception err)
                     {
-                        Console.WriteLine(this.id + " : " + err.Message);
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
                    
                 }
@@ -138,7 +138,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
            
 
@@ -165,7 +165,7 @@ namespace CellGameEdit.PM
                         }
                         catch (Exception err)
                         {
-                            Console.WriteLine(this.id + " : " + err.Message);
+                            Console.WriteLine(this.id + " : " + err.StackTrace);
                         }
                     }
                 }
@@ -174,7 +174,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
         }
 
@@ -604,7 +604,7 @@ namespace CellGameEdit.PM
                 output.WriteLine(sprite);
 
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             
         }
 
@@ -2061,7 +2061,7 @@ namespace CellGameEdit.PM
                     clipSuperForm = this.super;
                 }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
         private void animPaste()
         {
@@ -2091,7 +2091,7 @@ namespace CellGameEdit.PM
                     }
                 }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
 
         public string getAnimateName(int index)
@@ -2179,7 +2179,7 @@ namespace CellGameEdit.PM
                 }
                 framesRefersh();
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             
         }
         // down
@@ -2210,7 +2210,7 @@ namespace CellGameEdit.PM
                 }
                 framesRefersh();
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
 // timer
         private void timer1_Tick(object sender, EventArgs e)

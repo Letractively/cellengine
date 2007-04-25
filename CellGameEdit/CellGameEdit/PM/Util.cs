@@ -211,7 +211,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* remove trunk ERROR " + start + "->" + end + ": " + err.Message + " */ ");
+                return script.Insert(0, "/* remove trunk ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
             }
         }
 
@@ -227,7 +227,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.Message + " */ ");
+                return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
             }
         }
       
@@ -252,7 +252,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err) 
             {
-                return script.Insert(0, "/* replace keywords ERROR " + start + "->" + end + ": " + err.Message + " */ ");
+                return script.Insert(0, "/* replace keywords ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
             }
         }
 
@@ -280,7 +280,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine( "/* replace sub trunks ERROR " + start + "->" + end + " : "+err.Message+" */ ");
+                Console.WriteLine( "/* replace sub trunks ERROR " + start + "->" + end + " : "+err.StackTrace+" */ ");
                 return null; 
             }
         }

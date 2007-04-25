@@ -273,7 +273,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
         }
 
@@ -312,7 +312,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
         }
 
@@ -617,7 +617,7 @@ namespace CellGameEdit.PM
                 output.WriteLine(map);
 
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
 
         }
 

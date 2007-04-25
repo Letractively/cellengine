@@ -121,7 +121,7 @@ namespace CellGameEdit
                 //    }
                 //    catch (Exception err)
                 //    {
-                //        MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
+                //        MessageBox.Show("找不到工程文件 Project.cpj " + err.StackTrace);
                 //    }
                    
                 //}
@@ -146,7 +146,7 @@ namespace CellGameEdit
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show(err.StackTrace+":"+err.Message);
+                            MessageBox.Show(err.StackTrace+":"+err.StackTrace);
                         }
                     }
                 }
@@ -207,7 +207,7 @@ namespace CellGameEdit
                     }
                 }
                 catch(Exception err){
-                    MessageBox.Show("目录错误 "+err.Message);
+                    MessageBox.Show("目录错误 "+err.StackTrace);
                 }
             }
             else
@@ -266,7 +266,7 @@ namespace CellGameEdit
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show("目录错误 " + err.Message);
+                    MessageBox.Show("目录错误 " + err.StackTrace);
                 }
             }
             else
@@ -324,7 +324,7 @@ namespace CellGameEdit
             }
             catch (Exception err)
             {
-                MessageBox.Show("脚本导入错误：" + err.Message);
+                MessageBox.Show("脚本导入错误：" + err.StackTrace);
             }
         }
         // del script
@@ -354,7 +354,7 @@ namespace CellGameEdit
             }
             catch (Exception err)
             {
-                MessageBox.Show("脚本删除错误：" + err.Message);
+                MessageBox.Show("脚本删除错误：" + err.StackTrace);
             }
         }
 
@@ -473,7 +473,7 @@ namespace CellGameEdit
                     this.progressBar1.Value = 0;
                 }
             }
-            catch (Exception err) { Console.WriteLine(err.Message); }
+            catch (Exception err) { Console.WriteLine(err.StackTrace); }
         }
 
         private void outputLocalProjectScript(object sender, EventArgs e)
@@ -488,7 +488,7 @@ namespace CellGameEdit
                     this.progressBar1.Value = 0;
                 }
             }
-            catch (Exception err) { Console.WriteLine(err.Message); }
+            catch (Exception err) { Console.WriteLine(err.StackTrace); }
         }
 
 

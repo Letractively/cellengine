@@ -134,7 +134,7 @@ namespace CellGameEdit.PM
                     catch (Exception err)
                     {
                         dstImages.Add(null);
-                        Console.WriteLine(this.id + " : " + err.Message);
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
 
                     
@@ -165,7 +165,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
         }
 
@@ -219,7 +219,7 @@ namespace CellGameEdit.PM
                         outX.Add(0);
                         outY.Add(0);
                         outK.Add(false);
-                        Console.WriteLine(this.id + " : " + err.Message);
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
                 }
                 info.AddValue("output", output);
@@ -229,7 +229,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.Message);
+                MessageBox.Show(err.StackTrace);
             }
         }
 
@@ -288,7 +288,7 @@ namespace CellGameEdit.PM
                         outputImage.getDImage().Save(dir + "\\" + this.id + "." + type, format);
                     }
                 }
-                catch (Exception err) { Console.WriteLine(this.id + " : save group : " + err.Message); }
+                catch (Exception err) { Console.WriteLine(this.id + " : save group : " + err.StackTrace); }
                 if (tile)
                 {
                     String tileDir = dir + "\\" + this.id + "\\" ;
@@ -304,11 +304,11 @@ namespace CellGameEdit.PM
                             getDstImage(i).getDImage().Save(tileDir + i + "." + type, format);
 
                         }
-                        catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.Message); }
+                        catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.StackTrace); }
                     }
                 }
             }
-            catch (Exception err){Console.WriteLine(this.id + " : " + err.Message);}
+            catch (Exception err){Console.WriteLine(this.id + " : " + err.StackTrace);}
             
         }
 
@@ -353,7 +353,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     String[] clips = new string[getDstImageCount()];
                     for (int i = 0; i < getDstImageCount(); i++)
                     {
-                        if (getDstImage(i) != null)
+                        if (getDstImage(i) != null )
                         {
                             string X = getDstImage(i).killed ? "0" : getDstImage(i).x.ToString();
                             string Y = getDstImage(i).killed ? "0" : getDstImage(i).y.ToString();
@@ -364,6 +364,13 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                                 new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
                                 new string[] { i.ToString(), X, Y, W, H }
                                 );
+                        }
+                        else
+                        {
+                            clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
+                                   new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
+                                   new string[] { i.ToString(), "0", "0", "0", "0" }
+                                   );
                         }
                     }
                     string temp = Util.replaceSubTrunksScript(images, "#<CLIP>", "#<END CLIP>", clips);
@@ -391,7 +398,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 SaveAllImages(outDir,imageType,imageTile,imageGroup);
                
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
 
 
@@ -441,7 +448,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         {
             for (int i = 0; i < dstImages.Count; i++)
             {
-                if (getDstImage(i).killed)
+                if (dstImages[i] == null || getDstImage(i).killed)
                 {
                     dstImages[i] = img;
                     try
@@ -481,7 +488,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
                         pictureBox2.Height += (img.getHeight() * dstSize);
                     }catch(Exception err){
-                        Console.WriteLine(err.Message);
+                        Console.WriteLine(err.StackTrace);
                     }
                 }
             }
@@ -694,7 +701,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 }
             }
             catch (Exception err) {
-                Console.WriteLine(this.id + " : " + err.Message);
+                Console.WriteLine(this.id + " : " + err.StackTrace);
             }
        
 
