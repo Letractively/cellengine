@@ -6,7 +6,7 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 
-namespace CellGameEdit.PM
+namespace CellGameEdit
 {
     public partial class EventEdit : Form
     {
