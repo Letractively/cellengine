@@ -125,7 +125,7 @@ namespace CellGameEdit.PM
             //}
             //catch (Exception err)
             //{
-            //    MessageBox.Show("找不到工程文件 Project.cpj " + err.Message);
+            //    MessageBox.Show("找不到工程文件 Project.cpj " + err.StackTrace);
             //}
         }
 
@@ -317,7 +317,7 @@ namespace CellGameEdit.PM
                     Console.WriteLine("Error : " + fileName + " : 不存在!");
                 }
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace); }
 
         }
 
@@ -369,7 +369,7 @@ namespace CellGameEdit.PM
 
                 }
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace); }
 
             script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
                 
@@ -406,7 +406,7 @@ namespace CellGameEdit.PM
                     new string[] { FormsImages.Count.ToString(), FormsMap.Count.ToString(), FormsSprite.Count.ToString()});
                 script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace); }
 
             //build world trunk
             try
@@ -428,7 +428,7 @@ namespace CellGameEdit.PM
                     new string[] { FormsWorld.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
             }
-            catch (Exception err) { MessageBox.Show(err.Message); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace); }
 
             return script;
         }
@@ -679,7 +679,7 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show(err.TargetSite+":"+err.Message);
+                    MessageBox.Show(err.TargetSite+":"+err.StackTrace);
                 }
                 break;
             }

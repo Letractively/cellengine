@@ -87,7 +87,7 @@ namespace CellGameEdit.PM
                     }
                     catch (Exception err)
                     {
-                        Console.WriteLine(this.id + " : " + err.Message);
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
                 }
 
@@ -115,7 +115,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine(this.id + " : " + err.Message);
+                Console.WriteLine(this.id + " : " + err.StackTrace);
             }
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -144,7 +144,7 @@ namespace CellGameEdit.PM
                     }
                     catch (Exception err)
                     {
-                        Console.WriteLine(this.id + " : " + err.Message);
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
                 }
                 info.AddValue("Units", Units);
@@ -160,7 +160,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine(this.id + " : " + err.Message);
+                Console.WriteLine(this.id + " : " + err.StackTrace);
             }
         }
 
@@ -185,7 +185,7 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err)
                 {
-                    Console.WriteLine(this.id + " : " + err.Message);
+                    Console.WriteLine(this.id + " : " + err.StackTrace);
                 }
             }
             //
@@ -203,7 +203,7 @@ namespace CellGameEdit.PM
                         sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "] = new CWayPoint(" + (p.rect.X + p.rect.Width / 2) + "," + (p.rect.Y + p.rect.Height / 2) + ");");//
                     }
                 }
-                catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             }//
             sw.WriteLine("");//
             foreach (WayPoint p in WayPoints)
@@ -221,11 +221,11 @@ namespace CellGameEdit.PM
                                     sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "].link(WayPoints[" + WayPoints.IndexOf(l) + "]);");//
                                 }
                             }
-                            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
                         }//
                     }
                 }
-                catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             }//
             sw.WriteLine("}");// way point end
 
@@ -253,7 +253,7 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err)
                 {
-                    Console.WriteLine(this.id + " : " + err.Message);
+                    Console.WriteLine(this.id + " : " + err.StackTrace);
                 }
             }
             sw.WriteLine("}");//unit end
@@ -391,11 +391,11 @@ namespace CellGameEdit.PM
                                             );
                                         }
                                     }
-                                    catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                                    catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
                                 }//
                             }
                         }
-                        catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+                        catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
                     }//
                     String[] slink = new string[link.Count];
                     slink = (String[])link.ToArray(typeof(String));
@@ -467,7 +467,7 @@ namespace CellGameEdit.PM
                 output.WriteLine(world);
 
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.Message); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
 
         private void WorldForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -1503,7 +1503,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine(this.id + " Unit Lable Error : " + err.Message);
+                Console.WriteLine(this.id + " Unit Lable Error : " + err.StackTrace);
             }
         }
 
@@ -1523,7 +1523,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine(this.id + " Unit Lable Error : " + err.Message);
+                Console.WriteLine(this.id + " Unit Lable Error : " + err.StackTrace);
             }
         }
 
@@ -1816,7 +1816,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Region : " + err.Message);
+                Console.WriteLine("Region : " + err.StackTrace);
             }
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -1832,7 +1832,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Region : " + err.Message);
+                Console.WriteLine("Region : " + err.StackTrace);
             }
         }
 
@@ -1898,7 +1898,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Region : " + err.Message);
+                Console.WriteLine("Region : " + err.StackTrace);
             }
 
         }
@@ -1941,7 +1941,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Path : " + err.Message);
+                Console.WriteLine("Path : " + err.StackTrace);
             }
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -1956,7 +1956,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Path : " + err.Message);
+                Console.WriteLine("Path : " + err.StackTrace);
             }
         }
 
@@ -2100,7 +2100,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Path : " + err.Message);
+                Console.WriteLine("Path : " + err.StackTrace);
             }
 
         }
@@ -2187,7 +2187,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Unit:" + err.Message);
+                Console.WriteLine("Unit:" + err.StackTrace);
             }
 
 
@@ -2216,7 +2216,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Unit:" + err.Message);
+                Console.WriteLine("Unit:" + err.StackTrace);
             }
         }
 
@@ -2314,7 +2314,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Unit:" + err.Message);
+                Console.WriteLine("Unit:" + err.StackTrace);
             }
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -2326,7 +2326,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine("Event:" + err.Message);
+                Console.WriteLine("Event:" + err.StackTrace);
             }
         }
 
