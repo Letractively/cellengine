@@ -22,8 +22,10 @@ namespace CellGameEdit.PM
         public StringBuilder Data = new StringBuilder();
 
         Hashtable UnitList;
-        ArrayList WayPoints;
-        ArrayList Regions;
+        //ArrayList WayPoints;
+        //ArrayList Regions;
+        Hashtable WayPointsList;
+        Hashtable RegionsList;
 
         int CellW = 16;
         int CellH = 16;
@@ -37,8 +39,10 @@ namespace CellGameEdit.PM
             id = name;
 
             UnitList = new Hashtable();
-            WayPoints = new ArrayList();
-            Regions = new ArrayList();
+            WayPointsList = new Hashtable();
+            RegionsList = new Hashtable();
+            //WayPoints = new ArrayList();
+            //Regions = new ArrayList();
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -49,29 +53,16 @@ namespace CellGameEdit.PM
             numericUpDown2.Value = CellH;
 
             UnitList = new Hashtable();
+            WayPointsList = new Hashtable();
+            RegionsList = new Hashtable();
 
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
-                // waypoint
-                try
-                {
-                    WayPoints = (ArrayList)info.GetValue("WayPoints", typeof(ArrayList));
-                }
-                catch (Exception err)
-                {
-                    WayPoints = new ArrayList();
-                }
-                // region
-                try
-                {
-                    Regions = (ArrayList)info.GetValue("Regions", typeof(ArrayList));
-                }
-                catch (Exception err)
-                {
-                    Regions = new ArrayList();
-                }
+
+
                 // unit
+                #region Units 
                 ArrayList Units = (ArrayList)info.GetValue("Units", typeof(ArrayList));
                 for (int i = 0; i < Units.Count; i++)
                 {
@@ -81,8 +72,6 @@ namespace CellGameEdit.PM
                         ListViewItem item = new ListViewItem(new String[] { unit.id, unit.animID.ToString() });
                         listView1.Items.Add(item);
                         UnitList.Add(item, unit);
-                        pictureBox1.Width = Math.Max(unit.x + unit.getWidth(), pictureBox1.Width);
-                        pictureBox1.Height = Math.Max(unit.y + unit.getHeight(), pictureBox1.Height);
                         //Console.WriteLine("Level: Load " + unit.id);
                     }
                     catch (Exception err)
@@ -90,6 +79,64 @@ namespace CellGameEdit.PM
                         Console.WriteLine(this.id + " : " + err.StackTrace);
                     }
                 }
+                #endregion
+
+                // WayPoint
+                #region WayPoints
+                try
+                {
+                    ArrayList WayPoints = (ArrayList)info.GetValue("WayPoints", typeof(ArrayList));
+                    for (int i = 0; i < WayPoints.Count; i++)
+                    {
+                        try
+                        {
+                            WayPoint wp = ((WayPoint)WayPoints[i]);
+                            ListViewItem item = new ListViewItem(new String[] { 
+                                wp.getWX().ToString(),
+                                wp.getWY().ToString()
+                            });
+                            listView2.Items.Add(item);
+                            WayPointsList.Add(item, wp);
+                            //Console.WriteLine("Level: Load " + unit.id);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(this.id + " : " + err.StackTrace);
+                        }
+                    }
+                }
+                catch (Exception err) { }
+                #endregion
+
+                // region
+                #region Regions
+                try
+                {
+                    ArrayList Regions = (ArrayList)info.GetValue("Regions", typeof(ArrayList));
+                    for (int i = 0; i < Regions.Count; i++)
+                    {
+                        try
+                        {
+                            Region region = ((Region)Regions[i]);
+                            ListViewItem item = new ListViewItem(new String[] { 
+                                region.rect.X.ToString(), 
+                                region.rect.Y.ToString(),
+                                region.rect.Width.ToString(),
+                                region.rect.Height.ToString(),
+                            });
+                            listView3.Items.Add(item);
+                            RegionsList.Add(item, region);
+                            //Console.WriteLine("Level: Load " + unit.id);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(this.id + " : " + err.StackTrace);
+                        }
+                    }
+                }
+                catch (Exception err) { }
+                #endregion
+
 
                 pictureBox1.Width = (int)info.GetValue("Width", typeof(int));
                 pictureBox1.Height = (int)info.GetValue("Height", typeof(int));
@@ -126,10 +173,7 @@ namespace CellGameEdit.PM
             {
                 info.AddValue("id", id);
 
-                info.AddValue("WayPoints", WayPoints);
-
-                info.AddValue("Regions", Regions);
-
+                #region Units
                 ArrayList Units = new ArrayList();
                 for (int i = 0; i < listView1.Items.Count; i++)
                 {
@@ -149,6 +193,46 @@ namespace CellGameEdit.PM
                 }
                 info.AddValue("Units", Units);
                 info.AddValue("UnitList", UnitList);
+                #endregion
+
+                #region WayPoints
+                ArrayList WayPoints = new ArrayList();
+                for (int i = 0; i < listView2.Items.Count; i++)
+                {
+                    try
+                    {
+                        WayPoint wp = (WayPoint)WayPointsList[listView2.Items[i]];
+                        WayPoints.Add(wp);
+                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                    }
+                }
+                info.AddValue("WayPoints", WayPoints);
+                info.AddValue("WayPointsList", WayPointsList);
+                #endregion
+
+                #region Regions
+                ArrayList Regions = new ArrayList();
+                for (int i = 0; i < listView3.Items.Count; i++)
+                {
+                    try
+                    {
+                        Region region = (Region)RegionsList[listView3.Items[i]];
+                        Regions.Add(region);
+                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                    }
+                }
+                info.AddValue("Regions", Regions);
+                info.AddValue("RegionsList", RegionsList);
+                #endregion
+
 
                 info.AddValue("Width", pictureBox1.Width);
                 info.AddValue("Height", pictureBox1.Height);
@@ -162,104 +246,6 @@ namespace CellGameEdit.PM
             {
                 Console.WriteLine(this.id + " : " + err.StackTrace);
             }
-        }
-
-        public void Output(System.IO.StringWriter sw)
-        {
-            testDelUnit();
-
-            // class
-            sw.WriteLine();
-            sw.WriteLine("class " + this.id + " extends CWorld ");// class
-            sw.WriteLine("{");
-
-            // fields
-            foreach (ListViewItem item in listView1.Items)
-            {
-                try
-                {
-                    Unit unit = ((Unit)UnitList[item]);
-                    sw.WriteLine("public C" + unit.type + " " + unit.id + ";");
-                    sw.WriteLine("private int " + unit.id + "_X = " + unit.x + ";");
-                    sw.WriteLine("private int " + unit.id + "_Y = " + unit.y + ";");
-                }
-                catch (Exception err)
-                {
-                    Console.WriteLine(this.id + " : " + err.StackTrace);
-                }
-            }
-            //
-
-            // way points
-            sw.WriteLine("public void initPath()");//
-            sw.WriteLine("{");//
-            sw.WriteLine("    WayPoints = new CWayPoint[" + WayPoints.Count + "];");//
-            foreach (WayPoint p in WayPoints)
-            {
-                try
-                {
-                    if (p != null)
-                    {//
-                        sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "] = new CWayPoint(" + (p.rect.X + p.rect.Width / 2) + "," + (p.rect.Y + p.rect.Height / 2) + ");");//
-                    }
-                }
-                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-            }//
-            sw.WriteLine("");//
-            foreach (WayPoint p in WayPoints)
-            {
-                try
-                {
-                    if (p != null)
-                    {//
-                        foreach (WayPoint l in p.link)
-                        {
-                            try
-                            {
-                                if (l != null)
-                                {//
-                                    sw.WriteLine("    WayPoints[" + WayPoints.IndexOf(p) + "].link(WayPoints[" + WayPoints.IndexOf(l) + "]);");//
-                                }
-                            }
-                            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-                        }//
-                    }
-                }
-                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-            }//
-            sw.WriteLine("}");// way point end
-
-            // units
-            sw.WriteLine("public void initUnit()");
-            sw.WriteLine("{");
-            foreach (ListViewItem item in listView1.Items)
-            {
-                try
-                {
-                    Unit unit = ((Unit)UnitList[item]);
-                    if (unit.type.Equals("Map"))
-                    {
-                        sw.WriteLine("    addMap(" + unit.id + ");");
-                    }
-                    else
-                    {
-                        sw.WriteLine("    try{");
-                        sw.WriteLine("    addSprite(" + unit.id + ");");
-                        sw.WriteLine("    " + unit.id + ".X = " + unit.id + "_X;");
-                        sw.WriteLine("    " + unit.id + ".Y = " + unit.id + "_Y;");
-                        sw.WriteLine("    }catch(Exception err){}");
-
-                    }
-                }
-                catch (Exception err)
-                {
-                    Console.WriteLine(this.id + " : " + err.StackTrace);
-                }
-            }
-            sw.WriteLine("}");//unit end
-
-            sw.WriteLine("}");//class end
-
         }
 
         public void OutputCustom(String script, System.IO.StringWriter output)
@@ -281,6 +267,36 @@ namespace CellGameEdit.PM
 
                     }
                     catch (Exception err) { }
+                }
+
+                ArrayList WayPoints = new ArrayList();
+                for (int i = 0; i < listView2.Items.Count; i++)
+                {
+                    try
+                    {
+                        WayPoint wp = (WayPoint)WayPointsList[listView2.Items[i]];
+                        WayPoints.Add(wp);
+                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                    }
+                }
+
+                ArrayList Regions = new ArrayList();
+                for (int i = 0; i < listView3.Items.Count; i++)
+                {
+                    try
+                    {
+                        Region region = (Region)RegionsList[listView3.Items[i]];
+                        Regions.Add(region);
+                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                    }
+                    catch (Exception err)
+                    {
+                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                    }
                 }
 
                 bool fix = false;
@@ -549,6 +565,13 @@ namespace CellGameEdit.PM
             //    Console.WriteLine("e.Iss");
             //}
         }
+        private void listView1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button ==MouseButtons.Right && listView1.SelectedItems.Count > 0)
+            {
+                menuUnit.Show(listView1, e.Location);
+            }
+        }
 
         // picturebox1 dst level
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
@@ -700,14 +723,16 @@ namespace CellGameEdit.PM
         { // draw way points
             if (toolStripButton9.Checked)
             {
-                foreach (WayPoint p in WayPoints)
+                foreach (ListViewItem item in listView2.Items)
                 {
+                    WayPoint p = (WayPoint)WayPointsList[item];
+
                     if (p != null)
                     {
                         p.Render(g);
                         g.setColor(0xff, 0, 0, 0);
                         g.dg.DrawString(
-                            "p" + WayPoints.IndexOf(p).ToString(),
+                            "p" + listView2.Items.IndexOf(item).ToString(),
                             this.Font,
                             System.Drawing.Brushes.Black,
                             p.rect.X + p.rect.Width + 1,
@@ -758,14 +783,15 @@ namespace CellGameEdit.PM
         {
             if (toolStripButton17.Checked)
             {
-                foreach (Region r in Regions)
+                foreach (ListViewItem item in listView3.Items)
                 {
+                    Region r = (Region)RegionsList[item];
                     if (r != null)
                     {
                         r.Render(g);
                         g.setColor(0xff, 0, 0, 0);
                         g.dg.DrawString(
-                            "r"+Regions.IndexOf(r).ToString(),
+                            "r" + listView3.Items.IndexOf(item).ToString(),
                             this.Font,
                             System.Drawing.Brushes.Black,
                             r.rect.X,
@@ -832,8 +858,10 @@ namespace CellGameEdit.PM
                 #endregion
 
                 #region waypoint
-                foreach (WayPoint p in WayPoints)
+                foreach (ListViewItem item in listView2.Items)
                 {
+                    WayPoint p = (WayPoint)WayPointsList[item];
+
                     if (p != null && p.isCheck)
                     {
 
@@ -869,8 +897,9 @@ namespace CellGameEdit.PM
                 #endregion
 
                 #region region
-                foreach (Region r in Regions)
+                foreach (ListViewItem item in listView3.Items)
                 {
+                    Region r = (Region)RegionsList[item];
                     if (r != null && r.isCheck && !r.isSub)
                     {
                         if (!toolStripButton11.Checked)
@@ -1022,8 +1051,9 @@ namespace CellGameEdit.PM
 
                     popedWayPoint = null;
                     selectedWayPoint = null;
-                    foreach (WayPoint p in WayPoints)
+                    foreach (ListViewItem item in listView2.Items)
                     {
+                        WayPoint p = (WayPoint)WayPointsList[item];
                         if (p != null)
                         {
                             p.isCheck = false;
@@ -1031,8 +1061,9 @@ namespace CellGameEdit.PM
                     }
 
                     selectedRegion = null;
-                    foreach (Region r in Regions)
+                    foreach (ListViewItem item in listView3.Items)
                     {
+                        Region r = (Region)RegionsList[item];
                         if (r != null)
                         {
                             r.isCheck = false;
@@ -1067,8 +1098,9 @@ namespace CellGameEdit.PM
                     //select way point
                     if (isChecked == false && toolStripButton9.Checked)
                     {
-                        foreach (WayPoint p in WayPoints)
+                        foreach (ListViewItem item in listView2.Items)
                         {
+                            WayPoint p = (WayPoint)WayPointsList[item];
                             if (p != null)
                             {
                                 if (p.rect.Contains(e.X, e.Y))
@@ -1084,8 +1116,9 @@ namespace CellGameEdit.PM
                     // select regions
                     if (isChecked == false && toolStripButton17.Checked)
                     {
-                        foreach (Region r in Regions)
+                        foreach (ListViewItem item in listView3.Items)
                         {
+                            Region r = (Region)RegionsList[item];
                             if (r != null)
                             {
                                 if (r.select(e.X, e.Y))
@@ -1125,8 +1158,9 @@ namespace CellGameEdit.PM
                     popedWayPoint = null;
 
                     selectedRegion = null;
-                    foreach (Region r in Regions)
+                    foreach (ListViewItem item in listView3.Items)
                     {
+                        Region r = (Region)RegionsList[item];
                         if (r != null)
                         {
                             r.isCheck = false;
@@ -1157,8 +1191,9 @@ namespace CellGameEdit.PM
                     //select way point
                     if (isChecked == false && toolStripButton9.Checked)
                     {
-                        foreach (WayPoint p in WayPoints)
+                        foreach (ListViewItem item in listView2.Items)
                         {
+                            WayPoint p = (WayPoint)WayPointsList[item];
                             if (p != null)
                             {
                                 if (p.rect.Contains(e.X, e.Y))
@@ -1174,8 +1209,9 @@ namespace CellGameEdit.PM
                     // select regions
                     if (isChecked == false && toolStripButton17.Checked)
                     {
-                        foreach (Region r in Regions)
+                        foreach (ListViewItem item in listView3.Items)
                         {
+                            Region r = (Region)RegionsList[item];
                             if (r != null)
                             {
                                 if (r.select(e.X, e.Y))
@@ -1320,7 +1356,14 @@ namespace CellGameEdit.PM
         {
             // menuPath.SourceControl
             WayPoint p = new WayPoint(dx, dy);
-            WayPoints.Add(p);
+            //WayPoints.Add(p);
+            ListViewItem item = new ListViewItem(new String[] { 
+                                p.getWX().ToString(),
+                                p.getWY().ToString()
+                            });
+            listView2.Items.Add(item);
+            WayPointsList.Add(item, p);
+            //Console.WriteLine("Level: Load " + unit.id);
 
             pictureBox1.Refresh();
         }
@@ -1328,8 +1371,16 @@ namespace CellGameEdit.PM
         private void 区域ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             // menuPath.SourceControl
-            Region p = new Region(dx, dy);
-            Regions.Add(p);
+            Region region = new Region(dx, dy);
+            //Regions.Add(p);
+            ListViewItem item = new ListViewItem(new String[] { 
+                                region.rect.X.ToString(), 
+                                region.rect.Y.ToString(),
+                                region.rect.Width.ToString(),
+                                region.rect.Height.ToString(),
+                            });
+            listView3.Items.Add(item);
+            RegionsList.Add(item, region);
 
             pictureBox1.Refresh();
         }
@@ -1353,7 +1404,9 @@ namespace CellGameEdit.PM
             popedWayPoint.DisLinkAll();
             WayPoints.Remove(popedWayPoint);
 
-            foreach(WayPoint p in WayPoints){
+            foreach (ListViewItem item in listView2.Items)
+            {
+                WayPoint p = (WayPoint)WayPointsList[item];
                 p.DisLink(popedWayPoint);
             }
 
@@ -1458,6 +1511,11 @@ namespace CellGameEdit.PM
 
         #endregion
 
+
+
+
+
+
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
             pictureBox1.Refresh();
@@ -1526,6 +1584,8 @@ namespace CellGameEdit.PM
                 Console.WriteLine(this.id + " Unit Lable Error : " + err.StackTrace);
             }
         }
+       
+
 
         // change sprite id
         private void toolStripDropDownButton1_DropDownOpening(object sender, EventArgs e)
@@ -1712,8 +1772,9 @@ namespace CellGameEdit.PM
             // draw way points
             if (toolStripButton9.Checked)
             {
-                foreach (WayPoint p in WayPoints)
+                foreach (ListViewItem item in listView2.Items)
                 {
+                    WayPoint p = (WayPoint)WayPointsList[item];
                     if (p != null)
                     {
                         p.Render(g);
@@ -1769,6 +1830,7 @@ namespace CellGameEdit.PM
             pictureBox1.Height = (int)numericUpDown4.Value;
             pictureBox1.Refresh();
         }
+
 
 
 
@@ -1960,6 +2022,14 @@ namespace CellGameEdit.PM
             }
         }
 
+        public int getWX()
+        {
+            return rect.X - rect.Width / 2;
+        }
+        public int getWY()
+        {
+            return rect.Y - rect.Height / 2;
+        }
         public bool Link2(WayPoint point)
         {
             if (point == null) return false;

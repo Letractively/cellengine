@@ -143,68 +143,68 @@ namespace CellGameEdit.PM
 
         }
 
-        public void Output()
-        {
-            RefreshNodeName();
+        //public void Output()
+        //{
+        //    RefreshNodeName();
 
-            System.IO.StringWriter sw = new System.IO.StringWriter();
-            sw.WriteLine("/* Cell Game Editor by WAZA Zhang */");
-            sw.WriteLine("/* Email : wazazhang@gmail.com */");
+        //    System.IO.StringWriter sw = new System.IO.StringWriter();
+        //    sw.WriteLine("/* Cell Game Editor by WAZA Zhang */");
+        //    sw.WriteLine("/* Email : wazazhang@gmail.com */");
 
-            sw.WriteLine("import com.morefuntek.cell.*;");
-            sw.WriteLine("import com.morefuntek.cell.Game.*;");
-            sw.WriteLine();
+        //    sw.WriteLine("import com.morefuntek.cell.*;");
+        //    sw.WriteLine("import com.morefuntek.cell.Game.*;");
+        //    sw.WriteLine();
 
-            sw.WriteLine("public class Reses {");
-            Output(nodeReses, sw);
-            sw.WriteLine("}");
+        //    sw.WriteLine("public class Reses {");
+        //    Output(nodeReses, sw);
+        //    sw.WriteLine("}");
 
-            Output(nodeLevels, sw);
+        //    Output(nodeLevels, sw);
 
-            Console.WriteLine(sw.ToString());
+        //    Console.WriteLine(sw.ToString());
 
-            System.IO.File.WriteAllText(
-                ProjectForm.workSpace + "\\Reses.java",
-                sw.ToString());
+        //    System.IO.File.WriteAllText(
+        //        ProjectForm.workSpace + "\\Reses.java",
+        //        sw.ToString());
 
-            //
+        //    //
 
-        }
+        //}
 
-        public void Output(TreeNode node, System.IO.StringWriter sw)
-        {
-            if (formTable[node] != null)
-            {
-                //
-                if (formTable[node].GetType().Equals(typeof(ImagesForm)))
-                {
-                    ((ImagesForm)formTable[node]).Output(sw);
-                }
-                if (formTable[node].GetType().Equals(typeof(MapForm)))
-                {
-                    ((MapForm)formTable[node]).Output(sw);
-                }
-                if (formTable[node].GetType().Equals(typeof(SpriteForm)))
-                {
-                    ((SpriteForm)formTable[node]).Output(sw);
-                }
+        //public void Output(TreeNode node, System.IO.StringWriter sw)
+        //{
+        //    if (formTable[node] != null)
+        //    {
+        //        //
+        //        if (formTable[node].GetType().Equals(typeof(ImagesForm)))
+        //        {
+        //            ((ImagesForm)formTable[node]).Output(sw);
+        //        }
+        //        if (formTable[node].GetType().Equals(typeof(MapForm)))
+        //        {
+        //            ((MapForm)formTable[node]).Output(sw);
+        //        }
+        //        if (formTable[node].GetType().Equals(typeof(SpriteForm)))
+        //        {
+        //            ((SpriteForm)formTable[node]).Output(sw);
+        //        }
 
-                //
-                if (formTable[node].GetType().Equals(typeof(WorldForm)))
-                {
-                    ((WorldForm)formTable[node]).Output(sw);
-                }
-            }
+        //        //
+        //        if (formTable[node].GetType().Equals(typeof(WorldForm)))
+        //        {
+        //            ((WorldForm)formTable[node]).Output(sw);
+        //        }
+        //    }
 
-            if (node.Nodes.Count >= 0)
-            {
-                foreach (TreeNode sub in node.Nodes)
-                {
-                    Output(sub, sw);
-                }
-            }
+        //    if (node.Nodes.Count >= 0)
+        //    {
+        //        foreach (TreeNode sub in node.Nodes)
+        //        {
+        //            Output(sub, sw);
+        //        }
+        //    }
 
-        }
+        //}
 
         
         string OutputName ;
