@@ -1,4 +1,4 @@
-﻿namespace CellGameEdit.PM
+﻿namespace CellGameEdit
 {
     partial class DataEdit
     {
