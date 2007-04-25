@@ -47,6 +47,8 @@ namespace CellGameEdit.PM
             }
         }
 
-
+        public void Render(javax.microedition.lcdui.Graphics g,int x,int y)
+        {
+        }
     }
 }
