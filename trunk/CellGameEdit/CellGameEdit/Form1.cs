@@ -364,7 +364,7 @@ namespace CellGameEdit
         {
             if (prjForm != null && prjForm.Visible)
             {
-                prjForm.Output();
+                //prjForm.Output();
             }
         }
 

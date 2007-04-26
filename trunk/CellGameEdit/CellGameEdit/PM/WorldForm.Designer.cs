@@ -36,11 +36,23 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.columnHeader2 = new System.Windows.Forms.ColumnHeader();
             this.columnHeader4 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton6 = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.listView2 = new System.Windows.Forms.ListView();
+            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.listView3 = new System.Windows.Forms.ListView();
+            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
+            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -91,24 +103,14 @@
             this.menuRegion = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
-            this.listView2 = new System.Windows.Forms.ListView();
-            this.listView3 = new System.Windows.Forms.ListView();
-            this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader3 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader5 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader6 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader8 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader9 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader10 = new System.Windows.Forms.ColumnHeader();
-            this.columnHeader11 = new System.Windows.Forms.ColumnHeader();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.tabPage3.SuspendLayout();
+            this.tabPage4.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
@@ -122,8 +124,6 @@
             this.menuWorld.SuspendLayout();
             this.menuUnit.SuspendLayout();
             this.menuRegion.SuspendLayout();
-            this.tabPage3.SuspendLayout();
-            this.tabPage4.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -159,6 +159,7 @@
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(191, 428);
             this.tabControl1.TabIndex = 3;
+            this.tabControl1.SelectedIndexChanged += new System.EventHandler(this.tabControl1_SelectedIndexChanged);
             // 
             // tabPage1
             // 
@@ -210,6 +211,16 @@
             // 
             this.columnHeader4.Text = "动画";
             this.columnHeader4.Width = 44;
+            // 
+            // columnHeader1
+            // 
+            this.columnHeader1.Text = "X";
+            this.columnHeader1.Width = 32;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "Y";
+            this.columnHeader3.Width = 32;
             // 
             // toolStrip2
             // 
@@ -268,6 +279,99 @@
             this.toolStripDropDownButton1.Text = "选择动画";
             this.toolStripDropDownButton1.DropDownOpening += new System.EventHandler(this.toolStripDropDownButton1_DropDownOpening);
             this.toolStripDropDownButton1.DropDownItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStripDropDownButton1_DropDownItemClicked);
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Controls.Add(this.listView2);
+            this.tabPage3.Location = new System.Drawing.Point(4, 21);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(183, 403);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "路点";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // listView2
+            // 
+            this.listView2.AutoArrange = false;
+            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader5,
+            this.columnHeader6});
+            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView2.FullRowSelect = true;
+            this.listView2.GridLines = true;
+            this.listView2.HideSelection = false;
+            this.listView2.Location = new System.Drawing.Point(3, 3);
+            this.listView2.MultiSelect = false;
+            this.listView2.Name = "listView2";
+            this.listView2.Size = new System.Drawing.Size(177, 397);
+            this.listView2.TabIndex = 0;
+            this.listView2.UseCompatibleStateImageBehavior = false;
+            this.listView2.View = System.Windows.Forms.View.Details;
+            this.listView2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView2_MouseClick);
+            this.listView2.SelectedIndexChanged += new System.EventHandler(this.listView2_SelectedIndexChanged);
+            // 
+            // columnHeader5
+            // 
+            this.columnHeader5.Text = "X";
+            this.columnHeader5.Width = 32;
+            // 
+            // columnHeader6
+            // 
+            this.columnHeader6.Text = "Y";
+            this.columnHeader6.Width = 32;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Controls.Add(this.listView3);
+            this.tabPage4.Location = new System.Drawing.Point(4, 21);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(183, 403);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "区域";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // listView3
+            // 
+            this.listView3.AutoArrange = false;
+            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeader8,
+            this.columnHeader9,
+            this.columnHeader10,
+            this.columnHeader11});
+            this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView3.FullRowSelect = true;
+            this.listView3.GridLines = true;
+            this.listView3.HideSelection = false;
+            this.listView3.Location = new System.Drawing.Point(0, 0);
+            this.listView3.MultiSelect = false;
+            this.listView3.Name = "listView3";
+            this.listView3.Size = new System.Drawing.Size(183, 403);
+            this.listView3.TabIndex = 0;
+            this.listView3.UseCompatibleStateImageBehavior = false;
+            this.listView3.View = System.Windows.Forms.View.Details;
+            this.listView3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.listView3_MouseClick);
+            this.listView3.SelectedIndexChanged += new System.EventHandler(this.listView3_SelectedIndexChanged);
+            // 
+            // columnHeader8
+            // 
+            this.columnHeader8.Text = "X";
+            this.columnHeader8.Width = 32;
+            // 
+            // columnHeader9
+            // 
+            this.columnHeader9.Text = "Y";
+            this.columnHeader9.Width = 32;
+            // 
+            // columnHeader10
+            // 
+            this.columnHeader10.Text = "宽";
+            this.columnHeader10.Width = 32;
+            // 
+            // columnHeader11
+            // 
+            this.columnHeader11.Text = "高";
+            this.columnHeader11.Width = 32;
             // 
             // tabPage2
             // 
@@ -809,95 +913,6 @@
             this.toolStripMenuItem5.Text = "区域数据";
             this.toolStripMenuItem5.Click += new System.EventHandler(this.toolStripMenuItem5_Click);
             // 
-            // tabPage3
-            // 
-            this.tabPage3.Controls.Add(this.listView2);
-            this.tabPage3.Location = new System.Drawing.Point(4, 21);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(183, 403);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "路点";
-            this.tabPage3.UseVisualStyleBackColor = true;
-            // 
-            // tabPage4
-            // 
-            this.tabPage4.Controls.Add(this.listView3);
-            this.tabPage4.Location = new System.Drawing.Point(4, 21);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(183, 403);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "区域";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
-            // listView2
-            // 
-            this.listView2.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader5,
-            this.columnHeader6});
-            this.listView2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView2.Location = new System.Drawing.Point(3, 3);
-            this.listView2.Name = "listView2";
-            this.listView2.Size = new System.Drawing.Size(177, 397);
-            this.listView2.TabIndex = 0;
-            this.listView2.UseCompatibleStateImageBehavior = false;
-            this.listView2.View = System.Windows.Forms.View.Details;
-            // 
-            // listView3
-            // 
-            this.listView3.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.columnHeader8,
-            this.columnHeader9,
-            this.columnHeader10,
-            this.columnHeader11});
-            this.listView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView3.Location = new System.Drawing.Point(0, 0);
-            this.listView3.Name = "listView3";
-            this.listView3.Size = new System.Drawing.Size(183, 403);
-            this.listView3.TabIndex = 0;
-            this.listView3.UseCompatibleStateImageBehavior = false;
-            this.listView3.View = System.Windows.Forms.View.Details;
-            // 
-            // columnHeader1
-            // 
-            this.columnHeader1.Text = "X";
-            this.columnHeader1.Width = 32;
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "Y";
-            this.columnHeader3.Width = 32;
-            // 
-            // columnHeader5
-            // 
-            this.columnHeader5.Text = "X";
-            this.columnHeader5.Width = 32;
-            // 
-            // columnHeader6
-            // 
-            this.columnHeader6.Text = "Y";
-            this.columnHeader6.Width = 32;
-            // 
-            // columnHeader8
-            // 
-            this.columnHeader8.Text = "X";
-            this.columnHeader8.Width = 32;
-            // 
-            // columnHeader9
-            // 
-            this.columnHeader9.Text = "Y";
-            this.columnHeader9.Width = 32;
-            // 
-            // columnHeader10
-            // 
-            this.columnHeader10.Text = "宽";
-            this.columnHeader10.Width = 32;
-            // 
-            // columnHeader11
-            // 
-            this.columnHeader11.Text = "高";
-            this.columnHeader11.Width = 32;
-            // 
             // WorldForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -921,6 +936,8 @@
             this.tabPage1.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.tabPage3.ResumeLayout(false);
+            this.tabPage4.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown4)).EndInit();
@@ -937,8 +954,6 @@
             this.menuWorld.ResumeLayout(false);
             this.menuUnit.ResumeLayout(false);
             this.menuRegion.ResumeLayout(false);
-            this.tabPage3.ResumeLayout(false);
-            this.tabPage4.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
