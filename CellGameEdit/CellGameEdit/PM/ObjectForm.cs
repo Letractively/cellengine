@@ -35,7 +35,7 @@ namespace CellGameEdit.PM
 
         private void ObjectForm_Load(object sender, EventArgs e)
         {
-
+            this.propertyGrid1.SelectedObject = this;
         }
 
         private void ObjectForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -49,6 +49,7 @@ namespace CellGameEdit.PM
 
         public void Render(javax.microedition.lcdui.Graphics g,int x,int y)
         {
+           
         }
     }
 }

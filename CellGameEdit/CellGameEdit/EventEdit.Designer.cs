@@ -28,13 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.propertyGrid1 = new System.Windows.Forms.PropertyGrid();
             this.SuspendLayout();
+            // 
+            // propertyGrid1
+            // 
+            this.propertyGrid1.Location = new System.Drawing.Point(12, 12);
+            this.propertyGrid1.Name = "propertyGrid1";
+            this.propertyGrid1.Size = new System.Drawing.Size(203, 398);
+            this.propertyGrid1.TabIndex = 0;
             // 
             // EventEdit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(579, 281);
+            this.ClientSize = new System.Drawing.Size(663, 435);
+            this.Controls.Add(this.propertyGrid1);
             this.Name = "EventEdit";
             this.Text = "EventEdit";
             this.ResumeLayout(false);
@@ -42,5 +51,7 @@
         }
 
         #endregion
+
+        private System.Windows.Forms.PropertyGrid propertyGrid1;
     }
 }
