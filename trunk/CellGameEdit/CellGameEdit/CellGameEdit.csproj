@@ -85,6 +85,7 @@
     <Compile Include="EventEdit.Designer.cs">
       <DependentUpon>EventEdit.cs</DependentUpon>
     </Compile>
+    <Compile Include="PM\GameObject.cs" />
     <Compile Include="PM\ObjectForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -103,6 +104,12 @@
     </Compile>
     <Compile Include="PM\WorldForm.Designer.cs">
       <DependentUpon>WorldForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PropertyEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PropertyEdit.Designer.cs">
+      <DependentUpon>PropertyEdit.cs</DependentUpon>
     </Compile>
     <Compile Include="Settings1.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -174,6 +181,10 @@
     <EmbeddedResource Include="PM\WorldForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>WorldForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PropertyEdit.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PropertyEdit.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TextDialog.resx">
       <SubType>Designer</SubType>
@@ -417,6 +428,7 @@
     <None Include="Resources\Image60.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Properties\DataSources\CellGameEdit.PM.Region.datasource" />
     <None Include="Resources\Image61.bmp" />
     <None Include="Resources\Image62.bmp" />
     <None Include="Resources\Image63.bmp" />

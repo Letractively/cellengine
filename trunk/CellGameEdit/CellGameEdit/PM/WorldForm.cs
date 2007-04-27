@@ -12,6 +12,8 @@ using System.Runtime.Serialization.Formatters;
 using System.IO;
 
 using javax.microedition.lcdui;
+using System.Runtime.InteropServices;
+using System.Runtime.Remoting;
 
 namespace CellGameEdit.PM
 {
@@ -516,8 +518,19 @@ namespace CellGameEdit.PM
             numericUpDown2.Value = CellH;
             numericUpDown3.Value = pictureBox1.Width;
             numericUpDown4.Value = pictureBox1.Height;
-
-            tabControl1.Refresh();
+        }
+        private void WorldForm_Activated(object sender, EventArgs e)
+        {
+           
+        }
+        private void WorldForm_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                tabControl1.SelectTab(2);
+                tabControl1.SelectTab(1);
+                tabControl1.SelectTab(0);
+            }
         }
 
         // list view1 map list
@@ -776,7 +789,7 @@ namespace CellGameEdit.PM
                         if (item.Selected)
                         {
                             toolStripStatusLabel1.Text +=
-                                "Unit["+unit.type+"]:" +
+                                "Unit[" + unit.getName() + "]:" +
                                 "X=" + unit.x + "," +
                                 "Y=" + unit.y + " | "
                             ;
@@ -921,7 +934,7 @@ namespace CellGameEdit.PM
                         }
                     }
 
-                }
+                }else
                 #endregion
 
                 #region waypoint
@@ -963,7 +976,7 @@ namespace CellGameEdit.PM
                         numericUpDown4.Value = pictureBox1.Height;
                     }
 
-                }
+                }else
                 #endregion
 
                 #region region
@@ -1418,7 +1431,6 @@ namespace CellGameEdit.PM
 
         }
 
-
 #region menuWorld
         // add way point command
         private void 路点ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1456,11 +1468,67 @@ namespace CellGameEdit.PM
         // open world data editor
         private void 场景数据ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            DataEdit dataEdit = new DataEdit(Data);
+            DataEdit dataEdit = new DataEdit(this.Data);
             dataEdit.MdiParent = this.MdiParent;
             dataEdit.Text = "DataEdit(" + this.id + ")";
             dataEdit.Show();
         }
+
+        private void 属性ToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            PropertyEdit propertyEdit = new PropertyEdit(this.pictureBox1.BackColor);
+            propertyEdit.MdiParent = this.MdiParent;
+            propertyEdit.Text = "属性(" +this.id + ")";
+            propertyEdit.Show();
+        }
+#endregion
+
+#region menuUnit
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                foreach (ListViewItem item in listView1.SelectedItems)
+                {
+                    if (listView1.Items.Contains(item))
+                    {
+                        listView1.Items.Remove(item);
+                        UnitList.Remove(item);
+
+                        pictureBox1.Refresh();
+                        break;
+                    }
+                }
+            }
+            catch (Exception err) { }
+        }
+        private void 单位数据ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listView1.SelectedItems[0] == null) return;
+
+                DataEdit dataEdit = new DataEdit(((Unit)UnitList[listView1.SelectedItems[0]]).Data);
+                dataEdit.MdiParent = this.MdiParent;
+                dataEdit.Text = "DataEdit(" + this.id + ".Unit[" + ((Unit)UnitList[listView1.SelectedItems[0]]).id + "])";
+                dataEdit.Show();
+            }
+            catch (Exception err) { }
+        }
+        private void 属性ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listView1.SelectedItems[0] == null) return;
+
+                PropertyEdit propertyEdit = new PropertyEdit(((Unit)UnitList[listView1.SelectedItems[0]]));
+                propertyEdit.MdiParent = this.MdiParent;
+                propertyEdit.Text = "属性(" + ((Unit)UnitList[listView1.SelectedItems[0]]).id + ")";
+                propertyEdit.Show();
+            }
+            catch (Exception err) { }
+        }
+
 #endregion
 
 #region menuPath
@@ -1525,37 +1593,15 @@ namespace CellGameEdit.PM
             dataEdit.Text = "DataEdit(" + this.id + ".WayPoint[" + listView2.Items.IndexOf(listView2.SelectedItems[0]) + "])";
             dataEdit.Show();
         }
-#endregion
 
-#region menuUnit
-        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void toolStripMenuItem6_Click(object sender, EventArgs e)
         {
-            try
-            {
-                foreach (ListViewItem item in listView1.SelectedItems)
-                {
-                    if (listView1.Items.Contains(item))
-                    {
-                        listView1.Items.Remove(item);
-                        UnitList.Remove(item);
+            if (listView2.SelectedItems[0] == null) return;
 
-                        pictureBox1.Refresh();
-                        break;
-                    }
-                }
-            }
-            catch (Exception err) { }
-        }
-        private void 单位数据ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                DataEdit dataEdit = new DataEdit(((Unit)UnitList[listView1.SelectedItems[0]]).Data);
-                dataEdit.MdiParent = this.MdiParent;
-                dataEdit.Text = "DataEdit(" + this.id + ".Unit[" + ((Unit)UnitList[listView1.SelectedItems[0]]).id + "])";
-                dataEdit.Show();
-            }
-            catch (Exception err) { }
+            PropertyEdit propertyEdit = new PropertyEdit(((WayPoint)WayPointsList[listView2.SelectedItems[0]]));
+            propertyEdit.MdiParent = this.MdiParent;
+            propertyEdit.Text = "属性(" + this.id + ".WayPoint[" + listView2.Items.IndexOf(listView2.SelectedItems[0]) + "])";
+            propertyEdit.Show();
         }
 #endregion
 
@@ -1584,6 +1630,8 @@ namespace CellGameEdit.PM
         {
             try
             {
+                if (listView3.SelectedItems[0] == null) return;
+
                 DataEdit dataEdit = new DataEdit(((Region)RegionsList[listView3.SelectedItems[0]]).Data);
                 dataEdit.MdiParent = this.MdiParent;
                 dataEdit.Text = "DataEdit(" + this.id + ".Region[" + listView3.Items.IndexOf(listView3.SelectedItems[0]) + "])";
@@ -1591,7 +1639,19 @@ namespace CellGameEdit.PM
             }
             catch (Exception err) { }
         }
+        private void 属性ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (listView3.SelectedItems[0] == null) return;
 
+                PropertyEdit propertyEdit = new PropertyEdit(((Region)RegionsList[listView3.SelectedItems[0]]));
+                propertyEdit.MdiParent = this.MdiParent;
+                propertyEdit.Text = "属性(" + this.id + ".Region[" + listView3.Items.IndexOf(listView3.SelectedItems[0]) + "])";
+                propertyEdit.Show();
+            }
+            catch (Exception err) { }
+        }
 #endregion
 
 
@@ -1918,7 +1978,18 @@ namespace CellGameEdit.PM
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             //tabControl1.SelectedTab.Focus();
+            pictureBox1.Refresh();
         }
+
+
+
+
+
+
+
+
+
+
 
   
 
@@ -1934,10 +2005,13 @@ namespace CellGameEdit.PM
     public partial class Region : ISerializable
     {
         // serial
-        public StringBuilder Data = new StringBuilder();
+        
         public bool isSub = false;
 
+        [Description("This is the rectangle."), Category("Location")]
         public System.Drawing.Rectangle rect;
+
+        public StringBuilder Data = new StringBuilder();
 
         public Region(int x, int y)
         {
@@ -2258,7 +2332,7 @@ namespace CellGameEdit.PM
 
     }
 
-
+    
     [Serializable]
     public partial class Unit : ISerializable
     {
@@ -2402,6 +2476,27 @@ namespace CellGameEdit.PM
                 return map.getHeight();
             else
                 return h;
+        }
+
+
+        public string getName()
+        {
+            if (map != null)
+                return map.id;
+            if (spr != null)
+                return spr.id;
+
+            return "";
+        }
+
+        public string getImagesName()
+        {
+            if (map != null)
+                return map.super.id;
+            if (spr != null)
+                return spr.super.id;
+
+            return "";
         }
 
         public void render(

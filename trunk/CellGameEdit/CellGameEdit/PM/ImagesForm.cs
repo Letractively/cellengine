@@ -74,7 +74,7 @@ namespace CellGameEdit.PM
             dstRect = new System.Drawing.Rectangle(0, 0, 1, 1);
 
         }
-
+        [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected ImagesForm(SerializationInfo info, StreamingContext context)
         {
             try
@@ -134,7 +134,7 @@ namespace CellGameEdit.PM
                     catch (Exception err)
                     {
                         dstImages.Add(null);
-                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                        Console.WriteLine(this.id + " : Tile["+i+"] : " + err.StackTrace);
                     }
 
                     
@@ -168,7 +168,6 @@ namespace CellGameEdit.PM
                 MessageBox.Show(err.StackTrace);
             }
         }
-
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -197,21 +196,27 @@ namespace CellGameEdit.PM
                 {
                     try
                     {
-                        Image img = getDstImage(i);
-
                         String name = dir + "\\" + i.ToString() + ".tile";
-                        if (System.IO.File.Exists(ProjectForm.workSpace + name))
+
+                        Image img = getDstImage(i);
+                        if (img != null)
                         {
-                            //System.IO.File.Delete(ProjectForm.workSpace + name);
+                            if (!System.IO.File.Exists(ProjectForm.workSpace + name))
+                            {
+                                img.getDImage().Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
+                            }
+                            output.Add(name);
+                            outX.Add(img.x);
+                            outY.Add(img.y);
+                            outK.Add(img.killed);
                         }
                         else
                         {
-                            img.getDImage().Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
+                            output.Add("");
+                            outX.Add(0);
+                            outY.Add(0);
+                            outK.Add(false);
                         }
-                        output.Add(name);
-                        outX.Add(img.x);
-                        outY.Add(img.y);
-                        outK.Add(img.killed);
                     }
                     catch (Exception err)
                     {
@@ -219,7 +224,7 @@ namespace CellGameEdit.PM
                         outX.Add(0);
                         outY.Add(0);
                         outK.Add(false);
-                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                        Console.WriteLine(this.id + " : "+i+" : " + err.StackTrace);
                     }
                 }
                 info.AddValue("output", output);
