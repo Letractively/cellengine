@@ -37,14 +37,12 @@ namespace CellGameEdit.PM
         //Hashtable AnimTable;
         Hashtable AnimIndexTable;
         Hashtable AnimFlipTable;
-        //Hashtable AnimTypeTable;
-
-        //[NoneSerializable]
         ArrayList Tiles;
 
         int XCount;
         int YCount;
 
+        #region fliptable
         static public System.Drawing.RotateFlipType[] flipTable = new System.Drawing.RotateFlipType[]
         {
             System.Drawing.RotateFlipType.RotateNoneFlipNone,
@@ -70,6 +68,7 @@ namespace CellGameEdit.PM
             Cell.Game.CImages.TRANS_H90,
 
         };
+        #endregion
 
         int flipIndex = 0;
 
@@ -394,7 +393,7 @@ namespace CellGameEdit.PM
 
 
                         // 和JAVA端相反
-                        if (MatrixAnim[y][x] < 0)
+                        if (MatrixAnim[y][x] < 0)//多层
                         {
                             tileMatrix[y][x] = indexFrame;
                         }
@@ -641,24 +640,65 @@ namespace CellGameEdit.PM
 
 
 
-        private Image getTileImage(int index)
+        public Image getTileImage(int index)
         {
             return (((Image)(Tiles[index])));
         }
-        private int getTileCount()
+        public int getTileCount()
         {
             return Tiles.Count;
         }
-
 
         public int getWidth()
         {
             return this.XCount * this.CellW;
         }
-
         public int getHeight()
         {
             return this.YCount * this.CellH;
+        }
+
+        public int getTileID(int x,int y)
+        {
+            try {
+                return MatrixTile[y][x];
+            }
+            catch (Exception err) {
+                return -1;
+            }
+        }
+        public int getTileFlip(int x, int y)
+        {
+            try
+            {
+                return MatrixFlip[y][x];
+            }
+            catch (Exception err)
+            {
+                return -1;
+            }
+        }
+        public int getTagID(int x, int y)
+        {
+            try
+            {
+                return MatrixTag[y][x];
+            }
+            catch (Exception err)
+            {
+                return -1;
+            }
+        }
+        public int getAnimateID(int x, int y)
+        {
+            try
+            {
+                return MatrixAnim[y][x];
+            }
+            catch (Exception err)
+            {
+                return -1;
+            }
         }
 
         private void addAnimate()
@@ -736,7 +776,6 @@ namespace CellGameEdit.PM
                 }
             }
         }
-
 
         private void addFrame(int pos, int index, int flip)
         {
@@ -890,7 +929,6 @@ namespace CellGameEdit.PM
             }
         }
 
-
         private void putTile(int index, int bx, int by)
         {
             if (index < getTileCount() && by < MatrixTile.Length && bx < MatrixTile[by].Length)
@@ -911,7 +949,7 @@ namespace CellGameEdit.PM
             {
                 if (index > 0 && index < listView1.Items.Count)
                 {
-                    if (toolStripButton22.Checked)
+                    if (toolStripButton22.Checked)//duo ceng
                     {
                         MatrixAnim[by][bx] = -index;
                     }
@@ -934,8 +972,6 @@ namespace CellGameEdit.PM
                 MatrixFlip[by][bx] = flip;
             }
         }
-
-
 
         private void renderTile(Graphics g, int index, int flip, int x, int y)
         {
