@@ -86,7 +86,7 @@
             <H>                    /*(int) 该部件 高（快速排斥矩形）*/
         #<END CD PART>         /* 碰撞部件 结束 */
 
-        <TILE MATRIX>          /*(int)[][] 地图图象二维数组 格式为 matrix[y count][x count] = {x0y0,x1y0,x2y0,...},{x0y1,x1y1,x2y1,...},... 数据为帧号码 */
+        <TILE MATRIX>          /*(int)[][] 地图图象二维数组 格式为 matrix[y count][x count] = {x0y0,x1y0,x2y0,...},{x0y1,x1y1,x2y1,...},... 数据为帧号码（该数据的绝对值表示对应的帧号码，符号用来区分多重贴图和动画（value<0多层  value>=0动画）） */
         <FLAG MATRIX>          /*(int)[][] 地图碰撞二维数组 格式为 matrix[y count][x count] = {x0y0,x1y0,x2y0,...},{x0y1,x1y1,x2y1,...},... 数据为碰撞部件号码 */
 
     #<END MAP>             /* 地图数据块 结束 */
@@ -182,6 +182,7 @@
             <SPR DATA>             /*(str) 当前精灵 数据 */
             <IDENTIFY>             /*(str) 当前精灵 标识 */
             <ANIMATE ID>           /*(int) 当前精灵 动画号 */
+            <FRAME ID>             /*(int) 当前精灵 帧号 */
             <X>                    /*(int) 当前精灵 场景中X位置 */
             <Y>                    /*(int) 当前精灵 场景中Y位置 */
             <SUPER>                /*(str) 当前精灵 用的图片组 */

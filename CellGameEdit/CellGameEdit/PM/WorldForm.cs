@@ -24,8 +24,6 @@ namespace CellGameEdit.PM
         public StringBuilder Data = new StringBuilder();
 
         Hashtable UnitList;
-        //ArrayList WayPoints;
-        //ArrayList Regions;
         Hashtable WayPointsList;
         Hashtable RegionsList;
 
@@ -354,10 +352,11 @@ namespace CellGameEdit.PM
                         string NAME = ((Unit)sprs[i]).id;
                         string SUPER = ((Unit)sprs[i]).spr.super.id;
                         string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
+                        string FRAME_ID = ((Unit)sprs[i]).frameID.ToString();
                         string SPR_DATA = ((Unit)sprs[i]).Data.ToString();
                         spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>", "<SUPER>","<SPR DATA>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, SUPER ,SPR_DATA});
+                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<FRAME ID>", "<SUPER>","<SPR DATA>" },
+                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, FRAME_ID, SUPER ,SPR_DATA});
                     }
                     string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
                     if (temp == null)
@@ -378,8 +377,8 @@ namespace CellGameEdit.PM
                     for (int i = 0; i < wp.Length; i++)
                     {
                         WayPoint p = ((WayPoint)WayPoints[i]);
-                        string X = (p.rect.X + p.rect.Width / 2) + "";
-                        string Y = (p.rect.Y + p.rect.Height / 2) + "";
+                        string X = p.point.X.ToString();
+                        string Y = p.point.Y.ToString();
                         wp[i] = Util.replaceKeywordsScript(world, "#<WAYPOINT>", "#<END WAYPOINT>",
                                new string[] { "<INDEX>", "<X>", "<Y>", "<PATH DATA>" },
                                new string[] { i.ToString(), X, Y, p.Data.ToString()});
@@ -808,7 +807,7 @@ namespace CellGameEdit.PM
                 foreach (ListViewItem item in listView2.Items)
                 {
                     WayPoint p = (WayPoint)WayPointsList[item];
-
+                   
                     if (p != null)
                     {
                         p.Render(g,item.Selected);
@@ -817,8 +816,8 @@ namespace CellGameEdit.PM
                             "p" + listView2.Items.IndexOf(item).ToString(),
                             this.Font,
                             System.Drawing.Brushes.Black,
-                            p.rect.X + p.rect.Width + 1,
-                            p.rect.Y - p.rect.Height / 2);
+                            p.point.X ,
+                            p.point.Y - this.Font.Height - 1);
 
                         if (item.Selected)
                         {
@@ -834,29 +833,33 @@ namespace CellGameEdit.PM
 
                 if (popedWayPoint != null)
                 {
-                    ((WayPoint)WayPointsList[popedWayPoint]).Render(g,true);
+                    WayPoint p = ((WayPoint)WayPointsList[popedWayPoint]);
+                    p.Render(g,true);
                     g.setColor(0xff, 0xff, 0xff, 0);
                     g.drawLine(
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.X + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width / 2,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.Y + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height / 2 - ((WayPoint)WayPointsList[popedWayPoint]).rect.Height,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.X + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width / 2,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.Y + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height / 2 + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height
+                        p.point.X ,
+                        p.point.Y -  p.getH(),
+                        p.point.X ,
+                        p.point.Y +  p.getH()
                         );
                     g.drawLine(
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.X + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width / 2 - ((WayPoint)WayPointsList[popedWayPoint]).rect.Width,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.Y + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height / 2,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.X + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width / 2 + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width,
-                        ((WayPoint)WayPointsList[popedWayPoint]).rect.Y + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height / 2
+                        p.point.X - p.getW(),
+                        p.point.Y ,
+                        p.point.X + p.getW(),
+                        p.point.Y
                         );
                 }
                 if (listView2.SelectedItems.Count>0 && popedWayPoint != null)
                 {
+                    WayPoint p1 = ((WayPoint)WayPointsList[listView2.SelectedItems[0]]);
+                    WayPoint p2 = ((WayPoint)WayPointsList[popedWayPoint]);
+
                     g.setColor(0x80, 0xff, 0, 0);
                     g.drawLine(
-                         ((WayPoint)WayPointsList[popedWayPoint]).rect.X + ((WayPoint)WayPointsList[popedWayPoint]).rect.Width / 2,
-                         ((WayPoint)WayPointsList[popedWayPoint]).rect.Y + ((WayPoint)WayPointsList[popedWayPoint]).rect.Height / 2,
-                         ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.X + ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Width / 2,
-                         ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Y + ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Height / 2
+                         p1.point.X,
+                         p1.point.Y,
+                         p2.point.X,
+                         p2.point.Y
                          );
                 }
             }
@@ -947,29 +950,26 @@ namespace CellGameEdit.PM
 
                         if (!toolStripButton11.Checked)
                         {
-                            p.rect.X = e.X;
-                            p.rect.Y = e.Y;
+                            p.point.X = e.X;
+                            p.point.Y = e.Y;
 
-                            if (p.rect.X < 0) p.rect.X = 0;
-                            if (p.rect.Y < 0) p.rect.Y = 0;
+                            if (p.point.X < 0) p.point.X = 0;
+                            if (p.point.Y < 0) p.point.Y = 0;
                         }
                         else
                         {
-                            p.rect.X = e.X - e.X % CellW;
-                            p.rect.Y = e.Y - e.Y % CellH;
+                            p.point.X = e.X - e.X % CellW;
+                            p.point.Y = e.Y - e.Y % CellH;
 
-                            if (p.rect.X < 0) p.rect.X = 0;
-                            if (p.rect.Y < 0) p.rect.Y = 0;
+                            if (p.point.X < 0) p.point.X = 0;
+                            if (p.point.Y < 0) p.point.Y = 0;
                         }
-
-                        p.rect.X -= p.rect.Width / 2;
-                        p.rect.Y -= p.rect.Height / 2;
 
                         listView2.SelectedItems[0].SubItems[0].Text = p.getWX().ToString();
                         listView2.SelectedItems[0].SubItems[1].Text = p.getWY().ToString();
 
-                        pictureBox1.Width = Math.Max(p.rect.X + p.rect.Width, pictureBox1.Width);
-                        pictureBox1.Height = Math.Max(p.rect.Y + p.rect.Height, pictureBox1.Height);
+                        pictureBox1.Width = Math.Max(p.point.X, pictureBox1.Width);
+                        pictureBox1.Height = Math.Max(p.point.Y, pictureBox1.Height);
                         numericUpDown1.Value = CellW;
                         numericUpDown2.Value = CellH;
                         numericUpDown3.Value = pictureBox1.Width;
@@ -1090,8 +1090,8 @@ namespace CellGameEdit.PM
                     {
                         if (listView2.SelectedItems.Count>0)
                         {
-                            ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.X = e.X - ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Width / 2;
-                            ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Y = e.Y - ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).rect.Height / 2;
+                            ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).point.X = e.X ;
+                            ((WayPoint)WayPointsList[listView2.SelectedItems[0]]).point.Y = e.Y;
                         }
                     }
                     //select region
@@ -1167,7 +1167,7 @@ namespace CellGameEdit.PM
                             WayPoint p = (WayPoint)WayPointsList[item];
                             if (p != null)
                             {
-                                if (p.rect.Contains(e.X, e.Y))
+                                if (p.getRect().Contains(e.X, e.Y))
                                 {
                                     isChecked = true;
                                     item.Selected = true;
@@ -1264,7 +1264,7 @@ namespace CellGameEdit.PM
                             WayPoint p = (WayPoint)WayPointsList[item];
                             if (p != null)
                             {
-                                if (p.rect.Contains(e.X, e.Y))
+                                if (p.getRect().Contains(e.X, e.Y))
                                 {
                                     isChecked = true;
                                     popedWayPoint = item;
@@ -1476,7 +1476,14 @@ namespace CellGameEdit.PM
 
         private void 属性ToolStripMenuItem2_Click(object sender, EventArgs e)
         {
-            PropertyEdit propertyEdit = new PropertyEdit(this.pictureBox1.BackColor);
+            PropertyEdit propertyEdit = new PropertyEdit(
+                new WorldPorperty(
+                    pictureBox1.Width,
+                    pictureBox1.Height,
+                    CellW,
+                    CellH,
+                    Data)
+                );
             propertyEdit.MdiParent = this.MdiParent;
             propertyEdit.Text = "属性(" +this.id + ")";
             propertyEdit.Show();
@@ -1926,8 +1933,8 @@ namespace CellGameEdit.PM
                             listView2.Items.IndexOf(item).ToString(),
                             this.Font,
                             System.Drawing.Brushes.Black,
-                            p.rect.X + p.rect.Width + 1,
-                            p.rect.Y - p.rect.Height / 2);
+                            p.point.X ,
+                            p.point.Y );
 
                         //g.drawString(WayPoints.IndexOf(p).ToString(), p.rect.X + p.rect.Width + 1, p.rect.Y - p.rect.Height / 2, 0);
                     }
@@ -1948,7 +1955,6 @@ namespace CellGameEdit.PM
             if (toolStripButton16.Checked)
             {
                 pictureBox1.Refresh();
-                Unit.frameID++;
             }
         }
 
@@ -2001,17 +2007,79 @@ namespace CellGameEdit.PM
 
     }
 
+    public class WorldPorperty
+    {
+        StringBuilder _Data;
+        int _Width;
+        int _Height;
+        int _CellW;
+        int _CellH;
+
+        [Description("数据"), Category("属性")]
+        public StringBuilder Data
+        {
+            get { return _Data; }
+        }
+
+        [Description("宽"), Category("属性")]
+        public int Width
+        {
+            get { return _Width; }
+            //set { _Width = value; }
+        }
+
+        [Description("高"), Category("属性")]
+        public int Height
+        {
+            get { return _Height; }
+            //set { _Height = value; }
+        }
+
+        [Description("格子宽"), Category("属性")]
+        public int CellW
+        {
+            get { return _CellW; }
+            //set { _CellW = value; }
+        }
+
+        [Description("格子高"), Category("属性")]
+        public int CellH
+        {
+            get { return _CellH; }
+            //set { _CellH = value; }
+        }
+
+        public WorldPorperty(int w,int h,int cw,int ch,StringBuilder data)
+        {
+            _Width = w;
+            _Height = h;
+            _CellW = cw;
+            _CellH = ch;
+            _Data = data;
+        }
+    }
+
+
     [Serializable]
-    public partial class Region : ISerializable
+    public class Region : ISerializable
     {
         // serial
-        
         public bool isSub = false;
 
-        [Description("This is the rectangle."), Category("Location")]
         public System.Drawing.Rectangle rect;
+        [Description("区域"), Category("属性")]
+        public System.Drawing.Rectangle m_Rect
+        {
+            get { return rect; }
+            set { rect = value; } 
+        }
 
         public StringBuilder Data = new StringBuilder();
+        [Description("数据"), Category("属性")]
+        public StringBuilder m_Data
+        {
+            get { return Data; } 
+        }
 
         public Region(int x, int y)
         {
@@ -2124,18 +2192,29 @@ namespace CellGameEdit.PM
 
 
     [Serializable]
-    public partial class WayPoint : ISerializable
+    public class WayPoint : ISerializable
     {
         // serial
+        public Point point;
+        [Description("位置"), Category("属性")]
+        public Point m_Point
+        {
+            get { return point; }
+            set { point = value; }
+        }
+
         public StringBuilder Data = new StringBuilder();
-        //public bool isCheck = false;
-        public System.Drawing.Rectangle rect;
+        [Description("数据"), Category("属性")]
+        public StringBuilder m_Data
+        {
+            get { return Data; }
+        }
 
         public ArrayList link = new ArrayList();
-
+        
         public WayPoint(int x, int y)
         {
-            rect = new Rectangle(x, y, 5, 5);
+            point = new Point(x, y);
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -2143,10 +2222,9 @@ namespace CellGameEdit.PM
         {
             try
             {
-                rect = new Rectangle(
+                point = new Point(
                     (int)info.GetValue("X", typeof(int)),
-                    (int)info.GetValue("Y", typeof(int)),
-                    5, 5
+                    (int)info.GetValue("Y", typeof(int))
                     );
                 link = (ArrayList)info.GetValue("link", typeof(ArrayList));
 
@@ -2166,8 +2244,8 @@ namespace CellGameEdit.PM
         {
             try
             {
-                info.AddValue("X", rect.X);
-                info.AddValue("Y", rect.Y);
+                info.AddValue("X", point.X);
+                info.AddValue("Y", point.Y);
                 info.AddValue("link", link);
                 info.AddValue("Data", Data.ToString());
             }
@@ -2179,12 +2257,19 @@ namespace CellGameEdit.PM
 
         public int getWX()
         {
-            return rect.X - rect.Width / 2;
+            return point.X ;
         }
         public int getWY()
         {
-            return rect.Y - rect.Height / 2;
+            return point.Y;
         }
+        public int getW() { return 5; }
+        public int getH() { return 5; }
+        public Rectangle getRect()
+        {
+            return new Rectangle(point.X - getW() / 2, point.Y - getH() / 2, getW(), getH());
+        }
+
         public bool Link2(WayPoint point)
         {
             if (point == null) return false;
@@ -2251,26 +2336,26 @@ namespace CellGameEdit.PM
         {
             try
             {
-                int sx = rect.X + rect.Width / 2;
-                int sy = rect.Y + rect.Height / 2;
+                int sx = point.X;
+                int sy = point.Y;
 
                 if (isCheck)
                 {
                     g.setColor(0xff, 0xff, 0xff, 0xff);
-                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                    g.drawRect(getRect().X, getRect().Y, getRect().Width, getRect().Height);
                 }
                 else
                 {
                     g.setColor(0xff, 0, 0, 0xff);
-                    g.drawRect(rect.X, rect.Y, rect.Width, rect.Height);
+                    g.drawRect(getRect().X, getRect().Y, getRect().Width, getRect().Height);
                 }
 
                 foreach (WayPoint p in link)
                 {
                     if (p != null)
                     {
-                        int dx = p.rect.X + p.rect.Width / 2;
-                        int dy = p.rect.Y + p.rect.Height / 2;
+                        int dx = p.point.X;
+                        int dy = p.point.Y;
 
                         float[] px = new float[3];
                         float[] py = new float[3];
@@ -2332,27 +2417,97 @@ namespace CellGameEdit.PM
 
     }
 
-    
+   
     [Serializable]
-    public partial class Unit : ISerializable
+    public class Unit : ISerializable
     {
-
-        static public int frameID = 0;
-
-        public StringBuilder Data = new StringBuilder();
-        public String id = "null";
-        public String type = "null";
-
-        public SpriteForm spr = null;
-        public MapForm map = null;
+#region 属性
+        public int frameID = 0;
+        [Description("当前帧"), Category("属性")]
+        public int m_FrameID
+        {
+            get { return frameID; }
+            set { 
+                frameID = value;
+                if (spr != null) {
+                    if (frameID >= spr.GetFrameCount(animID)) frameID = spr.GetFrameCount(animID)-1;
+                    if (frameID < 0) frameID = 0;
+                }
+            }
+        }
 
         public int animID = 0;
+        [Description("当前动画"), Category("属性")]
+        public int m_AnimateID
+        {
+            get{return animID;}
+            set{
+                animID = value;
+                if (spr != null)
+                {
+                    if (animID >= spr.GetAnimateCount()) animID = spr.GetAnimateCount() - 1;
+                    if (animID < 0) animID = 0;
+                }
+            }
+        }
+
+        public StringBuilder Data = new StringBuilder();
+        [Description("数据"), Category("属性")]
+        public StringBuilder m_Data
+        {
+            get { return Data; }
+        }
+
+        public String id = "null";
+        [Description("数据"), Category("属性")]
+        public String m_ID
+        {
+            get { return id; }
+        }
+
+        public String type = "null";
+        [Description("数据"), Category("属性")]
+        public String m_Type
+        {
+            get { return type; }
+        }
+
+        [Description("图片组"), Category("属性")]
+        public String m_Tiles
+        {
+            get { return getImagesName(); }
+        }
+
+        [Description("资源"), Category("属性")]
+        public String m_Resource
+        {
+            get { return getName(); }
+        }
 
         public int x = 0;
         public int y = 0;
         public int w = 8;
         public int h = 8;
-        //public 
+        [Description("位置"), Category("属性")]
+        public Point m_Position
+        {
+            get { return new Point(x, y); }
+            set { x = value.X; y = value.Y; }
+        }
+
+        public SpriteForm spr = null;
+        public MapForm map = null;
+#endregion
+
+#region 事件
+
+        public event EventHandler OnUpdate;
+        //[EditorAttribute(typeof(System.ComponentModel.Design.ObjectSelectorEditor), typeof(System.Drawing.Design.UITypeEditor))]
+        [Description("每周期的更新事件"), Category("事件")]
+        public EventHandler Update { get { return OnUpdate; } set { OnUpdate = value; } }
+
+#endregion
+
 
 
         public Unit(SpriteForm spr, String no)
@@ -2514,6 +2669,7 @@ namespace CellGameEdit.PM
             else if (map != null)
             {
                 map.Render(g, x, y, scope, false, debug, true, frameID);
+                frameID++;
             }
 
 
@@ -2545,12 +2701,16 @@ namespace CellGameEdit.PM
 
         }
 
+        
+
+
 
     }
 
 
+
     [Serializable]
-    public partial class Event : ISerializable
+    public class Event : ISerializable
     {
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected Event(SerializationInfo info, StreamingContext context)
