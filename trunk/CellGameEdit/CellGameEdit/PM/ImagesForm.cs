@@ -399,6 +399,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                     );
 
                 output.WriteLine(images);
+                //Console.WriteLine(images);
 
                 SaveAllImages(outDir,imageType,imageTile,imageGroup);
                

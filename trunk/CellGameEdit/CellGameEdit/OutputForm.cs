@@ -8,10 +8,11 @@ using System.Windows.Forms;
 
 namespace CellGameEdit
 {
-    public partial class Output : Form
+    public partial class OutputForm : Form
     {
         System.IO.StringWriter sw;
-        public Output()
+
+        public OutputForm()
         {
             InitializeComponent();
 
@@ -21,7 +22,16 @@ namespace CellGameEdit
 
         }
 
-  
+        private void Output_FormClosing(object sender, FormClosingEventArgs e)
+        {
+        }
+
+        private void Output_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
@@ -33,6 +43,13 @@ namespace CellGameEdit
             sw = new System.IO.StringWriter();
             System.Console.SetOut(sw);
         }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        
     }
 
 

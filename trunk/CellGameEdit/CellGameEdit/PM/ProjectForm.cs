@@ -290,11 +290,6 @@ namespace CellGameEdit.PM
                         ImageGroupData = false;
                     }
                    
-
-
-                    
-
-
                     script = fillScriptNode(script);
 
 
@@ -302,6 +297,7 @@ namespace CellGameEdit.PM
                     script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
                     script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
 
+                    Console.WriteLine("");
                     Console.WriteLine(script);
 
                     System.IO.File.WriteAllText(
@@ -311,6 +307,7 @@ namespace CellGameEdit.PM
                         );
 
                     Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");
+                    Console.WriteLine("");
                 }
                 else
                 {
@@ -320,12 +317,6 @@ namespace CellGameEdit.PM
             catch (Exception err) { MessageBox.Show(err.StackTrace); }
 
         }
-
-
-        //ArrayList ScriptsImages = new ArrayList();
-        //ArrayList ScriptsMap = new ArrayList();
-        //ArrayList ScriptsSprite = new ArrayList();
-        //ArrayList ScriptsWorld = new ArrayList();
 
         ArrayList FormsImages = new ArrayList();
         ArrayList FormsMap = new ArrayList();
@@ -348,21 +339,23 @@ namespace CellGameEdit.PM
                     //
                     if (forms[i].GetType().Equals(typeof(ImagesForm)))
                     {
-                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDirImage,
-                            ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
-
+                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDirImage, ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
+                        Console.WriteLine("Output : " + ((ImagesForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(MapForm)))
                     {
                         ((MapForm)forms[i]).OutputCustom(sub, output);
+                        Console.WriteLine("Output : " + ((MapForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(SpriteForm)))
                     {
                         ((SpriteForm)forms[i]).OutputCustom(sub, output);
+                        Console.WriteLine("Output : " + ((SpriteForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(WorldForm)))
                     {
                         ((WorldForm)forms[i]).OutputCustom(sub, output);
+                        Console.WriteLine("Output : " + ((WorldForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     //
                     scripts.Add(output.ToString());

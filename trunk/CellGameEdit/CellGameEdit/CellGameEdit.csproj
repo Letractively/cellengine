@@ -61,11 +61,11 @@
     <Compile Include="HelpForm.Designer.cs">
       <DependentUpon>HelpForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Output.cs">
+    <Compile Include="OutputForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Output.Designer.cs">
-      <DependentUpon>Output.cs</DependentUpon>
+    <Compile Include="OutputForm.Designer.cs">
+      <DependentUpon>OutputForm.cs</DependentUpon>
     </Compile>
     <Compile Include="MapMini.cs">
       <SubType>Form</SubType>
@@ -154,9 +154,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>HelpForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Output.resx">
+    <EmbeddedResource Include="OutputForm.resx">
       <SubType>Designer</SubType>
-      <DependentUpon>Output.cs</DependentUpon>
+      <DependentUpon>OutputForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MapMini.resx">
       <SubType>Designer</SubType>
