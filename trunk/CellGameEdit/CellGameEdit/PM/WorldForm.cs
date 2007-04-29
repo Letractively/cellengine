@@ -1046,9 +1046,11 @@ namespace CellGameEdit.PM
         {
             dx = e.X;
             dy = e.Y;
-
+            
             try
             {
+                textBox1.Focus();
+
                 #region pointUnit
                 // 是定位指令
                 if (e.Button == MouseButtons.Left && toolStripButton14.Checked == true)
@@ -1344,6 +1346,138 @@ namespace CellGameEdit.PM
             pictureBox1.Refresh();
         }
 
+        // key adjust
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            int eX = 0;
+            int eY = 0;
+            textBox1.Text = "";
+            switch(e.KeyCode)
+            {
+                case Keys.Up: eY = -1; textBox1.Text += "UP"; break;
+                case Keys.Down: eY = 1; textBox1.Text += "DOWN"; break;
+                case Keys.Left: eX = -1; textBox1.Text += "LEFT"; break;
+                case Keys.Right: eX = 1; textBox1.Text += "RIGHT"; break;
+            }
+
+            try
+            {
+                #region unit
+                if (listView1.SelectedItems.Count>0)
+                {
+                    if (listView1.SelectedItems[0].Checked == true)
+                    {
+                        Unit unit = ((Unit)UnitList[listView1.SelectedItems[0]]);
+
+                        if (!toolStripButton11.Checked)
+                        {
+                            unit.x += eX;
+                            unit.y += eY;
+                        }
+                        else
+                        {
+                            unit.x += eX * CellW;
+                            unit.y += eY * CellH;
+                        }
+
+                        if (unit.x < 0) unit.x = 0;
+                        if (unit.y < 0) unit.y = 0;
+                        listView1.SelectedItems[0].SubItems[2].Text = unit.x.ToString();
+                        listView1.SelectedItems[0].SubItems[3].Text = unit.y.ToString();
+                    
+                    }
+
+                }else
+                #endregion
+
+                #region waypoint
+                if (listView2.SelectedItems.Count>0)
+                {
+                    WayPoint p = (WayPoint)WayPointsList[listView2.SelectedItems[0]];
+
+                    if (p != null )
+                    {
+
+                        if (!toolStripButton11.Checked)
+                        {
+                            p.point.X += eX;
+                            p.point.Y += eY;
+
+                            if (p.point.X < 0) p.point.X = 0;
+                            if (p.point.Y < 0) p.point.Y = 0;
+                        }
+                        else
+                        {
+                            p.point.X += eX * CellW;
+                            p.point.Y += eY * CellH;
+
+                            if (p.point.X < 0) p.point.X = 0;
+                            if (p.point.Y < 0) p.point.Y = 0;
+                        }
+
+                        listView2.SelectedItems[0].SubItems[0].Text = p.getWX().ToString();
+                        listView2.SelectedItems[0].SubItems[1].Text = p.getWY().ToString();
+
+                    }
+
+                }else
+                #endregion
+
+                #region region
+                if (listView3.SelectedItems.Count>0)
+                {
+                    Region r = (Region)RegionsList[listView3.SelectedItems[0]];
+                    if (r != null && !r.isSub)
+                    {
+                        if (!toolStripButton11.Checked)
+                        {
+                            r.rect.X += eX;
+                            r.rect.Y += eY ;
+
+                            if (r.rect.X < 0) r.rect.X = 0;
+                            if (r.rect.Y < 0) r.rect.Y = 0;
+                        }
+                        else
+                        {
+                            r.rect.X = eX * CellW;
+                            r.rect.Y = eY * CellH;
+
+                            if (r.rect.X < 0) r.rect.X = 0;
+                            if (r.rect.Y < 0) r.rect.Y = 0;
+                        }
+                    }
+
+                    if (r != null && r.isSub )
+                    {
+                        if (!toolStripButton11.Checked)
+                        {
+                            if (r.rect.Width + eX > 0) r.rect.Width += eX;
+                            else r.rect.Width = 1;
+                            if (r.rect.Height + eY > 0) r.rect.Height += eY;
+                            else r.rect.Height = 1;
+                        }
+                        else
+                        {
+                            if (r.rect.Width + eX*CellW > 0) r.rect.Width += eX*CellW;
+                            else r.rect.Width = 1;
+                            if (r.rect.Height + eY*CellH > 0) r.rect.Height += eY*CellH;
+                            else r.rect.Height = 1;
+                        }
+                        
+                    }
+
+                    listView3.SelectedItems[0].SubItems[0].Text = r.rect.X.ToString();
+                    listView3.SelectedItems[0].SubItems[1].Text = r.rect.Y.ToString();
+                    listView3.SelectedItems[0].SubItems[2].Text = r.rect.Width.ToString();
+                    listView3.SelectedItems[0].SubItems[3].Text = r.rect.Height.ToString();
+
+                }
+                #endregion
+
+                pictureBox1.Refresh();
+
+            }catch(Exception err){}
+        }
         //show select
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
@@ -1987,6 +2121,8 @@ namespace CellGameEdit.PM
             pictureBox1.Refresh();
         }
 
+       
+
 
 
 
@@ -2441,14 +2577,14 @@ namespace CellGameEdit.PM
         public int m_AnimateID
         {
             get{return animID;}
-            set{
-                animID = value;
-                if (spr != null)
-                {
-                    if (animID >= spr.GetAnimateCount()) animID = spr.GetAnimateCount() - 1;
-                    if (animID < 0) animID = 0;
-                }
-            }
+            //set{
+            //    animID = value;
+            //    if (spr != null)
+            //    {
+            //        if (animID >= spr.GetAnimateCount()) animID = spr.GetAnimateCount() - 1;
+            //        if (animID < 0) animID = 0;
+            //    }
+            //}
         }
 
         public StringBuilder Data = new StringBuilder();
