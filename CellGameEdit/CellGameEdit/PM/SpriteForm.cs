@@ -806,6 +806,8 @@ namespace CellGameEdit.PM
             pictureBox1.Refresh();
         }
 
+
+
 // dst part
 
         Boolean dstRefreshEnable = true;
@@ -1669,13 +1671,42 @@ namespace CellGameEdit.PM
 
         }
 
+        //adjust frame
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            int eX = 0;
+            int eY = 0;
+            textBox1.Text = "";
+            switch (e.KeyCode)
+            {
+                case Keys.Up: eY = -1; textBox1.Text += "UP"; break;
+                case Keys.Down: eY = 1; textBox1.Text += "DOWN"; break;
+                case Keys.Left: eX = -1; textBox1.Text += "LEFT"; break;
+                case Keys.Right: eX = 1; textBox1.Text += "RIGHT"; break;
+            }
 
+            try
+            {
+                if (tabControl1.SelectedIndex == 0)
+                {
+                    framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] + eX;
+                    framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] + eY;
+                }
+                if (tabControl1.SelectedIndex == 1)
+                {
+                    framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] + eX;
+                    framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] + eY;
+                }
+            }
+            catch (Exception err) { }
+            dstRefersh();
+        }
         private void pictureBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
 
         }
 
-
+       
 
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
@@ -1695,20 +1726,21 @@ namespace CellGameEdit.PM
 
         private void dstBoxFocus()
         {
-            if (this.panel2.Focused == false)
-            {
-                this.panel2.Focus();
+            textBox1.Focus();
+            //if (this.panel2.Focused == false)
+            //{
+            //    this.panel2.Focus();
 
-                //try
-                //{
-                //    panel2.HorizontalScroll.Value   = panel2.HorizontalScroll.Maximum / 2 - panel2.Width / 2;
-                //    panel2.VerticalScroll.Value     = panel2.VerticalScroll.Maximum / 2 - panel2.Height / 2;
+            //    //try
+            //    //{
+            //    //    panel2.HorizontalScroll.Value   = panel2.HorizontalScroll.Maximum / 2 - panel2.Width / 2;
+            //    //    panel2.VerticalScroll.Value     = panel2.VerticalScroll.Maximum / 2 - panel2.Height / 2;
 
-                //    panel2.Refresh();
-                //}
-                //catch (Exception err) { }
+            //    //    panel2.Refresh();
+            //    //}
+            //    //catch (Exception err) { }
 
-            }
+            //}
         }
         
 
@@ -2242,6 +2274,8 @@ namespace CellGameEdit.PM
         
         
         }
+
+
 
 
 
