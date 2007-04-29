@@ -290,7 +290,7 @@ namespace CellGameEdit
 
         private void 显示输出ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Output output = new Output();
+            OutputForm output = new OutputForm();
             output.MdiParent = this;
             output.Show();
         }

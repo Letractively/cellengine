@@ -493,7 +493,7 @@ namespace CellGameEdit.PM
                     );
 
                 output.WriteLine(world);
-
+                //Console.WriteLine(world);
             }
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }

@@ -614,7 +614,7 @@ namespace CellGameEdit.PM
                     );
 
                 output.WriteLine(map);
-
+                //Console.WriteLine(map);
             }
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
 

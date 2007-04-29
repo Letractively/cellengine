@@ -174,7 +174,7 @@ namespace CellGameEdit.PM
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
-
+        
         public static string getCommandScript(string script , string command)
         {
             try
@@ -192,6 +192,7 @@ namespace CellGameEdit.PM
                         }
                     }
                     string ret = script.Substring(start,end-start);
+
                     return ret.Trim();
                 }
             }
@@ -222,7 +223,6 @@ namespace CellGameEdit.PM
                 int first = script.IndexOf(start) ;
                 int last = script.IndexOf(end) + end.Length ;
                 string ret = script.Substring(first, last - first);
-
                 return ret;
             }
             catch (Exception err)
@@ -231,7 +231,6 @@ namespace CellGameEdit.PM
             }
         }
       
-
         public static string replaceKeywordsScript(string script, string start, string end, string[] src,string[] dst)
         {
             try
@@ -239,7 +238,7 @@ namespace CellGameEdit.PM
                 int first = script.IndexOf(start) + start.Length;
                 int last = script.IndexOf(end);
                 string ret = script.Substring(first, last - first);
-
+                
                 if (src != null && dst != null)
                 {
                     for (int i = 0; i < src.Length ; i++)
@@ -247,7 +246,7 @@ namespace CellGameEdit.PM
                         ret = ret.Replace(src[i], dst[i]);
                     }
                 }
-
+                
                 return ret;
             }
             catch (Exception err) 
@@ -270,7 +269,6 @@ namespace CellGameEdit.PM
                     for (int i = dst.Length - 1; i>=0; i--)
                     {
                         ret = ret.Insert(first, dst[i]);
-                        //Console.WriteLine(dst[i]);
                     }
                 }
 

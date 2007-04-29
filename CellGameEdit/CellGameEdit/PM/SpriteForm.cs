@@ -602,7 +602,7 @@ namespace CellGameEdit.PM
                     );
 
                 output.WriteLine(sprite);
-
+                //Console.WriteLine(sprite);
             }
             catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             
