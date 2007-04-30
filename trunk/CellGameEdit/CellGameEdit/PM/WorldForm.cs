@@ -259,7 +259,7 @@ namespace CellGameEdit.PM
             }
         }
 
-        public void OutputCustom(String script, System.IO.StringWriter output)
+        public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
             try
             {
@@ -470,6 +470,7 @@ namespace CellGameEdit.PM
                 world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
                     new string[] { 
                         "<NAME>", 
+                        "<WORLD INDEX>",
                         "<DATA>",
                         "<WIDTH>",
                         "<HEIGHT>",
@@ -481,6 +482,7 @@ namespace CellGameEdit.PM
                     },
                     new string[] { 
                         this.id, 
+                        index.ToString(),
                         this.Data.ToString(),
                         pictureBox1.Width.ToString(),
                         pictureBox1.Height.ToString(),

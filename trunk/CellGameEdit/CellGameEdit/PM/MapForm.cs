@@ -463,7 +463,7 @@ namespace CellGameEdit.PM
 
         }
 
-        public void OutputCustom(String script , System.IO.StringWriter output)
+        public void OutputCustom(int index, String script , System.IO.StringWriter output)
         {
             try
             {
@@ -588,6 +588,7 @@ namespace CellGameEdit.PM
                 map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
                     new string[] { 
                     "<NAME>", 
+                    "<MAP INDEX>",
                     "<IMAGES NAME>",
                     "<CELL W>",
                     "<CELL H>" , 
@@ -601,6 +602,7 @@ namespace CellGameEdit.PM
                 },
                     new string[] { 
                     this.id, 
+                    index.ToString(),
                     super.id,
                     CellW.ToString(),
                     CellH.ToString(),

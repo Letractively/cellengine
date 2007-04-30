@@ -416,7 +416,7 @@ namespace CellGameEdit.PM
             //sw.WriteLine("}");// class end
         }
 
-        public void OutputCustom(String script, System.IO.StringWriter output)
+        public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
             try
             {
@@ -570,13 +570,14 @@ namespace CellGameEdit.PM
                 sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
                     new string[] { 
                     "<NAME>", 
+                    "<SPR INDEX>",
                     "<IMAGES NAME>",
                     "<SCENE PART COUNT>" ,
                     "<SCENE FRAME COUNT>" ,
                     "<CD PART COUNT>",
                     "<CD FRAME COUNT>",
-                        "<ANIMATE COUNT>",
-                        "<FRAME COUNTS>",
+                    "<ANIMATE COUNT>",
+                    "<FRAME COUNTS>",
                     "<FRAME NAME>",
                     "<FRAME ANIMATE>",
                     "<FRAME CD MAP>",
@@ -586,13 +587,14 @@ namespace CellGameEdit.PM
                 },
                     new string[] { 
                     this.id,
+                    index.ToString(),
                     super.id,
                     AllFrame.getSubCount().ToString(),
                     animates.frameGetCount().ToString(),
                     AllFrame.getCDCount().ToString(),
                     collides.frameGetCount().ToString(),
-                        frameAnimate.Length.ToString(),
-                        outFrameCounts,
+                    frameAnimate.Length.ToString(),
+                    outFrameCounts,
                     outFrameName,
                     outFrameAnimate,
                     outFrameCDMap,
