@@ -345,7 +345,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         }
 
 
-        public void OutputCustom(String script, System.IO.StringWriter output, String outDir,
+        public void OutputCustom(int index, String script, System.IO.StringWriter output, String outDir,
             String imageType,bool imageTile,bool imageTileData,bool imageGroup,bool imageGroupData)
         {
             try
@@ -394,8 +394,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 
 
                 images = Util.replaceKeywordsScript(images, "#<IMAGES>", "#<END IMAGES>",
-                    new string[] { "<NAME>", "<COUNT>" },
-                    new string[] { this.id, this.getDstImageCount().ToString() }
+                    new string[] { "<NAME>", "<IMAGES INDEX>", "<COUNT>" },
+                    new string[] { this.id, index.ToString(), this.getDstImageCount().ToString() }
                     );
 
                 output.WriteLine(images);

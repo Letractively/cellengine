@@ -33,6 +33,7 @@
 
     #<IMAGES>              /* 图片组数据块 开始 */
     
+        <IMAGES INDEX>         /*(int) 该图片组的编号*/
         <NAME>                 /*(str) 该图片组的名称 */
         <COUNT>                /*(int) 该图片组包含的图块数量，包含空图 */
         
@@ -52,6 +53,7 @@
     
     #<MAP>                 /* 地图数据块 开始 */
     
+        <MAP INDEX>            /*(int) 该地图 编号*/
         <NAME>                 /*(str) 该地图 名字 */
         <IMAGES NAME>          /*(str) 该地图 使用的图片组名字 */
         <X COUNT>              /*(int) 该地图 水平格子数量 */
@@ -97,6 +99,7 @@
     
     #<SPRITE>              /* 精灵数据块 开始 */
     
+        <SPR INDEX>            /*(int) 该精灵 编号*/
         <NAME>                 /*(str) 该精灵 名字 */
         <IMAGES NAME>          /*(str) 该精灵 使用的图片组名字 */
         
@@ -159,6 +162,8 @@
     <LEVEL WORLD COUNT>    /*(int) 总共场景数量 */
     
     #<WORLD>               /* 场景数据块 开始 */
+    
+        <WORLD INDEX>          /*(int) 该场景 编号*/
         <NAME>                 /*(str) 该场景 名字 */
         <DATA>                 /*(str) 该场景 数据 */
         <GRID W>               /*(int) 该场景 网格宽 */
@@ -167,9 +172,9 @@
         <UNIT MAP COUNT>       /*(int) 该场景 包含的地图数量 */    
         #<UNIT MAP>            /* 场景地图 开始 */
             <INDEX>                /*(int) 当前地图 号码 */
-            <MAP NAME>             /*(str) 当前地图 类型名字 */
+            <MAP NAME>             /*(str) 当前地图 名字 */
             <MAP DATA>             /*(str) 当前地图 数据 */
-            <IDENTIFY>             /*(str) 当前地图 标识 */
+            <IDENTIFY>             /*(str) 当前地图 类型 */
             <X>                    /*(int) 当前地图 场景中X位置 */
             <Y>                    /*(int) 当前地图 场景中Y位置 */
             <SUPER>                /*(str) 当前地图 用的图片组 */
@@ -178,9 +183,9 @@
         <UNIT SPRITE COUNT>    /*(int) 该场景 包含的精灵数量 */     
         #<UNIT SPRITE>         /* 场景精灵 开始 */
             <INDEX>                /*(int) 当前精灵 号码 */
-            <SPR NAME>             /*(str) 当前精灵 类型名字 */
+            <SPR NAME>             /*(str) 当前精灵 名字 */
             <SPR DATA>             /*(str) 当前精灵 数据 */
-            <IDENTIFY>             /*(str) 当前精灵 标识 */
+            <IDENTIFY>             /*(str) 当前精灵 类型 */
             <ANIMATE ID>           /*(int) 当前精灵 动画号 */
             <FRAME ID>             /*(int) 当前精灵 帧号 */
             <X>                    /*(int) 当前精灵 场景中X位置 */

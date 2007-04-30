@@ -22,10 +22,6 @@ namespace CellGameEdit.PM
         static public String workSpace = "";
         static public String workName = "";
 
-        //<IMAGE TILE>
-        //<IMAGE GROUP>
-        //<IMAGE DATA>
-
         TreeNode nodeReses;
         TreeNode nodeLevels;
         TreeNode nodeObjects;
@@ -339,22 +335,22 @@ namespace CellGameEdit.PM
                     //
                     if (forms[i].GetType().Equals(typeof(ImagesForm)))
                     {
-                        ((ImagesForm)forms[i]).OutputCustom(sub, output, OutputDirImage, ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
+                        ((ImagesForm)forms[i]).OutputCustom(i, sub, output, OutputDirImage, ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
                         Console.WriteLine("Output : " + ((ImagesForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(MapForm)))
                     {
-                        ((MapForm)forms[i]).OutputCustom(sub, output);
+                        ((MapForm)forms[i]).OutputCustom(i, sub, output);
                         Console.WriteLine("Output : " + ((MapForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(SpriteForm)))
                     {
-                        ((SpriteForm)forms[i]).OutputCustom(sub, output);
+                        ((SpriteForm)forms[i]).OutputCustom(i, sub, output);
                         Console.WriteLine("Output : " + ((SpriteForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(WorldForm)))
                     {
-                        ((WorldForm)forms[i]).OutputCustom(sub, output);
+                        ((WorldForm)forms[i]).OutputCustom(i, sub, output);
                         Console.WriteLine("Output : " + ((WorldForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     //
@@ -438,6 +434,7 @@ namespace CellGameEdit.PM
 
             initForms(nodeReses);
             initForms(nodeLevels);
+
         }
         public void initForms(TreeNode node)
         {
