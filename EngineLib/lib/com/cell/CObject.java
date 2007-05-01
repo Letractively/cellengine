@@ -14,7 +14,6 @@ package com.cell;
 
 import java.util.Random;
 
-
 /**
  * base class object, all other class entends this </br>
  * 基础类，库中所有其他类从该类继承
