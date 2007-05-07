@@ -571,28 +571,26 @@ namespace CellGameEdit.PM
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-
-            e.Node.Name = e.Label;
-            e.Node.Text = e.Label;
-            if (getForm(treeView1.SelectedNode) != null)
+            if (getForm(treeView1.SelectedNode) != null && e.Label != null && e.Label.Length > 0)
             {
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(ImagesForm)))
-                { 
-                    ((ImagesForm)getForm(treeView1.SelectedNode)).id = e.Label; 
+                {
+                    ((ImagesForm)getForm(treeView1.SelectedNode)).id = e.Label;
                 }
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(SpriteForm)))
-                { 
-                    ((SpriteForm)getForm(treeView1.SelectedNode)).id = e.Label; 
+                {
+                    ((SpriteForm)getForm(treeView1.SelectedNode)).id = e.Label;
                 }
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(MapForm)))
-                { 
-                    ((MapForm)getForm(treeView1.SelectedNode)).id = e.Label; 
+                {
+                    ((MapForm)getForm(treeView1.SelectedNode)).id = e.Label;
                 }
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(WorldForm)))
-                { 
-                    ((WorldForm)getForm(treeView1.SelectedNode)).id = e.Label; 
+                {
+                    ((WorldForm)getForm(treeView1.SelectedNode)).id = e.Label;
                 }
-
+                e.Node.Name = e.Label;
+                Console.WriteLine("New Name = " + e.Label);
             }
 
             RefreshNodeName();
