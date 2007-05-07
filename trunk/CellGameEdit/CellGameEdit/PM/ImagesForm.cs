@@ -713,6 +713,89 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
 
         }
 
+        public void changeDstImageFormSrc(int index)
+        {
+
+            if (getDstImage(index) == null) return;
+            if (srcImage == null) return;
+            
+
+            try
+            {
+                if (srcRect.Width != 0 && srcRect.Height != 0)
+                {
+
+                    Image changed = Image.createImage(
+                        srcImage,
+                        srcRect.X,
+                        srcRect.Y,
+                        srcRect.Width,
+                        srcRect.Height,
+                        0);
+
+                    int oy = getDstImage(index).y;
+                    int ox = getDstImage(index).x;
+
+                    dstImages[index] = changed;
+
+                    // test size
+                    bool isSameSize = true;
+                    System.Drawing.Rectangle src = new System.Drawing.Rectangle(
+                        getDstImage(index).x,
+                        getDstImage(index).y,
+                        getDstImage(index).getWidth(),
+                        getDstImage(index).getHeight()
+                        );
+                    for (int i = 0; i < getDstImageCount(); i++)
+                    {
+                        if (getDstImage(i) != null && i != index)
+                        {
+                            System.Drawing.Rectangle dst = new System.Drawing.Rectangle(
+                               getDstImage(i).x,
+                               getDstImage(i).y,
+                               getDstImage(i).getWidth(),
+                               getDstImage(i).getHeight()
+                               );
+
+                            if (src.IntersectsWith(dst))
+                            {
+                                isSameSize = false;
+                                break;
+                            }
+
+                        }
+                    }
+                    if (isSameSize)
+                    {
+                        changed.x = ox;
+                        changed.y = oy;
+                    }
+                    else
+                    {
+                        changed.x = pictureBox2.Width / dstSize;
+                        changed.y = oy;
+                    }
+
+                    pictureBox2.Width += changed.getWidth() * dstSize;
+                    pictureBox2.Height = Math.Max(pictureBox2.Height, changed.getHeight() * dstSize);
+
+                    // save to src pic
+                    String name = "\\tiles\\" + this.id + "\\" + index.ToString() + ".tile";
+                    if (System.IO.File.Exists(ProjectForm.workSpace + name))
+                    {
+                        System.IO.File.Delete(ProjectForm.workSpace + name);
+                    }
+                    changed.dimg.Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
+                }
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " : " + err.StackTrace);
+            }
+
+
+        }
+
         public void delDstImage(int index)
         {
             getDstImage(index).killed = true;
@@ -1056,6 +1139,15 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             dstRect.Height = getDstImage(dstSelectIndex).getHeight();
             pictureBox2.Refresh();
         }
+        private void toolStripButton14_Click(object sender, EventArgs e)
+        {
+            changeDstImageFormSrc(dstSelectIndex);
+            dstRect.X = getDstImage(dstSelectIndex).x;
+            dstRect.Y = getDstImage(dstSelectIndex).y;
+            dstRect.Width = getDstImage(dstSelectIndex).getWidth();
+            dstRect.Height = getDstImage(dstSelectIndex).getHeight();
+            pictureBox2.Refresh();
+        }
         // del image
         private void toolStripButton12_Click(object sender, EventArgs e)
         {
@@ -1211,6 +1303,8 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         {
             pictureBox2.Refresh();
         }
+
+      
 
   
 

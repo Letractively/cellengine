@@ -423,8 +423,6 @@ namespace CellGameEdit.PM
         }
 
 
-   
-
         public void initForms()
         {
             FormsImages.Clear();
@@ -573,8 +571,9 @@ namespace CellGameEdit.PM
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-           
 
+            e.Node.Name = e.Label;
+            e.Node.Text = e.Label;
             if (getForm(treeView1.SelectedNode) != null)
             {
                 if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(ImagesForm)))
@@ -651,6 +650,7 @@ namespace CellGameEdit.PM
                 ImagesForm form = new ImagesForm(name);
                 TreeNode node = new TreeNode(name);
                 node.Name = name;
+                node.Text = name;
                 formTable.Add(node, form);
 
                 node.ContextMenuStrip = this.tileMenu;
@@ -695,6 +695,7 @@ namespace CellGameEdit.PM
                 WorldForm form = new WorldForm(name);
                 TreeNode node = new TreeNode(name);
                 node.Name = name;
+                node.Text = name;
                 formTable.Add(node, form);
 
                 node.ContextMenuStrip = this.subMenu;
@@ -725,6 +726,7 @@ namespace CellGameEdit.PM
                 ObjectForm form = new ObjectForm(name);
                 TreeNode node = new TreeNode(name);
                 node.Name = name;
+                node.Text = name;
                 formTable.Add(node, form);
 
                 node.ContextMenuStrip = this.subMenu;
