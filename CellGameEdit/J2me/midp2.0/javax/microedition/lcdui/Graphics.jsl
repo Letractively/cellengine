@@ -61,11 +61,6 @@ public class Graphics
 			new System.Drawing.RectangleF(0, 0, img.getWidth() , img.getHeight() ),
 			System.Drawing.GraphicsUnit.Pixel
 			);
-
-		//dg.DrawImage(img.dimg,x, y,
-		//    System.Drawing.GraphicsUnit.Pixel
-		//    );
-		dg.DrawImage(img.dimg, x, y);
 	}
 	
 
@@ -79,11 +74,22 @@ public class Graphics
 		if (img.killed) return;
 		img.dimg.RotateFlip(transform);
 
-		dg.DrawImage(img.dimg,
-				new System.Drawing.RectangleF(x + scale / 2, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
-				new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
-				System.Drawing.GraphicsUnit.Pixel
-				);
+		if (scale == 1) 
+		{
+			dg.DrawImage(img.dimg,
+					new System.Drawing.RectangleF(x , y , img.getWidth() , img.getHeight() ),
+					new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
+					System.Drawing.GraphicsUnit.Pixel
+					);
+		}
+		else
+		{
+			dg.DrawImage(img.dimg,
+					new System.Drawing.RectangleF(x + scale / 2, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
+					new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
+					System.Drawing.GraphicsUnit.Pixel
+					);
+		}
 
 		switch (transform)
 		{
