@@ -32,6 +32,7 @@ namespace CellGameEdit.PM
         Image srcImage;
         System.Drawing.Rectangle srcRect;
 
+        int dstPanelSize = 1024;
         int masterScale = 1;
         int srcScale = 1;
 
@@ -614,8 +615,8 @@ namespace CellGameEdit.PM
         {
             pictureBox1.Width = 1;
             pictureBox1.Height = 1;
-            pictureBox2.Width = 1024;
-            pictureBox2.Height = 1024;
+            pictureBox2.Width = dstPanelSize;
+            pictureBox2.Height = dstPanelSize;
             pictureBox2.Image = new System.Drawing.Bitmap(256, 256);
             try
             {
@@ -1336,6 +1337,7 @@ namespace CellGameEdit.PM
         {
             masterScale += 1;
             if (masterScale > 8) masterScale = 8;
+            dstGridChange();
             dstRefersh();
 
         }
@@ -1343,6 +1345,7 @@ namespace CellGameEdit.PM
         {
             masterScale -= 1;
             if (masterScale < 1) masterScale = 1;
+            dstGridChange();
             dstRefersh();
         }
 
@@ -1541,6 +1544,26 @@ namespace CellGameEdit.PM
         private void pictureBox2_Paint(object sender, PaintEventArgs e)
         {
            // pictureBox2.SizeMode = PictureBoxSizeMode.
+             System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
+
+            if (this.显示十字ToolStripMenuItem.Checked)
+            {
+
+               
+               // System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
+                e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
+                e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
+            }
+
+            //if (this.显示网格ToolStripMenuItem.Checked && masterScale>1)
+            //{
+            //    System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0x80, 0x80, 0x80));
+            //   // System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0x80, 0x80, 0x80)).Brush;
+
+            //    //for(){
+            //    //}
+
+            //}
 
             Graphics g = new Graphics(e.Graphics);
 
@@ -1569,20 +1592,39 @@ namespace CellGameEdit.PM
                 }
             }
 
+            if (this.显示尺子ToolStripMenuItem.Checked)
+            {
+                pen.Color = System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff);
+                e.Graphics.DrawLine(pen, rx , 0, rx, pictureBox2.Height);
+                e.Graphics.DrawLine(pen, 0, ry, pictureBox2.Width, ry);
+            }
             //e.Graphics.DrawImage(pictureBox2.Image,0,0);
 
-            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0, 0, 0));
-            System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
-
-            e.Graphics.DrawLine(pen, pictureBox2.Width / 2, 0, pictureBox2.Width / 2, pictureBox2.Height);
-            e.Graphics.DrawLine(pen, 0, pictureBox2.Height / 2, pictureBox2.Width, pictureBox2.Height / 2);
+           
         }
-
+        private void 显示网格ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            dstGridChange();
+            pictureBox2.Refresh();
+        }
+        private void 显示十字ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox2.Refresh();
+        }
+        private void 显示尺子ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBox2.Refresh();
+        }
+       
+        int rx;
+        int ry;
         float px;
         float py;
         bool isDown =false;
+        bool isSub = false;
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
+            isSub = false;
             isDown = true;
             int x = e.X - pictureBox2.Width / 2;
             int y = e.Y - pictureBox2.Height / 2;
@@ -1637,6 +1679,17 @@ namespace CellGameEdit.PM
                         px = x - rect.X;
                         py = y - rect.Y;
                         item.Selected = true;
+
+                        System.Drawing.RectangleF sub = new System.Drawing.RectangleF(
+                            rect.X + rect.Width - Frame.CDSubW,
+                            rect.Y + rect.Height - Frame.CDSubH,
+                            Frame.CDSubW,
+                            Frame.CDSubH
+                            );
+                        if (sub.Contains(x, y))
+                        {
+                            isSub = true;
+                        }
                         break;
                     }
                 }
@@ -1648,6 +1701,7 @@ namespace CellGameEdit.PM
         private void pictureBox2_MouseUp(object sender, MouseEventArgs e)
         {
             isDown = false;
+            isSub = false;
         }
 
         private void pictureBox2_MouseMove(object sender, MouseEventArgs e)
@@ -1663,12 +1717,38 @@ namespace CellGameEdit.PM
                     }
                     if (tabControl1.SelectedIndex == 1)
                     {
-                        framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)((e.X - pictureBox2.Width / 2 - px) / masterScale);
-                        framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)((e.Y - pictureBox2.Height / 2 - py) / masterScale);
-                    }
+                        if (!isSub)
+                        {
+                            framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)((e.X - pictureBox2.Width / 2 - px) / masterScale);
+                            framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)((e.Y - pictureBox2.Height / 2 - py) / masterScale);
+                        }
+                        else
+                        {
+                            framesGetCurFrame().CDW[dstGetCurCDIndexes()[0]] = (int)((e.X - pictureBox2.Width / 2 ) / masterScale) - (int)framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]];
+                            framesGetCurFrame().CDH[dstGetCurCDIndexes()[0]] = (int)((e.Y - pictureBox2.Height / 2 ) / masterScale) - (int)framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]];
+
+                            if ((int)framesGetCurFrame().CDW[dstGetCurCDIndexes()[0]] <= 0) framesGetCurFrame().CDW[dstGetCurCDIndexes()[0]] = 1;
+                            if ((int)framesGetCurFrame().CDH[dstGetCurCDIndexes()[0]] <= 0) framesGetCurFrame().CDH[dstGetCurCDIndexes()[0]] = 1;
+                        }
+                     }
                 }
                 catch (Exception err) { }
+                if (this.显示尺子ToolStripMenuItem.Checked)
+                {
+                    rx = e.X - e.X % masterScale;
+                    ry = e.Y - e.Y % masterScale;
+                    this.RulerLabel2.Text = "X=" + (rx - pictureBox2.Width / 2) / masterScale + " Y=" + (ry - pictureBox2.Height / 2) / masterScale;
+                }
                 dstRefersh();
+            }else
+            {
+                if (this.显示尺子ToolStripMenuItem.Checked)
+                {
+                    rx = e.X - e.X % masterScale;
+                    ry = e.Y - e.Y % masterScale;
+                    this.RulerLabel2.Text = "X=" + (rx - pictureBox2.Width / 2) / masterScale + " Y=" + (ry - pictureBox2.Height / 2) / masterScale;
+                    pictureBox2.Refresh();
+                }
             }
 
         }
@@ -1676,32 +1756,47 @@ namespace CellGameEdit.PM
         //adjust frame
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
-            int eX = 0;
-            int eY = 0;
-            textBox1.Text = "";
-            switch (e.KeyCode)
-            {
-                case Keys.Up: eY = -1; textBox1.Text += "UP"; break;
-                case Keys.Down: eY = 1; textBox1.Text += "DOWN"; break;
-                case Keys.Left: eX = -1; textBox1.Text += "LEFT"; break;
-                case Keys.Right: eX = 1; textBox1.Text += "RIGHT"; break;
-            }
 
-            try
+            if (e.Shift)
             {
-                if (tabControl1.SelectedIndex == 0)
+                switch (e.KeyCode)
                 {
-                    framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] + eX;
-                    framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] + eY;
+                    case Keys.Up: framesMoveAll(0, -1); textBox1.Text += "UP"; break;
+                    case Keys.Down: framesMoveAll(0,  1); textBox1.Text += "DOWN"; break;
+                    case Keys.Left: framesMoveAll(-1, 0); textBox1.Text += "LEFT"; break;
+                    case Keys.Right: framesMoveAll(1, 0); textBox1.Text += "RIGHT"; break;
                 }
-                if (tabControl1.SelectedIndex == 1)
-                {
-                    framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] + eX;
-                    framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] + eY;
-                }
+                framesRefersh();
             }
-            catch (Exception err) { }
-            dstRefersh();
+            else
+            {
+                int eX = 0;
+                int eY = 0;
+                textBox1.Text = "";
+                switch (e.KeyCode)
+                {
+                    case Keys.Up: eY = -1; textBox1.Text += "UP"; break;
+                    case Keys.Down: eY = 1; textBox1.Text += "DOWN"; break;
+                    case Keys.Left: eX = -1; textBox1.Text += "LEFT"; break;
+                    case Keys.Right: eX = 1; textBox1.Text += "RIGHT"; break;
+                }
+
+                try
+                {
+                    if (tabControl1.SelectedIndex == 0)
+                    {
+                        framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubX[dstGetCurSubIndexes()[0]] + eX;
+                        framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] = (int)framesGetCurFrame().SubY[dstGetCurSubIndexes()[0]] + eY;
+                    }
+                    if (tabControl1.SelectedIndex == 1)
+                    {
+                        framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDX[dstGetCurCDIndexes()[0]] + eX;
+                        framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] = (int)framesGetCurFrame().CDY[dstGetCurCDIndexes()[0]] + eY;
+                    }
+                }
+                catch (Exception err) { }
+                dstRefersh();
+            }
         }
         private void pictureBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {
@@ -1726,6 +1821,44 @@ namespace CellGameEdit.PM
             dstRefersh();
         }
 
+        private void dstGridChange()
+        {
+            pictureBox2.Width = pictureBox2.Height = dstPanelSize * masterScale;
+            //panel2.HorizontalScroll.Value = panel2.HorizontalScroll.Minimum + (panel2.HorizontalScroll.Maximum - panel2.HorizontalScroll.Minimum) / 2 + panel2.Width / 2;
+            //panel2.VerticalScroll.Value = panel2.VerticalScroll.Minimum + (panel2.VerticalScroll.Maximum - panel2.VerticalScroll.Minimum) / 2 + panel2.Height / 2;
+            try
+            {
+                panel2.HorizontalScroll.Value = panel2.HorizontalScroll.Maximum / 2 - panel2.Width / 2;
+                panel2.VerticalScroll.Value = panel2.VerticalScroll.Maximum / 2 - panel2.Height / 2;
+
+            }
+            catch (Exception err) { }
+            //panel2.HorizontalScroll.Value = -pictureBox2.Location.X * masterScale;
+            //panel2.VerticalScroll.Value = -pictureBox2.Location.Y * masterScale;
+
+            if (this.显示网格ToolStripMenuItem.Checked && masterScale > 1)
+            {
+                //javax.microedition.lcdui.Image bg = javax.microedition.lcdui.Image.createImage(masterScale, masterScale);
+                //bg.getGraphics().setColor(0x7f808080);
+                //bg.getGraphics().drawLine(0, 0, masterScale, 0);
+                //bg.getGraphics().drawLine(0, 0, 0, masterScale);
+                System.Drawing.Image bg = new System.Drawing.Bitmap(masterScale, masterScale);
+                System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff, 0x80, 0x80, 0x80));
+                System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(bg);
+                g.DrawLine(pen, 0, 0, masterScale, 0);
+                g.DrawLine(pen, 0, 0, 0, masterScale);
+
+                //for(){
+                //}
+                pictureBox2.BackgroundImage = bg;
+                pictureBox2.Refresh();
+            }
+            else
+            {
+                pictureBox2.BackgroundImage = null;
+                pictureBox2.Refresh();
+            }
+        }
         private void dstBoxFocus()
         {
             textBox1.Focus();
@@ -1957,18 +2090,18 @@ namespace CellGameEdit.PM
             trackBar1.Value = trackBar1.Minimum;
             framesRefersh();
         }
-        private void toolStripButton5_Click(object sender, EventArgs e)
-        {
-            if (trackBar1.Value > trackBar1.Minimum)
-            {
-                trackBar1.Value -= trackBar1.SmallChange;
-            }
-            else
-            {
-                trackBar1.Value = trackBar1.Maximum;
-            }
-            framesRefersh();
-        }
+        //private void toolStripButton5_Click(object sender, EventArgs e)
+        //{
+        //    if (trackBar1.Value > trackBar1.Minimum)
+        //    {
+        //        trackBar1.Value -= trackBar1.SmallChange;
+        //    }
+        //    else
+        //    {
+        //        trackBar1.Value = trackBar1.Maximum;
+        //    }
+        //    framesRefersh();
+        //}
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
             if (toolStripButton6.Checked == true)
@@ -1990,14 +2123,20 @@ namespace CellGameEdit.PM
         }
         private void toolStripButton7_Click(object sender, EventArgs e)
         {
-            if (trackBar1.Value < trackBar1.Maximum)
-            {
-                trackBar1.Value += trackBar1.SmallChange;
-            }
-            else
-            {
-                trackBar1.Value = trackBar1.Minimum;
-            } 
+            //if (toolStripButton7.Checked == true)
+            //{
+            //    //foreach (Control control in splitContainer5.Panel2.Controls)
+            //    //{
+            //    //    control.Enabled = false;
+            //    //}
+            //}
+            //else
+            //{
+            //    //foreach (Control control in splitContainer5.Panel2.Controls)
+            //    //{
+            //    //    control.Enabled = true;
+            //    //}
+            //}
             framesRefersh();
         }
         private void toolStripButton14_Click(object sender, EventArgs e)
@@ -2273,9 +2412,27 @@ namespace CellGameEdit.PM
                 pictureBox2.Refresh();
             }
 
-        
+            if (toolStripButton7.Checked)
+            {
+                if (trackBar1.Value < trackBar1.Maximum)
+                {
+                    trackBar1.Value += trackBar1.SmallChange;
+                }
+                else
+                {
+                    trackBar1.Value = trackBar1.Minimum;
+                    toolStripButton7.Checked = false;
+                    toolStripButton7_Click(toolStripButton7,null);
+                }
+                pictureBox2.Refresh();
+            }
         
         }
+
+
+
+
+
 
 
 
@@ -2295,7 +2452,12 @@ namespace CellGameEdit.PM
     [Serializable]
     public partial class Frame : ISerializable
     {
+
+
         #region const
+        public static int CDSubW = 4;
+        public static int CDSubH = 4;
+
         public const int CD_TYPE_MAP = 0;
         public const int CD_TYPE_ATK = 1;
         public const int CD_TYPE_DEF = 2;
@@ -2701,6 +2863,11 @@ namespace CellGameEdit.PM
                     ((int)CDY[i]) * scale + y,
                     ((int)CDW[i]) * scale - 1,
                     ((int)CDH[i]) * scale - 1);
+                g.drawRect(
+                   ((int)CDX[i]) * scale + x + ((int)CDW[i]) * scale - Frame.CDSubW,
+                   ((int)CDY[i]) * scale + y + ((int)CDH[i]) * scale - Frame.CDSubH,
+                   Frame.CDSubW,
+                   Frame.CDSubH);
 
                 if ((Boolean)(CDSelected[i]))
                 {
@@ -2711,6 +2878,11 @@ namespace CellGameEdit.PM
                         ((int)CDW[i] * scale),
                         ((int)CDH[i] * scale)
                         );
+                    g.fillRect(
+                       ((int)CDX[i]) * scale + x + ((int)CDW[i]) * scale - Frame.CDSubW,
+                       ((int)CDY[i]) * scale + y + ((int)CDH[i]) * scale - Frame.CDSubH,
+                       Frame.CDSubW,
+                       Frame.CDSubH);
                 }
 
             }

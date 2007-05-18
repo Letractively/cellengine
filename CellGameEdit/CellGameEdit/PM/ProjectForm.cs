@@ -11,6 +11,10 @@ using System.Runtime.Serialization;
 using System.Security.Permissions;
 using System.Runtime.Serialization.Formatters;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Formatters.Soap;
+
 
 namespace CellGameEdit.PM
 {
@@ -48,15 +52,11 @@ namespace CellGameEdit.PM
             nodeObjects.ContextMenuStrip = this.objMenu;
             nodeLevels.ContextMenuStrip = this.levelMenu;
 
-
             treeView1.Nodes.Add(nodeReses);
             treeView1.Nodes.Add(nodeObjects);
             treeView1.Nodes.Add(nodeLevels);
 
             treeView1.ExpandAll();
-
-           
-            
 
         }
 
@@ -65,64 +65,54 @@ namespace CellGameEdit.PM
         {
             InitializeComponent();
 
-            
-
-            nodeReses = (TreeNode)info.GetValue("nodeReses", typeof(TreeNode));
-            nodeLevels = (TreeNode)info.GetValue("nodeLevels", typeof(TreeNode));
             try
             {
-                nodeObjects = (TreeNode)info.GetValue("nodeObjects", typeof(TreeNode));
-            }catch(Exception err){
-                nodeObjects = new TreeNode("对象");
-            }
-            //formGroup = (ArrayList)info.GetValue("formGroup", typeof(ArrayList));
-
-            formTable = (Hashtable)info.GetValue("formTable", typeof(Hashtable));
-
-            nodeReses.ContextMenuStrip = this.resMenu;
-            nodeObjects.ContextMenuStrip = this.objMenu;
-            nodeLevels.ContextMenuStrip = this.levelMenu;
-
-
-            foreach(TreeNode node in nodeReses.Nodes)
-            {
-                node.ContextMenuStrip = this.tileMenu;
-
-                foreach(TreeNode subnode in node.Nodes)
+                nodeReses = (TreeNode)info.GetValue("nodeReses", typeof(TreeNode));
+                nodeLevels = (TreeNode)info.GetValue("nodeLevels", typeof(TreeNode));
+                try
                 {
-                    subnode.ContextMenuStrip = this.subMenu;
+                    nodeObjects = (TreeNode)info.GetValue("nodeObjects", typeof(TreeNode));
                 }
+                catch (Exception err)
+                {
+                    nodeObjects = new TreeNode("对象");
+                }
+                //formGroup = (ArrayList)info.GetValue("formGroup", typeof(ArrayList));
+
+                formTable = (Hashtable)info.GetValue("formTable", typeof(Hashtable));
+
+                nodeReses.ContextMenuStrip = this.resMenu;
+                nodeObjects.ContextMenuStrip = this.objMenu;
+                nodeLevels.ContextMenuStrip = this.levelMenu;
+
+
+                foreach (TreeNode node in nodeReses.Nodes)
+                {
+                    node.ContextMenuStrip = this.tileMenu;
+
+                    foreach (TreeNode subnode in node.Nodes)
+                    {
+                        subnode.ContextMenuStrip = this.subMenu;
+                    }
+                }
+                foreach (TreeNode node in nodeLevels.Nodes)
+                {
+                    node.ContextMenuStrip = this.subMenu;
+                }
+                foreach (TreeNode node in nodeObjects.Nodes)
+                {
+                    node.ContextMenuStrip = this.subMenu;
+                }
+
+                treeView1.Nodes.Add(nodeReses);
+                treeView1.Nodes.Add(nodeObjects);
+                treeView1.Nodes.Add(nodeLevels);
+
+                treeView1.ExpandAll();
+
+            }catch(Exception err){
+                MessageBox.Show("构造工程出错 !\n" + err.Message +"\n"+err.StackTrace);
             }
-            foreach (TreeNode node in nodeLevels.Nodes)
-            {
-                node.ContextMenuStrip = this.subMenu;
-            }
-            foreach (TreeNode node in nodeObjects.Nodes)
-            {
-                node.ContextMenuStrip = this.subMenu;
-            }
-
-            treeView1.Nodes.Add(nodeReses);
-            treeView1.Nodes.Add(nodeObjects);
-            treeView1.Nodes.Add(nodeLevels);
-
-            treeView1.ExpandAll();
-
-
-            //// load
-            //try
-            //{
-            //    SoapFormatter formatter = new SoapFormatter();
-            //    Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
-            //    prjForm = (ProjectForm)formatter.Deserialize(stream);
-            //    stream.Close();
-            //    prjForm.MdiParent = this;
-            //    prjForm.Show();
-            //}
-            //catch (Exception err)
-            //{
-            //    MessageBox.Show("找不到工程文件 Project.cpj " + err.StackTrace);
-            //}
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -137,6 +127,31 @@ namespace CellGameEdit.PM
                 info.AddValue("nodeLevels", nodeLevels);
                 info.AddValue("formTable", formTable);
 
+        }
+        
+        private void ProjectForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (MessageBox.Show("是否要关闭工程？", "警告", MessageBoxButtons.OKCancel, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) != DialogResult.OK)
+            {
+                e.Cancel = true;
+            }
+        }
+        private void ProjectForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            foreach (TreeNode key in formTable.Keys)
+            {
+
+                if (getForm(key) != null)
+                {
+                    getForm(key).Close();
+                    getForm(key).Dispose();
+                }
+            }
+
+        }
+        private void ProjectForm_Shown(object sender, EventArgs e)
+        {
+            sortTreeView();
         }
 
         //public void Output()
@@ -215,10 +230,12 @@ namespace CellGameEdit.PM
         Boolean ImageGroup;
         Boolean ImageGroupData;
 
+        
         public void OutputCustom(String fileName)
         {
             try
             {
+
                 initForms();
                 RefreshNodeName();
 
@@ -480,6 +497,8 @@ namespace CellGameEdit.PM
         {
             if (formTable[node] != null)
             {
+                node.Name = node.Text;
+
                 //
                 if (formTable[node].GetType().Equals(typeof(ImagesForm)))
                 {
@@ -537,24 +556,7 @@ namespace CellGameEdit.PM
             return null;
         }
 
-        private void ProjectForm_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            foreach (TreeNode key in formTable.Keys)
-            {
-                
-                if (getForm(key) != null)
-                {
-                    getForm(key).Close();
-                    getForm(key).Dispose();
-                }
-            }
 
-        }
-
-        private void ProjectForm_Shown(object sender, EventArgs e)
-        {
-            RefreshNodeName();
-        }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
@@ -565,35 +567,65 @@ namespace CellGameEdit.PM
         private void treeView1_BeforeLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             if(e.Node.Parent==null){
+                e.CancelEdit = true;
                 nodeReses.EndEdit(true);
             }
         }
 
         private void treeView1_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
-            if (getForm(treeView1.SelectedNode) != null && e.Label != null && e.Label.Length > 0)
+           
+            if (getForm(e.Node) != null && e.Label != null && e.Label.Length > 0)
             {
-                if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(ImagesForm)))
-                {
-                    ((ImagesForm)getForm(treeView1.SelectedNode)).id = e.Label;
-                }
-                if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(SpriteForm)))
-                {
-                    ((SpriteForm)getForm(treeView1.SelectedNode)).id = e.Label;
-                }
-                if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(MapForm)))
-                {
-                    ((MapForm)getForm(treeView1.SelectedNode)).id = e.Label;
-                }
-                if (getForm(treeView1.SelectedNode).GetType().Equals(typeof(WorldForm)))
-                {
-                    ((WorldForm)getForm(treeView1.SelectedNode)).id = e.Label;
-                }
-                e.Node.Name = e.Label;
-                Console.WriteLine("New Name = " + e.Label);
-            }
+                e.CancelEdit = true;
 
-            RefreshNodeName();
+                String name = e.Label;
+                
+
+                while(true)
+                {
+                    int index = e.Node.Parent.Nodes.IndexOfKey(name);
+                    if (index >= 0 && index != e.Node.Parent.Nodes.IndexOf(e.Node))
+                    {
+                        TextDialog nameDialog = new TextDialog(name);
+                        nameDialog.Text = "已经有" + name + "这个名字了";
+                        if (nameDialog.showDialog() == DialogResult.OK)
+                        {
+                            name = nameDialog.getText();
+                            continue;
+                        }
+                        else
+                        {
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        if (getForm(e.Node).GetType().Equals(typeof(ImagesForm)))
+                        {
+                            ((ImagesForm)getForm(e.Node)).id = name;
+                        }
+                        if (getForm(e.Node).GetType().Equals(typeof(SpriteForm)))
+                        {
+                            ((SpriteForm)getForm(e.Node)).id = name;
+                        }
+                        if (getForm(e.Node).GetType().Equals(typeof(MapForm)))
+                        {
+                            ((MapForm)getForm(e.Node)).id = name;
+                        }
+                        if (getForm(e.Node).GetType().Equals(typeof(WorldForm)))
+                        {
+                            ((WorldForm)getForm(e.Node)).id = name;
+                        }
+                        e.Node.Name = name;
+                        e.Node.Text = name;
+                        RefreshNodeName();
+                        sortTreeView();
+                        Console.WriteLine("New Name = " + e.Node.Name);
+                        break;
+                    }
+                }
+            }
         }
 
         private void treeView1_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
@@ -629,11 +661,54 @@ namespace CellGameEdit.PM
         }
 
 
+        private void 刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshNodeName();
+            sortTreeView();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            RefreshNodeName();
+            sortTreeView();
+        }
+
+        private void treeView1_AfterCollapse(object sender, TreeViewEventArgs e)
+        {
+        }
+
+        private void treeView1_AfterExpand(object sender, TreeViewEventArgs e)
+        {
+        }
+        
+        //------------------------------------------------------------------------------------------------------------------------------------
+
+        class NodesSorter : IComparer
+        {
+            StringComparer comparer = StringComparer.OrdinalIgnoreCase;
+
+            int IComparer.Compare(Object x, Object y)
+            {
+                return comparer.Compare(((TreeNode)x).Name, ((TreeNode)y).Name);
+            }
+
+        }
+
+        public void sortTreeView()
+        {
+            treeView1.SelectedNode = null;
+            treeView1.TreeViewNodeSorter = new NodesSorter();
+            treeView1.Sort();
+            treeView1.SelectedNode = null;
+        }
+
+
         //------------------------------------------------------------------------------------------------------------------------------------
 
 #region resMenu
         private void 添加图片组ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RefreshNodeName();
             String name = "unamed_Tile";
             TextDialog nameDialog = new TextDialog(name);
             while (nameDialog.ShowDialog() == DialogResult.OK)
@@ -669,16 +744,20 @@ namespace CellGameEdit.PM
                 {
                     MessageBox.Show(err.TargetSite+":"+err.StackTrace);
                 }
+                sortTreeView();
                 break;
             }
 
         }
+      
+     
 #endregion
 
 #region levelMenu
 
         private void 添加场景ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RefreshNodeName();
             String name = "unamed_Level";
             TextDialog nameDialog = new TextDialog(name);
             while (nameDialog.ShowDialog() == DialogResult.OK)
@@ -701,6 +780,7 @@ namespace CellGameEdit.PM
                 this.treeView1.SelectedNode.ExpandAll();
                 form.MdiParent = this.MdiParent;
                 form.Show();
+                sortTreeView();
                 break;
             }
 
@@ -710,6 +790,7 @@ namespace CellGameEdit.PM
 #region objMenu
         private void 添加对象ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RefreshNodeName();
             String name = "unamed_Object";
             TextDialog nameDialog = new TextDialog(name);
             while (nameDialog.ShowDialog() == DialogResult.OK)
@@ -732,6 +813,7 @@ namespace CellGameEdit.PM
                 this.treeView1.SelectedNode.ExpandAll();
                 form.MdiParent = this.MdiParent;
                 form.Show();
+                sortTreeView();
                 break;
             }
         }
@@ -752,9 +834,39 @@ namespace CellGameEdit.PM
             }
            
         }
+        private void 复制ToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            copySub(treeView1.SelectedNode, null);
+            sortTreeView();
+        }
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            if (getForm(treeView1.SelectedNode) != null)
+            {
+                while (treeView1.SelectedNode.Nodes.Count > 0)
+                {
+                    getForm(treeView1.SelectedNode.Nodes[0]).Enabled = false;
+                    getForm(treeView1.SelectedNode.Nodes[0]).Dispose();
+                    //getForm(treeView1.SelectedNode.Nodes[0]).Hide();
+                    formTable.Remove(treeView1.SelectedNode.Nodes[0]);
+                    treeView1.SelectedNode.Nodes.RemoveAt(0);
+                }
+
+                getForm(treeView1.SelectedNode).Enabled = false;
+                getForm(treeView1.SelectedNode).Dispose();
+                //getForm(treeView1.SelectedNode).Hide();
+                formTable.Remove(treeView1.SelectedNode);
+                treeView1.SelectedNode.Parent.Nodes.Remove(treeView1.SelectedNode);
+
+                sortTreeView();
+            }
+
+        }
 
         private void 精灵ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RefreshNodeName();
             String name = "unamed_Sprite";
             TextDialog nameDialog = new TextDialog(name);
             while (nameDialog.ShowDialog() == DialogResult.OK)
@@ -776,6 +888,7 @@ namespace CellGameEdit.PM
                     this.treeView1.SelectedNode.ExpandAll();
                     form.MdiParent = this.MdiParent;
                     form.Show();
+                    sortTreeView();
                 }
                 break;
             }
@@ -783,6 +896,7 @@ namespace CellGameEdit.PM
 
         private void 地图ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            RefreshNodeName();
             String name = "unamed_Map";
             TextDialog nameDialog = new TextDialog(name);
             while (nameDialog.ShowDialog() == DialogResult.OK)
@@ -804,37 +918,14 @@ namespace CellGameEdit.PM
                     this.treeView1.SelectedNode.ExpandAll();
                     form.MdiParent = this.MdiParent;
                     form.Show();
-                    
+                    sortTreeView();
                 }
                 break;
             }
 
         }
 
-        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-            if (getForm(treeView1.SelectedNode)!=null)
-            {
-                while (treeView1.SelectedNode.Nodes.Count > 0)
-                {
-                    getForm(treeView1.SelectedNode.Nodes[0]).Enabled = false;
-                    getForm(treeView1.SelectedNode.Nodes[0]).Dispose();
-                    //getForm(treeView1.SelectedNode.Nodes[0]).Hide();
-                    formTable.Remove(treeView1.SelectedNode.Nodes[0]);
-                    treeView1.SelectedNode.Nodes.RemoveAt(0);
-                }
-
-                getForm(treeView1.SelectedNode).Enabled = false;
-                getForm(treeView1.SelectedNode).Dispose();
-                //getForm(treeView1.SelectedNode).Hide();
-                formTable.Remove(treeView1.SelectedNode);
-                treeView1.SelectedNode.Parent.Nodes.Remove(treeView1.SelectedNode);
-            
-           
-            }
-           
-        }
+        
 
 #endregion
 
@@ -852,7 +943,11 @@ namespace CellGameEdit.PM
             }
             
         }
-
+        private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            copySub(treeView1.SelectedNode, null);
+            sortTreeView();
+        }
         private void 删除ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             if (getForm(treeView1.SelectedNode) != null)
@@ -865,11 +960,143 @@ namespace CellGameEdit.PM
                 formTable.Remove(treeView1.SelectedNode);
                 treeView1.SelectedNode.Parent.Nodes.Remove(treeView1.SelectedNode);
 
-               
+                sortTreeView();
             }
         }
 
 #endregion
+
+
+        private void copySub(TreeNode super,TreeNode superCopy)
+        {
+            if (formTable[super] != null)
+            {
+                RefreshNodeName();
+                //
+                if (formTable[super].GetType().Equals(typeof(ImagesForm)) ||
+                    formTable[super].GetType().Equals(typeof(MapForm)) ||
+                    formTable[super].GetType().Equals(typeof(SpriteForm)) ||
+                    formTable[super].GetType().Equals(typeof(WorldForm)))
+                {
+                    try
+                    {
+                        // clone form
+                       
+                        SoapFormatter formatter = new SoapFormatter();
+                        MemoryStream stream = new MemoryStream();
+                        stream.Seek(0, SeekOrigin.Begin);
+                        formatter.Serialize(stream, formTable[super]);
+                        stream.Seek(0, SeekOrigin.Begin);
+                        Form form = (Form)formatter.Deserialize(stream);
+
+                        if (formTable[super].GetType().Equals(typeof(ImagesForm)))
+                        {
+                            ((ImagesForm)form).id = ((ImagesForm)form).id ;
+                        }
+                        if (formTable[super].GetType().Equals(typeof(MapForm)))
+                        {
+                            ((MapForm)form).id = ((MapForm)form).id ;
+                            if (superCopy!=null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
+                            {
+                                ((MapForm)form).super = (ImagesForm)formTable[superCopy];
+                            }
+                        }
+                        if (formTable[super].GetType().Equals(typeof(SpriteForm)))
+                        {
+                            ((SpriteForm)form).id = ((SpriteForm)form).id ;
+                            if (superCopy != null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
+                            {
+                                ((SpriteForm)form).super = (ImagesForm)formTable[superCopy];
+                            }
+                        }
+                        if (formTable[super].GetType().Equals(typeof(WorldForm)))
+                        {
+                            ((WorldForm)form).id = ((WorldForm)form).id ;
+                        }
+                        form.MdiParent = this.MdiParent;
+                        stream.Close();
+                        
+
+                        // clone node
+                        TreeNode copy = new TreeNode(super.Name + "_Copy");
+                        copy.Name = super.Name + "_Copy";
+                        copy.ContextMenuStrip = super.ContextMenuStrip;
+
+                        // add 
+                        formTable.Add(copy, form);
+                        if (superCopy != null)
+                        {
+                            // adjust
+                            while (true)
+                            {
+                                if (superCopy.Nodes.ContainsKey(copy.Name))
+                                {
+                                    copy.Name = copy.Name + "_Copy";
+                                    copy.Text = copy.Name;
+                                    continue;
+                                }
+                                else
+                                {
+                                    superCopy.Nodes.Add(copy);
+                                    break;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // adjust
+                            while (true)
+                            {
+                                if (super.Parent.Nodes.ContainsKey(copy.Name))
+                                {
+                                    copy.Name = copy.Name + "_Copy";
+                                    copy.Text = copy.Name;
+                                    continue;
+                                }
+                                else
+                                {
+                                    super.Parent.Nodes.Add(copy);
+                                    break;
+                                }
+                            }
+                        }
+
+                        
+
+                        // sub nodes
+                        if (super.Nodes.Count >= 0)
+                        {
+                            foreach (TreeNode sub in super.Nodes)
+                            {
+                                if (form.GetType().Equals(typeof(ImagesForm)))
+                                {
+                                    copySub(sub, copy);
+                                }
+                                else
+                                {
+                                    copySub(sub, null);
+                                }
+                                
+                            }
+                        }
+                    }
+                    catch (Exception err) {
+                        Console.WriteLine(err.HelpLink); 
+                        Console.WriteLine(err.Source); 
+                        Console.WriteLine(err.Message); 
+                        Console.WriteLine(err.StackTrace); 
+                    }
+                }
+                RefreshNodeName();
+            }
+
+        
+
+        }
+
+     
+
+    
 
 
 
