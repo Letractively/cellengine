@@ -432,8 +432,13 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             openFileDialog1.Filter = "PNG files (*.png)|*.png|All files (*.*)|*.*";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
+                Image buf = Image.createImage(openFileDialog1.FileName);
 
-                srcImage = Image.createImage(openFileDialog1.FileName);
+                srcImage = Image.createImage(buf.getWidth(), buf.getHeight());
+                srcImage.getGraphics().drawImage(buf,0,0,0);
+
+                buf.dimg.Dispose();
+                buf = null;
 
                 pictureBox1.Width = srcImage.getWidth() * srcSize;
                 pictureBox1.Height = srcImage.getHeight() * srcSize;
@@ -1132,21 +1137,29 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         // change image
         private void toolStripButton9_Click(object sender, EventArgs e)
         {
-            changeDstImage(dstSelectIndex);
-            dstRect.X = getDstImage(dstSelectIndex).x;
-            dstRect.Y = getDstImage(dstSelectIndex).y;
-            dstRect.Width = getDstImage(dstSelectIndex).getWidth();
-            dstRect.Height = getDstImage(dstSelectIndex).getHeight();
-            pictureBox2.Refresh();
+            try
+            {
+                changeDstImage(dstSelectIndex);
+                dstRect.X = getDstImage(dstSelectIndex).x;
+                dstRect.Y = getDstImage(dstSelectIndex).y;
+                dstRect.Width = getDstImage(dstSelectIndex).getWidth();
+                dstRect.Height = getDstImage(dstSelectIndex).getHeight();
+                pictureBox2.Refresh();
+            }
+            catch (Exception err) { }
         }
         private void toolStripButton14_Click(object sender, EventArgs e)
         {
-            changeDstImageFormSrc(dstSelectIndex);
-            dstRect.X = getDstImage(dstSelectIndex).x;
-            dstRect.Y = getDstImage(dstSelectIndex).y;
-            dstRect.Width = getDstImage(dstSelectIndex).getWidth();
-            dstRect.Height = getDstImage(dstSelectIndex).getHeight();
-            pictureBox2.Refresh();
+            try
+            {
+                changeDstImageFormSrc(dstSelectIndex);
+                dstRect.X = getDstImage(dstSelectIndex).x;
+                dstRect.Y = getDstImage(dstSelectIndex).y;
+                dstRect.Width = getDstImage(dstSelectIndex).getWidth();
+                dstRect.Height = getDstImage(dstSelectIndex).getHeight();
+                pictureBox2.Refresh();
+            }
+            catch (Exception err) { }
         }
         // del image
         private void toolStripButton12_Click(object sender, EventArgs e)

@@ -102,70 +102,38 @@ namespace CellGameEdit
         {
             if (prjForm == null || prjForm.Visible == false)
             {
-                //FolderBrowserDialog dir = new FolderBrowserDialog();
-                //dir.ShowNewFolderButton = false;
-                //dir.Description = "打开包含(Project.cpj)的工程文件夹";
-
-                //if (dir.ShowDialog() == DialogResult.OK)
-                //{
-                //    try
-                //    {
-                //        ProjectForm.workSpace = dir.SelectedPath;
-
-                //        SoapFormatter formatter = new SoapFormatter();
-                //        Stream stream = new FileStream(dir.SelectedPath + "\\Project.cpj", FileMode.Open, FileAccess.Read, FileShare.Read);
-                //        prjForm = (ProjectForm)formatter.Deserialize(stream);
-                //        stream.Close();
-                //        prjForm.MdiParent = this;
-                //        prjForm.Show();
-                //    }
-                //    catch (Exception err)
-                //    {
-                //        MessageBox.Show("找不到工程文件 Project.cpj " + err.StackTrace);
-                //    }
-                   
-                //}
-
-                try
+                OpenFileDialog openFileDialog1 = new OpenFileDialog();
+                openFileDialog1.Filter = "CPJ files (*.cpj)|*.cpj";
+                if (openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    OpenFileDialog openFileDialog1 = new OpenFileDialog();
-                    openFileDialog1.Filter = "CPJ files (*.cpj)|*.cpj";
-                    if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                    try
                     {
-                        try
-                        {
-                            ProjectForm.workSpace = System.IO.Path.GetDirectoryName(openFileDialog1.FileName);
-                            ProjectForm.workName = openFileDialog1.FileName;
+                        ProjectForm.workSpace = System.IO.Path.GetDirectoryName(openFileDialog1.FileName);
+                        ProjectForm.workName = openFileDialog1.FileName;
 
-                            SoapFormatter formatter = new SoapFormatter();
-                            Stream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
-                            prjForm = (ProjectForm)formatter.Deserialize(stream);
-                            stream.Close();
-                            prjForm.MdiParent = this;
-                            prjForm.Show();
-                        }
-                        catch (Exception err)
-                        {
-                            MessageBox.Show(err.StackTrace+":"+err.StackTrace);
-                        }
+                        SoapFormatter formatter = new SoapFormatter();
+                        FileStream stream = new FileStream(openFileDialog1.FileName, FileMode.Open, FileAccess.Read, FileShare.Read);
+                        prjForm = (ProjectForm)formatter.Deserialize(stream);
+                        stream.Close();
+                        prjForm.MdiParent = this;
+                        prjForm.Show();
+                    }
+                    catch (Exception err)
+                    {
+                        MessageBox.Show(err.Message + "\n" + err.StackTrace);
                     }
                 }
-                catch (Exception err)
-                {
-                }
-
-
+                   
             }
-            else
-            {
-            }
-           
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (prjForm != null && prjForm.Visible == true)
             {
+
+                this.Enabled = false;
+
                 try {
 
                     if (ProjectForm.workName == "")
@@ -181,23 +149,39 @@ namespace CellGameEdit
                     if (ProjectForm.workName != "")
                     {
                         SoapFormatter formatter = new SoapFormatter();
-                        Stream stream = new MemoryStream();
+                        MemoryStream stream = new MemoryStream();
                         try
                         {
+                            this.progressBar1.Value = (this.progressBar1.Maximum / 4);
+
                             formatter.Serialize(stream, prjForm);
+                           
+                            this.progressBar1.Value = (this.progressBar1.Maximum / 2);
 
                             FileStream fs = new FileStream(ProjectForm.workName, FileMode.Create, FileAccess.Write, FileShare.None);
                             stream.Seek(0,SeekOrigin.Begin);
-                            while(true){
+                            while (true)
+                            {
                                 int data = stream.ReadByte();
-                                if(data>0){
+                                if (data > 0)
+                                {
                                     fs.WriteByte((byte)data);
-                                }else{
+                                    try
+                                    {
+                                        this.progressBar1.Value = (int)((this.progressBar1.Maximum / 2) + (this.progressBar1.Maximum / 2) * stream.Position / stream.Length);
+                                    }
+                                    catch (Exception err) { }
+                                }
+                                else
+                                {
                                     break;
                                 }
                             }
 
                             fs.Close();
+
+                            this.progressBar1.Value = this.progressBar1.Maximum;
+
                         }
                         catch (Exception err)
                         {
@@ -209,6 +193,8 @@ namespace CellGameEdit
                 catch(Exception err){
                     MessageBox.Show("目录错误 "+err.StackTrace);
                 }
+
+                this.Enabled = true;
             }
             else
             {
@@ -467,6 +453,7 @@ namespace CellGameEdit
             {
                 if (prjForm != null && prjForm.Visible && toolStripComboBox1.SelectedItem != null)
                 {
+                    prjForm.sortTreeView();
                     outputDir = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
                     outputThread = new Thread(new ThreadStart(OutputCustom));
                     outputThread.Start();
@@ -482,6 +469,7 @@ namespace CellGameEdit
             {
                 if (prjForm != null && prjForm.Visible)
                 {
+                    prjForm.sortTreeView();
                     outputDir = ProjectForm.workSpace + "\\script\\" + ((ToolStripMenuItem)sender).Text;
                     outputThread = new Thread(new ThreadStart(OutputCustom));
                     outputThread.Start();
@@ -505,6 +493,7 @@ namespace CellGameEdit
                         outputThread.Abort();
                         outputThread = null;
                         this.progressBar1.Value = this.progressBar1.Maximum;
+
                     }
                     else
                     {

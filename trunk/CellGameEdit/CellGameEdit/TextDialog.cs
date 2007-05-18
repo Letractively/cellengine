@@ -13,6 +13,7 @@ namespace CellGameEdit.PM
         public TextDialog(string name)
         {
             InitializeComponent();
+            this.StartPosition = FormStartPosition.CenterParent;
             this.textBox1.Text = name;
             this.textBox1.SelectAll();
             this.textBox1.Focus();

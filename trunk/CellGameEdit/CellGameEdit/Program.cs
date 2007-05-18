@@ -27,7 +27,7 @@ namespace CellGameEdit
                 }
 
             }catch(Exception err){
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.Message + "\n" +err.StackTrace);
             }
             
            
