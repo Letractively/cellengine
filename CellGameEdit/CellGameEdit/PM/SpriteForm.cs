@@ -1281,16 +1281,24 @@ namespace CellGameEdit.PM
 
                     framesGetCurFrame().SubIndex[dstGetCurSubIndexes()[0]] = srcIndex;
 
-                    if (flip % 2 == 0)
+                    switch (Frame.flipTable[flip])
                     {
-                        framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
-                        framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
+                        case System.Drawing.RotateFlipType.RotateNoneFlipNone:
+                        case System.Drawing.RotateFlipType.Rotate180FlipNone:
+                        case System.Drawing.RotateFlipType.Rotate180FlipX:
+                        case System.Drawing.RotateFlipType.RotateNoneFlipX:
+                            framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
+                            framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
+                            break;
+                        case System.Drawing.RotateFlipType.Rotate90FlipNone:
+                        case System.Drawing.RotateFlipType.Rotate270FlipNone:
+                        case System.Drawing.RotateFlipType.Rotate270FlipX:
+                        case System.Drawing.RotateFlipType.Rotate90FlipX:
+                            framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
+                            framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
+                            break;
                     }
-                    else
-                    {
-                        framesGetCurFrame().SubW[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getHeight();
-                        framesGetCurFrame().SubH[dstGetCurSubIndexes()[0]] = srcGetImage(srcIndex).getWidth();
-                    }
+
                     dstRefersh();
                 }
             }
@@ -2520,7 +2528,7 @@ namespace CellGameEdit.PM
         
         static public System.Drawing.RotateFlipType[] flipTable = new System.Drawing.RotateFlipType[]
         {
-            System.Drawing.RotateFlipType.RotateNoneFlipNone,
+            System.Drawing.RotateFlipType.RotateNoneFlipNone,//
             System.Drawing.RotateFlipType.Rotate90FlipNone,//
             System.Drawing.RotateFlipType.Rotate180FlipNone,
             System.Drawing.RotateFlipType.Rotate270FlipNone,//
@@ -2862,6 +2870,24 @@ namespace CellGameEdit.PM
         {
             for (int i = SubIndex.Count - 1; i >=0 ;i-- )
             {
+                switch (flipTable[(int)SubFlip[i]])
+                {
+                    case System.Drawing.RotateFlipType.RotateNoneFlipNone:
+                    case System.Drawing.RotateFlipType.Rotate180FlipNone:
+                    case System.Drawing.RotateFlipType.Rotate180FlipX:
+                    case System.Drawing.RotateFlipType.RotateNoneFlipX:
+                        SubW[i] = ((Image)tile[(int)SubIndex[i]]).getWidth();
+                        SubH[i] = ((Image)tile[(int)SubIndex[i]]).getHeight();
+                        break;
+                    case System.Drawing.RotateFlipType.Rotate90FlipNone:
+                    case System.Drawing.RotateFlipType.Rotate270FlipNone:
+                    case System.Drawing.RotateFlipType.Rotate270FlipX:
+                    case System.Drawing.RotateFlipType.Rotate90FlipX:
+                        SubH[i] = ((Image)tile[(int)SubIndex[i]]).getWidth();
+                        SubW[i] = ((Image)tile[(int)SubIndex[i]]).getHeight();
+                        break;
+                }
+
                 if (((Image)tile[(int)SubIndex[i]]) != null)
                 {
                    

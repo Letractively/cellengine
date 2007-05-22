@@ -130,32 +130,50 @@ namespace CellGameEdit
 
         private void 清理ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (prjForm != null && prjForm.Visible == true)
-            {
-                if (ProjectForm.workName == "")
+            try{
+                if (prjForm != null && prjForm.Visible == true)
                 {
-                    SaveFileDialog sfd = new SaveFileDialog();
-                    sfd.Filter = "CPJ files (*.cpj)|*.cpj";
-                    if (sfd.ShowDialog() == DialogResult.OK)
+                    if (ProjectForm.workName == "")
                     {
-                        ProjectForm.workSpace = System.IO.Path.GetDirectoryName(sfd.FileName);
-                        ProjectForm.workName = sfd.FileName;
+                        SaveFileDialog sfd = new SaveFileDialog();
+                        sfd.Filter = "CPJ files (*.cpj)|*.cpj";
+                        if (sfd.ShowDialog() == DialogResult.OK)
+                        {
+                            ProjectForm.workSpace = System.IO.Path.GetDirectoryName(sfd.FileName);
+                            ProjectForm.workName = sfd.FileName;
+                        }
                     }
-                }
-                String dir = ProjectForm.workSpace + "\\tiles";
-                String[] dirs = System.IO.Directory.GetDirectories(dir);
-                for (int i = 0; i < dirs.Length;i++ )
-                {
-                    Console.WriteLine("Clean : " + dirs[i]);
-                    if (System.IO.Directory.Exists(dirs[i]))
+
+                    String dir = ProjectForm.workSpace + "\\tiles";
+                    String[] dirs = System.IO.Directory.GetDirectories(dir);
+                    for (int i = 0; i < dirs.Length; i++)
                     {
-                        System.IO.Directory.Delete(dirs[i], true);
+                        if (System.IO.Directory.Exists(dirs[i]))
+                        {
+                            Boolean flag = false;
+                            Console.Write("Clean : " + dirs[i]);
+                            String[] tiles = System.IO.Directory.GetFiles(dirs[i], "*.tile", SearchOption.TopDirectoryOnly);
+                            for (int j = 0; j < tiles.Length; j++)
+                            {
+                                try
+                                {
+                                    if (System.IO.File.Exists(tiles[j]))
+                                    {
+                                        flag = true;
+                                        Console.Write(" "+System.IO.Path.GetFileName(tiles[j])+" ");
+                                        System.IO.File.Delete(tiles[j]);
+                                    }
+                                }
+                                catch (Exception err) { Console.WriteLine("Error Delete : " + tiles[j] + " " + err.Message); }
+                            }
+                            if (flag == true) System.IO.Directory.Delete(dirs[i], true);
+                            Console.WriteLine("");
+                        }
                     }
+                    保存ToolStripMenuItem_Click(sender, e);
                 }
-
-
-                保存ToolStripMenuItem_Click(sender, e);
             }
+            catch (Exception err) { MessageBox.Show(err.Message); }
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
