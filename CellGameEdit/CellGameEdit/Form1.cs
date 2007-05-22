@@ -127,6 +127,37 @@ namespace CellGameEdit
             }
         }
 
+
+        private void 清理ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (prjForm != null && prjForm.Visible == true)
+            {
+                if (ProjectForm.workName == "")
+                {
+                    SaveFileDialog sfd = new SaveFileDialog();
+                    sfd.Filter = "CPJ files (*.cpj)|*.cpj";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        ProjectForm.workSpace = System.IO.Path.GetDirectoryName(sfd.FileName);
+                        ProjectForm.workName = sfd.FileName;
+                    }
+                }
+                String dir = ProjectForm.workSpace + "\\tiles";
+                String[] dirs = System.IO.Directory.GetDirectories(dir);
+                for (int i = 0; i < dirs.Length;i++ )
+                {
+                    Console.WriteLine("Clean : " + dirs[i]);
+                    if (System.IO.Directory.Exists(dirs[i]))
+                    {
+                        System.IO.Directory.Delete(dirs[i], true);
+                    }
+                }
+
+
+                保存ToolStripMenuItem_Click(sender, e);
+            }
+        }
+
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (prjForm != null && prjForm.Visible == true)
@@ -523,6 +554,7 @@ namespace CellGameEdit
 
 
         }
+
 
 
 
