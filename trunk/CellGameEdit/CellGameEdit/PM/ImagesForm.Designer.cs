@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImagesForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.panel1 = new System.Windows.Forms.Panel();
@@ -57,6 +58,10 @@
             this.statusStrip2 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip2 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.从左边替换ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.从目录替换ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButton14 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton9 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton12 = new System.Windows.Forms.ToolStripButton();
@@ -385,6 +390,7 @@
             // toolStrip2
             // 
             this.toolStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDropDownButton1,
             this.toolStripButton14,
             this.toolStripButton9,
             this.toolStripButton12,
@@ -397,6 +403,41 @@
             this.toolStrip2.Size = new System.Drawing.Size(312, 25);
             this.toolStrip2.TabIndex = 2;
             this.toolStrip2.Text = "toolStrip2";
+            // 
+            // toolStripDropDownButton1
+            // 
+            this.toolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.从左边替换ToolStripMenuItem,
+            this.从目录替换ToolStripMenuItem,
+            this.删除ToolStripMenuItem});
+            this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
+            this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(44, 22);
+            this.toolStripDropDownButton1.Text = "菜单";
+            // 
+            // 从左边替换ToolStripMenuItem
+            // 
+            this.从左边替换ToolStripMenuItem.Name = "从左边替换ToolStripMenuItem";
+            this.从左边替换ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.从左边替换ToolStripMenuItem.Text = "从左边替换";
+            this.从左边替换ToolStripMenuItem.Click += new System.EventHandler(this.从左边替换ToolStripMenuItem_Click);
+            // 
+            // 从目录替换ToolStripMenuItem
+            // 
+            this.从目录替换ToolStripMenuItem.Name = "从目录替换ToolStripMenuItem";
+            this.从目录替换ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.从目录替换ToolStripMenuItem.Text = "从目录替换";
+            this.从目录替换ToolStripMenuItem.Click += new System.EventHandler(this.从目录替换ToolStripMenuItem_Click);
+            // 
+            // 删除ToolStripMenuItem
+            // 
+            this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
+            this.删除ToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.删除ToolStripMenuItem.Text = "删除";
+            this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
             // toolStripButton14
             // 
@@ -498,6 +539,7 @@
             this.Text = "ImagesForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ImagesForm_FormClosed);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.ImagesForm_FormClosing);
+            this.TextChanged += new System.EventHandler(this.ImagesForm_TextChanged);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
@@ -563,5 +605,9 @@
         private System.Windows.Forms.ToolStripButton toolStripButton12;
         private System.Windows.Forms.ToolStripButton toolStripButton13;
         private System.Windows.Forms.ToolStripButton toolStripButton14;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem 从目录替换ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 从左边替换ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
     }
 }

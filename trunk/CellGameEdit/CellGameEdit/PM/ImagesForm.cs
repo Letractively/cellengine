@@ -1252,6 +1252,23 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             
         }
 
+
+        private void 从目录替换ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton9_Click(null,null);
+        }
+
+        private void 从左边替换ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton14_Click(null,null);
+        }
+
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton12_Click(null,null);
+        }
+
+
         //-------------------------------------------------------------------------------------------------------------------------------------
         
         public MapForm createMapForm(String name)
@@ -1316,6 +1333,12 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
         {
             pictureBox2.Refresh();
         }
+
+        private void ImagesForm_TextChanged(object sender, EventArgs e)
+        {
+            this.id = this.Text;
+        }
+
 
       
 

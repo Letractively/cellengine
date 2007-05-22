@@ -8,36 +8,160 @@ namespace CellGameEdit.PM
 {
     class Util
     {
-        public static String toTextArray(int[] array)
+        public static string FormatArray1D_h = "";
+        public static string FormatArray1D_t = ",";
+
+        public static string FormatArray2D_h = "{";
+        public static string FormatArray2D_t = "},";
+
+        public static string FormatStringArray1D_h = "\"";
+        public static string FormatStringArray1D_t = "\",";
+
+        public static string FormatStringArray2D_h = "{\"";
+        public static string FormatStringArray2D_t = "\"},";
+
+        public static void setFormatArray1D(String format, String elementKey)
+        {
+            try
+            {
+                if (format == null || format == "")
+                {
+                    FormatArray1D_h = format.Substring(0, format.IndexOf(elementKey));
+                    FormatArray1D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
+                }
+            }
+            catch (Exception err)
+            {
+                FormatArray1D_h = "";
+                FormatArray1D_t = ",";
+                Console.WriteLine("Error ! Set Default. ");
+            }
+
+            Console.WriteLine("FormatArray1D : " + FormatArray1D_h + elementKey + FormatArray1D_t);
+        }
+        public static void setFormatArray2D(String format, String elementKey)
+        {
+            try
+            {
+                if (format == null || format == "")
+                {
+                    FormatArray2D_h = format.Substring(0, format.IndexOf(elementKey));
+                    FormatArray2D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
+                }
+            }
+            catch (Exception err)
+            {
+                FormatArray2D_h = "{";
+                FormatArray2D_t = "},";
+                Console.WriteLine("Error ! Set Default. ");
+            }
+
+            Console.WriteLine("FormatArray2D : " + FormatArray2D_h + elementKey + FormatArray2D_t);
+        }
+
+        public static void setFormatStringArray1D(String format, String elementKey)
+        {
+            try
+            {
+                if (format == null || format == "")
+                {
+                    FormatStringArray1D_h = format.Substring(0, format.IndexOf(elementKey));
+                    FormatStringArray1D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
+                }
+            }
+            catch (Exception err)
+            {
+                FormatStringArray1D_h = "\"";
+                FormatStringArray1D_t = "\",";
+                Console.WriteLine("Error ! Set Default. ");
+            }
+
+            Console.WriteLine("FormatStringArray1D : " + FormatStringArray1D_h + elementKey + FormatStringArray1D_t);
+        }
+        public static void setFormatStringArray2D(String format, String elementKey)
+        {
+            try
+            {
+                if (format == null || format == "")
+                {
+                    FormatStringArray2D_h = format.Substring(0, format.IndexOf(elementKey));
+                    FormatStringArray2D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
+                }
+            }
+            catch (Exception err)
+            {
+                FormatStringArray2D_h = "{\"";
+                FormatStringArray2D_t = "\"},";
+                Console.WriteLine("Error ! Set Default. ");
+            }
+
+            Console.WriteLine("FormatStringArray2D : " + FormatStringArray2D_h + elementKey + FormatStringArray2D_t);
+        }
+
+
+        //public static String toTextArray(short[] array)
+        //{
+        //    String ret = "";
+        //    for (int i = 0; i < array.Length; i++)
+        //    {
+        //        ret += FormatArray1D_h + array[i].ToString() + FormatArray1D_t;
+        //    }
+        //    return ret;
+        //}
+
+        //public static String toTextArray(byte[] array)
+        //{
+        //    String ret = "";
+        //    for (int i = 0; i < array.Length; i++)
+        //    {
+        //        ret += FormatArray1D_h + array[i].ToString() + FormatArray1D_t;
+        //    }
+        //    return ret;
+        //}
+
+        public static String toTextArray1D<T>(ref T[] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += array[i].ToString() + ",";
+                ret += FormatArray1D_h + array[i].ToString() + FormatArray1D_t;
+            }
+            return ret;
+        }
+        public static String toTextArray2D<T>(ref T[][] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                ret += FormatArray2D_h + toTextArray1D<T>(ref array[i]) + FormatArray2D_t;
             }
             return ret;
         }
 
-        public static String toTextArray(short[] array)
+        public static String toStringArray1D(string[] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += array[i].ToString() + ",";
+                ret += FormatStringArray1D_h + array[i] + FormatStringArray1D_t;
+            }
+            return ret;
+        }
+        public static String toStringArray2D(string[][] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                ret += FormatStringArray2D_h + toStringArray1D(array[i]) + FormatStringArray2D_t;
             }
             return ret;
         }
 
-        public static String toTextArray(byte[] array)
+        public static String[] toStringMultiLine(string src)
         {
-            String ret = "";
-            for (int i = 0; i < array.Length; i++)
-            {
-                ret += array[i].ToString() + ",";
-            }
-            return ret;
+            return src.Split(new char[] {'\n'});
         }
-       
+
         /// 
         /// 取得一个文本文件的编码方式。如果无法在文件头部找到有效的前导符，Encoding.Default将被返回。
         /// 
@@ -45,7 +169,6 @@ namespace CellGameEdit.PM
         /// 
         public static Encoding GetEncoding(string fileName)
         {
-
             return GetEncoding(fileName, Encoding.Default);
 
         }

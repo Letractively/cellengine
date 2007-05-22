@@ -315,6 +315,13 @@ namespace CellGameEdit.PM
             }
         }
 
+        public void changeSuper(ImagesForm super)
+        {
+            this.super = super;
+            this.Tiles = super.dstImages;
+        }
+
+
         int[][] tileMatrix;
         int[][] flagMatrix;
         Animates animates;
@@ -410,58 +417,58 @@ namespace CellGameEdit.PM
 
         }
 
-        public void Output(System.IO.StringWriter sw)
-        {
+        //public void Output(System.IO.StringWriter sw)
+        //{
 
-            initOutput();
+        //    initOutput();
 
-            sw.WriteLine();
-            sw.WriteLine("final static public CMap createMap_" + super.id + "_" + this.id + "(IImages tiles,boolean isAnimate,boolean isCyc)");
-            sw.WriteLine("{");
-            // animates
-            sw.WriteLine("    CAnimates animates = new CAnimates("+animates.subGetCount()+",tiles);");
-        for (int i = 0; i < animates.subGetCount(); i++)  
-            sw.WriteLine("    animates.addPart(0,0," + animates.SubPart[i] + "," + flipTableJ2me[(int)(animates.SubFlip[i])] + ");");
-            sw.WriteLine("    animates.setFrame(new int[" + animates.frameGetCount() + "][]);");
-        for (int i = 0; i < animates.frameGetCount(); i++)
-            sw.WriteLine("    animates.setComboFrame(new int[]{"+Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))))+"},"+i+");");
-            sw.WriteLine();
-            // collides
-            sw.WriteLine("    CCollides collides = new CCollides(8);");
-            sw.WriteLine("    collides.addCDRect(0x00000000, 0, 0, " + CellW + "," + CellH + ");");
-            sw.WriteLine("    collides.addCDRect(0x00000001, " + 0 + ", " + 0 + ", " + CellW + "," + CellH + ");");
-            sw.WriteLine("    collides.addCDRect(0x00000002, " + 0 + ", " + 0 + ", " + CellW + "," + 1 + ");");
-            sw.WriteLine("    collides.addCDRect(0x00000004, " + 0 + ", " + (CellH - 1) + ", " + CellW + "," + 1 + ");");
-            sw.WriteLine("    collides.addCDRect(0x00000008, " + 0 + ", " + 0 + ", " + 1 + "," + CellH + ");");
-            sw.WriteLine("    collides.addCDRect(0x00000010, " + (CellW - 1) + ", " + 0 + ", " + 1 + "," + CellH + ");");
-            sw.WriteLine("    collides.addCDLine(0x00000020, " + 0 + ", " + 0 + ", " + (CellW-1) + "," + (CellH-1) + ");");
-            sw.WriteLine("    collides.addCDLine(0x00000040, " + (CellW-1) + ", " + 0 + ", " + 0 + "," + (CellH-1) + ");");
-            sw.WriteLine();
-            // map matrix
-            sw.WriteLine("    short[][] tileMatrix = new short[][]{");
-        for (int i = 0; i < YCount; i++)
-            sw.WriteLine("        {"+ Util.toTextArray(tileMatrix[i]) +"},");
-            sw.WriteLine("    };");
-            sw.WriteLine("    short[][] flagMatrix = new short[][]{");
-        for (int i = 0; i < YCount; i++)
-            sw.WriteLine("        {" + Util.toTextArray(flagMatrix[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine();
-            // map new
-            sw.WriteLine("    CMap ret = new CMap(");
-            sw.WriteLine("            animates, ");
-            sw.WriteLine("            collides, ");
-            sw.WriteLine("            " + CellW + ", " + CellH + ", ");
-            sw.WriteLine("            tileMatrix, ");
-            sw.WriteLine("            flagMatrix, ");
-            sw.WriteLine("            isAnimate,isCyc ");
-            sw.WriteLine("            );");
-            sw.WriteLine();
-            sw.WriteLine("    return ret;");
-            sw.WriteLine();
-            sw.WriteLine("}");
+        //    sw.WriteLine();
+        //    sw.WriteLine("final static public CMap createMap_" + super.id + "_" + this.id + "(IImages tiles,boolean isAnimate,boolean isCyc)");
+        //    sw.WriteLine("{");
+        //    // animates
+        //    sw.WriteLine("    CAnimates animates = new CAnimates("+animates.subGetCount()+",tiles);");
+        //for (int i = 0; i < animates.subGetCount(); i++)  
+        //    sw.WriteLine("    animates.addPart(0,0," + animates.SubPart[i] + "," + flipTableJ2me[(int)(animates.SubFlip[i])] + ");");
+        //    sw.WriteLine("    animates.setFrame(new int[" + animates.frameGetCount() + "][]);");
+        //for (int i = 0; i < animates.frameGetCount(); i++)
+        //    sw.WriteLine("    animates.setComboFrame(new int[]{"+Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))))+"},"+i+");");
+        //    sw.WriteLine();
+        //    // collides
+        //    sw.WriteLine("    CCollides collides = new CCollides(8);");
+        //    sw.WriteLine("    collides.addCDRect(0x00000000, 0, 0, " + CellW + "," + CellH + ");");
+        //    sw.WriteLine("    collides.addCDRect(0x00000001, " + 0 + ", " + 0 + ", " + CellW + "," + CellH + ");");
+        //    sw.WriteLine("    collides.addCDRect(0x00000002, " + 0 + ", " + 0 + ", " + CellW + "," + 1 + ");");
+        //    sw.WriteLine("    collides.addCDRect(0x00000004, " + 0 + ", " + (CellH - 1) + ", " + CellW + "," + 1 + ");");
+        //    sw.WriteLine("    collides.addCDRect(0x00000008, " + 0 + ", " + 0 + ", " + 1 + "," + CellH + ");");
+        //    sw.WriteLine("    collides.addCDRect(0x00000010, " + (CellW - 1) + ", " + 0 + ", " + 1 + "," + CellH + ");");
+        //    sw.WriteLine("    collides.addCDLine(0x00000020, " + 0 + ", " + 0 + ", " + (CellW-1) + "," + (CellH-1) + ");");
+        //    sw.WriteLine("    collides.addCDLine(0x00000040, " + (CellW-1) + ", " + 0 + ", " + 0 + "," + (CellH-1) + ");");
+        //    sw.WriteLine();
+        //    // map matrix
+        //    sw.WriteLine("    short[][] tileMatrix = new short[][]{");
+        //for (int i = 0; i < YCount; i++)
+        //    sw.WriteLine("        {"+ Util.toTextArray(tileMatrix[i]) +"},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine("    short[][] flagMatrix = new short[][]{");
+        //for (int i = 0; i < YCount; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(flagMatrix[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine();
+        //    // map new
+        //    sw.WriteLine("    CMap ret = new CMap(");
+        //    sw.WriteLine("            animates, ");
+        //    sw.WriteLine("            collides, ");
+        //    sw.WriteLine("            " + CellW + ", " + CellH + ", ");
+        //    sw.WriteLine("            tileMatrix, ");
+        //    sw.WriteLine("            flagMatrix, ");
+        //    sw.WriteLine("            isAnimate,isCyc ");
+        //    sw.WriteLine("            );");
+        //    sw.WriteLine();
+        //    sw.WriteLine("    return ret;");
+        //    sw.WriteLine();
+        //    sw.WriteLine("}");
 
-        }
+        //}
 
         public void OutputCustom(int index, String script , System.IO.StringWriter output)
         {
@@ -506,7 +513,9 @@ namespace CellGameEdit.PM
                     String[] senceFrames = new string[animates.frameGetCount()];
                     for (int i = 0; i < animates.frameGetCount(); i++)
                     {
-                        string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
+                        //string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
+                        int[] frames = ((int[])(animates.frameGetFrame(i).ToArray(typeof(int)))) ;
+                        string DATA = Util.toTextArray1D<int>(ref frames);
 
                         senceFrames[i] = Util.replaceKeywordsScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>",
                             new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
@@ -574,16 +583,17 @@ namespace CellGameEdit.PM
 
                 
                 // tile matrix
-                String senceMatrix = "";
-                for (int i = 0; i < YCount; i++)
-                    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
-
+                //String senceMatrix = "";
+                //for (int i = 0; i < YCount; i++)
+                //    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
+                String senceMatrix = Util.toTextArray2D<int>(ref tileMatrix);
 
                 // cd matrix
-                String cdMatrix = "";
-                for (int i = 0; i < YCount; i++)
-                    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
+                //String cdMatrix = "";
+                //for (int i = 0; i < YCount; i++)
+                //    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
 
+                String cdMatrix = Util.toTextArray2D<int>(ref flagMatrix);
 
                 map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
                     new string[] { 
@@ -1909,6 +1919,11 @@ namespace CellGameEdit.PM
                     trackBar1.Value = e.X / CellW;
                 }
             }
+        }
+
+        private void MapForm_TextChanged(object sender, EventArgs e)
+        {
+            this.id = this.Text;
         }
 
 
