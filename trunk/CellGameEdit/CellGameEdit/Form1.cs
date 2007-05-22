@@ -148,32 +148,44 @@ namespace CellGameEdit
                     String[] dirs = System.IO.Directory.GetDirectories(dir);
                     for (int i = 0; i < dirs.Length; i++)
                     {
-                        if (System.IO.Directory.Exists(dirs[i]))
+                        try
                         {
-                            Boolean flag = false;
-                            Console.Write("Clean : " + dirs[i]);
-                            String[] tiles = System.IO.Directory.GetFiles(dirs[i], "*.tile", SearchOption.TopDirectoryOnly);
-                            for (int j = 0; j < tiles.Length; j++)
+                            if (System.IO.Directory.Exists(dirs[i]))
                             {
-                                try
+
+                                Boolean flag = false;
+                                Console.Write("Clean : " + dirs[i]);
+                                String[] tiles = System.IO.Directory.GetFiles(dirs[i], "*.tile", SearchOption.TopDirectoryOnly);
+                                for (int j = 0; j < tiles.Length; j++)
                                 {
-                                    if (System.IO.File.Exists(tiles[j]))
+                                    try
                                     {
-                                        flag = true;
-                                        Console.Write(" "+System.IO.Path.GetFileName(tiles[j])+" ");
-                                        System.IO.File.Delete(tiles[j]);
+                                        if (System.IO.File.Exists(tiles[j]))
+                                        {
+                                            flag = true;
+                                            Console.Write(" " + System.IO.Path.GetFileName(tiles[j]) + " ");
+                                            System.IO.File.Delete(tiles[j]);
+                                        }
                                     }
+                                    catch (Exception err) { Console.WriteLine(); Console.WriteLine("Error Delete : " + tiles[j] + " " + err.Message); }
                                 }
-                                catch (Exception err) { Console.WriteLine("Error Delete : " + tiles[j] + " " + err.Message); }
+                                if (flag == true)
+                                {
+                                    System.IO.Directory.Delete(dirs[i], true);
+                                }
+                                Console.WriteLine("");
                             }
-                            if (flag == true) System.IO.Directory.Delete(dirs[i], true);
-                            Console.WriteLine("");
                         }
+                        catch (Exception err) { Console.WriteLine(); Console.WriteLine("Error Delete : " + dirs[i] + " " + err.Message); }
+
                     }
-                    保存ToolStripMenuItem_Click(sender, e);
+                    
                 }
+                
             }
             catch (Exception err) { MessageBox.Show(err.Message); }
+
+            保存ToolStripMenuItem_Click(sender, e);   
         }
 
         private void 保存ToolStripMenuItem_Click(object sender, EventArgs e)
