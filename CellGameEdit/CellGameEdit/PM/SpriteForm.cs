@@ -179,6 +179,11 @@ namespace CellGameEdit.PM
             }
         }
 
+        public void changeSuper(ImagesForm super)
+        {
+            this.super = super;
+            this.srcTiles = super.dstImages;
+        }
 
         Frame AllFrame ;
         Group animates ;
@@ -348,74 +353,74 @@ namespace CellGameEdit.PM
             }
         }
 
-        public void Output(System.IO.StringWriter sw)
-        {
+        //public void Output(System.IO.StringWriter sw)
+        //{
 
-            initOutput();
-
-
-
-            //sw.WriteLine("class " + super.id + "_" + this.id + " extends CSprite {");// class
+        //    initOutput();
 
 
-            sw.WriteLine("final static public CSprite createSprite_" + super.id + "_" + this.id + "(IImages tiles)");
-            sw.WriteLine("{");
-            // animates
-            sw.WriteLine("    CAnimates animates = new CAnimates(" + AllFrame.getSubCount() + ",tiles);");
-        for (int i = 0; i < AllFrame.getSubCount(); i++)
-            sw.WriteLine("    animates.addPart(" + (int)AllFrame.SubX[i] + "," + (int)AllFrame.SubY[i] + "," + (int)AllFrame.SubIndex[i] + "," + flipTableJ2me[(int)(AllFrame.SubFlip[i])] + ");");
-            sw.WriteLine("    animates.setFrame(new int[" + animates.frameGetCount() + "][]);");
-        for (int i = 0; i < animates.frameGetCount(); i++)
-            sw.WriteLine("    animates.setComboFrame(new int[]{" + Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int)))) + "}," + i + ");");
-            sw.WriteLine();
-            // collides
-            sw.WriteLine("    CCollides collides = new CCollides(" + AllFrame.getCDCount() + ");");
-        for (int i = 0; i < AllFrame.getCDCount(); i++)
-            sw.WriteLine("    collides.addCDRect(" + (int)AllFrame.CDMask[i] + "," + (int)AllFrame.CDX[i] + "," + (int)AllFrame.CDY[i] + "," + (int)AllFrame.CDW[i] + "," + (int)AllFrame.CDH[i] + ");");
-            sw.WriteLine("    collides.setFrame(new int[" + collides.frameGetCount() + "][]);");
-        for (int i = 0; i < collides.frameGetCount(); i++)
-            sw.WriteLine("    collides.setComboFrame(new int[]{" + Util.toTextArray((int[])(collides.frameGetFrame(i).ToArray(typeof(int)))) + "}," + i + ");");
-            sw.WriteLine();
-            // sprframes
-            sw.WriteLine("    int[][] frameAnimate = new int[][]{");
-        for (int i = 0; i < frameAnimate.Length; i++)
-            sw.WriteLine("        {" + Util.toTextArray(frameAnimate[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine("    int[][] frameCDMap = new int[][]{");
-        for (int i = 0; i < frameCDMap.Length; i++)
-            sw.WriteLine("        {" + Util.toTextArray(frameCDMap[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine("    int[][] frameCDAtk = new int[][]{");
-        for (int i = 0; i < frameCDAtk.Length; i++)
-            sw.WriteLine("        {" + Util.toTextArray(frameCDAtk[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine("    int[][] frameCDDef = new int[][]{");
-        for (int i = 0; i < frameCDDef.Length; i++)
-            sw.WriteLine("        {" + Util.toTextArray(frameCDDef[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine("    int[][] frameCDExt = new int[][]{");
-        for (int i = 0; i < frameCDExt.Length; i++)
-            sw.WriteLine("        {" + Util.toTextArray(frameCDExt[i]) + "},");
-            sw.WriteLine("    };");
-            sw.WriteLine();
-            // spr new
-            sw.WriteLine("    CSprite ret = new CSprite(");
-            sw.WriteLine("            animates, ");
-            sw.WriteLine("            collides, ");
-            sw.WriteLine("            frameAnimate, ");
-            sw.WriteLine("            frameCDMap, ");
-            sw.WriteLine("            frameCDAtk, ");
-            sw.WriteLine("            frameCDDef, ");
-            sw.WriteLine("            frameCDExt ");
-            sw.WriteLine("            );");
-            sw.WriteLine();
-            sw.WriteLine("    return ret;");
-            sw.WriteLine();
 
-            sw.WriteLine("}");
+        //    //sw.WriteLine("class " + super.id + "_" + this.id + " extends CSprite {");// class
 
-            //sw.WriteLine("}");// class end
-        }
+
+        //    sw.WriteLine("final static public CSprite createSprite_" + super.id + "_" + this.id + "(IImages tiles)");
+        //    sw.WriteLine("{");
+        //    // animates
+        //    sw.WriteLine("    CAnimates animates = new CAnimates(" + AllFrame.getSubCount() + ",tiles);");
+        //for (int i = 0; i < AllFrame.getSubCount(); i++)
+        //    sw.WriteLine("    animates.addPart(" + (int)AllFrame.SubX[i] + "," + (int)AllFrame.SubY[i] + "," + (int)AllFrame.SubIndex[i] + "," + flipTableJ2me[(int)(AllFrame.SubFlip[i])] + ");");
+        //    sw.WriteLine("    animates.setFrame(new int[" + animates.frameGetCount() + "][]);");
+        //for (int i = 0; i < animates.frameGetCount(); i++)
+        //    sw.WriteLine("    animates.setComboFrame(new int[]{" + Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int)))) + "}," + i + ");");
+        //    sw.WriteLine();
+        //    // collides
+        //    sw.WriteLine("    CCollides collides = new CCollides(" + AllFrame.getCDCount() + ");");
+        //for (int i = 0; i < AllFrame.getCDCount(); i++)
+        //    sw.WriteLine("    collides.addCDRect(" + (int)AllFrame.CDMask[i] + "," + (int)AllFrame.CDX[i] + "," + (int)AllFrame.CDY[i] + "," + (int)AllFrame.CDW[i] + "," + (int)AllFrame.CDH[i] + ");");
+        //    sw.WriteLine("    collides.setFrame(new int[" + collides.frameGetCount() + "][]);");
+        //for (int i = 0; i < collides.frameGetCount(); i++)
+        //    sw.WriteLine("    collides.setComboFrame(new int[]{" + Util.toTextArray((int[])(collides.frameGetFrame(i).ToArray(typeof(int)))) + "}," + i + ");");
+        //    sw.WriteLine();
+        //    // sprframes
+        //    sw.WriteLine("    int[][] frameAnimate = new int[][]{");
+        //for (int i = 0; i < frameAnimate.Length; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(frameAnimate[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine("    int[][] frameCDMap = new int[][]{");
+        //for (int i = 0; i < frameCDMap.Length; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(frameCDMap[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine("    int[][] frameCDAtk = new int[][]{");
+        //for (int i = 0; i < frameCDAtk.Length; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(frameCDAtk[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine("    int[][] frameCDDef = new int[][]{");
+        //for (int i = 0; i < frameCDDef.Length; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(frameCDDef[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine("    int[][] frameCDExt = new int[][]{");
+        //for (int i = 0; i < frameCDExt.Length; i++)
+        //    sw.WriteLine("        {" + Util.toTextArray(frameCDExt[i]) + "},");
+        //    sw.WriteLine("    };");
+        //    sw.WriteLine();
+        //    // spr new
+        //    sw.WriteLine("    CSprite ret = new CSprite(");
+        //    sw.WriteLine("            animates, ");
+        //    sw.WriteLine("            collides, ");
+        //    sw.WriteLine("            frameAnimate, ");
+        //    sw.WriteLine("            frameCDMap, ");
+        //    sw.WriteLine("            frameCDAtk, ");
+        //    sw.WriteLine("            frameCDDef, ");
+        //    sw.WriteLine("            frameCDExt ");
+        //    sw.WriteLine("            );");
+        //    sw.WriteLine();
+        //    sw.WriteLine("    return ret;");
+        //    sw.WriteLine();
+
+        //    sw.WriteLine("}");
+
+        //    //sw.WriteLine("}");// class end
+        //}
 
         public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
@@ -462,7 +467,10 @@ namespace CellGameEdit.PM
                     String[] senceFrames = new string[animates.frameGetCount()];
                     for (int i = 0; i < senceFrames.Length; i++)
                     {
-                        string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
+
+                        int[] frames = (int[])(animates.frameGetFrame(i).ToArray(typeof(int)));
+                        string DATA = Util.toTextArray1D<int>(ref frames);
+
 
                         senceFrames[i] = Util.replaceKeywordsScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>",
                             new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
@@ -520,7 +528,8 @@ namespace CellGameEdit.PM
                     String[] cdFrames = new string[collides.frameGetCount()];
                     for (int i = 0; i < cdFrames.Length; i++)
                     {
-                        string DATA = Util.toTextArray((int[])(collides.frameGetFrame(i).ToArray(typeof(int))));
+                        int[] frame = (int[])(collides.frameGetFrame(i).ToArray(typeof(int)));
+                        string DATA = Util.toTextArray1D<int>(ref frame);
 
                         cdFrames[i] = Util.replaceKeywordsScript(sprite, "#<CD FRAME>", "#<END CD FRAME>",
                             new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
@@ -539,7 +548,7 @@ namespace CellGameEdit.PM
                     }
                 } while (fix);
 
-
+                /*
                 // sprframes
                 String outFrameName = "";
                 String outFrameAnimate = "";
@@ -566,6 +575,25 @@ namespace CellGameEdit.PM
                 for (int i = 0; i < frameAnimate.Length; i++)
                     frameCounts[i] = frameAnimate[i].Length;
                 String outFrameCounts = Util.toTextArray(frameCounts);
+                */
+
+                // sprframes
+                
+                String outFrameAnimate = Util.toTextArray2D<int>(ref frameAnimate);
+                String outFrameCDMap = Util.toTextArray2D<int>(ref frameCDMap);
+                String outFrameCDAtk = Util.toTextArray2D<int>(ref frameCDAtk);
+                String outFrameCDDef = Util.toTextArray2D<int>(ref frameCDDef);
+                String outFrameCDExt = Util.toTextArray2D<int>(ref frameCDExt);
+
+                int[] frameCounts = new int[frameName.Length];
+                for (int i = 0; i < frameAnimate.Length; i++)
+                    frameCounts[i] = frameAnimate[i].Length;
+                String outFrameCounts = Util.toTextArray1D<int>(ref frameCounts);
+
+                String outFrameName = Util.toStringArray1D(frameName);
+
+               
+
 
 
                 sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
@@ -585,7 +613,7 @@ namespace CellGameEdit.PM
                     "<FRAME CD ATK>",
                     "<FRAME CD DEF>",
                     "<FRAME CD EXT>"
-                },
+                    },
                     new string[] { 
                     this.id,
                     index.ToString(),
@@ -1328,10 +1356,29 @@ namespace CellGameEdit.PM
             dstRefersh();
         }
 
+        private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton15_Click(null, null);
+        }
+        private void 粘贴ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton19_Click(null, null);
+        }
+        private void 粘贴到所有帧ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton21_Click(null, null);
+        }
+        private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            toolStripButton16_Click(null, null);
+        }
+
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
             framesRefersh();
         }
+        
+        
         //scale
         private void toolStripButton27_Click(object sender, EventArgs e)
         {
@@ -2428,6 +2475,13 @@ namespace CellGameEdit.PM
             }
         
         }
+
+        private void SpriteForm_TextChanged(object sender, EventArgs e)
+        {
+            this.id = this.Text;
+        }
+
+
 
 
 

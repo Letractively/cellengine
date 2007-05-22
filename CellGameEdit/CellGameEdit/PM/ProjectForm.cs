@@ -235,9 +235,9 @@ namespace CellGameEdit.PM
         {
             try
             {
-
-                initForms();
                 RefreshNodeName();
+                initForms();
+               
 
                 if (System.IO.File.Exists(fileName))
                 {
@@ -303,6 +303,13 @@ namespace CellGameEdit.PM
                         ImageGroupData = false;
                     }
                    
+                    // build format
+                    Util.setFormatArray1D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 1D>"),"<>");
+                    Util.setFormatArray2D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 2D>"), "<>");
+                    Util.setFormatStringArray1D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 1D>"), "<>");
+                    Util.setFormatStringArray2D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 2D>"), "<>");
+
+
                     script = fillScriptNode(script);
 
 
@@ -619,8 +626,10 @@ namespace CellGameEdit.PM
                         }
                         e.Node.Name = name;
                         e.Node.Text = name;
+
                         RefreshNodeName();
                         sortTreeView();
+
                         Console.WriteLine("New Name = " + e.Node.Name);
                         break;
                     }
@@ -996,17 +1005,31 @@ namespace CellGameEdit.PM
                         if (formTable[super].GetType().Equals(typeof(MapForm)))
                         {
                             ((MapForm)form).id = ((MapForm)form).id ;
-                            if (superCopy!=null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
+
+                            if (superCopy != null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((MapForm)form).super = (ImagesForm)formTable[superCopy];
+                                ((MapForm)form).changeSuper((ImagesForm)formTable[superCopy]);
+                                Console.WriteLine("change super : " + ((ImagesForm)formTable[superCopy]).id);
+                            }
+                            else if (super.Parent != null && formTable[super.Parent] != null && formTable[super.Parent].GetType().Equals(typeof(ImagesForm)))
+                            {
+                                ((MapForm)form).changeSuper((ImagesForm)formTable[super.Parent]);
+                                Console.WriteLine("change super : " + ((ImagesForm)formTable[super.Parent]).id);
                             }
                         }
                         if (formTable[super].GetType().Equals(typeof(SpriteForm)))
                         {
                             ((SpriteForm)form).id = ((SpriteForm)form).id ;
+
                             if (superCopy != null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((SpriteForm)form).super = (ImagesForm)formTable[superCopy];
+                                ((SpriteForm)form).changeSuper((ImagesForm)formTable[superCopy]);
+                                Console.WriteLine("change super : " + ((ImagesForm)formTable[superCopy]).id);
+                            }
+                            else if (super.Parent != null && formTable[super.Parent] != null && formTable[super.Parent].GetType().Equals(typeof(ImagesForm)))
+                            {
+                                ((SpriteForm)form).changeSuper((ImagesForm)formTable[super.Parent]);
+                                Console.WriteLine("change super : " + ((ImagesForm)formTable[super.Parent]).id);
                             }
                         }
                         if (formTable[super].GetType().Equals(typeof(WorldForm)))
