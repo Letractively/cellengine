@@ -40,9 +40,11 @@ namespace CellGameEdit.PM
             this.添加ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.精灵ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.地图ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.复制ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.subMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.打开ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.删除ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.nodeMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -51,8 +53,6 @@ namespace CellGameEdit.PM
             this.添加对象ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
-            this.复制ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.复制ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.resMenu.SuspendLayout();
             this.levelMenu.SuspendLayout();
             this.tileMenu.SuspendLayout();
@@ -98,7 +98,7 @@ namespace CellGameEdit.PM
             this.复制ToolStripMenuItem1,
             this.删除ToolStripMenuItem});
             this.tileMenu.Name = "tileMenu";
-            this.tileMenu.Size = new System.Drawing.Size(153, 114);
+            this.tileMenu.Size = new System.Drawing.Size(99, 92);
             // 
             // 打开ToolStripMenuItem
             // 
@@ -130,6 +130,13 @@ namespace CellGameEdit.PM
             this.地图ToolStripMenuItem.Text = "地图";
             this.地图ToolStripMenuItem.Click += new System.EventHandler(this.地图ToolStripMenuItem_Click);
             // 
+            // 复制ToolStripMenuItem1
+            // 
+            this.复制ToolStripMenuItem1.Name = "复制ToolStripMenuItem1";
+            this.复制ToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
+            this.复制ToolStripMenuItem1.Text = "复制";
+            this.复制ToolStripMenuItem1.Click += new System.EventHandler(this.复制ToolStripMenuItem1_Click);
+            // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
@@ -149,14 +156,21 @@ namespace CellGameEdit.PM
             // 打开ToolStripMenuItem1
             // 
             this.打开ToolStripMenuItem1.Name = "打开ToolStripMenuItem1";
-            this.打开ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.打开ToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.打开ToolStripMenuItem1.Text = "打开";
             this.打开ToolStripMenuItem1.Click += new System.EventHandler(this.打开ToolStripMenuItem1_Click);
+            // 
+            // 复制ToolStripMenuItem
+            // 
+            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
+            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
+            this.复制ToolStripMenuItem.Text = "复制";
+            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
             // 
             // 删除ToolStripMenuItem1
             // 
             this.删除ToolStripMenuItem1.Name = "删除ToolStripMenuItem1";
-            this.删除ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
+            this.删除ToolStripMenuItem1.Size = new System.Drawing.Size(98, 22);
             this.删除ToolStripMenuItem1.Text = "删除";
             this.删除ToolStripMenuItem1.Click += new System.EventHandler(this.删除ToolStripMenuItem1_Click);
             // 
@@ -226,20 +240,6 @@ namespace CellGameEdit.PM
             this.toolStripButton1.Size = new System.Drawing.Size(35, 22);
             this.toolStripButton1.Text = "刷新";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
-            // 
-            // 复制ToolStripMenuItem
-            // 
-            this.复制ToolStripMenuItem.Name = "复制ToolStripMenuItem";
-            this.复制ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.复制ToolStripMenuItem.Text = "复制";
-            this.复制ToolStripMenuItem.Click += new System.EventHandler(this.复制ToolStripMenuItem_Click);
-            // 
-            // 复制ToolStripMenuItem1
-            // 
-            this.复制ToolStripMenuItem1.Name = "复制ToolStripMenuItem1";
-            this.复制ToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
-            this.复制ToolStripMenuItem1.Text = "复制";
-            this.复制ToolStripMenuItem1.Click += new System.EventHandler(this.复制ToolStripMenuItem1_Click);
             // 
             // ProjectForm
             // 

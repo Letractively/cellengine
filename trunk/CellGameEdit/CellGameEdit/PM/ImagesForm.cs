@@ -182,15 +182,9 @@ namespace CellGameEdit.PM
                 ArrayList outK = new ArrayList();
 
                 String dir =  "\\tiles\\" + this.id;
-                //if (System.IO.Directory.Exists(ProjectForm.workSpace + dir))
-                //{
-                //    System.IO.Directory.Delete(ProjectForm.workSpace + dir, true);
-                //}
+
                 System.IO.Directory.CreateDirectory(ProjectForm.workSpace + dir);
-                //System.IO.File.SetAttributes(
-                //    ProjectForm.workSpace + dir,
-                //    System.IO.FileAttributes.Hidden
-                //    );
+
 
                 for (int i = 0; i < dstImages.Count;i++ )
                 {
@@ -204,7 +198,8 @@ namespace CellGameEdit.PM
                             if (!System.IO.File.Exists(ProjectForm.workSpace + name))
                             {
                                 img.getDImage().Save(ProjectForm.workSpace + name, System.Drawing.Imaging.ImageFormat.Png);
-                            }
+                            } 
+
                             output.Add(name);
                             outX.Add(img.x);
                             outY.Add(img.y);

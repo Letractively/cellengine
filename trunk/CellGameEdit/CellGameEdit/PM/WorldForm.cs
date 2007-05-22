@@ -566,8 +566,8 @@ namespace CellGameEdit.PM
                 SpriteForm spr = ((SpriteForm)e.Data.GetData(typeof(SpriteForm)));
 
                 Unit unit = new Unit(spr, "S" + (listView1.Items.Count).ToString("d3") + "_");
-                unit.x = -pictureBox1.Location.X /*+ panel1.Width / 2*/;
-                unit.y = -pictureBox1.Location.Y /*+ panel1.Height / 2*/;
+                unit.x = -pictureBox1.Location.X + pictureBox1.Width / 2;
+                unit.y = -pictureBox1.Location.Y + pictureBox1.Height / 2;
 
                 ListViewItem item = new ListViewItem(new String[] { 
                     unit.id, 
