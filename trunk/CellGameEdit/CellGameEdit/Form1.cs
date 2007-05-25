@@ -120,7 +120,7 @@ namespace CellGameEdit
                     }
                     catch (Exception err)
                     {
-                        MessageBox.Show(err.Message + "\n" + err.StackTrace);
+                        MessageBox.Show(err.Message + "\n" + err.StackTrace + "  at  " +err.Message);
                     }
                 }
                    
@@ -152,9 +152,7 @@ namespace CellGameEdit
                         {
                             if (System.IO.Directory.Exists(dirs[i]))
                             {
-
-                                Boolean flag = false;
-                                Console.Write("Clean : " + dirs[i]);
+                                Console.Write("Delete : ");
                                 String[] tiles = System.IO.Directory.GetFiles(dirs[i], "*.tile", SearchOption.TopDirectoryOnly);
                                 for (int j = 0; j < tiles.Length; j++)
                                 {
@@ -162,16 +160,11 @@ namespace CellGameEdit
                                     {
                                         if (System.IO.File.Exists(tiles[j]))
                                         {
-                                            flag = true;
                                             Console.Write(" " + System.IO.Path.GetFileName(tiles[j]) + " ");
                                             System.IO.File.Delete(tiles[j]);
                                         }
                                     }
                                     catch (Exception err) { Console.WriteLine(); Console.WriteLine("Error Delete : " + tiles[j] + " " + err.Message); }
-                                }
-                                if (flag == true)
-                                {
-                                    System.IO.Directory.Delete(dirs[i], true);
                                 }
                                 Console.WriteLine("");
                             }
@@ -246,13 +239,13 @@ namespace CellGameEdit
                         }
                         catch (Exception err)
                         {
-                            MessageBox.Show(err.StackTrace);
+                            MessageBox.Show(err.StackTrace + "  at  " +err.Message);
                         }
                         stream.Close();
                     }
                 }
                 catch(Exception err){
-                    MessageBox.Show("目录错误 "+err.StackTrace);
+                    MessageBox.Show("目录错误 "+err.StackTrace + "  at  " +err.Message);
                 }
 
                 this.Enabled = true;
@@ -304,7 +297,7 @@ namespace CellGameEdit
                             }
                             catch (Exception err)
                             {
-                                MessageBox.Show(err.StackTrace);
+                                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
                             }
                             stream.Close();
                         }
@@ -313,7 +306,7 @@ namespace CellGameEdit
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show("目录错误 " + err.StackTrace);
+                    MessageBox.Show("目录错误 " + err.StackTrace + "  at  " +err.Message);
                 }
             }
             else
@@ -371,7 +364,7 @@ namespace CellGameEdit
             }
             catch (Exception err)
             {
-                MessageBox.Show("脚本导入错误：" + err.StackTrace);
+                MessageBox.Show("脚本导入错误：" + err.StackTrace + "  at  " +err.Message);
             }
         }
         // del script
@@ -401,7 +394,7 @@ namespace CellGameEdit
             }
             catch (Exception err)
             {
-                MessageBox.Show("脚本删除错误：" + err.StackTrace);
+                MessageBox.Show("脚本删除错误：" + err.StackTrace + "  at  " +err.Message);
             }
         }
 
@@ -483,9 +476,6 @@ namespace CellGameEdit
             }
         }
 
-
-
-
         private void 关于ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             AboutBox1 about = new AboutBox1();
@@ -499,13 +489,49 @@ namespace CellGameEdit
         }
 
 
-
-        //output
         Thread outputThread;
         String outputDir;
-        void OutputCustom()
+
+        void ShowOutput()
         {
             prjForm.OutputCustom(outputDir);
+      
+        }
+
+        void StartOutputProjectScript(String dir)
+        {
+            this.Cursor = Cursors.WaitCursor;
+            this.progressBar1.Value = 0;
+
+            prjForm.RefreshNodeName();
+            prjForm.sortTreeView();
+            prjForm.lockForms();
+
+
+            outputThread = new Thread(new ThreadStart(ShowOutput));
+            outputThread.Start();
+
+            OutputForm output = new OutputForm();
+            //output.WindowState = FormWindowState.Maximized;
+            output.StartPosition = FormStartPosition.CenterScreen;
+            //output.MdiParent = this;
+            output.ShowDialog(this);
+
+            //prjForm.OutputCustom(outputDir);
+            //this.progressBar1.Value = this.progressBar1.Maximum;
+            //this.Cursor = Cursors.Default;
+        }
+
+        void EndOutputProjectScript()
+        {
+
+            outputThread.Abort();
+            outputThread = null;
+            prjForm.unlockForms();
+
+            this.progressBar1.Value = this.progressBar1.Maximum;
+            this.Cursor = Cursors.Default;
+            
         }
 
         private void 自定义脚本ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -514,14 +540,12 @@ namespace CellGameEdit
             {
                 if (prjForm != null && prjForm.Visible && toolStripComboBox1.SelectedItem != null)
                 {
-                    prjForm.sortTreeView();
                     outputDir = Application.StartupPath + "\\script\\" + toolStripComboBox1.Text;
-                    outputThread = new Thread(new ThreadStart(OutputCustom));
-                    outputThread.Start();
-                    this.progressBar1.Value = 0;
+                    StartOutputProjectScript(outputDir);
+                  
                 }
             }
-            catch (Exception err) { Console.WriteLine(err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(err.StackTrace + "  at  " +err.Message); }
         }
 
         private void outputLocalProjectScript(object sender, EventArgs e)
@@ -530,14 +554,12 @@ namespace CellGameEdit
             {
                 if (prjForm != null && prjForm.Visible)
                 {
-                    prjForm.sortTreeView();
                     outputDir = ProjectForm.workSpace + "\\script\\" + ((ToolStripMenuItem)sender).Text;
-                    outputThread = new Thread(new ThreadStart(OutputCustom));
-                    outputThread.Start();
-                    this.progressBar1.Value = 0;
+                    StartOutputProjectScript(outputDir);
+
                 }
             }
-            catch (Exception err) { Console.WriteLine(err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(err.StackTrace + "  at  " +err.Message); }
         }
 
 
@@ -551,10 +573,7 @@ namespace CellGameEdit
                 {
                     if (!outputThread.IsAlive)
                     {
-                        outputThread.Abort();
-                        outputThread = null;
-                        this.progressBar1.Value = this.progressBar1.Maximum;
-
+                        EndOutputProjectScript();
                     }
                     else
                     {

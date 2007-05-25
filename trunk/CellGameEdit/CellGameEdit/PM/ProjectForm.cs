@@ -26,6 +26,8 @@ namespace CellGameEdit.PM
         static public String workSpace = "";
         static public String workName = "";
 
+        static public Boolean IsCopy = false;/*此状态不序列化子对象*/
+
         TreeNode nodeReses;
         TreeNode nodeLevels;
         TreeNode nodeObjects;
@@ -56,7 +58,7 @@ namespace CellGameEdit.PM
             treeView1.Nodes.Add(nodeObjects);
             treeView1.Nodes.Add(nodeLevels);
 
-            treeView1.ExpandAll();
+            //treeView1.ExpandAll();
 
         }
 
@@ -108,10 +110,10 @@ namespace CellGameEdit.PM
                 treeView1.Nodes.Add(nodeObjects);
                 treeView1.Nodes.Add(nodeLevels);
 
-                treeView1.ExpandAll();
+                //treeView1.ExpandAll();
 
             }catch(Exception err){
-                MessageBox.Show("构造工程出错 !\n" + err.Message +"\n"+err.StackTrace);
+                MessageBox.Show("构造工程出错 !\n" + err.Message +"\n"+err.StackTrace + "  at  " +err.Message);
             }
         }
 
@@ -233,109 +235,114 @@ namespace CellGameEdit.PM
         
         public void OutputCustom(String fileName)
         {
-            try
+            lock (this)
             {
-                RefreshNodeName();
-                initForms();
-               
-
-                if (System.IO.File.Exists(fileName))
+                try
                 {
-                    Encoding encoding = Util.GetEncoding(fileName);
 
-                    StreamReader sr = new StreamReader(fileName, encoding);
-                    string script = sr.ReadToEnd();
-                    sr.Close();
+                    initForms();
 
 
-                    string ret = new string(new char[] { '\r', '\n' });
-
-                    // build command
-                    OutputName =  Util.getCommandScript(script, "<OUTPUT>");
-                    try{
-                        if (System.IO.Path.IsPathRooted(OutputName))
-                        {
-                            OutputDir = System.IO.Path.GetDirectoryName(OutputName);
-                        }
-                        else
-                        {
-                            OutputDir = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputName);
-                        }
-                    }catch(Exception err){
-                        OutputDir = System.IO.Path.GetDirectoryName(workSpace);
-                    }
-                    if (!System.IO.Directory.Exists(OutputDir))
+                    if (System.IO.File.Exists(fileName))
                     {
-                        System.IO.Directory.CreateDirectory(OutputDir);
-                    }
-                    OutputName = OutputDir + "\\" + System.IO.Path.GetFileName(OutputName);
+                        Encoding encoding = Util.GetEncoding(fileName);
 
-                    // out image
-                    OutputDirImage = Util.getCommandScript(script, "<IMAGE OUTPUT>");
-                    if (OutputDirImage == "") OutputDirImage = null;
-                    try
+                        StreamReader sr = new StreamReader(fileName, encoding);
+                        string script = sr.ReadToEnd();
+                        sr.Close();
+
+
+                        string ret = new string(new char[] { '\r', '\n' });
+
+                        // build command
+                        OutputName = Util.getCommandScript(script, "<OUTPUT>");
+                        try
+                        {
+                            if (System.IO.Path.IsPathRooted(OutputName))
+                            {
+                                OutputDir = System.IO.Path.GetDirectoryName(OutputName);
+                            }
+                            else
+                            {
+                                OutputDir = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputName);
+                            }
+                        }
+                        catch (Exception err)
+                        {
+                            OutputDir = System.IO.Path.GetDirectoryName(workSpace);
+                        }
+                        if (!System.IO.Directory.Exists(OutputDir))
+                        {
+                            System.IO.Directory.CreateDirectory(OutputDir);
+                        }
+                        OutputName = OutputDir + "\\" + System.IO.Path.GetFileName(OutputName);
+
+                        // out image
+                        OutputDirImage = Util.getCommandScript(script, "<IMAGE OUTPUT>");
+                        if (OutputDirImage == "") OutputDirImage = null;
+                        try
+                        {
+                            if (System.IO.Path.IsPathRooted(OutputDirImage))
+                            {
+                                OutputDirImage = System.IO.Path.GetDirectoryName(OutputDirImage);
+                            }
+                            else
+                            {
+                                OutputDirImage = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputDirImage);
+                            }
+                            if (!System.IO.Directory.Exists(OutputDirImage))
+                            {
+                                System.IO.Directory.CreateDirectory(OutputDirImage);
+                            }
+                            ImageType = Util.getCommandScript(script, "<IMAGE TYPE>");
+                            ImageTile = Util.getCommandScript(script, "<IMAGE TILE>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                            ImageTileData = Util.getCommandScript(script, "<IMAGE TILE DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                            ImageGroup = Util.getCommandScript(script, "<IMAGE GROUP>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                            ImageGroupData = Util.getCommandScript(script, "<IMAGE GROUP DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                        }
+                        catch (Exception err)
+                        {
+                            OutputDirImage = System.IO.Path.GetDirectoryName(workSpace);
+                            ImageType = "";
+                            ImageTile = false;
+                            ImageTileData = false;
+                            ImageGroup = false;
+                            ImageGroupData = false;
+                        }
+
+                        // build format
+                        Util.setFormatArray1D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 1D>"), "<>");
+                        Util.setFormatArray2D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 2D>"), "<>");
+                        Util.setFormatStringArray1D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 1D>"), "<>");
+                        Util.setFormatStringArray2D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 2D>"), "<>");
+
+
+                        script = fillScriptNode(script);
+
+
+                        script = script.Insert(0, "/* Email : wazazhang@gmail.com */" + ret);
+                        script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
+                        script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
+
+                        Console.WriteLine("");
+                        Console.WriteLine(script);
+
+                        System.IO.File.WriteAllText(
+                            OutputName,
+                            script,
+                            encoding
+                            );
+
+                        Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");
+                        Console.WriteLine("");
+                    }
+                    else
                     {
-                        if (System.IO.Path.IsPathRooted(OutputDirImage))
-                        {
-                            OutputDirImage = System.IO.Path.GetDirectoryName(OutputDirImage);
-                        }
-                        else
-                        {
-                            OutputDirImage = workSpace + "\\" + System.IO.Path.GetDirectoryName(OutputDirImage);
-                        }
-                        if (!System.IO.Directory.Exists(OutputDirImage))
-                        {
-                            System.IO.Directory.CreateDirectory(OutputDirImage);
-                        }
-                        ImageType = Util.getCommandScript(script, "<IMAGE TYPE>");
-                        ImageTile = Util.getCommandScript(script, "<IMAGE TILE>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
-                        ImageTileData = Util.getCommandScript(script, "<IMAGE TILE DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
-                        ImageGroup = Util.getCommandScript(script, "<IMAGE GROUP>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
-                        ImageGroupData = Util.getCommandScript(script, "<IMAGE GROUP DATA>").Equals("true", StringComparison.CurrentCultureIgnoreCase);
+                        Console.WriteLine("Error : " + fileName + " : 不存在!");
                     }
-                    catch (Exception err)
-                    {
-                        OutputDirImage = System.IO.Path.GetDirectoryName(workSpace);
-                        ImageType = "";
-                        ImageTile = false;
-                        ImageTileData = false;
-                        ImageGroup = false;
-                        ImageGroupData = false;
-                    }
-                   
-                    // build format
-                    Util.setFormatArray1D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 1D>"),"<>");
-                    Util.setFormatArray2D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 2D>"), "<>");
-                    Util.setFormatStringArray1D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 1D>"), "<>");
-                    Util.setFormatStringArray2D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 2D>"), "<>");
-
-
-                    script = fillScriptNode(script);
-
-
-                    script = script.Insert(0, "/* Email : wazazhang@gmail.com */" + ret);
-                    script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
-                    script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
-
-                    Console.WriteLine("");
-                    Console.WriteLine(script);
-
-                    System.IO.File.WriteAllText(
-                        OutputName,
-                        script,
-                        encoding
-                        );
-
-                    Console.WriteLine(ret + "Output --> : " + script.Length + " (Chars)");
-                    Console.WriteLine("");
                 }
-                else
-                {
-                    Console.WriteLine("Error : " + fileName + " : 不存在!");
-                }
+                catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " + err.Message); }
             }
-            catch (Exception err) { MessageBox.Show(err.StackTrace); }
-
         }
 
         ArrayList FormsImages = new ArrayList();
@@ -382,7 +389,7 @@ namespace CellGameEdit.PM
 
                 }
             }
-            catch (Exception err) { MessageBox.Show(err.StackTrace); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
 
             script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
                 
@@ -419,7 +426,7 @@ namespace CellGameEdit.PM
                     new string[] { FormsImages.Count.ToString(), FormsMap.Count.ToString(), FormsSprite.Count.ToString()});
                 script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
             }
-            catch (Exception err) { MessageBox.Show(err.StackTrace); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
 
             //build world trunk
             try
@@ -441,10 +448,62 @@ namespace CellGameEdit.PM
                     new string[] { FormsWorld.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
             }
-            catch (Exception err) { MessageBox.Show(err.StackTrace); }
+            catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
 
             return script;
         }
+
+        public void lockForms()
+        {
+            
+            lockForms(nodeReses);
+            lockForms(nodeLevels);
+            //this.Hide();
+            this.Enabled = false;
+            
+        }
+        private void lockForms(TreeNode node)
+        {
+            if (getForm(node)!=null)
+            {
+                getForm(node).Hide();
+                getForm(node).Enabled = false;
+            }
+
+            if (node.Nodes.Count >= 0)
+            {
+                foreach (TreeNode sub in node.Nodes)
+                {
+                    lockForms(sub);
+                }
+            }
+        }
+        public void unlockForms()
+        {
+
+            unlockForms(nodeReses);
+            unlockForms(nodeLevels);
+            //this.Show();
+            this.Enabled = true;
+            
+        }
+        private void unlockForms(TreeNode node)
+        {
+            if (getForm(node) != null)
+            {
+                //getForm(node).Show();
+                getForm(node).Enabled = true;
+            }
+
+            if (node.Nodes.Count >= 0)
+            {
+                foreach (TreeNode sub in node.Nodes)
+                {
+                    unlockForms(sub);
+                }
+            }
+        }
+
 
 
         public void initForms()
@@ -499,7 +558,6 @@ namespace CellGameEdit.PM
             RefreshNodeName(nodeReses);
             RefreshNodeName(nodeLevels);
         }
-
         public void RefreshNodeName(TreeNode node)
         {
             if (formTable[node] != null)
@@ -752,7 +810,7 @@ namespace CellGameEdit.PM
                 }
                 catch (Exception err)
                 {
-                    MessageBox.Show(err.TargetSite+":"+err.StackTrace);
+                    MessageBox.Show(err.TargetSite+":"+err.StackTrace + "  at  " +err.Message);
                 }
                 sortTreeView();
                 break;
@@ -846,8 +904,10 @@ namespace CellGameEdit.PM
         }
         private void 复制ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
+            IsCopy = true;
             copySub(treeView1.SelectedNode, null);
             sortTreeView();
+            IsCopy = false;
         }
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -955,8 +1015,10 @@ namespace CellGameEdit.PM
         }
         private void 复制ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            IsCopy = true;
             copySub(treeView1.SelectedNode, null);
             sortTreeView();
+            IsCopy = false;
         }
         private void 删除ToolStripMenuItem1_Click(object sender, EventArgs e)
         {
@@ -998,47 +1060,50 @@ namespace CellGameEdit.PM
                         formatter.Serialize(stream, formTable[super]);
                         stream.Seek(0, SeekOrigin.Begin);
                         Form form = (Form)formatter.Deserialize(stream);
+                        stream.Close();
 
                         if (formTable[super].GetType().Equals(typeof(ImagesForm)))
                         {
-                            ((ImagesForm)form).id = ((ImagesForm)form).id ;
                         }
                         if (formTable[super].GetType().Equals(typeof(MapForm)))
                         {
-                            ((MapForm)form).id = ((MapForm)form).id ;
+                            //((MapForm)form).id = ((MapForm)form).id ;
 
                             if (superCopy != null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((MapForm)form).changeSuper((ImagesForm)formTable[superCopy]);
+                                ((MapForm)form).ChangeSuper((ImagesForm)formTable[superCopy]);
                                 Console.WriteLine("change super : " + ((ImagesForm)formTable[superCopy]).id);
                             }
                             else if (super.Parent != null && formTable[super.Parent] != null && formTable[super.Parent].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((MapForm)form).changeSuper((ImagesForm)formTable[super.Parent]);
+                                ((MapForm)form).ChangeSuper((ImagesForm)formTable[super.Parent]);
                                 Console.WriteLine("change super : " + ((ImagesForm)formTable[super.Parent]).id);
                             }
                         }
                         if (formTable[super].GetType().Equals(typeof(SpriteForm)))
                         {
-                            ((SpriteForm)form).id = ((SpriteForm)form).id ;
+                            //initForms();
+                            //((SpriteForm)form).ChangeSuper(FormsImages);
+                            //((SpriteForm)form).id = ((SpriteForm)form).id ;
 
                             if (superCopy != null && formTable[superCopy] != null && formTable[superCopy].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((SpriteForm)form).changeSuper((ImagesForm)formTable[superCopy]);
+                                ((SpriteForm)form).ChangeSuper((ImagesForm)formTable[superCopy]);
                                 Console.WriteLine("change super : " + ((ImagesForm)formTable[superCopy]).id);
                             }
                             else if (super.Parent != null && formTable[super.Parent] != null && formTable[super.Parent].GetType().Equals(typeof(ImagesForm)))
                             {
-                                ((SpriteForm)form).changeSuper((ImagesForm)formTable[super.Parent]);
+                                ((SpriteForm)form).ChangeSuper((ImagesForm)formTable[super.Parent]);
                                 Console.WriteLine("change super : " + ((ImagesForm)formTable[super.Parent]).id);
                             }
                         }
                         if (formTable[super].GetType().Equals(typeof(WorldForm)))
                         {
-                            ((WorldForm)form).id = ((WorldForm)form).id ;
+                            initForms();
+                            ((WorldForm)form).ChangeAllUnits(FormsMap,FormsSprite);
                         }
                         form.MdiParent = this.MdiParent;
-                        stream.Close();
+                        
                         
 
                         // clone node
@@ -1108,7 +1173,7 @@ namespace CellGameEdit.PM
                         Console.WriteLine(err.HelpLink); 
                         Console.WriteLine(err.Source); 
                         Console.WriteLine(err.Message); 
-                        Console.WriteLine(err.StackTrace); 
+                        Console.WriteLine(err.StackTrace + "  at  " +err.Message); 
                     }
                 }
                 RefreshNodeName();

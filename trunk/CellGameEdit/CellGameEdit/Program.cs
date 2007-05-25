@@ -13,6 +13,7 @@ namespace CellGameEdit
         static void Main(string[] args)
         {
             try{
+                
                 if((args!= null) && (args.Length > 0))
                 {                
                     string filePath = args[0] ;
@@ -27,7 +28,7 @@ namespace CellGameEdit
                 }
 
             }catch(Exception err){
-                MessageBox.Show(err.Message + "\n" +err.StackTrace);
+                MessageBox.Show(err.Message + "\n" +err.StackTrace + "  at  " +err.Message);
             }
             
            

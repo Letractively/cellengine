@@ -179,7 +179,10 @@ namespace CellGameEdit.PM
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            Console.WriteLine("Serializ World : " + id);
+
             testDelUnit();
+
             try
             {
                 info.AddValue("id", id);
@@ -258,220 +261,272 @@ namespace CellGameEdit.PM
                 Console.WriteLine(this.id + " : " + err.StackTrace);
             }
         }
+        
+        public void ChangeAllUnits(ArrayList maps,ArrayList sprs)
+        {
+            Hashtable mapsHT = new Hashtable();
+            Hashtable sprsHT = new Hashtable();
+
+           
+            for (int i = 0; i < maps.Count; i++)
+            {
+                mapsHT.Add(((MapForm)maps[i]).super.id + ((MapForm)maps[i]).id, maps[i]);
+            }
+            for (int i = 0; i < sprs.Count; i++)
+            {
+                sprsHT.Add(((SpriteForm)sprs[i]).super.id + ((SpriteForm)sprs[i]).id, sprs[i]);
+            }
+
+
+            for (int i = 0; i < listView1.Items.Count; i++)
+            {
+                try
+                {
+                    Unit unit = (Unit)UnitList[listView1.Items[i]];
+
+                    if (unit.type == "Map")
+                    {
+                        if (mapsHT.ContainsKey(unit.SuperName + unit.Name))
+                        {
+                            unit.map = (MapForm)mapsHT[unit.SuperName + unit.Name];
+                            Console.WriteLine("World ChangeUnit : " + unit.Name);
+                        }
+                    }
+                    if (unit.type == "Sprite")
+                    {
+                        if (sprsHT.ContainsKey(unit.SuperName + unit.Name))
+                        {
+                            unit.spr = (SpriteForm)sprsHT[unit.SuperName + unit.Name];
+                            Console.WriteLine("World ChangeUnit : " + unit.Name);
+                        }
+                    }
+                       
+                    
+
+                }
+                catch (Exception err)
+                {
+                    Console.WriteLine(this.id + " Change Units : " + err.StackTrace);
+                }
+            }
+        }
+
 
         public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
-            try
+            lock (this)
             {
-                String world = Util.getFullTrunkScript(script, "#<WORLD>", "#<END WORLD>");
-
-                ArrayList maps = new ArrayList();
-                ArrayList sprs = new ArrayList();
-                foreach (ListViewItem item in listView1.Items)
+                try
                 {
-                    try
-                    {
-                        Unit unit = ((Unit)UnitList[item]);
-                        if (unit.type == "Map") maps.Add(unit);
-                        if (unit.type == "Sprite") sprs.Add(unit);
-                        unit.id = item.Text;
+                    String world = Util.getFullTrunkScript(script, "#<WORLD>", "#<END WORLD>");
 
-                    }
-                    catch (Exception err) { }
-                }
-
-                ArrayList WayPoints = new ArrayList();
-                for (int i = 0; i < listView2.Items.Count; i++)
-                {
-                    try
-                    {
-                        WayPoint wp = (WayPoint)WayPointsList[listView2.Items[i]];
-                        WayPoints.Add(wp);
-                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
-                    }
-                    catch (Exception err)
-                    {
-                        Console.WriteLine(this.id + " : " + err.StackTrace);
-                    }
-                }
-
-                ArrayList Regions = new ArrayList();
-                for (int i = 0; i < listView3.Items.Count; i++)
-                {
-                    try
-                    {
-                        Region region = (Region)RegionsList[listView3.Items[i]];
-                        Regions.Add(region);
-                        //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
-                    }
-                    catch (Exception err)
-                    {
-                        Console.WriteLine(this.id + " : " + err.StackTrace);
-                    }
-                }
-
-                bool fix = false;
-
-                // maps
-                do
-                {
-                    String[] map = new string[maps.Count];
-                    for (int i = 0; i < map.Length; i++)
-                    {
-                        string X = ((Unit)maps[i]).x.ToString();
-                        string Y = ((Unit)maps[i]).y.ToString();
-                        string ID = ((Unit)maps[i]).map.id;
-                        string NAME = ((Unit)maps[i]).id;
-                        string SUPER = ((Unit)maps[i]).map.super.id;
-                        string MAP_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)maps[i]).Data.ToString()));
-                        map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
-                               new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<SUPER>", "<MAP DATA>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, SUPER, MAP_DATA });
-                    }
-                    string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        world = temp;
-                    }
-                } while (fix);
-
-                // sprs
-                do
-                {
-                    String[] spr = new string[sprs.Count];
-                    for (int i = 0; i < spr.Length; i++)
-                    {
-                        string X = ((Unit)sprs[i]).x.ToString();
-                        string Y = ((Unit)sprs[i]).y.ToString();
-                        string ID = ((Unit)sprs[i]).spr.id;
-                        string NAME = ((Unit)sprs[i]).id;
-                        string SUPER = ((Unit)sprs[i]).spr.super.id;
-                        string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
-                        string FRAME_ID = ((Unit)sprs[i]).frameID.ToString();
-                        //string SPR_DATA = ((Unit)sprs[i]).Data.ToString();
-                        string SPR_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)sprs[i]).Data.ToString()));
-                        spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
-                               new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>","<FRAME ID>", "<SUPER>","<SPR DATA>" },
-                               new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, FRAME_ID, SUPER ,SPR_DATA});
-                    }
-                    string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        world = temp;
-                    }
-                } while (fix);
-
-                //way points
-                do
-                {
-                    String[] wp = new string[WayPoints.Count];
-                    for (int i = 0; i < wp.Length; i++)
-                    {
-                        WayPoint p = ((WayPoint)WayPoints[i]);
-                        string X = p.point.X.ToString();
-                        string Y = p.point.Y.ToString();
-                        string PATH_DATA = Util.toStringArray1D(Util.toStringMultiLine(p.Data.ToString()));
-                        wp[i] = Util.replaceKeywordsScript(world, "#<WAYPOINT>", "#<END WAYPOINT>",
-                               new string[] { "<INDEX>", "<X>", "<Y>", "<PATH DATA>" },
-                               new string[] { i.ToString(), X, Y, PATH_DATA });
-                    }
-                    string temp = Util.replaceSubTrunksScript(world, "#<WAYPOINT>", "#<END WAYPOINT>", wp);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        world = temp;
-                    }
-                } while (fix);
-
-                do
-                {
-                    ArrayList link = new ArrayList();
-                    foreach (WayPoint p in WayPoints)
+                    ArrayList maps = new ArrayList();
+                    ArrayList sprs = new ArrayList();
+                    foreach (ListViewItem item in listView1.Items)
                     {
                         try
                         {
-                            if (p != null)
-                            {//
-                                foreach (WayPoint l in p.link)
-                                {
-                                    try
-                                    {
-                                        if (l != null)
-                                        {//
-                                            string START = WayPoints.IndexOf(p).ToString();
-                                            string END = WayPoints.IndexOf(l).ToString();
-                                            link.Add(
-                                                Util.replaceKeywordsScript(world, "#<WAYPOINT LINK>", "#<END WAYPOINT LINK>",
-                                                   new string[] { "<INDEX>", "<START>", "<END>", },
-                                                   new string[] { link.Count.ToString(), START, END, })
-                                            );
-                                        }
-                                    }
-                                    catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-                                }//
-                            }
+                            Unit unit = ((Unit)UnitList[item]);
+                            if (unit.type == "Map") maps.Add(unit);
+                            if (unit.type == "Sprite") sprs.Add(unit);
+                            unit.id = item.Text;
+
                         }
-                        catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-                    }//
-                    String[] slink = new string[link.Count];
-                    slink = (String[])link.ToArray(typeof(String));
-                    string temp = Util.replaceSubTrunksScript(world, "#<WAYPOINT LINK>", "#<END WAYPOINT LINK>", slink);
-                    if (temp == null)
-                    {
-                        fix = false;
+                        catch (Exception err) { }
                     }
-                    else
-                    {
-                        fix = true;
-                        world = temp;
-                    }
-                } while (fix);
 
-                // regions 
-                do
-                {
-                    String[] region = new string[Regions.Count];
-                    for (int i = 0; i < region.Length; i++)
+                    ArrayList WayPoints = new ArrayList();
+                    for (int i = 0; i < listView2.Items.Count; i++)
                     {
-                        Region r = ((Region)Regions[i]);
-                        string X = (r.rect.X) + "";
-                        string Y = (r.rect.Y) + "";
-                        string W = (r.rect.Width) + "";
-                        string H = (r.rect.Height) + "";
-                        string REGION_DATA = Util.toStringArray1D(Util.toStringMultiLine(r.Data.ToString()));
-                        region[i] = Util.replaceKeywordsScript(world, "#<REGION>", "#<END REGION>",
-                               new string[] { "<INDEX>", "<X>", "<Y>", "<W>","<H>", "<REGION DATA>"},
-                               new string[] { i.ToString(), X, Y, W, H, REGION_DATA });
+                        try
+                        {
+                            WayPoint wp = (WayPoint)WayPointsList[listView2.Items[i]];
+                            WayPoints.Add(wp);
+                            //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(this.id + " : " + err.StackTrace);
+                        }
                     }
-                    string temp = Util.replaceSubTrunksScript(world, "#<REGION>", "#<END REGION>", region);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        world = temp;
-                    }
-                } while (fix);
 
-                // world key words
-                world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
-                    new string[] { 
+                    ArrayList Regions = new ArrayList();
+                    for (int i = 0; i < listView3.Items.Count; i++)
+                    {
+                        try
+                        {
+                            Region region = (Region)RegionsList[listView3.Items[i]];
+                            Regions.Add(region);
+                            //Console.WriteLine("Level: Add " + ((Unit)UnitList[listView1.Items[i]]).id);
+                        }
+                        catch (Exception err)
+                        {
+                            Console.WriteLine(this.id + " : " + err.StackTrace);
+                        }
+                    }
+
+                    bool fix = false;
+
+                    // maps
+                    do
+                    {
+                        String[] map = new string[maps.Count];
+                        for (int i = 0; i < map.Length; i++)
+                        {
+                            string X = ((Unit)maps[i]).x.ToString();
+                            string Y = ((Unit)maps[i]).y.ToString();
+                            string ID = ((Unit)maps[i]).map.id;
+                            string NAME = ((Unit)maps[i]).id;
+                            string SUPER = ((Unit)maps[i]).map.super.id;
+                            string MAP_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)maps[i]).Data.ToString()));
+                            map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
+                                   new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<SUPER>", "<MAP DATA>" },
+                                   new string[] { NAME, ID, i.ToString(), X, Y, SUPER, MAP_DATA });
+                        }
+                        string temp = Util.replaceSubTrunksScript(world, "#<UNIT MAP>", "#<END UNIT MAP>", map);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            world = temp;
+                        }
+                    } while (fix);
+
+                    // sprs
+                    do
+                    {
+                        String[] spr = new string[sprs.Count];
+                        for (int i = 0; i < spr.Length; i++)
+                        {
+                            string X = ((Unit)sprs[i]).x.ToString();
+                            string Y = ((Unit)sprs[i]).y.ToString();
+                            string ID = ((Unit)sprs[i]).spr.id;
+                            string NAME = ((Unit)sprs[i]).id;
+                            string SUPER = ((Unit)sprs[i]).spr.super.id;
+                            string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
+                            string FRAME_ID = ((Unit)sprs[i]).frameID.ToString();
+                            //string SPR_DATA = ((Unit)sprs[i]).Data.ToString();
+                            string SPR_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)sprs[i]).Data.ToString()));
+                            spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
+                                   new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>", "<FRAME ID>", "<SUPER>", "<SPR DATA>" },
+                                   new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, FRAME_ID, SUPER, SPR_DATA });
+                        }
+                        string temp = Util.replaceSubTrunksScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>", spr);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            world = temp;
+                        }
+                    } while (fix);
+
+                    //way points
+                    do
+                    {
+                        String[] wp = new string[WayPoints.Count];
+                        for (int i = 0; i < wp.Length; i++)
+                        {
+                            WayPoint p = ((WayPoint)WayPoints[i]);
+                            string X = p.point.X.ToString();
+                            string Y = p.point.Y.ToString();
+                            string PATH_DATA = Util.toStringArray1D(Util.toStringMultiLine(p.Data.ToString()));
+                            wp[i] = Util.replaceKeywordsScript(world, "#<WAYPOINT>", "#<END WAYPOINT>",
+                                   new string[] { "<INDEX>", "<X>", "<Y>", "<PATH DATA>" },
+                                   new string[] { i.ToString(), X, Y, PATH_DATA });
+                        }
+                        string temp = Util.replaceSubTrunksScript(world, "#<WAYPOINT>", "#<END WAYPOINT>", wp);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            world = temp;
+                        }
+                    } while (fix);
+
+                    do
+                    {
+                        ArrayList link = new ArrayList();
+                        foreach (WayPoint p in WayPoints)
+                        {
+                            try
+                            {
+                                if (p != null)
+                                {//
+                                    foreach (WayPoint l in p.link)
+                                    {
+                                        try
+                                        {
+                                            if (l != null)
+                                            {//
+                                                string START = WayPoints.IndexOf(p).ToString();
+                                                string END = WayPoints.IndexOf(l).ToString();
+                                                link.Add(
+                                                    Util.replaceKeywordsScript(world, "#<WAYPOINT LINK>", "#<END WAYPOINT LINK>",
+                                                       new string[] { "<INDEX>", "<START>", "<END>", },
+                                                       new string[] { link.Count.ToString(), START, END, })
+                                                );
+                                            }
+                                        }
+                                        catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+                                    }//
+                                }
+                            }
+                            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+                        }//
+                        String[] slink = new string[link.Count];
+                        slink = (String[])link.ToArray(typeof(String));
+                        string temp = Util.replaceSubTrunksScript(world, "#<WAYPOINT LINK>", "#<END WAYPOINT LINK>", slink);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            world = temp;
+                        }
+                    } while (fix);
+
+                    // regions 
+                    do
+                    {
+                        String[] region = new string[Regions.Count];
+                        for (int i = 0; i < region.Length; i++)
+                        {
+                            Region r = ((Region)Regions[i]);
+                            string X = (r.rect.X) + "";
+                            string Y = (r.rect.Y) + "";
+                            string W = (r.rect.Width) + "";
+                            string H = (r.rect.Height) + "";
+                            string REGION_DATA = Util.toStringArray1D(Util.toStringMultiLine(r.Data.ToString()));
+                            region[i] = Util.replaceKeywordsScript(world, "#<REGION>", "#<END REGION>",
+                                   new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>", "<REGION DATA>" },
+                                   new string[] { i.ToString(), X, Y, W, H, REGION_DATA });
+                        }
+                        string temp = Util.replaceSubTrunksScript(world, "#<REGION>", "#<END REGION>", region);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            world = temp;
+                        }
+                    } while (fix);
+
+                    // world key words
+                    world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
+                        new string[] { 
                         "<NAME>", 
                         "<WORLD INDEX>",
                         "<DATA>",
@@ -483,7 +538,7 @@ namespace CellGameEdit.PM
                         "<UNIT SPRITE COUNT>",
                         "<WAYPOINT COUNT>"
                     },
-                    new string[] { 
+                        new string[] { 
                         this.id, 
                         index.ToString(),
                         Util.toStringArray1D(Util.toStringMultiLine(this.Data.ToString())),
@@ -495,13 +550,15 @@ namespace CellGameEdit.PM
                         sprs.Count.ToString(),
                         WayPoints.Count.ToString()
                     }
-                    );
+                        );
 
-                output.WriteLine(world);
-                //Console.WriteLine(world);
+                    output.WriteLine(world);
+                    //Console.WriteLine(world);
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
+
 
         private void WorldForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -2638,6 +2695,9 @@ namespace CellGameEdit.PM
 
         public SpriteForm spr = null;
         public MapForm map = null;
+
+        public String Name ="";
+        public String SuperName = "";
 #endregion
 
 #region 事件
@@ -2689,15 +2749,24 @@ namespace CellGameEdit.PM
                 {
                     animID = 0;
                 }
-                if ((MapForm)info.GetValue("map", typeof(MapForm)) != null)
+                if (!ProjectForm.IsCopy)
                 {
-                    map = (MapForm)info.GetValue("map", typeof(MapForm));
-                    this.type = "Map";
+                    if ((MapForm)info.GetValue("map", typeof(MapForm)) != null)
+                    {
+                        map = (MapForm)info.GetValue("map", typeof(MapForm));
+                        this.type = "Map";
+                    }
+                    if ((SpriteForm)info.GetValue("spr", typeof(SpriteForm)) != null)
+                    {
+                        spr = (SpriteForm)info.GetValue("spr", typeof(SpriteForm));
+                        this.type = "Sprite";
+                    }
                 }
-                if ((SpriteForm)info.GetValue("spr", typeof(SpriteForm)) != null)
+                else
                 {
-                    spr = (SpriteForm)info.GetValue("spr", typeof(SpriteForm));
-                    this.type = "Sprite";
+                    type = (String)info.GetValue("Type", typeof(String));
+                    Name = (String)info.GetValue("Name", typeof(String));
+                    SuperName = (String)info.GetValue("SuperName", typeof(String));
                 }
 
                 try
@@ -2722,17 +2791,25 @@ namespace CellGameEdit.PM
                 info.AddValue("x", x);
                 info.AddValue("y", y);
                 info.AddValue("animID", animID);
-                try
+                if (!ProjectForm.IsCopy)
                 {
-                    info.AddValue("map", map);
+                    try
+                    {
+                        info.AddValue("map", map);
+                    }
+                    catch (Exception err) { }
+                    try
+                    {
+                        info.AddValue("spr", spr);
+                    }
+                    catch (Exception err) { }
                 }
-                catch (Exception err) { }
-                try
+                else
                 {
-                    info.AddValue("spr", spr);
+                    info.AddValue("Type",type);
+                    info.AddValue("Name", getName());
+                    info.AddValue("SuperName", getImagesName());
                 }
-                catch (Exception err) { }
-
                 info.AddValue("Data", Data.ToString());
             }
             catch (Exception err)

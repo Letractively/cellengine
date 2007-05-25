@@ -92,6 +92,11 @@
     <Compile Include="PM\ObjectForm.Designer.cs">
       <DependentUpon>ObjectForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PM\Config.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Config.settings</DependentUpon>
+    </Compile>
     <Compile Include="PM\SpriteForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,11 +115,6 @@
     </Compile>
     <Compile Include="PropertyEdit.Designer.cs">
       <DependentUpon>PropertyEdit.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Settings1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <DependentUpon>Settings1.settings</DependentUpon>
     </Compile>
     <Compile Include="TextDialog.cs">
       <SubType>Form</SubType>
@@ -320,10 +320,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Resources\Image26.bmp" />
-    <None Include="Settings1.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings1.Designer.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Image27.bmp" />
@@ -428,6 +424,10 @@
     <None Include="Resources\Image60.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="PM\Config.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Config.Designer.cs</LastGenOutput>
+    </None>
     <None Include="Properties\DataSources\CellGameEdit.PM.Region.datasource" />
     <None Include="Resources\Image61.bmp" />
     <None Include="Resources\Image62.bmp" />
