@@ -44,7 +44,6 @@ namespace CellGameEdit.PM
 
         public ImagesForm(String name)
         {
-           
             InitializeComponent();
 
             id = name;
@@ -134,7 +133,7 @@ namespace CellGameEdit.PM
                     catch (Exception err)
                     {
                         dstImages.Add(null);
-                        Console.WriteLine(this.id + " : Tile["+i+"] : " + err.StackTrace);
+                        Console.WriteLine(this.id + " : Tile["+i+"] : " + err.StackTrace + "  at  " +err.Message);
                     }
 
                     
@@ -165,12 +164,14 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            Console.WriteLine("Serializ Images : " + id);
+
             try{
                 info.AddValue("id",id);
                 info.AddValue("CellW", CellW);
@@ -219,7 +220,7 @@ namespace CellGameEdit.PM
                         outX.Add(0);
                         outY.Add(0);
                         outK.Add(false);
-                        Console.WriteLine(this.id + " : "+i+" : " + err.StackTrace);
+                        Console.WriteLine(this.id + " : "+i+" : " + err.StackTrace + "  at  " +err.Message);
                     }
                 }
                 info.AddValue("output", output);
@@ -229,7 +230,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
 
@@ -288,7 +289,7 @@ namespace CellGameEdit.PM
                         outputImage.getDImage().Save(dir + "\\" + this.id + "." + type, format);
                     }
                 }
-                catch (Exception err) { Console.WriteLine(this.id + " : save group : " + err.StackTrace); }
+                catch (Exception err) { Console.WriteLine(this.id + " : save group : " + err.StackTrace + "  at  " +err.Message); }
                 if (tile)
                 {
                     String tileDir = dir + "\\" + this.id + "\\" ;
@@ -304,102 +305,104 @@ namespace CellGameEdit.PM
                             getDstImage(i).getDImage().Save(tileDir + i + "." + type, format);
 
                         }
-                        catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.StackTrace); }
+                        catch (Exception err) { Console.WriteLine(this.id + " : save tile : " + err.StackTrace + "  at  " +err.Message); }
                     }
                 }
             }
-            catch (Exception err){Console.WriteLine(this.id + " : " + err.StackTrace);}
+            catch (Exception err){Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message);}
             
         }
 
-        public void Output(System.IO.StringWriter sw)
-        {
-            String head = "/" + this.id+"/tile_";
+//        public void Output(System.IO.StringWriter sw)
+//        {
+//            String head = "/" + this.id+"/tile_";
 
-            sw.WriteLine("final static public void buildImages_" + this.id + "(IImages stuff)");
-            sw.WriteLine("{");
-            sw.WriteLine("    stuff.buildImages(null, " + this.getDstImageCount() + ");");
-            sw.WriteLine("    for(int i=0;i<" + this.getDstImageCount() + ";i++){");
-            sw.WriteLine("        stuff.setTileImage(CIO.loadImage(\"" + head + "\"+i+\".png" + "\"));");
-            sw.WriteLine("        stuff.addTile();");
-            sw.WriteLine("    }");
-            sw.WriteLine("    stuff.gc();");
-            sw.WriteLine("}");
+//            sw.WriteLine("final static public void buildImages_" + this.id + "(IImages stuff)");
+//            sw.WriteLine("{");
+//            sw.WriteLine("    stuff.buildImages(null, " + this.getDstImageCount() + ");");
+//            sw.WriteLine("    for(int i=0;i<" + this.getDstImageCount() + ";i++){");
+//            sw.WriteLine("        stuff.setTileImage(CIO.loadImage(\"" + head + "\"+i+\".png" + "\"));");
+//            sw.WriteLine("        stuff.addTile();");
+//            sw.WriteLine("    }");
+//            sw.WriteLine("    stuff.gc();");
+//            sw.WriteLine("}");
 
-            sw.WriteLine("final static public void buildClipImages_" + this.id + "(IImages stuff)");
-            sw.WriteLine("{");
-            sw.WriteLine("    stuff.buildImages(CIO.loadImage(\"/" + this.id + ".png\"), " + this.getDstImageCount() + ");");
-for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
-            sw.WriteLine("    stuff.addTile(" + getDstImage(i).x + "," + getDstImage(i).y + "," + getDstImage(i).getWidth() + "," + getDstImage(i).getHeight() + ");");
-}}//
-            sw.WriteLine("    stuff.gc();");
-            sw.WriteLine("}");
+//            sw.WriteLine("final static public void buildClipImages_" + this.id + "(IImages stuff)");
+//            sw.WriteLine("{");
+//            sw.WriteLine("    stuff.buildImages(CIO.loadImage(\"/" + this.id + ".png\"), " + this.getDstImageCount() + ");");
+//for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
+//            sw.WriteLine("    stuff.addTile(" + getDstImage(i).x + "," + getDstImage(i).y + "," + getDstImage(i).getWidth() + "," + getDstImage(i).getHeight() + ");");
+//}}//
+//            sw.WriteLine("    stuff.gc();");
+//            sw.WriteLine("}");
 
-            SaveAllImages(ProjectForm.workSpace,"png",false,true);
+//            SaveAllImages(ProjectForm.workSpace,"png",false,true);
 
-        }
-
+//        }
 
         public void OutputCustom(int index, String script, System.IO.StringWriter output, String outDir,
-            String imageType,bool imageTile,bool imageTileData,bool imageGroup,bool imageGroupData)
+            String imageType, bool imageTile, bool imageTileData, bool imageGroup, bool imageGroupData)
         {
-            try
+            lock (this)
             {
-                String images = Util.getFullTrunkScript(script, "#<IMAGES>", "#<END IMAGES>");
-
-                bool fix = false;
-                do
+                try
                 {
-                    String[] clips = new string[getDstImageCount()];
-                    for (int i = 0; i < getDstImageCount(); i++)
-                    {
-                        if (getDstImage(i) != null )
-                        {
-                            string X = getDstImage(i).killed ? "0" : getDstImage(i).x.ToString();
-                            string Y = getDstImage(i).killed ? "0" : getDstImage(i).y.ToString();
-                            string W = getDstImage(i).killed ? "0" : getDstImage(i).getWidth().ToString();
-                            string H = getDstImage(i).killed ? "0" : getDstImage(i).getHeight().ToString();
+                    String images = Util.getFullTrunkScript(script, "#<IMAGES>", "#<END IMAGES>");
 
-                            clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
-                                new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
-                                new string[] { i.ToString(), X, Y, W, H }
-                                );
+                    bool fix = false;
+                    do
+                    {
+                        String[] clips = new string[getDstImageCount()];
+                        for (int i = 0; i < getDstImageCount(); i++)
+                        {
+                            if (getDstImage(i) != null)
+                            {
+                                string X = getDstImage(i).killed ? "0" : getDstImage(i).x.ToString();
+                                string Y = getDstImage(i).killed ? "0" : getDstImage(i).y.ToString();
+                                string W = getDstImage(i).killed ? "0" : getDstImage(i).getWidth().ToString();
+                                string H = getDstImage(i).killed ? "0" : getDstImage(i).getHeight().ToString();
+
+                                clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
+                                    new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
+                                    new string[] { i.ToString(), X, Y, W, H }
+                                    );
+                            }
+                            else
+                            {
+                                clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
+                                       new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
+                                       new string[] { i.ToString(), "0", "0", "0", "0" }
+                                       );
+                            }
+                        }
+                        string temp = Util.replaceSubTrunksScript(images, "#<CLIP>", "#<END CLIP>", clips);
+
+                        if (temp == null)
+                        {
+                            fix = false;
                         }
                         else
                         {
-                            clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
-                                   new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
-                                   new string[] { i.ToString(), "0", "0", "0", "0" }
-                                   );
+                            fix = true;
+                            images = temp;
                         }
-                    }
-                    string temp = Util.replaceSubTrunksScript(images, "#<CLIP>", "#<END CLIP>", clips);
 
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        images = temp;
-                    }
+                    } while (fix);
 
-                } while (fix);
-                
 
-                images = Util.replaceKeywordsScript(images, "#<IMAGES>", "#<END IMAGES>",
-                    new string[] { "<NAME>", "<IMAGES INDEX>", "<COUNT>" },
-                    new string[] { this.id, index.ToString(), this.getDstImageCount().ToString() }
-                    );
+                    images = Util.replaceKeywordsScript(images, "#<IMAGES>", "#<END IMAGES>",
+                        new string[] { "<NAME>", "<IMAGES INDEX>", "<COUNT>" },
+                        new string[] { this.id, index.ToString(), this.getDstImageCount().ToString() }
+                        );
 
-                output.WriteLine(images);
-                //Console.WriteLine(images);
+                    output.WriteLine(images);
+                    //Console.WriteLine(images);
 
-                SaveAllImages(outDir,imageType,imageTile,imageGroup);
-               
+                    SaveAllImages(outDir, imageType, imageTile, imageGroup);
+
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
         }
 
 
@@ -494,7 +497,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                         pictureBox2.Width = Math.Max(pictureBox2.Width, img.getWidth() * dstSize);
                         pictureBox2.Height += (img.getHeight() * dstSize);
                     }catch(Exception err){
-                        Console.WriteLine(err.StackTrace);
+                        Console.WriteLine(err.StackTrace + "  at  " +err.Message);
                     }
                 }
             }
@@ -707,7 +710,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
                 }
             }
             catch (Exception err) {
-                Console.WriteLine(this.id + " : " + err.StackTrace);
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message);
             }
        
 
@@ -790,7 +793,7 @@ for (int i = 0; i < getDstImageCount(); i++){if (getDstImage(i) != null){//
             }
             catch (Exception err)
             {
-                Console.WriteLine(this.id + " : " + err.StackTrace);
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message);
             }
 
 

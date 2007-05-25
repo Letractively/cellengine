@@ -34,7 +34,7 @@ namespace CellGameEdit.PM
             {
                 FormatArray1D_h = "";
                 FormatArray1D_t = ",";
-                Console.WriteLine("Error ! Set Default. ");
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
             Console.WriteLine("FormatArray1D : " + FormatArray1D_h + elementKey + FormatArray1D_t);
@@ -53,7 +53,7 @@ namespace CellGameEdit.PM
             {
                 FormatArray2D_h = "{";
                 FormatArray2D_t = "},";
-                Console.WriteLine("Error ! Set Default. ");
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
             Console.WriteLine("FormatArray2D : " + FormatArray2D_h + elementKey + FormatArray2D_t);
@@ -73,7 +73,7 @@ namespace CellGameEdit.PM
             {
                 FormatStringArray1D_h = "\"";
                 FormatStringArray1D_t = "\",";
-                Console.WriteLine("Error ! Set Default. ");
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
             Console.WriteLine("FormatStringArray1D : " + FormatStringArray1D_h + elementKey + FormatStringArray1D_t);
@@ -92,7 +92,7 @@ namespace CellGameEdit.PM
             {
                 FormatStringArray2D_h = "{\"";
                 FormatStringArray2D_t = "\"},";
-                Console.WriteLine("Error ! Set Default. ");
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
             Console.WriteLine("FormatStringArray2D : " + FormatStringArray2D_h + elementKey + FormatStringArray2D_t);
@@ -335,7 +335,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* remove trunk ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
+                return script.Insert(0, "/* remove trunk ERROR " + start + "->" + end + ": " + err.StackTrace + "  at  " +err.Message + " */ ");
             }
         }
 
@@ -350,7 +350,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
+                return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.StackTrace + "  at  " +err.Message + " */ ");
             }
         }
       
@@ -374,7 +374,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err) 
             {
-                return script.Insert(0, "/* replace keywords ERROR " + start + "->" + end + ": " + err.StackTrace + " */ ");
+                return script.Insert(0, "/* replace keywords ERROR " + start + "->" + end + ": " + err.StackTrace + "  at  " +err.Message + " */ ");
             }
         }
 
@@ -401,7 +401,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                Console.WriteLine( "/* replace sub trunks ERROR " + start + "->" + end + " : "+err.StackTrace+" */ ");
+                Console.WriteLine( "/* replace sub trunks ERROR " + start + "->" + end + " : "+err.StackTrace + "  at  " +err.Message+" */ ");
                 return null; 
             }
         }

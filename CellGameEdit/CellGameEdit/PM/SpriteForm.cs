@@ -20,6 +20,7 @@ namespace CellGameEdit.PM
     {
         public String id;
 
+        public String superName;
         public ImagesForm super;
 
         //Hashtable Frames;
@@ -93,25 +94,17 @@ namespace CellGameEdit.PM
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
-                super = (ImagesForm)info.GetValue("super", typeof(ImagesForm));
 
-                srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
-                //dstRect = new System.Drawing.Rectangle(0, 0, 0, 0);
-
-                srcTiles = super.dstImages;
-                for (int i = 0; i < srcGetCount(); i++)
+                if (!ProjectForm.IsCopy)
                 {
-                    if (srcGetImage(i) != null)
-                    {
-                        srcIndex = i;
-                        srcImage = srcGetImage(i);
-                        srcRect.X = srcGetImage(i).x;
-                        srcRect.Y = srcGetImage(i).y;
-                        srcRect.Width = srcGetImage(i).getWidth();
-                        srcRect.Height = srcGetImage(i).getHeight();
-                        break;
-                    }
+                    super = (ImagesForm)info.GetValue("super", typeof(ImagesForm));
+                    ChangeSuper(super);
                 }
+                else
+                {
+                    superName = (String)info.GetValue("SuperName", typeof(String));
+                }
+                
                 animCount = (int)info.GetValue("animCount", typeof(int));
                 ArrayList Animates = (ArrayList)info.GetValue("Animates", typeof(ArrayList));
                 ArrayList AniNames = (ArrayList)info.GetValue("AniNames", typeof(ArrayList));
@@ -131,7 +124,7 @@ namespace CellGameEdit.PM
                     }
                     catch (Exception err)
                     {
-                        Console.WriteLine(this.id + " : " + err.StackTrace);
+                        Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message);
                     }
                    
                 }
@@ -139,7 +132,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
            
 
@@ -147,10 +140,22 @@ namespace CellGameEdit.PM
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            Console.WriteLine("Serializ Sprite : " + id);
             try
             {
                 info.AddValue("id",id);
-                info.AddValue("super", super);
+
+
+                if (!ProjectForm.IsCopy)
+                {
+                    info.AddValue("super", super);
+                }
+                else
+                {
+                    info.AddValue("SuperName",super.id);
+                }
+
+
                 info.AddValue("animCount", animCount);
 
                 ArrayList Animates = new ArrayList();
@@ -166,7 +171,7 @@ namespace CellGameEdit.PM
                         }
                         catch (Exception err)
                         {
-                            Console.WriteLine(this.id + " : " + err.StackTrace);
+                            Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message);
                         }
                     }
                 }
@@ -175,14 +180,48 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
 
-        public void changeSuper(ImagesForm super)
+        public void ChangeSuper(ArrayList images)
+        {
+            Hashtable imagesHT = new Hashtable();
+
+            for (int i = 0; i < images.Count; i++)
+            {
+                imagesHT.Add(((ImagesForm)images[i]).id, images[i]);
+            }
+
+            if (imagesHT.ContainsKey(superName))
+            {
+                ChangeSuper((ImagesForm)imagesHT[superName]);
+                Console.WriteLine("Sprite ChangeImages : " + superName);
+            }
+        }
+
+        public void ChangeSuper(ImagesForm super)
         {
             this.super = super;
             this.srcTiles = super.dstImages;
+
+            srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+            //dstRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+
+            srcTiles = super.dstImages;
+            for (int i = 0; i < srcGetCount(); i++)
+            {
+                if (srcGetImage(i) != null)
+                {
+                    srcIndex = i;
+                    srcImage = srcGetImage(i);
+                    srcRect.X = srcGetImage(i).x;
+                    srcRect.Y = srcGetImage(i).y;
+                    srcRect.Width = srcGetImage(i).getWidth();
+                    srcRect.Height = srcGetImage(i).getHeight();
+                    break;
+                }
+            }
         }
 
         Frame AllFrame ;
@@ -424,180 +463,182 @@ namespace CellGameEdit.PM
 
         public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
-            try
+            lock (this)
             {
-                initOutput();
-
-                String sprite = Util.getFullTrunkScript(script, "#<SPRITE>", "#<END SPRITE>");
-
-                bool fix = false;
-
-                // animates part
-                do
+                try
                 {
-                    String[] senceParts = new string[AllFrame.getSubCount()];
-                    for (int i = 0; i < senceParts.Length; i++)
+                    initOutput();
+
+                    String sprite = Util.getFullTrunkScript(script, "#<SPRITE>", "#<END SPRITE>");
+
+                    bool fix = false;
+
+                    // animates part
+                    do
                     {
-                        string X = ((int)AllFrame.SubX[i]).ToString();
-                        string Y = ((int)AllFrame.SubY[i]).ToString();
-                        string TILE = ((int)AllFrame.SubIndex[i]).ToString();
-                        string TRANS = (flipTableJ2me[(int)(AllFrame.SubFlip[i])]).ToString();
+                        String[] senceParts = new string[AllFrame.getSubCount()];
+                        for (int i = 0; i < senceParts.Length; i++)
+                        {
+                            string X = ((int)AllFrame.SubX[i]).ToString();
+                            string Y = ((int)AllFrame.SubY[i]).ToString();
+                            string TILE = ((int)AllFrame.SubIndex[i]).ToString();
+                            string TRANS = (flipTableJ2me[(int)(AllFrame.SubFlip[i])]).ToString();
 
-                        senceParts[i] = Util.replaceKeywordsScript(sprite, "#<SCENE PART>", "#<END SCENE PART>",
-                            new string[] { "<INDEX>", "<X>", "<Y>", "<TILE>", "<TRANS>" },
-                            new string[] { i.ToString(), X, Y, TILE, TRANS }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(sprite, "#<SCENE PART>", "#<END SCENE PART>", senceParts);
-                    if (temp == null)
+                            senceParts[i] = Util.replaceKeywordsScript(sprite, "#<SCENE PART>", "#<END SCENE PART>",
+                                new string[] { "<INDEX>", "<X>", "<Y>", "<TILE>", "<TRANS>" },
+                                new string[] { i.ToString(), X, Y, TILE, TRANS }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(sprite, "#<SCENE PART>", "#<END SCENE PART>", senceParts);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            sprite = temp;
+                        }
+                    } while (fix);
+
+
+                    // animates frame
+                    do
                     {
-                        fix = false;
-                    }
-                    else
+                        String[] senceFrames = new string[animates.frameGetCount()];
+                        for (int i = 0; i < senceFrames.Length; i++)
+                        {
+
+                            int[] frames = (int[])(animates.frameGetFrame(i).ToArray(typeof(int)));
+                            string DATA = Util.toTextArray1D<int>(ref frames);
+
+
+                            senceFrames[i] = Util.replaceKeywordsScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>",
+                                new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                                new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            sprite = temp;
+                        }
+                    } while (fix);
+
+                    // cd part
+                    do
                     {
-                        fix = true;
-                        sprite = temp;
-                    }
-                } while (fix);
+                        String[] cdParts = new string[AllFrame.getCDCount()];
+                        for (int i = 0; i < cdParts.Length; i++)
+                        {
+                            string TYPE = "rect";
+                            string MASK = ((int)AllFrame.CDMask[i]).ToString();
+                            string X1 = ((int)AllFrame.CDX[i]).ToString();
+                            string Y1 = ((int)AllFrame.CDY[i]).ToString();
+                            string W = ((int)AllFrame.CDW[i]).ToString();
+                            string H = ((int)AllFrame.CDH[i]).ToString();
+                            string X2 = ((int)(((int)AllFrame.CDX[i]) + ((int)AllFrame.CDW[i]))).ToString();
+                            string Y2 = ((int)(((int)AllFrame.CDY[i]) + ((int)AllFrame.CDH[i]))).ToString();
+
+                            cdParts[i] = Util.replaceKeywordsScript(sprite, "#<CD PART>", "#<END CD PART>",
+                                new string[] { "<INDEX>", "<TYPE>", "<MASK>", "<X1>", "<Y1>", "<W>", "<H>", "<X2>", "<Y2>" },
+                                new string[] { i.ToString(), TYPE, MASK, X1, Y1, W, H, X2, Y2 }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(sprite, "#<CD PART>", "#<END CD PART>", cdParts);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            sprite = temp;
+                        }
+                    } while (fix);
 
 
-                // animates frame
-                do
-                {
-                    String[] senceFrames = new string[animates.frameGetCount()];
-                    for (int i = 0; i < senceFrames.Length; i++)
+                    // cd frame
+                    do
                     {
+                        String[] cdFrames = new string[collides.frameGetCount()];
+                        for (int i = 0; i < cdFrames.Length; i++)
+                        {
+                            int[] frame = (int[])(collides.frameGetFrame(i).ToArray(typeof(int)));
+                            string DATA = Util.toTextArray1D<int>(ref frame);
 
-                        int[] frames = (int[])(animates.frameGetFrame(i).ToArray(typeof(int)));
-                        string DATA = Util.toTextArray1D<int>(ref frames);
+                            cdFrames[i] = Util.replaceKeywordsScript(sprite, "#<CD FRAME>", "#<END CD FRAME>",
+                                new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                                new string[] { i.ToString(), collides.frameGetFrame(i).Count.ToString(), DATA }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(sprite, "#<CD FRAME>", "#<END CD FRAME>", cdFrames);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            sprite = temp;
+                        }
+                    } while (fix);
 
+                    /*
+                    // sprframes
+                    String outFrameName = "";
+                    String outFrameAnimate = "";
+                    String outFrameCDMap = "";
+                    String outFrameCDAtk = "";
+                    String outFrameCDDef = "";
+                    String outFrameCDExt = "";
 
-                        senceFrames[i] = Util.replaceKeywordsScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>",
-                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
-                            new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        sprite = temp;
-                    }
-                } while (fix);
+                    for (int i = 0; i < frameName.Length; i++)
+                        outFrameName += "\"" + frameName[i] + "\",\r\n"; 
 
-                // cd part
-                do
-                {
-                    String[] cdParts = new string[AllFrame.getCDCount()];
-                    for (int i = 0; i < cdParts.Length; i++)
-                    {
-                        string TYPE = "rect";
-                        string MASK = ((int)AllFrame.CDMask[i]).ToString();
-                        string X1 = ((int)AllFrame.CDX[i]).ToString();
-                        string Y1 = ((int)AllFrame.CDY[i]).ToString();
-                        string W = ((int)AllFrame.CDW[i]).ToString();
-                        string H = ((int)AllFrame.CDH[i]).ToString();
-                        string X2 = ((int)(((int)AllFrame.CDX[i]) + ((int)AllFrame.CDW[i]))).ToString();
-                        string Y2 = ((int)(((int)AllFrame.CDY[i]) + ((int)AllFrame.CDH[i]))).ToString();
+                    for (int i = 0; i < frameAnimate.Length; i++)
+                        outFrameAnimate += "{" + Util.toTextArray(frameAnimate[i]) + "},\r\n";
+                    for (int i = 0; i < frameCDMap.Length; i++)
+                        outFrameCDMap += "{" + Util.toTextArray(frameCDMap[i]) + "},\r\n";
+                    for (int i = 0; i < frameCDAtk.Length; i++)
+                        outFrameCDAtk += "{" + Util.toTextArray(frameCDAtk[i]) + "},\r\n";
+                    for (int i = 0; i < frameCDDef.Length; i++)
+                        outFrameCDDef += "{" + Util.toTextArray(frameCDDef[i]) + "},\r\n";
+                    for (int i = 0; i < frameCDExt.Length; i++)
+                        outFrameCDExt += "{" + Util.toTextArray(frameCDExt[i]) + "},\r\n";
 
-                        cdParts[i] = Util.replaceKeywordsScript(sprite, "#<CD PART>", "#<END CD PART>",
-                            new string[] { "<INDEX>", "<TYPE>", "<MASK>", "<X1>", "<Y1>", "<W>", "<H>", "<X2>", "<Y2>" },
-                            new string[] { i.ToString(), TYPE, MASK, X1, Y1, W, H, X2, Y2 }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(sprite, "#<CD PART>", "#<END CD PART>", cdParts);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        sprite = temp;
-                    }
-                } while (fix);
+                    int[] frameCounts = new int[frameName.Length];
+                    for (int i = 0; i < frameAnimate.Length; i++)
+                        frameCounts[i] = frameAnimate[i].Length;
+                    String outFrameCounts = Util.toTextArray(frameCounts);
+                    */
 
+                    // sprframes
 
-                // cd frame
-                do
-                {
-                    String[] cdFrames = new string[collides.frameGetCount()];
-                    for (int i = 0; i < cdFrames.Length; i++)
-                    {
-                        int[] frame = (int[])(collides.frameGetFrame(i).ToArray(typeof(int)));
-                        string DATA = Util.toTextArray1D<int>(ref frame);
+                    String outFrameAnimate = Util.toTextArray2D<int>(ref frameAnimate);
+                    String outFrameCDMap = Util.toTextArray2D<int>(ref frameCDMap);
+                    String outFrameCDAtk = Util.toTextArray2D<int>(ref frameCDAtk);
+                    String outFrameCDDef = Util.toTextArray2D<int>(ref frameCDDef);
+                    String outFrameCDExt = Util.toTextArray2D<int>(ref frameCDExt);
 
-                        cdFrames[i] = Util.replaceKeywordsScript(sprite, "#<CD FRAME>", "#<END CD FRAME>",
-                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
-                            new string[] { i.ToString(), collides.frameGetFrame(i).Count.ToString(), DATA }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(sprite, "#<CD FRAME>", "#<END CD FRAME>", cdFrames);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        sprite = temp;
-                    }
-                } while (fix);
+                    int[] frameCounts = new int[frameName.Length];
+                    for (int i = 0; i < frameAnimate.Length; i++)
+                        frameCounts[i] = frameAnimate[i].Length;
+                    String outFrameCounts = Util.toTextArray1D<int>(ref frameCounts);
 
-                /*
-                // sprframes
-                String outFrameName = "";
-                String outFrameAnimate = "";
-                String outFrameCDMap = "";
-                String outFrameCDAtk = "";
-                String outFrameCDDef = "";
-                String outFrameCDExt = "";
-
-                for (int i = 0; i < frameName.Length; i++)
-                    outFrameName += "\"" + frameName[i] + "\",\r\n"; 
-
-                for (int i = 0; i < frameAnimate.Length; i++)
-                    outFrameAnimate += "{" + Util.toTextArray(frameAnimate[i]) + "},\r\n";
-                for (int i = 0; i < frameCDMap.Length; i++)
-                    outFrameCDMap += "{" + Util.toTextArray(frameCDMap[i]) + "},\r\n";
-                for (int i = 0; i < frameCDAtk.Length; i++)
-                    outFrameCDAtk += "{" + Util.toTextArray(frameCDAtk[i]) + "},\r\n";
-                for (int i = 0; i < frameCDDef.Length; i++)
-                    outFrameCDDef += "{" + Util.toTextArray(frameCDDef[i]) + "},\r\n";
-                for (int i = 0; i < frameCDExt.Length; i++)
-                    outFrameCDExt += "{" + Util.toTextArray(frameCDExt[i]) + "},\r\n";
-
-                int[] frameCounts = new int[frameName.Length];
-                for (int i = 0; i < frameAnimate.Length; i++)
-                    frameCounts[i] = frameAnimate[i].Length;
-                String outFrameCounts = Util.toTextArray(frameCounts);
-                */
-
-                // sprframes
-                
-                String outFrameAnimate = Util.toTextArray2D<int>(ref frameAnimate);
-                String outFrameCDMap = Util.toTextArray2D<int>(ref frameCDMap);
-                String outFrameCDAtk = Util.toTextArray2D<int>(ref frameCDAtk);
-                String outFrameCDDef = Util.toTextArray2D<int>(ref frameCDDef);
-                String outFrameCDExt = Util.toTextArray2D<int>(ref frameCDExt);
-
-                int[] frameCounts = new int[frameName.Length];
-                for (int i = 0; i < frameAnimate.Length; i++)
-                    frameCounts[i] = frameAnimate[i].Length;
-                String outFrameCounts = Util.toTextArray1D<int>(ref frameCounts);
-
-                String outFrameName = Util.toStringArray1D(frameName);
-
-               
+                    String outFrameName = Util.toStringArray1D(frameName);
 
 
 
-                sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
-                    new string[] { 
+
+
+                    sprite = Util.replaceKeywordsScript(sprite, "#<SPRITE>", "#<END SPRITE>",
+                        new string[] { 
                     "<NAME>", 
                     "<SPR INDEX>",
                     "<IMAGES NAME>",
@@ -614,7 +655,7 @@ namespace CellGameEdit.PM
                     "<FRAME CD DEF>",
                     "<FRAME CD EXT>"
                     },
-                    new string[] { 
+                        new string[] { 
                     this.id,
                     index.ToString(),
                     super.id,
@@ -630,13 +671,14 @@ namespace CellGameEdit.PM
                     outFrameCDAtk,
                     outFrameCDDef,
                     outFrameCDExt}
-                    );
+                        );
 
-                output.WriteLine(sprite);
-                //Console.WriteLine(sprite);
+                    output.WriteLine(sprite);
+                    //Console.WriteLine(sprite);
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
+
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-            
         }
 
         private void SpriteForm_Load(object sender, EventArgs e)
@@ -2289,7 +2331,7 @@ namespace CellGameEdit.PM
                     clipSuperForm = this.super;
                 }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message); }
         }
         private void animPaste()
         {
@@ -2319,7 +2361,7 @@ namespace CellGameEdit.PM
                     }
                 }
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message); }
         }
 
         public string getAnimateName(int index)
@@ -2407,7 +2449,7 @@ namespace CellGameEdit.PM
                 }
                 framesRefersh();
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message); }
             
         }
         // down
@@ -2438,7 +2480,7 @@ namespace CellGameEdit.PM
                 }
                 framesRefersh();
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " +err.Message); }
         }
 // timer
         private void timer1_Tick(object sender, EventArgs e)

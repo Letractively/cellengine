@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="CellGameEdit.PM" GeneratedClassName="Config">
+  <Profiles />
+  <Settings>
+    <Setting Name="MapSrcSelectBackColorL" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">128, 255, 255, 255</Value>
+    </Setting>
+    <Setting Name="MapSrcSelectBorderColorL" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="MapSrcSelectBackColorR" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MapSrcSelectBorderColorR" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+  </Settings>
+</SettingsFile>

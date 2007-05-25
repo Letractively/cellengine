@@ -11,7 +11,7 @@ namespace CellGameEdit
     public partial class OutputForm : Form
     {
         System.IO.StringWriter sw;
-
+        
         public OutputForm()
         {
             InitializeComponent();
@@ -35,7 +35,14 @@ namespace CellGameEdit
 
         private void timer1_Tick_1(object sender, EventArgs e)
         {
-            this.textBox1.Text = sw.ToString();
+            if (this.textBox1.Text.Length != sw.ToString().Length) 
+            {
+                this.textBox1.Clear();
+                this.textBox1.AppendText(sw.ToString());
+                this.textBox1.ScrollToCaret();
+            }
+
+            //this.textBox1.Select(this.textBox1.Text.Length , 0);
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)

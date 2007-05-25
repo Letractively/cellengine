@@ -19,7 +19,7 @@ namespace CellGameEdit.PM
     {
 
         public String id;
-
+        public String superName;
         public ImagesForm super;
 
         public int CellW;
@@ -74,9 +74,13 @@ namespace CellGameEdit.PM
 
         int tagIndex = 0;
 
+        //Image srcImage;
+
         int srcIndex = 0;
-        Image srcImage;
         System.Drawing.Rectangle srcRect;
+
+        int srcIndexR = 0;
+        System.Drawing.Rectangle srcRectR;
 
         Boolean dstIsDown = false;
         int dstPX = 0;
@@ -105,6 +109,8 @@ namespace CellGameEdit.PM
             super = images;
             CellW = cellw;
             CellH = cellh;
+
+            srcRectR = new System.Drawing.Rectangle(0, 0, 0, 0);
             srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
             dstRect = new System.Drawing.Rectangle(0, 0, 0, 0);
 
@@ -114,11 +120,17 @@ namespace CellGameEdit.PM
                 if (getTileImage(i)!=null)
                 {
                     srcIndex = i;
-                    srcImage = getTileImage(i);
+                    //srcImage = getTileImage(i);
                     srcRect.X = getTileImage(i).x;
                     srcRect.Y = getTileImage(i).y;
                     srcRect.Width = getTileImage(i).getWidth();
                     srcRect.Height = getTileImage(i).getHeight();
+
+                    srcIndexR = i;
+                    srcRectR.X = getTileImage(i).x;
+                    srcRectR.Y = getTileImage(i).y;
+                    srcRectR.Width = getTileImage(i).getWidth();
+                    srcRectR.Height = getTileImage(i).getHeight();
                     break;
                 }
             }
@@ -190,12 +202,22 @@ namespace CellGameEdit.PM
             {
                 InitializeComponent();
                 id = (String)info.GetValue("id", typeof(String));
-                super = (ImagesForm)info.GetValue("super", typeof(ImagesForm));
+
+                if (!ProjectForm.IsCopy)
+                {
+                    super = (ImagesForm)info.GetValue("super", typeof(ImagesForm));
+                }
+                else
+                {
+                    superName = (String)info.GetValue("SuperName", typeof(String));
+                }
+                
                 CellW = (int)info.GetValue("CellW", typeof(int));
                 CellH = (int)info.GetValue("CellH", typeof(int));
+
+                srcRectR = new System.Drawing.Rectangle(0, 0, 0, 0);
                 srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
                 dstRect = new System.Drawing.Rectangle(0, 0, 0, 0);
-
 
                 Tiles = super.dstImages;
                 for (int i = 0; i < getTileCount(); i++)
@@ -203,15 +225,30 @@ namespace CellGameEdit.PM
                     if (getTileImage(i) != null)
                     {
                         srcIndex = i;
-                        srcImage = getTileImage(i);
+                        //srcImage = getTileImage(i);
                         srcRect.X = getTileImage(i).x;
                         srcRect.Y = getTileImage(i).y;
                         srcRect.Width = getTileImage(i).getWidth();
                         srcRect.Height = getTileImage(i).getHeight();
+
+                        srcIndexR = i;
+                        srcRectR.X = getTileImage(i).x;
+                        srcRectR.Y = getTileImage(i).y;
+                        srcRectR.Width = getTileImage(i).getWidth();
+                        srcRectR.Height = getTileImage(i).getHeight();
+
                         break;
                     }
                 }
 
+                pictureBox3.Width = CellW;
+                pictureBox3.Height = CellH;
+
+                pictureBox4.Left = pictureBox3.Location.X + 3 + CellW;
+
+                pictureBox4.Width = CellW;
+                pictureBox4.Height = CellH;
+               
 
                 MatrixTile = (int[][])info.GetValue("MatrixTile", typeof(int[][]));
                 MatrixTag = (int[][])info.GetValue("MatrixTag", typeof(int[][]));
@@ -260,28 +297,34 @@ namespace CellGameEdit.PM
 
                 animCount = (int)info.GetValue("animCount", typeof(int));
 
-                pictureBox3.Width = CellW;
-                pictureBox3.Height = CellH;
-
-                pictureBox4.Left = pictureBox3.Location.X + 3 + CellW;
-
-                pictureBox4.Width = CellW;
-                pictureBox4.Height = CellH;
+ 
 
                 trackBar1.Maximum = 0;
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
+            Console.WriteLine("Serializ Map : " + id);
+
             try{
                 info.AddValue("id",id);
-                info.AddValue("super", super);
+
+                if (!ProjectForm.IsCopy)
+                {
+                    info.AddValue("super", super);
+                }
+                else
+                {
+                    info.AddValue("SuperName", super.id);
+                }
+
+
                 info.AddValue("CellW",CellW);
                 info.AddValue("CellH",CellH);
                 
@@ -311,14 +354,74 @@ namespace CellGameEdit.PM
             }
             catch (Exception err)
             {
-                MessageBox.Show(err.StackTrace);
+                MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
 
-        public void changeSuper(ImagesForm super)
+        public void ChangeSuper(ArrayList images)
+        {
+            Hashtable imagesHT = new Hashtable();
+
+            for (int i = 0; i < images.Count; i++)
+            {
+                imagesHT.Add(((ImagesForm)images[i]).id, images[i]);
+            }
+
+            if (imagesHT.ContainsKey(superName))
+            {
+                ChangeSuper((ImagesForm)imagesHT[superName]);
+                Console.WriteLine("Map ChangeImages : " + superName);
+            }
+        }
+
+        public void ChangeSuper(ImagesForm super)
         {
             this.super = super;
             this.Tiles = super.dstImages;
+
+            srcRectR = new System.Drawing.Rectangle(0, 0, 0, 0);
+            srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+            dstRect = new System.Drawing.Rectangle(0, 0, 0, 0);
+
+            Tiles = super.dstImages;
+            for (int i = 0; i < getTileCount(); i++)
+            {
+                if (getTileImage(i) != null)
+                {
+                    srcIndex = i;
+                    //srcImage = getTileImage(i);
+                    srcRect.X = getTileImage(i).x;
+                    srcRect.Y = getTileImage(i).y;
+                    srcRect.Width = getTileImage(i).getWidth();
+                    srcRect.Height = getTileImage(i).getHeight();
+
+                    srcIndexR = i;
+                    srcRectR.X = getTileImage(i).x;
+                    srcRectR.Y = getTileImage(i).y;
+                    srcRectR.Width = getTileImage(i).getWidth();
+                    srcRectR.Height = getTileImage(i).getHeight();
+
+                    break;
+                }
+            }
+
+            pictureBox3.Width = CellW;
+            pictureBox3.Height = CellH;
+
+            pictureBox4.Left = pictureBox3.Location.X + 3 + CellW;
+
+            pictureBox4.Width = CellW;
+            pictureBox4.Height = CellH;
+
+            XCount = MatrixTile[0].Length;
+            YCount = MatrixTile.Length;
+
+            pictureBox2.Width = CellW * XCount;
+            pictureBox2.Height = CellH * YCount;
+            toolStripTextBox1.Text = XCount.ToString();
+            toolStripTextBox2.Text = YCount.ToString();
+
+
         }
 
 
@@ -470,75 +573,77 @@ namespace CellGameEdit.PM
 
         //}
 
-        public void OutputCustom(int index, String script , System.IO.StringWriter output)
+        public void OutputCustom(int index, String script, System.IO.StringWriter output)
         {
-            try
+            lock (this)
             {
-                initOutput();
-
-                String map = Util.getFullTrunkScript(script, "#<MAP>", "#<END MAP>");
-
-                bool fix = false;
-
-                // animates part
-                do
+                try
                 {
-                    String[] senceParts = new string[animates.subGetCount()];
-                    for (int i = 0; i < animates.subGetCount(); i++)
+                    initOutput();
+
+                    String map = Util.getFullTrunkScript(script, "#<MAP>", "#<END MAP>");
+
+                    bool fix = false;
+
+                    // animates part
+                    do
                     {
-                        string TILE = animates.SubPart[i].ToString();
-                        string TRANS = flipTableJ2me[(int)(animates.SubFlip[i])].ToString();
+                        String[] senceParts = new string[animates.subGetCount()];
+                        for (int i = 0; i < animates.subGetCount(); i++)
+                        {
+                            string TILE = animates.SubPart[i].ToString();
+                            string TRANS = flipTableJ2me[(int)(animates.SubFlip[i])].ToString();
 
-                        senceParts[i] = Util.replaceKeywordsScript(map, "#<SCENE PART>", "#<END SCENE PART>",
-                            new string[] { "<INDEX>", "<TILE>", "<TRANS>" },
-                            new string[] { i.ToString(), TILE, TRANS }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(map, "#<SCENE PART>", "#<END SCENE PART>", senceParts);
-                    if (temp == null)
+                            senceParts[i] = Util.replaceKeywordsScript(map, "#<SCENE PART>", "#<END SCENE PART>",
+                                new string[] { "<INDEX>", "<TILE>", "<TRANS>" },
+                                new string[] { i.ToString(), TILE, TRANS }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(map, "#<SCENE PART>", "#<END SCENE PART>", senceParts);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            map = temp;
+                        }
+                    } while (fix);
+
+
+                    // animates frame
+                    do
                     {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        map = temp;
-                    }
-                } while (fix);
+                        String[] senceFrames = new string[animates.frameGetCount()];
+                        for (int i = 0; i < animates.frameGetCount(); i++)
+                        {
+                            //string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
+                            int[] frames = ((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
+                            string DATA = Util.toTextArray1D<int>(ref frames);
+
+                            senceFrames[i] = Util.replaceKeywordsScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>",
+                                new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
+                                new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            map = temp;
+                        }
+                    } while (fix);
 
 
-                // animates frame
-                do
-                {
-                    String[] senceFrames = new string[animates.frameGetCount()];
-                    for (int i = 0; i < animates.frameGetCount(); i++)
-                    {
-                        //string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
-                        int[] frames = ((int[])(animates.frameGetFrame(i).ToArray(typeof(int)))) ;
-                        string DATA = Util.toTextArray1D<int>(ref frames);
-
-                        senceFrames[i] = Util.replaceKeywordsScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>",
-                            new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
-                            new string[] { i.ToString(), animates.frameGetFrame(i).Count.ToString(), DATA }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>", senceFrames);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        map = temp;
-                    }
-                } while (fix);
 
 
-               
-
-                // cd parts
-                int[][] cds = new int[][]{
+                    // cd parts
+                    int[][] cds = new int[][]{
                      new int[]{1,0x00000000, 0, 0, CellW, CellH, CellW, CellH},//null
                      new int[]{1,0x00000001, 0, 0, CellW, CellH, CellW, CellH},//full
 
@@ -551,52 +656,52 @@ namespace CellGameEdit.PM
                      new int[]{2,0x00000040, CellW-1, 0,       CellW,   CellH,   0 ,       CellH-1},//
                 };
 
-                do
-                {
-                    String[] cdParts = new string[8];
-                    for (int i = 0; i < 8; i++)
+                    do
                     {
-                        string TYPE = cds[i][0] == 1 ? "rect" : "line";
-                        string MASK = cds[i][1].ToString();
-                        string X1 = cds[i][2].ToString();
-                        string Y1 = cds[i][3].ToString();
-                        string W = cds[i][4].ToString();
-                        string H = cds[i][5].ToString();
-                        string X2 = cds[i][6].ToString();
-                        string Y2 = cds[i][7].ToString();
-                        cdParts[i] = Util.replaceKeywordsScript(map, "#<CD PART>", "#<END CD PART>",
-                            new string[] { "<INDEX>", "<TYPE>", "<MASK>", "<X1>", "<Y1>", "<W>", "<H>", "<X2>", "<Y2>" },
-                            new string[] { i.ToString(), TYPE, MASK, X1, Y1, W, H, X2, Y2 }
-                            );
-                    }
-                    string temp = Util.replaceSubTrunksScript(map, "#<CD PART>", "#<END CD PART>", cdParts);
-                    if (temp == null)
-                    {
-                        fix = false;
-                    }
-                    else
-                    {
-                        fix = true;
-                        map = temp;
-                    }
-                } while (fix);
+                        String[] cdParts = new string[8];
+                        for (int i = 0; i < 8; i++)
+                        {
+                            string TYPE = cds[i][0] == 1 ? "rect" : "line";
+                            string MASK = cds[i][1].ToString();
+                            string X1 = cds[i][2].ToString();
+                            string Y1 = cds[i][3].ToString();
+                            string W = cds[i][4].ToString();
+                            string H = cds[i][5].ToString();
+                            string X2 = cds[i][6].ToString();
+                            string Y2 = cds[i][7].ToString();
+                            cdParts[i] = Util.replaceKeywordsScript(map, "#<CD PART>", "#<END CD PART>",
+                                new string[] { "<INDEX>", "<TYPE>", "<MASK>", "<X1>", "<Y1>", "<W>", "<H>", "<X2>", "<Y2>" },
+                                new string[] { i.ToString(), TYPE, MASK, X1, Y1, W, H, X2, Y2 }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(map, "#<CD PART>", "#<END CD PART>", cdParts);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            map = temp;
+                        }
+                    } while (fix);
 
-                
-                // tile matrix
-                //String senceMatrix = "";
-                //for (int i = 0; i < YCount; i++)
-                //    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
-                String senceMatrix = Util.toTextArray2D<int>(ref tileMatrix);
 
-                // cd matrix
-                //String cdMatrix = "";
-                //for (int i = 0; i < YCount; i++)
-                //    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
+                    // tile matrix
+                    //String senceMatrix = "";
+                    //for (int i = 0; i < YCount; i++)
+                    //    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
+                    String senceMatrix = Util.toTextArray2D<int>(ref tileMatrix);
 
-                String cdMatrix = Util.toTextArray2D<int>(ref flagMatrix);
+                    // cd matrix
+                    //String cdMatrix = "";
+                    //for (int i = 0; i < YCount; i++)
+                    //    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
 
-                map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
-                    new string[] { 
+                    String cdMatrix = Util.toTextArray2D<int>(ref flagMatrix);
+
+                    map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
+                        new string[] { 
                     "<NAME>", 
                     "<MAP INDEX>",
                     "<IMAGES NAME>",
@@ -610,7 +715,7 @@ namespace CellGameEdit.PM
                     "<SCENE FRAME COUNT>" ,
                     "<CD PART COUNT>"
                 },
-                    new string[] { 
+                        new string[] { 
                     this.id, 
                     index.ToString(),
                     super.id,
@@ -623,13 +728,14 @@ namespace CellGameEdit.PM
                     animates.subGetCount().ToString(),
                     animates.frameGetCount().ToString(),
                     "8"}
-                    );
+                        );
 
-                output.WriteLine(map);
-                //Console.WriteLine(map);
+                    output.WriteLine(map);
+                    //Console.WriteLine(map);
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
+
             }
-            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace); }
-
         }
 
         private void MapForm_Load(object sender, EventArgs e)
@@ -1115,6 +1221,13 @@ namespace CellGameEdit.PM
                     renderTile(g, srcIndex, flipIndex, x + getTileImage(srcIndex).x, y + getTileImage(srcIndex).y);
                 }
             }
+            if (srcIndexR < getTileCount())
+            {
+                if (getTileImage(srcIndexR) != null)
+                {
+                    renderTile(g, srcIndexR, flipIndex, x + getTileImage(srcIndexR).x, y + getTileImage(srcIndexR).y);
+                }
+            }
         }
         private void renderDst(Graphics g, int x, int y, System.Drawing.Rectangle screen, Boolean grid, Boolean tag, Boolean anim,int timer)
         {
@@ -1210,16 +1323,20 @@ namespace CellGameEdit.PM
                 )
             );
 
-            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF));
+            System.Drawing.Pen pen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff,0,0,0));
             System.Drawing.Brush brush = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0xff, 0xff, 0xff)).Brush;
-
             e.Graphics.FillRectangle(brush, srcRect);
             e.Graphics.DrawRectangle(pen, srcRect.X, srcRect.Y, srcRect.Width - 1, srcRect.Height - 1);
+
+            System.Drawing.Pen penR = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff, 0xff, 0xff, 0xff));
+            System.Drawing.Brush brushR = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0x80, 0x80, 0x80, 0x80)).Brush;
+            e.Graphics.FillRectangle(brushR, srcRectR);
+            e.Graphics.DrawRectangle(penR, srcRectR.X, srcRectR.Y, srcRectR.Width - 1, srcRectR.Height - 1);
+
         }
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
-            {
+           
                 System.Drawing.Rectangle dst = new System.Drawing.Rectangle(0, 0, 1, 1);
                 for (int i = 0; i < getTileCount(); i++)
                 {
@@ -1232,22 +1349,46 @@ namespace CellGameEdit.PM
 
                         if (dst.Contains(e.X, e.Y))
                         {
+                            if (e.Button == MouseButtons.Left)
+                            {
+                                srcRect.X = dst.X;
+                                srcRect.Y = dst.Y;
+                                srcRect.Width = dst.Width;
+                                srcRect.Height = dst.Height;
 
-                            srcRect = dst;
-                            srcIndex = i;
-                            srcImage = getTileImage(i);
+                                srcIndex = i;
+                                //srcImage = getTileImage(i);
 
-                            toolStripLabel1.Text =
-                                "第" + i + "号" +
-                                " 宽：" + getTileImage(i).getWidth() +
-                                " 高：" + getTileImage(i).getHeight();
+                                toolStripLabel1.Text =
+                                    "第" + i + "号" +
+                                    " 宽：" + getTileImage(i).getWidth() +
+                                    " 高：" + getTileImage(i).getHeight();
 
-                            pictureBox1.Refresh();
-                            break;
+                                pictureBox1.Refresh();
+                                break;
+                            }
+                            if (e.Button == MouseButtons.Right)
+                            {
+                                srcRectR.X = dst.X;
+                                srcRectR.Y = dst.Y;
+                                srcRectR.Width = dst.Width;
+                                srcRectR.Height = dst.Height;
+
+                                srcIndexR = i;
+                                //srcImage = getTileImage(i);
+
+                                toolStripLabel1.Text =
+                                    "第" + i + "号" +
+                                    " 宽：" + getTileImage(i).getWidth() +
+                                    " 高：" + getTileImage(i).getHeight();
+
+                                pictureBox1.Refresh();
+                                break;
+                            }
+
                         }
                     }
                 }
-            }
         }
         private void toolStripMenuItem10_Click(object sender, EventArgs e)
         {
@@ -1565,7 +1706,8 @@ namespace CellGameEdit.PM
             {
                 if (toolStripButton9.Checked)
                 {
-
+                    putTile(srcIndexR, dstQX / CellW, dstQY / CellH);
+                    putFlip(flipIndex, dstQX / CellW, dstQY / CellH);
                 }
                 if (toolStripButton10.Checked)
                 {
@@ -1580,13 +1722,17 @@ namespace CellGameEdit.PM
         }
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
                 dstPX = e.X;
                 dstPY = e.Y;
                 dstQX = e.X;
                 dstQY = e.Y;
+                dstIsDown = true;
+            }
 
+            if (e.Button == MouseButtons.Left)
+            {
                 if (toolStripButton8.Checked)
                 {
                     dstRect.X = dstPX / CellW * CellW;
@@ -1594,23 +1740,6 @@ namespace CellGameEdit.PM
                     dstRect.Width = 0;
                     dstRect.Height = 0;
                 }
-
-                dstIsDown = true;
-            }
-            if (e.Button == MouseButtons.Left)
-            {
-                if (toolStripButton8.Checked)
-                {
-                    if (dstIsDown)
-                    {
-                        //toolStripDropDownButton2.
-                       
-                    }
-                }
-            }
-
-            if (e.Button == MouseButtons.Left)
-            {
 
                 if (toolStripButton9.Checked)
                 {
@@ -1625,8 +1754,6 @@ namespace CellGameEdit.PM
                 {
                     putAnimate(curAnimate, dstPX / CellW, dstPY / CellH);
                 }
-
-                
             }
             if (e.Button == MouseButtons.Right)
             {
@@ -1636,27 +1763,19 @@ namespace CellGameEdit.PM
                     {
                         try
                         {
-                            //contextMenuStrip1.Items.Clear();
-                            //contextMenuStrip1.Items.
-                            //contextMenuStrip1.Items.AddRange(toolStripDropDownButton2.DropDownItems);
                             contextMenuStrip1.Opacity = 0.5;
                             contextMenuStrip1.Show(pictureBox2,e.Location);
                         }
                         catch (Exception err)
                         {
-                            Console.WriteLine(err.StackTrace);
+                            Console.WriteLine(err.StackTrace + "  at  " +err.Message);
                         }
-                        //ClipMenu = new ContextMenuStrip();
-                        //toolStripDropDownButton2.DropDown.Show(pictureBox2, e.Location);
-                        
-                        //toolStripDropDownButton2.
                     }
-                    //e.Graphics.FillRectangle(brush, dstRect);
-                    //e.Graphics.DrawRectangle(pen, dstRect.X, dstRect.Y, dstRect.Width - 1, dstRect.Height - 1);
                 }
                 if (toolStripButton9.Checked)
                 {
-                    
+                    putTile(srcIndexR, dstPX / CellW, dstPY / CellH);
+                    putFlip(flipIndex, dstPX / CellW, dstPY / CellH);
                 }
                 if (toolStripButton10.Checked)
                 {
