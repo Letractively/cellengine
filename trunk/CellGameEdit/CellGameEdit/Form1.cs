@@ -507,14 +507,14 @@ namespace CellGameEdit
             prjForm.sortTreeView();
             prjForm.lockForms();
 
-
-            outputThread = new Thread(new ThreadStart(ShowOutput));
-            outputThread.Start();
-
             OutputForm output = new OutputForm();
             //output.WindowState = FormWindowState.Maximized;
             output.StartPosition = FormStartPosition.CenterScreen;
             //output.MdiParent = this;
+            
+            outputThread = new Thread(new ThreadStart(ShowOutput));
+            outputThread.Start();
+
             output.ShowDialog(this);
 
             //prjForm.OutputCustom(outputDir);
