@@ -109,6 +109,8 @@ namespace CellGameEdit.PM
             super = images;
             CellW = cellw;
             CellH = cellh;
+            numericUpDown4.Value = CellW;
+            numericUpDown5.Value = CellH;
 
             srcRectR = new System.Drawing.Rectangle(0, 0, 0, 0);
             srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
@@ -154,9 +156,9 @@ namespace CellGameEdit.PM
             }
             pictureBox2.Width = CellW * XCount;
             pictureBox2.Height = CellH * YCount;
-            toolStripTextBox1.Text = XCount.ToString();
-            toolStripTextBox2.Text = YCount.ToString();
-
+            numericUpDown2.Value = XCount;
+            numericUpDown3.Value = YCount;
+            
 
             dstClipTile = new int[1][];
             dstClipTag = new int[1][];
@@ -214,6 +216,8 @@ namespace CellGameEdit.PM
                 
                 CellW = (int)info.GetValue("CellW", typeof(int));
                 CellH = (int)info.GetValue("CellH", typeof(int));
+                numericUpDown4.Value = CellW;
+                numericUpDown5.Value = CellH;
 
                 srcRectR = new System.Drawing.Rectangle(0, 0, 0, 0);
                 srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
@@ -259,8 +263,8 @@ namespace CellGameEdit.PM
 
                 pictureBox2.Width = CellW * XCount;
                 pictureBox2.Height = CellH * YCount;
-                toolStripTextBox1.Text = XCount.ToString();
-                toolStripTextBox2.Text = YCount.ToString();
+                numericUpDown2.Value = XCount;
+                numericUpDown3.Value = YCount;
 
 
                 dstClipTile = new int[1][];
@@ -418,8 +422,8 @@ namespace CellGameEdit.PM
 
             pictureBox2.Width = CellW * XCount;
             pictureBox2.Height = CellH * YCount;
-            toolStripTextBox1.Text = XCount.ToString();
-            toolStripTextBox2.Text = YCount.ToString();
+            numericUpDown2.Value = XCount;
+            numericUpDown3.Value = YCount;
 
 
         }
@@ -740,7 +744,7 @@ namespace CellGameEdit.PM
 
         private void MapForm_Load(object sender, EventArgs e)
         {
-            timer1.Start();
+            //timer1.Start();
         }
         private void MapForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -753,6 +757,10 @@ namespace CellGameEdit.PM
         private void MapForm_FormClosed(object sender, FormClosedEventArgs e)
         {
 
+        }
+        private void MapForm_TextChanged(object sender, EventArgs e)
+        {
+            this.id = this.Text;
         }
 
 
@@ -1091,6 +1099,7 @@ namespace CellGameEdit.PM
             }
         }
 
+ 
         private void renderTile(Graphics g, int index, int flip, int x, int y)
         {
             if (getTileImage(index) != null && flip<flipTable.Length)
@@ -1242,7 +1251,6 @@ namespace CellGameEdit.PM
             {
                 for (int bx = sx; bx < sx + sw && bx < XCount; bx++)
                 {
-                    
                     if (MatrixAnim[by][bx] > 0 && MatrixAnim[by][bx] < listView1.Items.Count)
                     {
                         renderAnimate(g, MatrixAnim[by][bx], anim ? timer : 0, x + bx * CellW, y + by * CellH);
@@ -1423,6 +1431,81 @@ namespace CellGameEdit.PM
             }
         }
         
+        //property
+        private void dstChangeMapSize(int xcount, int ycount)
+        {
+            XCount = xcount;
+            YCount = ycount;
+
+            if (YCount != MatrixTile.Length || XCount != MatrixTile[0].Length)
+            {
+                int[][] matrixTile = new int[YCount][];
+                int[][] matrixTag = new int[YCount][];
+                int[][] matrixAnim = new int[YCount][];
+                int[][] matrixFlip = new int[YCount][];
+                for (int y = 0; y < YCount; y++)
+                {
+                    matrixTile[y] = new int[XCount];
+                    matrixTag[y] = new int[XCount];
+                    matrixAnim[y] = new int[XCount];
+                    matrixFlip[y] = new int[XCount];
+                    for (int x = 0; x < XCount; x++)
+                    {
+                        if (y < MatrixTile.Length && x < MatrixTile[y].Length)
+                        {
+                            matrixTile[y][x] = MatrixTile[y][x];
+                            matrixTag[y][x] = MatrixTag[y][x];
+                            matrixAnim[y][x] = MatrixAnim[y][x];
+                            matrixFlip[y][x] = MatrixFlip[y][x];
+                        }
+                    }
+                }
+
+                MatrixTile = matrixTile;
+                MatrixTag = matrixTag;
+                MatrixAnim = matrixAnim;
+                MatrixFlip = matrixFlip;
+
+                pictureBox2.Width = CellW * XCount;
+                pictureBox2.Height = CellH * YCount;
+            }
+        }
+        private void numericUpDown2_ValueChanged(object sender, EventArgs e)
+        {
+            dstChangeMapSize((int)numericUpDown2.Value,YCount);
+        }
+        private void numericUpDown3_ValueChanged(object sender, EventArgs e)
+        {
+            dstChangeMapSize(XCount, (int)numericUpDown3.Value);
+        }
+
+        private void dstChageCellSize(int cellw,int cellh)
+        {
+            CellW = cellw;
+            CellH = cellh;
+
+            pictureBox3.Width = CellW;
+            pictureBox3.Height = CellH;
+
+            pictureBox4.Left = pictureBox3.Location.X + 3 + CellW;
+
+            pictureBox4.Width = CellW;
+            pictureBox4.Height = CellH;
+
+            pictureBox2.Width = CellW * XCount;
+            pictureBox2.Height = CellH * YCount;
+
+            pictureBox2.Refresh();
+        }
+        private void numericUpDown4_ValueChanged(object sender, EventArgs e)
+        {
+            dstChageCellSize((int)numericUpDown4.Value, CellH);
+        }
+        private void numericUpDown5_ValueChanged(object sender, EventArgs e)
+        {
+            dstChageCellSize(CellW, (int)numericUpDown5.Value);
+        }
+
         // dst
         private void toolStriptoolStripButton_Clicked(object sender, EventArgs e)
         {
@@ -1497,66 +1580,6 @@ namespace CellGameEdit.PM
 
             
         }
-        private void toolStripButton13_Click(object sender, EventArgs e)
-        {
-            if (Cell.Util.stringIsDigit(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= toolStripTextBox1.Text.Length &&
-                Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length) >= 1)
-            {
-                XCount = Cell.Util.stringDigitToInt(toolStripTextBox1.Text, 0, toolStripTextBox1.Text.Length);
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox1.Focus();
-                return;
-            }
-    
-            if (Cell.Util.stringIsDigit(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= toolStripTextBox2.Text.Length &&
-                Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length) >= 1)
-            {
-                YCount = Cell.Util.stringDigitToInt(toolStripTextBox2.Text, 0, toolStripTextBox2.Text.Length);
-            }
-            else
-            {
-                MessageBox.Show("只能输入大于0的数字！");
-                toolStripTextBox2.Focus();
-                return;
-            }
-
-
-            if(YCount!=MatrixTile.Length || XCount!=MatrixTile[0].Length)
-            {
-                int[][] matrixTile = new int[YCount][];
-                int[][] matrixTag = new int[YCount][];
-                int[][] matrixAnim = new int[YCount][];
-                int[][] matrixFlip = new int[YCount][];
-                for (int y = 0; y < YCount; y++)
-                {
-                    matrixTile[y] = new int[XCount];
-                    matrixTag[y] = new int[XCount];
-                    matrixAnim[y] = new int[XCount];
-                    matrixFlip[y] = new int[XCount];
-                    for (int x = 0; x < XCount; x++)
-                    {
-                        if(y<MatrixTile.Length && x<MatrixTile[y].Length)
-                        {
-                            matrixTile[y][x] = MatrixTile[y][x];
-                            matrixTag[y][x] = MatrixTag[y][x];
-                            matrixAnim[y][x] = MatrixAnim[y][x];
-                            matrixFlip[y][x] = MatrixFlip[y][x];
-                        }
-                    }
-                }
-
-                MatrixTile = matrixTile;
-                MatrixTag = matrixTag;
-                MatrixAnim = matrixAnim;
-                MatrixFlip = matrixFlip;
-
-                pictureBox2.Width = CellW * XCount;
-                pictureBox2.Height = CellH * YCount;
-            }
-        }
         private void toolStripButton11_Click(object sender, EventArgs e)
         {
             pictureBox2.Refresh();
@@ -1615,15 +1638,28 @@ namespace CellGameEdit.PM
                 e.Graphics.DrawRectangle(pen, dstRect.X, dstRect.Y, dstRect.Width - 1, dstRect.Height - 1);
             }
 
-
-            
             if (toolStripButton9.Checked)
             {
                 //renderTile(g, srcIndex, flipIndex, dstQX / CellW * CellW, dstQY / CellH * CellH);
 
                 System.Drawing.Pen lpen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff, 0, 0, 0));
                 //e.Graphics.FillRectangle(brush, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW, CellH);
-                e.Graphics.DrawRectangle(lpen, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW - 1, CellH - 1);
+                int x = dstQX / CellW * CellW;
+                int y = dstQY / CellH * CellH;
+                int w = CellW*2;
+                int h = CellH*2;
+                if (D45.Checked)
+                {
+                    e.Graphics.DrawLine(lpen, x, y + CellH, x + CellW, y);//         /
+                    e.Graphics.DrawLine(lpen, x + CellW, y, x + w, y + CellH);//       \
+                    e.Graphics.DrawLine(lpen, x, y + CellH, x + CellW, y + h);//     \
+                    e.Graphics.DrawLine(lpen, x + CellW, y + h, x + w, y + CellH);//   /
+                }
+                else
+                {
+                    e.Graphics.DrawRectangle(lpen, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW - 1, CellH - 1);
+                }
+                
             }
             if (toolStripButton10.Checked)
             {
@@ -1649,7 +1685,23 @@ namespace CellGameEdit.PM
                 //}
                 System.Drawing.Pen lpen = new System.Drawing.Pen(System.Drawing.Color.FromArgb(0xff, 0, 0, 0xff));
                 //e.Graphics.FillRectangle(brush, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW, CellH);
-                e.Graphics.DrawRectangle(lpen, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW - 1, CellH - 1);
+                //e.Graphics.DrawRectangle(lpen, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW - 1, CellH - 1);
+
+                int x = dstQX / CellW * CellW;
+                int y = dstQY / CellH * CellH;
+                int w = CellW * 2;
+                int h = CellH * 2;
+                if (D45.Checked)
+                {
+                    e.Graphics.DrawLine(lpen, x, y + CellH, x + CellW, y);//         /
+                    e.Graphics.DrawLine(lpen, x + CellW, y, x + w, y + CellH);//       \
+                    e.Graphics.DrawLine(lpen, x, y + CellH, x + CellW, y + h);//     \
+                    e.Graphics.DrawLine(lpen, x + CellW, y + h, x + w, y + CellH);//   /
+                }
+                else
+                {
+                    e.Graphics.DrawRectangle(lpen, dstQX / CellW * CellW, dstQY / CellH * CellH, CellW - 1, CellH - 1);
+                }
             }
 
            // Console.WriteLine(""+pictureBox2.Location.Y);
@@ -1868,7 +1920,7 @@ namespace CellGameEdit.PM
             if (listView1.SelectedItems != null && listView1.SelectedItems.Count > 0)
             {
                 curAnimate = listView1.Items.IndexOf(listView1.SelectedItems[0]);
-                toolStripStatusLabel3.Text = "动画："+curAnimate.ToString();
+                toolStripLabel2.Text = "动画："+curAnimate.ToString();
                 curFrame = 0;
 
                 trackBar1.Maximum = getFrame(curAnimate).Count - 1;
@@ -1946,7 +1998,14 @@ namespace CellGameEdit.PM
         }
         private void toolStripButton5_Click(object sender, EventArgs e)
         {
-
+            if (toolStripButton5.Checked)
+            {
+                timer1.Start();
+            }
+            else
+            {
+                timer1.Stop();
+            }
         }
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
@@ -2040,10 +2099,14 @@ namespace CellGameEdit.PM
             }
         }
 
-        private void MapForm_TextChanged(object sender, EventArgs e)
+        private void toolStripButton22_Click(object sender, EventArgs e)
         {
-            this.id = this.Text;
+
         }
+
+
+
+
 
 
   

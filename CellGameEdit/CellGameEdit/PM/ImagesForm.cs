@@ -1277,16 +1277,16 @@ namespace CellGameEdit.PM
                 return null;
             }
            
-            for (int i = 0; i < dstImages.Count; i++)
-            {
-                if (((Image)dstImages[i]) == null || ((Image)dstImages[i]).killed) continue;
-                if (((Image)dstImages[i]).getWidth() != CellW ||
-                    ((Image)dstImages[i]).getHeight() != CellH)
-                {
-                    MessageBox.Show("地图的Tile大小必须相等！");
-                    return null;
-                }
-            }
+            //for (int i = 0; i < dstImages.Count; i++)
+            //{
+            //    if (((Image)dstImages[i]) == null || ((Image)dstImages[i]).killed) continue;
+            //    if (((Image)dstImages[i]).getWidth() != CellW ||
+            //        ((Image)dstImages[i]).getHeight() != CellH)
+            //    {
+            //        MessageBox.Show("地图的Tile大小必须相等！");
+            //        return null;
+            //    }
+            //}
 
             MapForm ret = new MapForm(name,CellW, CellH, this);
             return ret;

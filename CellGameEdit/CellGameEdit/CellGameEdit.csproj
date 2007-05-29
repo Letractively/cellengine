@@ -444,6 +444,7 @@
     <Content Include="Resources\Icon_1.ico">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\Image73.bmp" />
     <None Include="Resources\Image72.bmp" />
     <None Include="Resources\Image68.bmp" />
     <None Include="Resources\Image69.bmp" />
