@@ -696,7 +696,7 @@ namespace CellGameEdit.PM
             }
             catch (Exception err) { }
             dstRefersh();
-            timer1.Start();
+            //timer1.Start();
 
         }
         private void SpriteForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -2201,6 +2201,7 @@ namespace CellGameEdit.PM
         //}
         private void toolStripButton6_Click(object sender, EventArgs e)
         {
+        
             if (toolStripButton6.Checked == true)
             {
                 foreach (Control control in splitContainer5.Panel2.Controls)
@@ -2214,6 +2215,14 @@ namespace CellGameEdit.PM
                 {
                     control.Enabled = true;
                 }
+            }
+            if (toolStripButton6.Checked)
+            {
+                timer1.Start();
+            }
+            else
+            {
+                timer1.Stop();
             }
             framesRefersh();
             
@@ -2234,6 +2243,7 @@ namespace CellGameEdit.PM
             //    //    control.Enabled = true;
             //    //}
             //}
+            timer1.Start();
             framesRefersh();
         }
         private void toolStripButton14_Click(object sender, EventArgs e)
@@ -2520,6 +2530,7 @@ namespace CellGameEdit.PM
                     trackBar1.Value = trackBar1.Minimum;
                     toolStripButton7.Checked = false;
                     toolStripButton7_Click(toolStripButton7,null);
+                    timer1.Stop();
                 }
                 pictureBox2.Refresh();
             }

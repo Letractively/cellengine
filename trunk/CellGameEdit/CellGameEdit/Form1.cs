@@ -45,7 +45,7 @@ namespace CellGameEdit
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            timer1.Start();
+           timer1.Start();
         }
 
         private void Form1_Shown(object sender, EventArgs e)

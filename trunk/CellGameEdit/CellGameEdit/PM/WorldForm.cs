@@ -2183,6 +2183,18 @@ namespace CellGameEdit.PM
             pictureBox1.Refresh();
         }
 
+        private void toolStripButton16_Click(object sender, EventArgs e)
+        {
+            if (toolStripButton16.Checked)
+            {
+                timer1.Start();
+            }
+            else
+            {
+                timer1.Stop();
+            }
+        }
+
        
 
 

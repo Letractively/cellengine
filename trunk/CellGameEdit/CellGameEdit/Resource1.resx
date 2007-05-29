@@ -334,6 +334,9 @@
   <data name="Image72" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\Image72.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Image73" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\Image73.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Image8" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>resources\image8.bmp;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

@@ -564,6 +564,13 @@ namespace CellGameEdit {
             }
         }
         
+        internal static System.Drawing.Bitmap Image73 {
+            get {
+                object obj = ResourceManager.GetObject("Image73", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
         internal static System.Drawing.Bitmap Image8 {
             get {
                 object obj = ResourceManager.GetObject("Image8", resourceCulture);
