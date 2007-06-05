@@ -16,26 +16,30 @@ namespace CellGameEdit.PM
     [Serializable]
     public partial class ObjectForm : Form, ISerializable
     {
+        public string id;
+
         public ObjectForm(String name)
         {
+            id = name; this.Text = id;
             InitializeComponent();
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         protected ObjectForm(SerializationInfo info, StreamingContext context)
         {
+            id = (String)info.GetValue("id", typeof(String));
+            this.Text = id;
             InitializeComponent();
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-
+            info.AddValue("id", id);
         }
 
         private void ObjectForm_Load(object sender, EventArgs e)
         {
-            this.propertyGrid1.SelectedObject = this;
         }
 
         private void ObjectForm_FormClosing(object sender, FormClosingEventArgs e)

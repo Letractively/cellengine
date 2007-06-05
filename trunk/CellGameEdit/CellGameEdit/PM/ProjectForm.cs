@@ -31,7 +31,7 @@ namespace CellGameEdit.PM
         TreeNode nodeReses;
         TreeNode nodeLevels;
         TreeNode nodeObjects;
-
+        TreeNode nodeCommands;
 
         //ArrayList formGroup;
         Hashtable formTable;
@@ -48,15 +48,17 @@ namespace CellGameEdit.PM
             nodeReses       = new TreeNode("资源");
             nodeObjects     = new TreeNode("对象");
             nodeLevels      = new TreeNode("场景");
-            
+            nodeCommands    = new TreeNode("命令");
 
             nodeReses.ContextMenuStrip = this.resMenu;
             nodeObjects.ContextMenuStrip = this.objMenu;
             nodeLevels.ContextMenuStrip = this.levelMenu;
+            nodeCommands.ContextMenuStrip = this.commandMenu;
 
             treeView1.Nodes.Add(nodeReses);
             treeView1.Nodes.Add(nodeObjects);
             treeView1.Nodes.Add(nodeLevels);
+            treeView1.Nodes.Add(nodeCommands);
 
             //treeView1.ExpandAll();
 
@@ -71,14 +73,13 @@ namespace CellGameEdit.PM
             {
                 nodeReses = (TreeNode)info.GetValue("nodeReses", typeof(TreeNode));
                 nodeLevels = (TreeNode)info.GetValue("nodeLevels", typeof(TreeNode));
-                try
-                {
-                    nodeObjects = (TreeNode)info.GetValue("nodeObjects", typeof(TreeNode));
-                }
-                catch (Exception err)
-                {
-                    nodeObjects = new TreeNode("对象");
-                }
+
+                try{nodeObjects = (TreeNode)info.GetValue("nodeObjects", typeof(TreeNode));}
+                catch (Exception err){nodeObjects = new TreeNode("对象");}
+
+                try{nodeCommands = (TreeNode)info.GetValue("nodeCommands", typeof(TreeNode));}
+                catch (Exception err){nodeCommands = new TreeNode("命令");}
+
                 //formGroup = (ArrayList)info.GetValue("formGroup", typeof(ArrayList));
 
                 formTable = (Hashtable)info.GetValue("formTable", typeof(Hashtable));
@@ -86,6 +87,7 @@ namespace CellGameEdit.PM
                 nodeReses.ContextMenuStrip = this.resMenu;
                 nodeObjects.ContextMenuStrip = this.objMenu;
                 nodeLevels.ContextMenuStrip = this.levelMenu;
+                nodeCommands.ContextMenuStrip = this.commandMenu;
 
 
                 foreach (TreeNode node in nodeReses.Nodes)
@@ -104,11 +106,16 @@ namespace CellGameEdit.PM
                 foreach (TreeNode node in nodeObjects.Nodes)
                 {
                     node.ContextMenuStrip = this.subMenu;
+                } 
+                foreach (TreeNode node in nodeCommands.Nodes)
+                {
+                    node.ContextMenuStrip = this.subMenu;
                 }
 
                 treeView1.Nodes.Add(nodeReses);
                 treeView1.Nodes.Add(nodeObjects);
                 treeView1.Nodes.Add(nodeLevels);
+                treeView1.Nodes.Add(nodeCommands);
 
                 //treeView1.ExpandAll();
 
@@ -122,11 +129,12 @@ namespace CellGameEdit.PM
         {
             RefreshNodeName();
 
-           
                 // info.AddValue("formGroup", formGroup);
                 info.AddValue("nodeReses", nodeReses);
                 info.AddValue("nodeObjects", nodeObjects);
                 info.AddValue("nodeLevels", nodeLevels);
+                info.AddValue("nodeCommands", nodeCommands);
+
                 info.AddValue("formTable", formTable);
 
         }
@@ -349,6 +357,8 @@ namespace CellGameEdit.PM
         ArrayList FormsMap = new ArrayList();
         ArrayList FormsSprite = new ArrayList();
         ArrayList FormsWorld = new ArrayList();
+        ArrayList FormsObjects = new ArrayList();
+        ArrayList FormsCommands = new ArrayList();
 
         public string fillScriptSub(string src, string start, string end, ArrayList forms)
         {
@@ -385,6 +395,11 @@ namespace CellGameEdit.PM
                         Console.WriteLine("Output : " + ((WorldForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     //
+                    if (forms[i].GetType().Equals(typeof(CommandForm)))
+                    {
+                        ((CommandForm)forms[i]).OutputCustom(i, sub, output);
+                        Console.WriteLine("Output : " + ((CommandForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                    }
                     scripts.Add(output.ToString());
 
                 }
@@ -400,9 +415,9 @@ namespace CellGameEdit.PM
         {
             string script = src.Substring(0, src.Length);
 
+#region build resource trunk
             try
             {
-                // build resource trunk
                 string resource = Util.getTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
                 if (resource != null)
                 {
@@ -427,8 +442,9 @@ namespace CellGameEdit.PM
                 script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
             }
             catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
+#endregion
 
-            //build world trunk
+#region build world trunk
             try
             {
                 string level = Util.getTrunk(script, "#<LEVEL>", "#<END LEVEL>");
@@ -449,6 +465,30 @@ namespace CellGameEdit.PM
                 script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
             }
             catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
+#endregion
+
+#region build command trunk
+            try
+            {
+                string command = Util.getTrunk(script, "#<COMMAND>", "#<END COMMAND>");
+                if (command != null)
+                {
+                    bool fix = false;
+                    do
+                    {
+                        fix = false;
+                        string table = fillScriptSub(command, "#<TABLE>", "#<END TABLE>", FormsCommands);
+                        if (table != null) { command = table; fix = true; }
+
+                    } while (fix);
+                }
+                command = Util.replaceKeywordsScript(command, "#<COMMAND>", "#<END COMMAND>",
+                    new string[] { "<LEVEL TABLE COUNT>" },
+                    new string[] { FormsCommands.Count.ToString() });
+                script = Util.replaceSubTrunksScript(script, "#<COMMAND>", "#<END COMMAND>", new string[] { command });
+            }
+            catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " + err.Message); }
+#endregion
 
             return script;
         }
@@ -458,6 +498,9 @@ namespace CellGameEdit.PM
             
             lockForms(nodeReses);
             lockForms(nodeLevels);
+            lockForms(nodeObjects);
+            lockForms(nodeCommands);
+
             //this.Hide();
             this.Enabled = false;
             
@@ -483,6 +526,8 @@ namespace CellGameEdit.PM
 
             unlockForms(nodeReses);
             unlockForms(nodeLevels);
+            unlockForms(nodeObjects);
+            unlockForms(nodeCommands);
             //this.Show();
             this.Enabled = true;
             
@@ -512,10 +557,13 @@ namespace CellGameEdit.PM
             FormsMap.Clear();
             FormsSprite.Clear();
             FormsWorld.Clear();
+            FormsObjects.Clear();
+            FormsCommands.Clear();
 
             initForms(nodeReses);
             initForms(nodeLevels);
-
+            initForms(nodeObjects);
+            initForms(nodeCommands);
         }
         public void initForms(TreeNode node)
         {
@@ -540,6 +588,16 @@ namespace CellGameEdit.PM
                 {
                     FormsWorld.Add(((WorldForm)formTable[node]));
                 }
+                //
+                if (formTable[node].GetType().Equals(typeof(ObjectForm)))
+                {
+                    FormsObjects.Add(((ObjectForm)formTable[node]));
+                }
+                //
+                if (formTable[node].GetType().Equals(typeof(CommandForm)))
+                {
+                    FormsCommands.Add(((CommandForm)formTable[node]));
+                }
             }
 
             if (node.Nodes.Count >= 0)
@@ -557,6 +615,8 @@ namespace CellGameEdit.PM
         {
             RefreshNodeName(nodeReses);
             RefreshNodeName(nodeLevels);
+            RefreshNodeName(nodeObjects);
+            RefreshNodeName(nodeCommands);
         }
         public void RefreshNodeName(TreeNode node)
         {
@@ -587,6 +647,20 @@ namespace CellGameEdit.PM
                     ((WorldForm)formTable[node]).Text = node.Text;
                     ((WorldForm)formTable[node]).id = node.Text;
                 }
+
+                //
+                if (formTable[node].GetType().Equals(typeof(ObjectForm)))
+                {
+                    ((ObjectForm)formTable[node]).Text = node.Text;
+                    ((ObjectForm)formTable[node]).id = node.Text;
+                }
+
+                //
+                if (formTable[node].GetType().Equals(typeof(CommandForm)))
+                {
+                    ((CommandForm)formTable[node]).Text = node.Text;
+                    ((CommandForm)formTable[node]).id = node.Text;
+                }
             }
 
             if (node.Nodes.Count >= 0)
@@ -609,7 +683,9 @@ namespace CellGameEdit.PM
                         formTable[key].GetType().Equals(typeof(SpriteForm)) ||
                         formTable[key].GetType().Equals(typeof(MapForm))    ||
                         formTable[key].GetType().Equals(typeof(WorldForm))  ||
-                        formTable[key].GetType().Equals(typeof(ObjectForm)))
+                        formTable[key].GetType().Equals(typeof(ObjectForm)) ||
+                        formTable[key].GetType().Equals(typeof(CommandForm))
+                        )
                     {
                         return (Form)formTable[key];
                     }
@@ -682,6 +758,15 @@ namespace CellGameEdit.PM
                         {
                             ((WorldForm)getForm(e.Node)).id = name;
                         }
+                        if (getForm(e.Node).GetType().Equals(typeof(ObjectForm)))
+                        {
+                            ((ObjectForm)getForm(e.Node)).id = name;
+                        }
+                        if (getForm(e.Node).GetType().Equals(typeof(CommandForm)))
+                        {
+                            ((CommandForm)getForm(e.Node)).id = name;
+                        }
+
                         e.Node.Name = name;
                         e.Node.Text = name;
 
@@ -888,6 +973,37 @@ namespace CellGameEdit.PM
 
 #endregion
 
+#region commandMenu
+        private void 添加属性列表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            RefreshNodeName();
+            String name = "unamed_Command";
+            TextDialog nameDialog = new TextDialog(name);
+            while (nameDialog.ShowDialog() == DialogResult.OK)
+            {
+                name = nameDialog.getText();
+                if (treeView1.SelectedNode.Nodes.ContainsKey(name))
+                {
+                    MessageBox.Show("已经有　" + name + " 这个名字了");
+                    continue;
+                }
+
+                CommandForm form = new CommandForm(name);
+                TreeNode node = new TreeNode(name);
+                node.Name = name;
+                node.Text = name;
+                formTable.Add(node, form);
+
+                node.ContextMenuStrip = this.subMenu;
+                this.treeView1.SelectedNode.Nodes.Add(node);
+                this.treeView1.SelectedNode.ExpandAll();
+                form.MdiParent = this.MdiParent;
+                form.Show();
+                sortTreeView();
+                break;
+            }
+        }
+#endregion
         //------------------------------------------------------------------------------------------------------------------------------------
         
 #region tileMenu
@@ -1182,6 +1298,8 @@ namespace CellGameEdit.PM
         
 
         }
+
+
 
 
 

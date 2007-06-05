@@ -58,7 +58,7 @@ namespace CellGameEdit.PM
         {
             InitializeComponent();
 
-            id = name;
+            id = name; this.Text = id;
             super = images;
 
             srcRect = new System.Drawing.Rectangle(0, 0, 0, 0);
@@ -94,6 +94,7 @@ namespace CellGameEdit.PM
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
+                this.Text = id;
 
                 if (!ProjectForm.IsCopy)
                 {

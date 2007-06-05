@@ -46,7 +46,7 @@ namespace CellGameEdit.PM
         {
             InitializeComponent();
 
-            id = name;
+            id = name; this.Text = id;
             CellW = 16;
             CellH = 16;
             dstImages = new ArrayList();
@@ -83,6 +83,7 @@ namespace CellGameEdit.PM
                 pictureBox2.Height = 1;
                 // load start
                 id = (String)info.GetValue("id", typeof(String));
+                this.Text = id;
                 CellW = (int)info.GetValue("CellW", typeof(int));
                 CellH = (int)info.GetValue("CellH", typeof(int));
                 ArrayList output = (ArrayList)info.GetValue("output", typeof(ArrayList));
