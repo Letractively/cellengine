@@ -20,15 +20,22 @@ namespace CellGameEdit.PM
         public static string FormatStringArray2D_h = "{\"";
         public static string FormatStringArray2D_t = "\"},";
 
+        public static string fixControlText(string str)
+        {
+            string ret = str;
+            ret = ret.Replace("\\n", "\n");
+            ret = ret.Replace("\\t", "\t");
+            //Console.WriteLine("replace ");
+            return ret;
+        }
+
         public static void setFormatArray1D(String format, String elementKey)
         {
             try
             {
-                if (format == null || format == "")
-                {
-                    FormatArray1D_h = format.Substring(0, format.IndexOf(elementKey));
-                    FormatArray1D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
-                }
+                string[] ht = format.Split(new string[] { elementKey },StringSplitOptions.None);
+                FormatArray1D_h = ht[0];
+                FormatArray1D_t = ht[1];
             }
             catch (Exception err)
             {
@@ -37,17 +44,17 @@ namespace CellGameEdit.PM
                 Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
+            FormatArray1D_h = fixControlText(FormatArray1D_h);
+            FormatArray1D_t = fixControlText(FormatArray1D_t);
             Console.WriteLine("FormatArray1D : " + FormatArray1D_h + elementKey + FormatArray1D_t);
         }
         public static void setFormatArray2D(String format, String elementKey)
         {
             try
             {
-                if (format == null || format == "")
-                {
-                    FormatArray2D_h = format.Substring(0, format.IndexOf(elementKey));
-                    FormatArray2D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
-                }
+                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
+                FormatArray2D_h = ht[0];
+                FormatArray2D_t = ht[1];
             }
             catch (Exception err)
             {
@@ -56,6 +63,8 @@ namespace CellGameEdit.PM
                 Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
+            FormatArray2D_h = fixControlText(FormatArray2D_h);
+            FormatArray2D_t = fixControlText(FormatArray2D_t);
             Console.WriteLine("FormatArray2D : " + FormatArray2D_h + elementKey + FormatArray2D_t);
         }
 
@@ -63,11 +72,9 @@ namespace CellGameEdit.PM
         {
             try
             {
-                if (format == null || format == "")
-                {
-                    FormatStringArray1D_h = format.Substring(0, format.IndexOf(elementKey));
-                    FormatStringArray1D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
-                }
+                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
+                FormatStringArray1D_h = ht[0];
+                FormatStringArray1D_t = ht[1];
             }
             catch (Exception err)
             {
@@ -76,17 +83,17 @@ namespace CellGameEdit.PM
                 Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
+            FormatStringArray1D_h = fixControlText(FormatStringArray1D_h);
+            FormatStringArray1D_t = fixControlText(FormatStringArray1D_t);
             Console.WriteLine("FormatStringArray1D : " + FormatStringArray1D_h + elementKey + FormatStringArray1D_t);
         }
         public static void setFormatStringArray2D(String format, String elementKey)
         {
             try
             {
-                if (format == null || format == "")
-                {
-                    FormatStringArray2D_h = format.Substring(0, format.IndexOf(elementKey));
-                    FormatStringArray2D_t = format.Substring(format.IndexOf(elementKey) + elementKey.Length, format.Length - format.IndexOf(elementKey) + elementKey.Length);
-                }
+                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
+                FormatStringArray2D_h = ht[0];
+                FormatStringArray2D_t = ht[1];
             }
             catch (Exception err)
             {
@@ -95,6 +102,8 @@ namespace CellGameEdit.PM
                 Console.WriteLine("Set Array Format Error ! Set Default. ");
             }
 
+            FormatStringArray2D_h = fixControlText(FormatStringArray2D_h);
+            FormatStringArray2D_t = fixControlText(FormatStringArray2D_t);
             Console.WriteLine("FormatStringArray2D : " + FormatStringArray2D_h + elementKey + FormatStringArray2D_t);
         }
 

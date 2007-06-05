@@ -36,7 +36,7 @@ namespace CellGameEdit.PM
             numericUpDown1.Value = CellW;
             numericUpDown2.Value = CellH;
 
-            id = name;
+            id = name; this.Text = id;
 
             UnitList = new Hashtable();
             WayPointsList = new Hashtable();
@@ -59,7 +59,7 @@ namespace CellGameEdit.PM
             try
             {
                 id = (String)info.GetValue("id", typeof(String));
-
+                this.Text = id;
 
                 // unit
                 #region Units 

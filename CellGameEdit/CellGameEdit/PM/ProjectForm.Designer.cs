@@ -53,6 +53,8 @@ namespace CellGameEdit.PM
             this.添加对象ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.commandMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.添加属性列表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resMenu.SuspendLayout();
             this.levelMenu.SuspendLayout();
             this.tileMenu.SuspendLayout();
@@ -60,6 +62,7 @@ namespace CellGameEdit.PM
             this.nodeMenu.SuspendLayout();
             this.objMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
+            this.commandMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // resMenu
@@ -241,6 +244,20 @@ namespace CellGameEdit.PM
             this.toolStripButton1.Text = "刷新";
             this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
+            // commandMenu
+            // 
+            this.commandMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加属性列表ToolStripMenuItem});
+            this.commandMenu.Name = "objMenu";
+            this.commandMenu.Size = new System.Drawing.Size(153, 48);
+            // 
+            // 添加属性列表ToolStripMenuItem
+            // 
+            this.添加属性列表ToolStripMenuItem.Name = "添加属性列表ToolStripMenuItem";
+            this.添加属性列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.添加属性列表ToolStripMenuItem.Text = "添加属性列表";
+            this.添加属性列表ToolStripMenuItem.Click += new System.EventHandler(this.添加属性列表ToolStripMenuItem_Click);
+            // 
             // ProjectForm
             // 
             this.AllowDrop = true;
@@ -269,6 +286,7 @@ namespace CellGameEdit.PM
             this.objMenu.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
+            this.commandMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -298,5 +316,7 @@ namespace CellGameEdit.PM
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 复制ToolStripMenuItem1;
+        private System.Windows.Forms.ContextMenuStrip commandMenu;
+        private System.Windows.Forms.ToolStripMenuItem 添加属性列表ToolStripMenuItem;
     }
 }
