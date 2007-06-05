@@ -109,10 +109,30 @@ namespace CellGameEdit.PM
                 int ColumnsCount = this.dataGridView1.Columns.Count;
                 int RowsCount = this.dataGridView1.Rows.Count - 1;
 
+                String[][] cell_matrix_c_r = new string[ColumnsCount][];
+                for (int c = 0; c < ColumnsCount; c++)
+                {
+                    cell_matrix_c_r[c] = new string[RowsCount];
+                    for (int r = 0; r < RowsCount; r++)
+                    {
+                        cell_matrix_c_r[c][r] = getCellText(r, c);
+                    }
+                }
+
+                String[][] cell_matrix_r_c = new string[RowsCount][];
+                for (int r = 0; r < RowsCount; r++)
+                {
+                    cell_matrix_r_c[r] = new string[ColumnsCount];
+                    for (int c = 0; c < ColumnsCount; c++)
+                    {
+                        cell_matrix_r_c[r][c] = getCellText(r, c);
+                    }
+                }
+
+
                 try
                 {
                     String table = Util.getFullTrunkScript(script, "#<TABLE>", "#<END TABLE>");
-
 
                     bool fix = false;
 
@@ -174,6 +194,85 @@ namespace CellGameEdit.PM
                         }
                     } while (fix);
 
+                    // rows
+                    //#<ROWS>                /* 表行数据 开始 横向输出 */
+                    //    <INDEX>                /* (int)行 号码 */
+                    //    <ARRAY>                /* (obj)[]行 数据*/
+                    //    <ARRAY STR>            /* (str)[]行 数据*/
+                    //    <ARRAY NUM>            /* (int)[]行 数据*/
+                    //    <ARRAY SMART>          /* (ato)[]行 数据*/
+                    //#<END ROWS>            /* 表行数据 结束*/
+                    do
+                    {
+                        String[] rows = new string[RowsCount];
+                        for (int r = 0; r < RowsCount; r++)
+                        {
+                            string ARRAY = Util.toArray1D(ref cell_matrix_r_c[r]);
+                            string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_r_c[r]);
+                            string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_r_c[r]);
+                            string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_r_c[r]);
+
+                            rows[r] = Util.replaceKeywordsScript(table, "#<ROWS>", "#<END ROWS>",
+                                new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
+                                new string[] { r.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(table, "#<ROWS>", "#<END ROWS>", rows);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            table = temp;
+                        }
+                    } while (fix);
+
+
+                    // columns
+                    //#<COLUMNS>             /* 表列数据 开始 纵向输出 */
+                    //    <INDEX>                /* (int)列 号码 */
+                    //    <ARRAY>                /* (obj)[]列 数据*/
+                    //    <ARRAY STR>            /* (str)[]列 数据*/
+                    //    <ARRAY NUM>            /* (int)[]列 数据*/
+                    //    <ARRAY SMART>          /* (ato)[]列 数据*/
+                    //#<END COLUMNS>         /* 表列数据 结束*/
+                    do
+                    {
+                        String[] columns = new string[ColumnsCount];
+                        for (int c = 0; c < ColumnsCount; c++)
+                        {
+                            string ARRAY = Util.toArray1D(ref cell_matrix_c_r[c]);
+                            string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_c_r[c]);
+                            string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_c_r[c]);
+                            string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_c_r[c]);
+
+                            columns[c] = Util.replaceKeywordsScript(table, "#<COLUMNS>", "#<END COLUMNS>",
+                                new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
+                                new string[] { c.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
+                                );
+                        }
+                        string temp = Util.replaceSubTrunksScript(table, "#<COLUMNS>", "#<END COLUMNS>", columns);
+                        if (temp == null)
+                        {
+                            fix = false;
+                        }
+                        else
+                        {
+                            fix = true;
+                            table = temp;
+                        }
+                    } while (fix);
+                   
+
+
+
+                    //matrix
+                    string matrix = Util.toArray2D(ref cell_matrix_r_c);
+                    string strMatrix = Util.toStringArray2D(ref cell_matrix_r_c);
+                    string numMatrix = Util.toNumberArray2D(ref cell_matrix_r_c);
+                    string smartMatrix = Util.toSmartArray2D(ref cell_matrix_r_c);
 
                     table = Util.replaceKeywordsScript(table, "#<TABLE>", "#<END TABLE>",
                         new string[] { 
@@ -181,12 +280,20 @@ namespace CellGameEdit.PM
                             "<TABLE INDEX>",
                             "<COLUMN COUNT>",
                             "<ROW COUNT>",
+                            "<TABLE MATRIX> ",
+                            "<TABLE MATRIX STR>",         /*(str)[][] 表文字二维数组 */
+                            "<TABLE MATRIX NUM>",         /*(str)[][] 表数字二维数组 */
+                            "<TABLE MATRIX SMART>",       /*(str)[][] 表自动二维数组 */
                         },
                         new string[] { 
                             this.id, 
                             index.ToString(),
                             ColumnsCount.ToString(),
                             RowsCount.ToString(),
+                            matrix,
+                            strMatrix,
+                            numMatrix,
+                            smartMatrix,
                         }
                      );
 
@@ -239,6 +346,8 @@ namespace CellGameEdit.PM
             {
                 this.dataGridView1.Columns.Add(nameDialog.getText(), nameDialog.getText());
             }
+
+            
         }
 
         private void dataGridView1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)

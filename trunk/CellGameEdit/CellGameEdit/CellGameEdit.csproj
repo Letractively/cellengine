@@ -91,6 +91,12 @@
     <Compile Include="PM\CommandForm.Designer.cs">
       <DependentUpon>CommandForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="PM\DataGridConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PM\DataGridConfig.Designer.cs">
+      <DependentUpon>DataGridConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="PM\GameObject.cs" />
     <Compile Include="PM\IEditForm.cs" />
     <Compile Include="PM\ObjectForm.cs">
@@ -180,6 +186,10 @@
     <EmbeddedResource Include="PM\CommandForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>CommandForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PM\DataGridConfig.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DataGridConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PM\ObjectForm.resx">
       <SubType>Designer</SubType>

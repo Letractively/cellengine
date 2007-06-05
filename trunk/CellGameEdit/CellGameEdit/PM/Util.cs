@@ -8,17 +8,20 @@ namespace CellGameEdit.PM
 {
     class Util
     {
-        public static string FormatArray1D_h = "";
-        public static string FormatArray1D_t = ",";
-
-        public static string FormatArray2D_h = "{";
-        public static string FormatArray2D_t = "},";
+        public static string FormatNumberArray1D_h = "";
+        public static string FormatNumberArray1D_t = ",";
 
         public static string FormatStringArray1D_h = "\"";
         public static string FormatStringArray1D_t = "\",";
 
-        public static string FormatStringArray2D_h = "{\"";
-        public static string FormatStringArray2D_t = "\"},";
+
+        public static string FormatArray1D_h = "";
+        public static string FormatArray1D_t = ",";
+        public static string FormatArray2D_h = "{";
+        public static string FormatArray2D_t = "},";
+
+       
+
 
         public static string fixControlText(string str)
         {
@@ -29,11 +32,50 @@ namespace CellGameEdit.PM
             return ret;
         }
 
-        public static void setFormatArray1D(String format, String elementKey)
+        public static void setFormatStringArray1D(String format, String elementKey)
+        {
+            try
+            {
+                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
+                FormatStringArray1D_h = ht[0];
+                FormatStringArray1D_t = ht[1];
+            }
+            catch (Exception err)
+            {
+                FormatStringArray1D_h = "\"";
+                FormatStringArray1D_t = "\",";
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
+            }
+
+            FormatStringArray1D_h = fixControlText(FormatStringArray1D_h);
+            FormatStringArray1D_t = fixControlText(FormatStringArray1D_t);
+            Console.WriteLine("FormatStringArray1D : " + FormatStringArray1D_h + elementKey + FormatStringArray1D_t);
+        }
+        public static void setFormatNumberArray1D(String format, String elementKey)
         {
             try
             {
                 string[] ht = format.Split(new string[] { elementKey },StringSplitOptions.None);
+                FormatNumberArray1D_h = ht[0];
+                FormatNumberArray1D_t = ht[1];
+            }
+            catch (Exception err)
+            {
+                FormatNumberArray1D_h = "";
+                FormatNumberArray1D_t = ",";
+                Console.WriteLine("Set Array Format Error ! Set Default. ");
+            }
+
+            FormatNumberArray1D_h = fixControlText(FormatNumberArray1D_h);
+            FormatNumberArray1D_t = fixControlText(FormatNumberArray1D_t);
+            Console.WriteLine("FormatNumberArray1D : " + FormatNumberArray1D_h + elementKey + FormatNumberArray1D_t);
+        }
+
+        public static void setFormatArray1D(String format, String elementKey)
+        {
+            try
+            {
+                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
                 FormatArray1D_h = ht[0];
                 FormatArray1D_t = ht[1];
             }
@@ -68,44 +110,9 @@ namespace CellGameEdit.PM
             Console.WriteLine("FormatArray2D : " + FormatArray2D_h + elementKey + FormatArray2D_t);
         }
 
-        public static void setFormatStringArray1D(String format, String elementKey)
-        {
-            try
-            {
-                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
-                FormatStringArray1D_h = ht[0];
-                FormatStringArray1D_t = ht[1];
-            }
-            catch (Exception err)
-            {
-                FormatStringArray1D_h = "\"";
-                FormatStringArray1D_t = "\",";
-                Console.WriteLine("Set Array Format Error ! Set Default. ");
-            }
 
-            FormatStringArray1D_h = fixControlText(FormatStringArray1D_h);
-            FormatStringArray1D_t = fixControlText(FormatStringArray1D_t);
-            Console.WriteLine("FormatStringArray1D : " + FormatStringArray1D_h + elementKey + FormatStringArray1D_t);
-        }
-        public static void setFormatStringArray2D(String format, String elementKey)
-        {
-            try
-            {
-                string[] ht = format.Split(new string[] { elementKey }, StringSplitOptions.None);
-                FormatStringArray2D_h = ht[0];
-                FormatStringArray2D_t = ht[1];
-            }
-            catch (Exception err)
-            {
-                FormatStringArray2D_h = "{\"";
-                FormatStringArray2D_t = "\"},";
-                Console.WriteLine("Set Array Format Error ! Set Default. ");
-            }
+       
 
-            FormatStringArray2D_h = fixControlText(FormatStringArray2D_h);
-            FormatStringArray2D_t = fixControlText(FormatStringArray2D_t);
-            Console.WriteLine("FormatStringArray2D : " + FormatStringArray2D_h + elementKey + FormatStringArray2D_t);
-        }
 
 
         //public static String toTextArray(short[] array)
@@ -128,7 +135,7 @@ namespace CellGameEdit.PM
         //    return ret;
         //}
 
-        public static String toTextArray1D<T>(ref T[] array)
+        public static String toArray1D<T>(ref T[] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
@@ -137,33 +144,94 @@ namespace CellGameEdit.PM
             }
             return ret;
         }
-        public static String toTextArray2D<T>(ref T[][] array)
+        public static String toArray2D<T>(ref T[][] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += FormatArray2D_h + toTextArray1D<T>(ref array[i]) + FormatArray2D_t;
+                ret += FormatArray2D_h + toArray1D<T>(ref array[i]) + FormatArray2D_t;
             }
             return ret;
         }
 
-        public static String toStringArray1D(string[] array)
+        public static String toNumberArray1D<T>(ref T[] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += FormatStringArray1D_h + array[i] + FormatStringArray1D_t;
+                string e = array[i].ToString();
+                if (isNumberString(e))
+                {
+                    ret += FormatNumberArray1D_h + e + FormatNumberArray1D_t;
+                }
+                else
+                {
+                    ret += FormatNumberArray1D_h + "0" + FormatNumberArray1D_t;
+                }
+                
             }
             return ret;
         }
-        public static String toStringArray2D(string[][] array)
+        public static String toNumberArray2D<T>(ref T[][] array)
         {
             String ret = "";
             for (int i = 0; i < array.Length; i++)
             {
-                ret += FormatStringArray2D_h + toStringArray1D(array[i]) + FormatStringArray2D_t;
+                ret += FormatArray2D_h + toNumberArray1D<T>(ref array[i]) + FormatArray2D_t;
             }
             return ret;
+        }
+
+        public static String toStringArray1D<T>(ref T[] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                ret += FormatStringArray1D_h + array[i].ToString() + FormatStringArray1D_t;
+            }
+            return ret;
+        }
+        public static String toStringArray2D<T>(ref T[][] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                ret += FormatArray2D_h + toStringArray1D<T>(ref array[i]) + FormatArray2D_t;
+            }
+            return ret;
+        }
+
+        public static String toSmartArray1D<T>(ref T[] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                string e = array[i].ToString();
+                if (isNumberString(e))
+                {
+                    ret += FormatNumberArray1D_h + array[i].ToString() + FormatNumberArray1D_t;
+                }
+                else
+                {
+                    ret += FormatStringArray1D_h + array[i].ToString() + FormatStringArray1D_t;
+                }
+            }
+            return ret;
+        }
+        public static String toSmartArray2D<T>(ref T[][] array)
+        {
+            String ret = "";
+            for (int i = 0; i < array.Length; i++)
+            {
+                ret += FormatArray2D_h + toSmartArray1D<T>(ref array[i]) + FormatArray2D_t;
+            }
+            return ret;
+        }
+
+        public static Boolean isNumberString(String str)
+        {
+            int a = 0;
+            return Int32.TryParse(str, out a);
         }
 
         public static String[] toStringMultiLine(string src)

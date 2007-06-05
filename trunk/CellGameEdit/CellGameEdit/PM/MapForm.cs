@@ -625,7 +625,7 @@ namespace CellGameEdit.PM
                         {
                             //string DATA = Util.toTextArray((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
                             int[] frames = ((int[])(animates.frameGetFrame(i).ToArray(typeof(int))));
-                            string DATA = Util.toTextArray1D<int>(ref frames);
+                            string DATA = Util.toNumberArray1D<int>(ref frames);
 
                             senceFrames[i] = Util.replaceKeywordsScript(map, "#<SCENE FRAME>", "#<END SCENE FRAME>",
                                 new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
@@ -696,14 +696,14 @@ namespace CellGameEdit.PM
                     //String senceMatrix = "";
                     //for (int i = 0; i < YCount; i++)
                     //    senceMatrix += "{" + Util.toTextArray(tileMatrix[i]) + "},\r\n";
-                    String senceMatrix = Util.toTextArray2D<int>(ref tileMatrix);
+                    String senceMatrix = Util.toNumberArray2D<int>(ref tileMatrix);
 
                     // cd matrix
                     //String cdMatrix = "";
                     //for (int i = 0; i < YCount; i++)
                     //    cdMatrix += "{" + Util.toTextArray(flagMatrix[i]) + "},\r\n";
 
-                    String cdMatrix = Util.toTextArray2D<int>(ref flagMatrix);
+                    String cdMatrix = Util.toNumberArray2D<int>(ref flagMatrix);
 
                     map = Util.replaceKeywordsScript(map, "#<MAP>", "#<END MAP>",
                         new string[] { 

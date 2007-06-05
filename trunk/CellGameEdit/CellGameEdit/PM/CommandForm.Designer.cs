@@ -36,6 +36,8 @@
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.文本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.表属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.columnMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重命名列ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,8 +45,6 @@
             this.删除行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataLable = new System.Windows.Forms.ToolStripStatusLabel();
-            this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.表属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.dataGridMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -56,6 +56,7 @@
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToOrderColumns = true;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -115,6 +116,24 @@
             this.文本ToolStripMenuItem.Text = "文本列";
             this.文本ToolStripMenuItem.Click += new System.EventHandler(this.文本ToolStripMenuItem_Click);
             // 
+            // toolStripDropDownButton2
+            // 
+            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.表属性ToolStripMenuItem});
+            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
+            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
+            this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
+            this.toolStripDropDownButton2.Text = "配置";
+            // 
+            // 表属性ToolStripMenuItem
+            // 
+            this.表属性ToolStripMenuItem.Name = "表属性ToolStripMenuItem";
+            this.表属性ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.表属性ToolStripMenuItem.Text = "表属性";
+            this.表属性ToolStripMenuItem.Click += new System.EventHandler(this.表属性ToolStripMenuItem_Click);
+            // 
             // columnMenu
             // 
             this.columnMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -166,24 +185,6 @@
             this.dataLable.Name = "dataLable";
             this.dataLable.Size = new System.Drawing.Size(109, 17);
             this.dataLable.Text = "toolStripStatusLabel1";
-            // 
-            // toolStripDropDownButton2
-            // 
-            this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.表属性ToolStripMenuItem});
-            this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
-            this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
-            this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
-            this.toolStripDropDownButton2.Text = "配置";
-            // 
-            // 表属性ToolStripMenuItem
-            // 
-            this.表属性ToolStripMenuItem.Name = "表属性ToolStripMenuItem";
-            this.表属性ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.表属性ToolStripMenuItem.Text = "表属性";
-            this.表属性ToolStripMenuItem.Click += new System.EventHandler(this.表属性ToolStripMenuItem_Click);
             // 
             // CommandForm
             // 

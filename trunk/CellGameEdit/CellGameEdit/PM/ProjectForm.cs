@@ -319,11 +319,11 @@ namespace CellGameEdit.PM
                         }
 
                         // build format
-                        Util.setFormatArray1D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 1D>"), "<>");
-                        Util.setFormatArray2D(Util.getCommandScript(script, "<FORMAT DATA ARRAY 2D>"), "<>");
+                        Util.setFormatNumberArray1D(Util.getCommandScript(script, "<FORMAT NUMBER ARRAY 1D>"), "<>");
                         Util.setFormatStringArray1D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 1D>"), "<>");
-                        Util.setFormatStringArray2D(Util.getCommandScript(script, "<FORMAT STRING ARRAY 2D>"), "<>");
 
+                        Util.setFormatArray1D(Util.getCommandScript(script, "<FORMAT ARRAY 1D>"), "<>");
+                        Util.setFormatArray2D(Util.getCommandScript(script, "<FORMAT ARRAY 2D>"), "<>");
 
                         script = fillScriptNode(script);
 

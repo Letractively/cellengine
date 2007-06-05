@@ -378,7 +378,10 @@ namespace CellGameEdit.PM
                             string ID = ((Unit)maps[i]).map.id;
                             string NAME = ((Unit)maps[i]).id;
                             string SUPER = ((Unit)maps[i]).map.super.id;
-                            string MAP_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)maps[i]).Data.ToString()));
+                            
+                            string[] data = (Util.toStringMultiLine(((Unit)maps[i]).Data.ToString())) ;
+                            string MAP_DATA = Util.toStringArray1D(ref data);
+
                             map[i] = Util.replaceKeywordsScript(world, "#<UNIT MAP>", "#<END UNIT MAP>",
                                    new string[] { "<MAP NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<SUPER>", "<MAP DATA>" },
                                    new string[] { NAME, ID, i.ToString(), X, Y, SUPER, MAP_DATA });
@@ -409,7 +412,8 @@ namespace CellGameEdit.PM
                             string ANIM_ID = ((Unit)sprs[i]).animID.ToString();
                             string FRAME_ID = ((Unit)sprs[i]).frameID.ToString();
                             //string SPR_DATA = ((Unit)sprs[i]).Data.ToString();
-                            string SPR_DATA = Util.toStringArray1D(Util.toStringMultiLine(((Unit)sprs[i]).Data.ToString()));
+                            string[] data = Util.toStringMultiLine(((Unit)sprs[i]).Data.ToString());
+                            string SPR_DATA = Util.toStringArray1D(ref data);
                             spr[i] = Util.replaceKeywordsScript(world, "#<UNIT SPRITE>", "#<END UNIT SPRITE>",
                                    new string[] { "<SPR NAME>", "<IDENTIFY>", "<INDEX>", "<X>", "<Y>", "<ANIMATE ID>", "<FRAME ID>", "<SUPER>", "<SPR DATA>" },
                                    new string[] { NAME, ID, i.ToString(), X, Y, ANIM_ID, FRAME_ID, SUPER, SPR_DATA });
@@ -435,7 +439,8 @@ namespace CellGameEdit.PM
                             WayPoint p = ((WayPoint)WayPoints[i]);
                             string X = p.point.X.ToString();
                             string Y = p.point.Y.ToString();
-                            string PATH_DATA = Util.toStringArray1D(Util.toStringMultiLine(p.Data.ToString()));
+                            string[] data = Util.toStringMultiLine(p.Data.ToString());
+                            string PATH_DATA = Util.toStringArray1D(ref data);
                             wp[i] = Util.replaceKeywordsScript(world, "#<WAYPOINT>", "#<END WAYPOINT>",
                                    new string[] { "<INDEX>", "<X>", "<Y>", "<PATH DATA>" },
                                    new string[] { i.ToString(), X, Y, PATH_DATA });
@@ -507,7 +512,8 @@ namespace CellGameEdit.PM
                             string Y = (r.rect.Y) + "";
                             string W = (r.rect.Width) + "";
                             string H = (r.rect.Height) + "";
-                            string REGION_DATA = Util.toStringArray1D(Util.toStringMultiLine(r.Data.ToString()));
+                            string[] data = Util.toStringMultiLine(r.Data.ToString());
+                            string REGION_DATA = Util.toStringArray1D(ref data);
                             region[i] = Util.replaceKeywordsScript(world, "#<REGION>", "#<END REGION>",
                                    new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>", "<REGION DATA>" },
                                    new string[] { i.ToString(), X, Y, W, H, REGION_DATA });
@@ -523,6 +529,9 @@ namespace CellGameEdit.PM
                             world = temp;
                         }
                     } while (fix);
+
+                    //world data
+                    string[] world_data = Util.toStringMultiLine(this.Data.ToString());
 
                     // world key words
                     world = Util.replaceKeywordsScript(world, "#<WORLD>", "#<END WORLD>",
@@ -541,7 +550,7 @@ namespace CellGameEdit.PM
                         new string[] { 
                         this.id, 
                         index.ToString(),
-                        Util.toStringArray1D(Util.toStringMultiLine(this.Data.ToString())),
+                        Util.toStringArray1D(ref world_data),
                         pictureBox1.Width.ToString(),
                         pictureBox1.Height.ToString(),
                         CellW.ToString(),

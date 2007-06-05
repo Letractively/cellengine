@@ -511,7 +511,7 @@ namespace CellGameEdit.PM
                         {
 
                             int[] frames = (int[])(animates.frameGetFrame(i).ToArray(typeof(int)));
-                            string DATA = Util.toTextArray1D<int>(ref frames);
+                            string DATA = Util.toNumberArray1D<int>(ref frames);
 
 
                             senceFrames[i] = Util.replaceKeywordsScript(sprite, "#<SCENE FRAME>", "#<END SCENE FRAME>",
@@ -571,7 +571,7 @@ namespace CellGameEdit.PM
                         for (int i = 0; i < cdFrames.Length; i++)
                         {
                             int[] frame = (int[])(collides.frameGetFrame(i).ToArray(typeof(int)));
-                            string DATA = Util.toTextArray1D<int>(ref frame);
+                            string DATA = Util.toNumberArray1D<int>(ref frame);
 
                             cdFrames[i] = Util.replaceKeywordsScript(sprite, "#<CD FRAME>", "#<END CD FRAME>",
                                 new string[] { "<INDEX>", "<DATA SIZE>", "<DATA>" },
@@ -621,18 +621,18 @@ namespace CellGameEdit.PM
 
                     // sprframes
 
-                    String outFrameAnimate = Util.toTextArray2D<int>(ref frameAnimate);
-                    String outFrameCDMap = Util.toTextArray2D<int>(ref frameCDMap);
-                    String outFrameCDAtk = Util.toTextArray2D<int>(ref frameCDAtk);
-                    String outFrameCDDef = Util.toTextArray2D<int>(ref frameCDDef);
-                    String outFrameCDExt = Util.toTextArray2D<int>(ref frameCDExt);
+                    String outFrameAnimate = Util.toNumberArray2D<int>(ref frameAnimate);
+                    String outFrameCDMap = Util.toNumberArray2D<int>(ref frameCDMap);
+                    String outFrameCDAtk = Util.toNumberArray2D<int>(ref frameCDAtk);
+                    String outFrameCDDef = Util.toNumberArray2D<int>(ref frameCDDef);
+                    String outFrameCDExt = Util.toNumberArray2D<int>(ref frameCDExt);
 
                     int[] frameCounts = new int[frameName.Length];
                     for (int i = 0; i < frameAnimate.Length; i++)
                         frameCounts[i] = frameAnimate[i].Length;
-                    String outFrameCounts = Util.toTextArray1D<int>(ref frameCounts);
+                    String outFrameCounts = Util.toNumberArray1D<int>(ref frameCounts);
 
-                    String outFrameName = Util.toStringArray1D(frameName);
+                    String outFrameName = Util.toStringArray1D(ref frameName);
 
 
 
