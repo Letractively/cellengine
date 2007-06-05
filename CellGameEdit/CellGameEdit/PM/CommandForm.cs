@@ -80,7 +80,7 @@ namespace CellGameEdit.PM
 
             for (int c = 0; c < ColumnsCount; c++)
             {
-                string head = this.dataGridView1.Columns[c].HeaderText;
+                string head = getHeadText(c);
                 heads.Add(head);
             }
 
@@ -144,7 +144,7 @@ namespace CellGameEdit.PM
                         
                         for (int c = 0; c < heads.Length; c++)
                         {
-                            string TEXT = this.dataGridView1.Columns[c].HeaderText;
+                            string TEXT = getHeadText(c);
 
                             heads[c] = Util.replaceKeywordsScript(table, "#<COLUMN HEAD>", "#<END COLUMN HEAD>",
                                 new string[] { "<INDEX>", "<TEXT>"},
@@ -316,13 +316,51 @@ namespace CellGameEdit.PM
 
         private string getCellText(int r,int c)
         {   
-            string text;
+            string text = "";
             try
             {
-               text  = dataGridView1.Rows[r].Cells[c].Value.ToString();
+                int dc = c;
+                if (dataGridView1.Columns[c].DisplayIndex != c)
+                {
+                    foreach (DataGridViewColumn column in dataGridView1.Columns)
+                    {
+                        if (column.DisplayIndex == c)
+                        {
+                            dc = dataGridView1.Columns.IndexOf(column);
+                            break;
+                        }
+                    }
+                }
+               text  = dataGridView1.Rows[r].Cells[dc].Value.ToString();
             }
             catch (Exception err) { 
                 text = ""; 
+            }
+            return text;
+        }
+
+        private string getHeadText(int c)
+        {
+            string text = "";
+            try
+            {
+                int dc = c;
+                if (dataGridView1.Columns[c].DisplayIndex != c)
+                {
+                    foreach (DataGridViewColumn column in dataGridView1.Columns)
+                    {
+                        if (column.DisplayIndex == c)
+                        {
+                            dc = dataGridView1.Columns.IndexOf(column);
+                            break;
+                        }
+                    }
+                }
+                text = dataGridView1.Columns[dc].HeaderText;
+            }
+            catch (Exception err)
+            {
+                text = "";
             }
             return text;
         }
@@ -429,7 +467,13 @@ namespace CellGameEdit.PM
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataLable.Text = "行=" + e.RowIndex + " 列=" + e.ColumnIndex;
+            dataLable.Text = "行=" + e.RowIndex;
+            try
+            {
+                dataLable.Text += " 列=" + dataGridView1.Columns[e.ColumnIndex].DisplayIndex;
+            }
+            catch (Exception err) {
+            }
         }
 
         private void 表属性ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -437,6 +481,32 @@ namespace CellGameEdit.PM
             PropertyEdit edit = new PropertyEdit(this.dataGridView1);
             edit.MdiParent = this.MdiParent;
             edit.Show();
+        }
+
+
+
+        private void dataGridView1_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            Console.WriteLine("ColumnIndex = "+e.Column.DisplayIndex);
+
+            //if (dataGridView1.Columns[e.Column.DisplayIndex] != e.Column)
+            //{
+            //    DataGridViewColumn d = dataGridView1.Columns[e.Column.DisplayIndex];
+            //    DataGridViewColumn s = e.Column;
+            //    int src = dataGridView1.Columns.IndexOf(s);
+            //    int dst = dataGridView1.Columns.IndexOf(d);
+                
+            //    dataGridView1.Columns.RemoveAt(dst);
+            //    dataGridView1.Columns.Insert(dst,s);
+
+            //    dataGridView1.Columns.RemoveAt(src);
+            //    dataGridView1.Columns.Insert(src, d);
+
+            //    //dataGridView1.Columns[e.Column.DisplayIndex] = e.Column;
+            //    //dataGridView1.Columns[temp.DisplayIndex] = temp;
+
+            //}
+
         }
 
 
