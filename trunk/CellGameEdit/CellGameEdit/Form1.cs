@@ -29,6 +29,8 @@ namespace CellGameEdit
 
         public Form1(string file)
         {
+            InitializeComponent();
+
             string name = System.IO.Path.GetFileName(file);
             string dir = System.IO.Path.GetDirectoryName(file);
 
@@ -36,10 +38,19 @@ namespace CellGameEdit
             ProjectForm.workName = file;
             SoapFormatter formatter = new SoapFormatter();
             Stream stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read);
-            prjForm = (ProjectForm)formatter.Deserialize(stream);
+
+            if (stream.Length != 0)
+            {
+                prjForm = (ProjectForm)formatter.Deserialize(stream);
+            }
+            else
+            {
+                prjForm = new ProjectForm();
+            }
+           
             stream.Close();
 
-            InitializeComponent();
+            
 
         }
 
