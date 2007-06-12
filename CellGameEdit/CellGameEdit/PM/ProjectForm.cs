@@ -483,7 +483,7 @@ namespace CellGameEdit.PM
                     } while (fix);
                 }
                 command = Util.replaceKeywordsScript(command, "#<COMMAND>", "#<END COMMAND>",
-                    new string[] { "<LEVEL TABLE COUNT>" },
+                    new string[] { "<COMMAND TABLE COUNT>" },
                     new string[] { FormsCommands.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<COMMAND>", "#<END COMMAND>", new string[] { command });
             }
@@ -1164,7 +1164,9 @@ namespace CellGameEdit.PM
                 if (formTable[super].GetType().Equals(typeof(ImagesForm)) ||
                     formTable[super].GetType().Equals(typeof(MapForm)) ||
                     formTable[super].GetType().Equals(typeof(SpriteForm)) ||
-                    formTable[super].GetType().Equals(typeof(WorldForm)))
+                    formTable[super].GetType().Equals(typeof(WorldForm)) ||
+                    formTable[super].GetType().Equals(typeof(CommandForm))
+                    )
                 {
                     try
                     {
@@ -1218,6 +1220,10 @@ namespace CellGameEdit.PM
                             initForms();
                             ((WorldForm)form).ChangeAllUnits(FormsMap,FormsSprite);
                         }
+                        if (formTable[super].GetType().Equals(typeof(CommandForm)))
+                        {
+                        }
+
                         form.MdiParent = this.MdiParent;
                         
                         
