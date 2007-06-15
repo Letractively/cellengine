@@ -374,7 +374,7 @@ namespace CellGameEdit.PM
 
 
 //---------------------------------------------------------------------------------------------------------------------------------------------
-        
+        //得到指令 <command> value
         public static string getCommandScript(string script , string command)
         {
             try
@@ -400,6 +400,7 @@ namespace CellGameEdit.PM
             return "";
         }
 
+        //删除包含 #<start> #<end> 内的内容
         public static string removeTrunkScript(string script, string start, string end)
         {
             try
@@ -416,6 +417,7 @@ namespace CellGameEdit.PM
             }
         }
 
+        //得到包含 #<start> #<end> 内的内容
         public static string getFullTrunkScript(string script, string start, string end)
         {
             try
@@ -430,7 +432,8 @@ namespace CellGameEdit.PM
                 return script.Insert(0, "/* get full trunk ERROR " + start + "->" + end + ": " + err.StackTrace + "  at  " +err.Message + " */ ");
             }
         }
-      
+
+        //得到包含 #<start> #<end> 内的内容, 把 dst<V>[] -> src<K>[] ,返回的不包含 #<start> 和 #<end>
         public static string replaceKeywordsScript(string script, string start, string end, string[] src,string[] dst)
         {
             try
@@ -455,6 +458,7 @@ namespace CellGameEdit.PM
             }
         }
 
+        //用dst<V>[count]填充 count个 #<start> #<end> 内的内容,返回的不包含 #<start> 和 #<end>
         public static string replaceSubTrunksScript(string script, string start, string end, string[] dst)
         {
             try
@@ -483,7 +487,8 @@ namespace CellGameEdit.PM
             }
         }
 
-        public static string getTrunk(string script, string start, string end)
+        //得到包含 #<start> #<end> 内的内容 如果不包含，返回 null
+        public static string getTopTrunk(string script, string start, string end)
         {
             try
             {
@@ -498,6 +503,217 @@ namespace CellGameEdit.PM
             {
                 return null;
             }
+        }
+
+        
+//---------------------------------------------------------------------------------------------------------------------------------------------
+// function script 
+       
+        //解析所有函数指令
+        public static string replaceFuncScript(String script)
+        {
+            String ret = script;
+            while (containsFunction(ret) >= 0)
+            {
+                ret = fillFunction(ret);
+            }
+            return ret;
+        }
+
+
+        //得到函数参数块  ..., ..., ... 不包含 "<"">"
+        public static string getFunctionArgTrunk(String script,String funcName)
+        {
+            String ret = null;
+            try
+            {
+                int i = script.IndexOf(funcName);
+                if (i >= 0)
+                {
+                    i += funcName.Length;
+                    i = script.IndexOf("<", i);
+                    if (i >= 0)
+                    {
+                        char[] chars = script.ToCharArray(i, script.Length - i);
+
+                        int start = 0;
+                        int end = 0;
+
+                        int lc = 0;
+                        int rc = 0;
+
+                        for (; end < chars.Length; end++)
+                        {
+                            if (chars[end] == '<') lc++;
+                            if (chars[end] == '>') rc++;
+                            if (lc == rc)
+                            {
+                               
+                                ret = new string(chars, start + 1, end - start - 1);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                ret = null;
+            }
+            //if (ret != null)
+            //{
+            //    Console.WriteLine(" getFunctionArgTrunk : " + ret);
+            //}
+           
+            return ret;
+        }
+
+        //得到函数快 FuncName< ...... >
+        public static string getFunctionTrunk(String script,String funcName, ref String outFuncArg)
+        {
+            String ret = null;
+            try
+            {
+                int i = script.IndexOf(funcName);
+
+                if (i >= 0)
+                {
+                    string arg = getFunctionArgTrunk(script.Substring(i),funcName);
+                    if (arg != null)
+                    {
+                        outFuncArg = arg;
+                        ret = funcName + "<" + arg + ">";
+                    }
+                }
+            }
+            catch (Exception err)
+            {
+                ret = null;
+            }
+
+            //if (ret != null)
+            //{
+            //    Console.WriteLine(" getFunctionTrunk : " + ret);
+            //}
+            return ret;
+
+        }
+
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+// sub function script 
+ 
+        // 所有种类的函数处理
+        #region functions
+
+        private static String FUNC_SUB_STRING = "<CALL SUB STRING>";
+
+        private static Boolean fillFunction_SubString(String funcTrunk,String arg,ref String output)
+        {
+            string ret = "";
+            try
+            {
+                string[] args = arg.Split(new char[] { ',' });
+                if(args.Length==3 && funcTrunk.Contains(FUNC_SUB_STRING))
+                {
+                    ret = args[0].Substring(Int32.Parse(args[1]), Int32.Parse(args[2]));
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret =  err.Message ;
+            }
+            output = "/* Error Call : fillFunction_SubString : " + ret + " */";
+            return false;
+        }
+
+        private static String FUNC_PARSE_TO_INT = "<CALL PARSE TO INT>";
+
+        private static Boolean fillFunction_ParseToInt(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                if (funcTrunk.Contains(FUNC_PARSE_TO_INT))
+                {
+                    ret = Int32.Parse(arg.Trim()).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_ParseToInt : " + ret + " */";
+            return false;
+        }
+
+        #endregion
+
+//---------------------------------------------------------------------------------------------------------------------------------------------
+
+        //判断字符块内第一个函数的参数块
+        public static string getFunctionTrunk(string funcTrunk, ref String outFuncArg)
+        {
+            string ret = null;
+
+            ret = getFunctionTrunk(funcTrunk, FUNC_SUB_STRING, ref outFuncArg);
+            if (ret != null) return ret;
+
+            ret = getFunctionTrunk(funcTrunk, FUNC_PARSE_TO_INT, ref outFuncArg);
+            if (ret != null) return ret;
+
+            return null;
+        }
+
+        //判断字符块内是否有函数
+        public static int containsFunction(String funcTrunk)
+        {
+            int ret = -1;
+
+            ret = funcTrunk.IndexOf(FUNC_SUB_STRING);
+            if (ret >= 0) return ret;
+
+            ret = funcTrunk.IndexOf(FUNC_PARSE_TO_INT);
+            if (ret >= 0) return ret;
+
+            return -1;
+        }
+
+        //填充字符块内的第一个函数=>返回值
+        public static string fillFunction(String funcTrunk)
+        {
+            string ret = funcTrunk;
+            string arg = null;
+            string func = getFunctionTrunk(funcTrunk, ref arg);
+
+            if (func!=null && arg!=null)
+            {
+                String funcRet = "";
+
+                while (containsFunction(arg) >= 0)//如果参数内包含其函数则继续调用
+                {
+                    arg = fillFunction(arg);
+                }
+
+                if (fillFunction_SubString(func, arg, ref funcRet))
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }else
+                if (fillFunction_ParseToInt(func, arg, ref funcRet))
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+
+                return ret; 
+                    
+            }
+
+            return funcTrunk;
+
         }
 
     }
