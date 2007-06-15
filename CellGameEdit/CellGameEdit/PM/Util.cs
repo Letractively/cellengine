@@ -613,7 +613,7 @@ namespace CellGameEdit.PM
             string ret = "";
             try
             {
-                string[] args = arg.Split(new char[] { ',' });
+                string[] args = arg.Trim().Split(new char[] { ',' });
                 if(args.Length==3 && funcTrunk.Contains(FUNC_SUB_STRING))
                 {
                     ret = args[0].Substring(Int32.Parse(args[1]), Int32.Parse(args[2]));

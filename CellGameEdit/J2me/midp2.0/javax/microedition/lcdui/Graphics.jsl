@@ -47,9 +47,11 @@ public class Graphics
 	public Graphics(System.Drawing.Graphics sdg)
 	{
 		dg = sdg;
+		dg.set_CompositingMode(System.Drawing.Drawing2D.CompositingMode.SourceOver);
 		dg.set_CompositingQuality( System.Drawing.Drawing2D.CompositingQuality.HighSpeed);
 		dg.set_SmoothingMode(System.Drawing.Drawing2D.SmoothingMode.None);
 		dg.set_InterpolationMode( System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor);
+		dg.set_PixelOffsetMode(System.Drawing.Drawing2D.PixelOffsetMode.Half);
 	}
 
 
@@ -84,8 +86,25 @@ public class Graphics
 		}
 		else
 		{
+			//dg.DrawImage(img.dimg,
+			//        new System.Drawing.RectangleF(x + scale / 2, y, img.getWidth() * scale, img.getHeight() * scale),
+			//        new System.Drawing.RectangleF(0, 0, img.getWidth(), 1),
+			//        System.Drawing.GraphicsUnit.Pixel
+			//        );
+			//dg.DrawImage(img.dimg,
+			//        new System.Drawing.RectangleF(x, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
+			//        new System.Drawing.RectangleF(0, 0, 1, img.getHeight()),
+			//        System.Drawing.GraphicsUnit.Pixel
+			//        );
+			//dg.DrawImage(img.dimg,
+			//        new System.Drawing.RectangleF(x + scale / 2, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
+			//        new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
+			//        System.Drawing.GraphicsUnit.Display
+			//        );
+
+
 			dg.DrawImage(img.dimg,
-					new System.Drawing.RectangleF(x + scale / 2, y + scale / 2, img.getWidth() * scale, img.getHeight() * scale),
+					new System.Drawing.RectangleF(x , y , img.getWidth() * scale, img.getHeight() * scale),
 					new System.Drawing.RectangleF(0, 0, img.getWidth(), img.getHeight()),
 					System.Drawing.GraphicsUnit.Pixel
 					);
