@@ -327,7 +327,9 @@ namespace CellGameEdit.PM
 
                         script = fillScriptNode(script);
 
+                        script = Util.replaceFuncScript(script);
 
+                        // complete
                         script = script.Insert(0, "/* Email : wazazhang@gmail.com */" + ret);
                         script = script.Insert(0, "/* Cell Game Editor by WAZA Zhang */" + ret);
                         script = script.Insert(0, "/* Encoding : " + encoding.EncodingName + " */" + ret);
@@ -363,7 +365,7 @@ namespace CellGameEdit.PM
         public string fillScriptSub(string src, string start, string end, ArrayList forms)
         {
             string script = src.Substring(0, src.Length);
-            string sub = Util.getTrunk(script, start, end);
+            string sub = Util.getTopTrunk(script, start, end);
             if (sub == null) return null;
 
             ArrayList scripts = new ArrayList();
@@ -418,7 +420,7 @@ namespace CellGameEdit.PM
 #region build resource trunk
             try
             {
-                string resource = Util.getTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
+                string resource = Util.getTopTrunk(script, "#<RESOURCE>", "#<END RESOURCE>");
                 if (resource != null)
                 {
                     bool fix = false;
@@ -435,11 +437,12 @@ namespace CellGameEdit.PM
                         if (sprite != null) { resource = sprite; fix = true; }
 
                     } while (fix);
-                }
+                
                 resource = Util.replaceKeywordsScript(resource, "#<RESOURCE>", "#<END RESOURCE>",
-                    new string[] { "<RES IMAGES COUNT>", "<RES MAP COUNT>", "<RES SPRITE COUNT>" },
-                    new string[] { FormsImages.Count.ToString(), FormsMap.Count.ToString(), FormsSprite.Count.ToString()});
+                     new string[] { "<RES IMAGES COUNT>", "<RES MAP COUNT>", "<RES SPRITE COUNT>" },
+                     new string[] { FormsImages.Count.ToString(), FormsMap.Count.ToString(), FormsSprite.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<RESOURCE>", "#<END RESOURCE>", new string[] { resource });
+            } 
             }
             catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
 #endregion
@@ -447,7 +450,7 @@ namespace CellGameEdit.PM
 #region build world trunk
             try
             {
-                string level = Util.getTrunk(script, "#<LEVEL>", "#<END LEVEL>");
+                string level = Util.getTopTrunk(script, "#<LEVEL>", "#<END LEVEL>");
                 if (level != null)
                 {
                     bool fix = false;
@@ -458,11 +461,12 @@ namespace CellGameEdit.PM
                         if (world != null) { level = world; fix = true; }
 
                     } while (fix);
-                }
+                
                 level = Util.replaceKeywordsScript(level, "#<LEVEL>", "#<END LEVEL>",
                     new string[] { "<LEVEL WORLD COUNT>" },
                     new string[] { FormsWorld.Count.ToString() });
                 script = Util.replaceSubTrunksScript(script, "#<LEVEL>", "#<END LEVEL>", new string[] { level });
+            }
             }
             catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " +err.Message); }
 #endregion
@@ -470,7 +474,7 @@ namespace CellGameEdit.PM
 #region build command trunk
             try
             {
-                string command = Util.getTrunk(script, "#<COMMAND>", "#<END COMMAND>");
+                string command = Util.getTopTrunk(script, "#<COMMAND>", "#<END COMMAND>");
                 if (command != null)
                 {
                     bool fix = false;
@@ -481,11 +485,12 @@ namespace CellGameEdit.PM
                         if (table != null) { command = table; fix = true; }
 
                     } while (fix);
-                }
-                command = Util.replaceKeywordsScript(command, "#<COMMAND>", "#<END COMMAND>",
-                    new string[] { "<COMMAND TABLE COUNT>" },
-                    new string[] { FormsCommands.Count.ToString() });
-                script = Util.replaceSubTrunksScript(script, "#<COMMAND>", "#<END COMMAND>", new string[] { command });
+                
+                 command = Util.replaceKeywordsScript(command, "#<COMMAND>", "#<END COMMAND>",
+                      new string[] { "<COMMAND TABLE COUNT>" },
+                      new string[] { FormsCommands.Count.ToString() });
+                 script = Util.replaceSubTrunksScript(script, "#<COMMAND>", "#<END COMMAND>", new string[] { command });
+             }
             }
             catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " + err.Message); }
 #endregion
