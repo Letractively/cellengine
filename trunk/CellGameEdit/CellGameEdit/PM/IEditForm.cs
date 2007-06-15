@@ -8,12 +8,10 @@ namespace CellGameEdit.PM
     interface IEditForm
     {
         
-        string getID();
-
-        void setID(string id);
 
         Form getForm();
 
-        void OutputCustom(int index, String script, System.IO.StringWriter output);
+        System.Drawing.Image getImage();
+
     }
 }

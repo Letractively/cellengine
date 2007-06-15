@@ -17,7 +17,7 @@ namespace CellGameEdit.PM
 
 
     [Serializable]
-    public partial class ImagesForm : Form , ISerializable 
+    public partial class ImagesForm : Form, ISerializable
     {
         public String id;
 
@@ -406,8 +406,7 @@ namespace CellGameEdit.PM
             }
         }
 
-
-
+   
 
 
         private void ImagesForm_FormClosing(object sender, FormClosingEventArgs e)

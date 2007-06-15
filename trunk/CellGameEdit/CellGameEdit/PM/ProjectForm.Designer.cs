@@ -249,12 +249,12 @@ namespace CellGameEdit.PM
             this.commandMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.添加属性列表ToolStripMenuItem});
             this.commandMenu.Name = "objMenu";
-            this.commandMenu.Size = new System.Drawing.Size(153, 48);
+            this.commandMenu.Size = new System.Drawing.Size(147, 26);
             // 
             // 添加属性列表ToolStripMenuItem
             // 
             this.添加属性列表ToolStripMenuItem.Name = "添加属性列表ToolStripMenuItem";
-            this.添加属性列表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.添加属性列表ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.添加属性列表ToolStripMenuItem.Text = "添加属性列表";
             this.添加属性列表ToolStripMenuItem.Click += new System.EventHandler(this.添加属性列表ToolStripMenuItem_Click);
             // 
