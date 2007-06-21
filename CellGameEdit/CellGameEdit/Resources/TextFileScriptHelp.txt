@@ -17,8 +17,14 @@
 //函数列表：
 //--------------------------------------------------------------------------------------------------------------     
 
-<CALL SUB STRING><STRING,OFFSET,LENGTH>
-<CALL PARSE TO INT><STRING>
+<CALL SUB STRING><STRING,OFFSET,LENGTH> /* 得到子字符串 */
+<CALL PARSE TO INT><STRING>             /* 字符串转换成数字 */
+<CALL PARSE TO DECIMAL><STRING>         /* 字符串转换成十进制数字(带小数点) */
+
+<CALL ADD><ARG0,ARG1>
+<CALL SUB><ARG0,ARG1>
+<CALL MUL><ARG0,ARG1>
+<CALL DIV><ARG0,ARG1>
 
 //--------------------------------------------------------------------------------------------------------------     
 //指令列表：
