@@ -230,8 +230,8 @@ namespace CellGameEdit.PM
 
         public static Boolean isNumberString(String str)
         {
-            int a = 0;
-            return Int32.TryParse(str, out a);
+            Decimal a = 0;
+            return Decimal.TryParse(str, out a);
         }
 
         public static String[] toStringMultiLine(string src)
@@ -606,8 +606,9 @@ namespace CellGameEdit.PM
         // 所有种类的函数处理
         #region functions
 
-        private static String FUNC_SUB_STRING = "<CALL SUB STRING>";
+    
 
+        private static String FUNC_SUB_STRING = "<CALL SUB STRING>";
         private static Boolean fillFunction_SubString(String funcTrunk,String arg,ref String output)
         {
             string ret = "";
@@ -630,7 +631,6 @@ namespace CellGameEdit.PM
         }
 
         private static String FUNC_PARSE_TO_INT = "<CALL PARSE TO INT>";
-
         private static Boolean fillFunction_ParseToInt(String funcTrunk, String arg, ref String output)
         {
             string ret = "";
@@ -638,7 +638,9 @@ namespace CellGameEdit.PM
             {
                 if (funcTrunk.Contains(FUNC_PARSE_TO_INT))
                 {
-                    ret = Int32.Parse(arg.Trim()).ToString();
+                    Decimal dec = Decimal.Parse(arg.Trim());
+                    Int32 value = (Int32)dec;
+                    ret = value.ToString();
                     output = ret;
                     return true;
                 }
@@ -651,8 +653,134 @@ namespace CellGameEdit.PM
             return false;
         }
 
+        private static String FUNC_PARSE_TO_DECIMAL = "<CALL PARSE TO DECIMAL>";
+        private static Boolean fillFunction_ParseToDecimal(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                if (funcTrunk.Contains(FUNC_PARSE_TO_DECIMAL))
+                {
+                    ret = Decimal.Parse(arg.Trim()).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_ParseToDecimal : " + ret + " */";
+            return false;
+        }
+
+        private static String FUNC_ADD = "<CALL ADD>";
+        private static Boolean fillFunction_Add(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                string[] args = arg.Trim().Split(new char[] { ',' });
+                if (args.Length == 2 && funcTrunk.Contains(FUNC_ADD))
+                {
+                    Decimal a1 = Decimal.Parse(args[0]);
+                    Decimal a2 = Decimal.Parse(args[1]);
+                    ret = (a1 + a2).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_Add : " + ret + " */";
+            return false;
+        }
+
+        private static String FUNC_SUB = "<CALL SUB>";
+        private static Boolean fillFunction_Sub(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                string[] args = arg.Trim().Split(new char[] { ',' });
+                if (args.Length == 2 && funcTrunk.Contains(FUNC_SUB))
+                {
+                    Decimal a1 = Decimal.Parse(args[0]);
+                    Decimal a2 = Decimal.Parse(args[1]);
+                    ret = (a1 - a2).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_Sub : " + ret + " */";
+            return false;
+        }
+
+        private static String FUNC_MUL = "<CALL MUL>";
+        private static Boolean fillFunction_Mul(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                string[] args = arg.Trim().Split(new char[] { ',' });
+                if (args.Length == 2 && funcTrunk.Contains(FUNC_MUL))
+                {
+                    Decimal a1 = Decimal.Parse(args[0]);
+                    Decimal a2 = Decimal.Parse(args[1]);
+                    ret = (a1 * a2).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_Mul : " + ret + " */";
+            return false;
+        }
+
+        private static String FUNC_DIV = "<CALL DIV>";
+        private static Boolean fillFunction_Div(String funcTrunk, String arg, ref String output)
+        {
+            string ret = "";
+            try
+            {
+                string[] args = arg.Trim().Split(new char[] { ',' });
+                if (args.Length == 2 && funcTrunk.Contains(FUNC_DIV))
+                {
+                    Decimal a1 = Decimal.Parse(args[0]);
+                    Decimal a2 = Decimal.Parse(args[1]);
+                    ret = (a1 / a2).ToString();
+                    output = ret;
+                    return true;
+                }
+            }
+            catch (Exception err)
+            {
+                ret = err.Message;
+            }
+            output = "/* Error Call : fillFunction_Div : " + ret + " */";
+            return false;
+        }
+
         #endregion
 
+        private static String[] FUNC_COMMANDS = new String[] { 
+            FUNC_SUB_STRING,
+            FUNC_PARSE_TO_INT,
+            FUNC_PARSE_TO_DECIMAL,
+            FUNC_ADD,
+            FUNC_SUB,
+            FUNC_MUL,
+            FUNC_DIV,
+        };
 //---------------------------------------------------------------------------------------------------------------------------------------------
 
         //判断字符块内第一个函数的参数块
@@ -660,11 +788,20 @@ namespace CellGameEdit.PM
         {
             string ret = null;
 
-            ret = getFunctionTrunk(funcTrunk, FUNC_SUB_STRING, ref outFuncArg);
-            if (ret != null) return ret;
+            for (int i = 0; i < FUNC_COMMANDS.Length;i++ )
+            {
+                ret = getFunctionTrunk(funcTrunk, FUNC_COMMANDS[i], ref outFuncArg);
+                if (ret != null) return ret;
+            }
 
-            ret = getFunctionTrunk(funcTrunk, FUNC_PARSE_TO_INT, ref outFuncArg);
-            if (ret != null) return ret;
+            //ret = getFunctionTrunk(funcTrunk, FUNC_SUB_STRING, ref outFuncArg);
+            //if (ret != null) return ret;
+
+            //ret = getFunctionTrunk(funcTrunk, FUNC_PARSE_TO_INT, ref outFuncArg);
+            //if (ret != null) return ret;
+
+            //ret = getFunctionTrunk(funcTrunk, FUNC_PARSE_TO_DECIMAL, ref outFuncArg);
+            //if (ret != null) return ret;
 
             return null;
         }
@@ -674,11 +811,20 @@ namespace CellGameEdit.PM
         {
             int ret = -1;
 
-            ret = funcTrunk.IndexOf(FUNC_SUB_STRING);
-            if (ret >= 0) return ret;
+            for (int i = 0; i < FUNC_COMMANDS.Length; i++)
+            {
+                ret = funcTrunk.IndexOf(FUNC_COMMANDS[i]);
+                if (ret >= 0) return ret;
+            }
 
-            ret = funcTrunk.IndexOf(FUNC_PARSE_TO_INT);
-            if (ret >= 0) return ret;
+            //ret = funcTrunk.IndexOf(FUNC_SUB_STRING);
+            //if (ret >= 0) return ret;
+
+            //ret = funcTrunk.IndexOf(FUNC_PARSE_TO_INT);
+            //if (ret >= 0) return ret;
+
+            //ret = funcTrunk.IndexOf(FUNC_PARSE_TO_DECIMAL);
+            //if (ret >= 0) return ret;
 
             return -1;
         }
@@ -699,14 +845,35 @@ namespace CellGameEdit.PM
                     arg = fillFunction(arg);
                 }
 
-                if (fillFunction_SubString(func, arg, ref funcRet))
-                {
-                    ret = funcTrunk.Replace(func, funcRet);
-                }else
-                if (fillFunction_ParseToInt(func, arg, ref funcRet))
+                if (fillFunction_SubString(func, arg, ref funcRet))//sub string
                 {
                     ret = funcTrunk.Replace(func, funcRet);
                 }
+                else if (fillFunction_ParseToInt(func, arg, ref funcRet))//to int
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+                else if (fillFunction_ParseToDecimal(func, arg, ref funcRet))//to decimal
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+                else if (fillFunction_Add(func, arg, ref funcRet))//add
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+                else if (fillFunction_Sub(func, arg, ref funcRet))//sub
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+                else if (fillFunction_Mul(func, arg, ref funcRet))//mul
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+                else if (fillFunction_Div(func, arg, ref funcRet))//div
+                {
+                    ret = funcTrunk.Replace(func, funcRet);
+                }
+
 
                 return ret; 
                     

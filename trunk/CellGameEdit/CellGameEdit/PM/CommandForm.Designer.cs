@@ -34,10 +34,12 @@
             this.dataGridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
+            this.添加表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.文本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.表属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.查看设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.columnMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重命名列ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,26 +47,34 @@
             this.删除行ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataLable = new System.Windows.Forms.ToolStripStatusLabel();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.重命名表头ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.dataGridMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.columnMenu.SuspendLayout();
             this.rowMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tableMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // dataGridView1
             // 
             this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.Location = new System.Drawing.Point(0, 25);
+            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(646, 382);
+            this.dataGridView1.Size = new System.Drawing.Size(632, 350);
             this.dataGridView1.TabIndex = 0;
             this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
             this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
@@ -90,6 +100,7 @@
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripDropDownButton3,
             this.toolStripDropDownButton1,
             this.toolStripDropDownButton2});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
@@ -97,6 +108,24 @@
             this.toolStrip1.Size = new System.Drawing.Size(646, 25);
             this.toolStrip1.TabIndex = 2;
             this.toolStrip1.Text = "toolStrip1";
+            // 
+            // toolStripDropDownButton3
+            // 
+            this.toolStripDropDownButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.添加表ToolStripMenuItem});
+            this.toolStripDropDownButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton3.Image")));
+            this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
+            this.toolStripDropDownButton3.Size = new System.Drawing.Size(32, 22);
+            this.toolStripDropDownButton3.Text = "表";
+            // 
+            // 添加表ToolStripMenuItem
+            // 
+            this.添加表ToolStripMenuItem.Name = "添加表ToolStripMenuItem";
+            this.添加表ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.添加表ToolStripMenuItem.Text = "添加表";
+            this.添加表ToolStripMenuItem.Click += new System.EventHandler(this.添加表ToolStripMenuItem_Click);
             // 
             // toolStripDropDownButton1
             // 
@@ -121,19 +150,19 @@
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.表属性ToolStripMenuItem});
+            this.查看设置ToolStripMenuItem});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripDropDownButton2.Text = "配置";
             // 
-            // 表属性ToolStripMenuItem
+            // 查看设置ToolStripMenuItem
             // 
-            this.表属性ToolStripMenuItem.Name = "表属性ToolStripMenuItem";
-            this.表属性ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
-            this.表属性ToolStripMenuItem.Text = "表属性";
-            this.表属性ToolStripMenuItem.Click += new System.EventHandler(this.表属性ToolStripMenuItem_Click);
+            this.查看设置ToolStripMenuItem.Name = "查看设置ToolStripMenuItem";
+            this.查看设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.查看设置ToolStripMenuItem.Text = "查看设置";
+            this.查看设置ToolStripMenuItem.Click += new System.EventHandler(this.查看设置ToolStripMenuItem_Click);
             // 
             // columnMenu
             // 
@@ -187,12 +216,55 @@
             this.dataLable.Size = new System.Drawing.Size(109, 17);
             this.dataLable.Text = "toolStripStatusLabel1";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 25);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(646, 382);
+            this.tabControl1.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.dataGridView1);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(638, 356);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "表1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tableMenu
+            // 
+            this.tableMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.重命名表头ToolStripMenuItem,
+            this.删除表ToolStripMenuItem});
+            this.tableMenu.Name = "dataGridMenu";
+            this.tableMenu.Size = new System.Drawing.Size(153, 70);
+            // 
+            // 重命名表头ToolStripMenuItem
+            // 
+            this.重命名表头ToolStripMenuItem.Name = "重命名表头ToolStripMenuItem";
+            this.重命名表头ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.重命名表头ToolStripMenuItem.Text = "重命名表头";
+            this.重命名表头ToolStripMenuItem.Click += new System.EventHandler(this.重命名表头ToolStripMenuItem_Click);
+            // 
+            // 删除表ToolStripMenuItem
+            // 
+            this.删除表ToolStripMenuItem.Name = "删除表ToolStripMenuItem";
+            this.删除表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.删除表ToolStripMenuItem.Text = "删除表";
+            this.删除表ToolStripMenuItem.Click += new System.EventHandler(this.删除表ToolStripMenuItem_Click);
+            // 
             // CommandForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(646, 429);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStrip1);
             this.Location = new System.Drawing.Point(180, 3);
@@ -208,6 +280,9 @@
             this.rowMenu.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tableMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -229,6 +304,13 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel dataLable;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
-        private System.Windows.Forms.ToolStripMenuItem 表属性ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 查看设置ToolStripMenuItem;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
+        private System.Windows.Forms.ToolStripMenuItem 添加表ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip tableMenu;
+        private System.Windows.Forms.ToolStripMenuItem 重命名表头ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除表ToolStripMenuItem;
     }
 }
