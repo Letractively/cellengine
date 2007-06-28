@@ -27,7 +27,7 @@
 <CALL DIV><ARG0,ARG1>
 
 //--------------------------------------------------------------------------------------------------------------     
-//指令列表：
+//头指令列表：
 //--------------------------------------------------------------------------------------------------------------     
 
 <OUTPUT>           /* 后面跟输出的文件名(绝对目录或者当前工作空间的相对目录) */
@@ -49,12 +49,15 @@
     <RES IMAGES COUNT>     /*(int) 资源里总共的图片组数量 */
 
     #<IMAGES>              /* 图片组数据块 开始 */
-    
+		
+		<IGNORE>               /*忽略指定名字的图片组，后面跟图片组名字，可以指定多项，也可以用通配符(?=一个字符,*=一串字符)*/
+        
         <IMAGES INDEX>         /*(int) 该图片组的编号*/
         <NAME>                 /*(str) 该图片组的名称 */
         <COUNT>                /*(int) 该图片组包含的图块数量，包含空图 */
         
         #<CLIP>                /* 每一个图片块的数据，每一个定义了每个图块在原图中的范围 */ 
+            <DATA>                 /*(str) 数据*/
             <INDEX>                /*(int) 当前是第几块 */
             <X>                    /*(int) 当前Clip在整图位置的 X */ 
             <Y>                    /*(int) 当前Clip在整图位置的 Y */ 
@@ -70,6 +73,8 @@
     
     #<MAP>                 /* 地图数据块 开始 */
     
+		<IGNORE>               /*忽略指定名字的地图，后面跟地图名字，可以指定多项，也可以用通配符(?=一个字符,*=一串字符)*/
+        
         <MAP INDEX>            /*(int) 该地图 编号*/
         <NAME>                 /*(str) 该地图 名字 */
         <IMAGES NAME>          /*(str) 该地图 使用的图片组名字 */
@@ -115,7 +120,9 @@
     <RES SPRITE COUNT>     /*(int) 资源里总共的精灵数量 */
     
     #<SPRITE>              /* 精灵数据块 开始 */
-    
+		
+		<IGNORE>               /*忽略指定名字的精灵，后面跟精灵名字，可以指定多项，也可以用通配符(?=一个字符,*=一串字符)*/
+        
         <SPR INDEX>            /*(int) 该精灵 编号*/
         <NAME>                 /*(str) 该精灵 名字 */
         <IMAGES NAME>          /*(str) 该精灵 使用的图片组名字 */
@@ -180,6 +187,8 @@
     
     #<WORLD>               /* 场景数据块 开始 */
     
+        <IGNORE>               /*忽略指定名字的场景，后面跟场景名字，可以指定多项，也可以用通配符(?=一个字符,*=一串字符)*/
+        
         <WORLD INDEX>          /*(int) 该场景 编号*/
         <NAME>                 /*(str) 该场景 名字 */
         <DATA>                 /*(str[]) 该场景 数据 ，以字符串数组形式输出 */
@@ -246,49 +255,59 @@
 #<COMMAND>               /* 命令数据块 开始*/
 //--------------------------------------------------------------------------------------------------------------
     
-    <COMMAND TABLE COUNT>  /*(int) 总共表数量 */
+    <COMMAND TABLE GROUP COUNT>  /*(int) 表集合数量 */
     
-    #<TABLE>               /* 表数据块 开始 */
+    #<TABLE GROUP>                /* 表集合　开始*/
+    
+		<IGNORE>               /*忽略指定名字的表集合，后面跟表集合名字，可以指定多项，也可以用通配符(?=一个字符,*=一串字符)*/
         
-        <TABLE INDEX>          /* (int)该表编号 */
-        <NAME>                 /* (int)表名字 */
-        <COLUMN COUNT>         /* (int)列数量 */
-        <ROW COUNT>            /* (int)行数量 */
-    
-        <TABLE MATRIX>         /*(obj)[][] 表自定义二维数组 */
-        <TABLE MATRIX STR>     /*(str)[][] 表文字二维数组 */
-        <TABLE MATRIX NUM>     /*(int)[][] 表数字二维数组 */
-        <TABLE MATRIX SMART>   /*(ato)[][] 表自动二维数组 (自动判断为数字或者字符) */
+        <TABLE GROUP INDEX>        /*(int) 表集合编号*/
+        <TABLE GROUP NAME>        /*(str) 表集合名字*/
+        <TABLE COUNT>            /*(int) 集合中表的数量 */
         
-        #<COLUMN HEAD>         /* 表列头数据 开始*/
-            <INDEX>                /* (int)列头 号码 */
-            <TEXT>                 /* (str)列头 文本 */
-        #<END COLUMN HEAD>     /* 表列头数据 结束*/
-    
-        #<CELL>                /* 表元素 开始 单独输出 */
-            <ROW INDEX>            /* (int)该元素 行编号（横） */
-            <COLUMN INDEX>         /* (int)该元素 列编号（竖） */
-            <TEXT>                 /* (str)该元素 文本 */
-        #<END CELL>            /* 表元素 结束 */
-    
-        #<COLUMNS>             /* 表列数据 开始 纵向输出 */
-            <INDEX>                /* (int)列 号码 */
-            <ARRAY>                /* (obj)[]列 数据*/
-            <ARRAY STR>            /* (str)[]列 数据*/
-            <ARRAY NUM>            /* (int)[]列 数据*/
-            <ARRAY SMART>          /* (ato)[]列 数据*/
-        #<END COLUMNS>         /* 表列数据 结束*/
+        #<TABLE>                /* 表数据块 开始 */
+            
+            <TABLE INDEX>          /* (int)该表编号 */
+            <TABLE NAME>           /* (int)表名字 */
+            <COLUMN COUNT>         /* (int)列数量 */
+            <ROW COUNT>            /* (int)行数量 */
         
-        #<ROWS>                /* 表行数据 开始 横向输出 */
-            <INDEX>                /* (int)行 号码 */
-            <ARRAY>                /* (obj)[]行 数据*/
-            <ARRAY STR>            /* (str)[]行 数据*/
-            <ARRAY NUM>            /* (int)[]行 数据*/
-            <ARRAY SMART>          /* (ato)[]行 数据*/
-        #<END ROWS>            /* 表行数据 结束*/
+            <TABLE MATRIX>         /*(obj)[][] 表自定义二维数组 */
+            <TABLE MATRIX STR>     /*(str)[][] 表文字二维数组 */
+            <TABLE MATRIX NUM>     /*(int)[][] 表数字二维数组 */
+            <TABLE MATRIX SMART>   /*(ato)[][] 表自动二维数组 (自动判断为数字或者字符) */
+            
+            #<COLUMN HEAD>         /* 表列头数据 开始*/
+                <INDEX>                /* (int)列头 号码 */
+                <TEXT>                 /* (str)列头 文本 */
+            #<END COLUMN HEAD>     /* 表列头数据 结束*/
         
-    
-    #<END TABLE>           /* 表数据块 结束 */
+            #<CELL>                /* 表元素 开始 单独输出 */
+                <ROW INDEX>            /* (int)该元素 行编号（横） */
+                <COLUMN INDEX>         /* (int)该元素 列编号（竖） */
+                <TEXT>                 /* (str)该元素 文本 */
+            #<END CELL>            /* 表元素 结束 */
+        
+            #<COLUMNS>             /* 表列数据 开始 纵向输出 */
+                <INDEX>                /* (int)列 号码 */
+                <ARRAY>                /* (obj)[]列 数据*/
+                <ARRAY STR>            /* (str)[]列 数据*/
+                <ARRAY NUM>            /* (int)[]列 数据*/
+                <ARRAY SMART>          /* (ato)[]列 数据*/
+            #<END COLUMNS>         /* 表列数据 结束*/
+            
+            #<ROWS>                /* 表行数据 开始 横向输出 */
+                <INDEX>                /* (int)行 号码 */
+                <ARRAY>                /* (obj)[]行 数据*/
+                <ARRAY STR>            /* (str)[]行 数据*/
+                <ARRAY NUM>            /* (int)[]行 数据*/
+                <ARRAY SMART>          /* (ato)[]行 数据*/
+            #<END ROWS>            /* 表行数据 结束*/
+            
+        
+        #<END TABLE>           /* 表数据块 结束 */
+        
+    #<END TABLE GROUP>        /* 表集合　结束*/
      
 //--------------------------------------------------------------------------------------------------------------
 #<END COMMAND>           /* 命令数据块 结束*/ 

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImagesForm));
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
@@ -70,6 +71,9 @@
             this.toolStripButton5 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton11 = new System.Windows.Forms.ToolStripButton();
             this.panel5 = new System.Windows.Forms.Panel();
+            this.clipMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.编辑ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButton15 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
@@ -86,6 +90,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             this.statusStrip2.SuspendLayout();
             this.toolStrip2.SuspendLayout();
+            this.clipMenu.SuspendLayout();
             this.SuspendLayout();
             // 
             // splitContainer2
@@ -395,6 +400,7 @@
             this.toolStripButton9,
             this.toolStripButton12,
             this.toolStripButton13,
+            this.toolStripButton15,
             this.toolStripButton10,
             this.toolStripButton5,
             this.toolStripButton11});
@@ -526,6 +532,33 @@
             this.panel5.Size = new System.Drawing.Size(718, 26);
             this.panel5.TabIndex = 0;
             // 
+            // clipMenu
+            // 
+            this.clipMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.编辑ToolStripMenuItem});
+            this.clipMenu.Name = "clipMenu";
+            this.clipMenu.Size = new System.Drawing.Size(123, 26);
+            this.clipMenu.Text = "clipMenu";
+            // 
+            // 编辑ToolStripMenuItem
+            // 
+            this.编辑ToolStripMenuItem.Name = "编辑ToolStripMenuItem";
+            this.编辑ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.编辑ToolStripMenuItem.Text = "编辑键值";
+            this.编辑ToolStripMenuItem.Click += new System.EventHandler(this.编辑ToolStripMenuItem_Click);
+            // 
+            // toolStripButton15
+            // 
+            this.toolStripButton15.CheckOnClick = true;
+            this.toolStripButton15.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton15.Image = global::CellGameEdit.Resource1.Image16;
+            this.toolStripButton15.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton15.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton15.Name = "toolStripButton15";
+            this.toolStripButton15.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton15.Text = "显示键值";
+            this.toolStripButton15.Click += new System.EventHandler(this.toolStripButton15_Click);
+            // 
             // ImagesForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -562,6 +595,7 @@
             this.statusStrip2.PerformLayout();
             this.toolStrip2.ResumeLayout(false);
             this.toolStrip2.PerformLayout();
+            this.clipMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -609,5 +643,8 @@
         private System.Windows.Forms.ToolStripMenuItem 从目录替换ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 从左边替换ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 删除ToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip clipMenu;
+        private System.Windows.Forms.ToolStripMenuItem 编辑ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButton15;
     }
 }

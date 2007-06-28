@@ -14,5 +14,10 @@ namespace CellGameEdit
         {
             InitializeComponent();
         }
+
+        private void dataGridView1_ColumnHeaderMouseClick(object sender, DataGridViewCellMouseEventArgs e)
+        {
+
+        }
     }
 }

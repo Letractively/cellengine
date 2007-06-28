@@ -30,16 +30,23 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CommandForm));
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.dataGridMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton3 = new System.Windows.Forms.ToolStripDropDownButton();
             this.添加表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.重命名当前表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.删除当前表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.文本ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripDropDownButton2 = new System.Windows.Forms.ToolStripDropDownButton();
-            this.查看设置ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.表头样式 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButton4 = new System.Windows.Forms.ToolStripButton();
             this.columnMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重命名列ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,40 +55,12 @@
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.dataLable = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tableMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.重命名表头ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.删除表ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.dataGridMenu.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.columnMenu.SuspendLayout();
             this.rowMenu.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.tabControl1.SuspendLayout();
-            this.tabPage1.SuspendLayout();
-            this.tableMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            this.dataGridView1.AllowUserToOrderColumns = true;
-            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
-            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(632, 350);
-            this.dataGridView1.TabIndex = 0;
-            this.dataGridView1.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
-            this.dataGridView1.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
-            this.dataGridView1.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
-            this.dataGridView1.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnDisplayIndexChanged);
-            this.dataGridView1.ColumnAdded += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnAdded);
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // dataGridMenu
             // 
@@ -95,14 +74,19 @@
             this.属性ToolStripMenuItem.Name = "属性ToolStripMenuItem";
             this.属性ToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
             this.属性ToolStripMenuItem.Text = "属性";
-            this.属性ToolStripMenuItem.Click += new System.EventHandler(this.属性ToolStripMenuItem_Click);
             // 
             // toolStrip1
             // 
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton3,
             this.toolStripDropDownButton1,
-            this.toolStripDropDownButton2});
+            this.toolStripDropDownButton2,
+            this.toolStripSeparator1,
+            this.toolStripButton1,
+            this.toolStripButton2,
+            this.toolStripSeparator2,
+            this.toolStripButton3,
+            this.toolStripButton4});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(646, 25);
@@ -113,7 +97,9 @@
             // 
             this.toolStripDropDownButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.添加表ToolStripMenuItem});
+            this.添加表ToolStripMenuItem,
+            this.重命名当前表ToolStripMenuItem,
+            this.删除当前表ToolStripMenuItem});
             this.toolStripDropDownButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton3.Image")));
             this.toolStripDropDownButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton3.Name = "toolStripDropDownButton3";
@@ -123,9 +109,27 @@
             // 添加表ToolStripMenuItem
             // 
             this.添加表ToolStripMenuItem.Name = "添加表ToolStripMenuItem";
-            this.添加表ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
+            this.添加表ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.N)));
+            this.添加表ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
             this.添加表ToolStripMenuItem.Text = "添加表";
             this.添加表ToolStripMenuItem.Click += new System.EventHandler(this.添加表ToolStripMenuItem_Click);
+            // 
+            // 重命名当前表ToolStripMenuItem
+            // 
+            this.重命名当前表ToolStripMenuItem.Name = "重命名当前表ToolStripMenuItem";
+            this.重命名当前表ToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.R)));
+            this.重命名当前表ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.重命名当前表ToolStripMenuItem.Text = "重命名当前表";
+            this.重命名当前表ToolStripMenuItem.Click += new System.EventHandler(this.重命名当前表ToolStripMenuItem_Click);
+            // 
+            // 删除当前表ToolStripMenuItem
+            // 
+            this.删除当前表ToolStripMenuItem.Name = "删除当前表ToolStripMenuItem";
+            this.删除当前表ToolStripMenuItem.Size = new System.Drawing.Size(215, 22);
+            this.删除当前表ToolStripMenuItem.Text = "删除当前表";
+            this.删除当前表ToolStripMenuItem.Click += new System.EventHandler(this.删除当前表ToolStripMenuItem_Click);
             // 
             // toolStripDropDownButton1
             // 
@@ -150,19 +154,73 @@
             // 
             this.toolStripDropDownButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.toolStripDropDownButton2.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.查看设置ToolStripMenuItem});
+            this.表头样式});
             this.toolStripDropDownButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton2.Image")));
             this.toolStripDropDownButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton2.Name = "toolStripDropDownButton2";
             this.toolStripDropDownButton2.Size = new System.Drawing.Size(44, 22);
             this.toolStripDropDownButton2.Text = "配置";
             // 
-            // 查看设置ToolStripMenuItem
+            // 表头样式
             // 
-            this.查看设置ToolStripMenuItem.Name = "查看设置ToolStripMenuItem";
-            this.查看设置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.查看设置ToolStripMenuItem.Text = "查看设置";
-            this.查看设置ToolStripMenuItem.Click += new System.EventHandler(this.查看设置ToolStripMenuItem_Click);
+            this.表头样式.Name = "表头样式";
+            this.表头样式.Size = new System.Drawing.Size(122, 22);
+            this.表头样式.Text = "表头样式";
+            this.表头样式.DropDownOpening += new System.EventHandler(this.表头样式_DropDownOpening);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton1.Image = global::CellGameEdit.Resource1.Image32;
+            this.toolStripButton1.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton1.Text = "当前表左移";
+            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            // 
+            // toolStripButton2
+            // 
+            this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton2.Image = global::CellGameEdit.Resource1.Image33;
+            this.toolStripButton2.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton2.Name = "toolStripButton2";
+            this.toolStripButton2.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton2.Text = "当前表右移";
+            this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton3.Image = global::CellGameEdit.Resource1.Image65;
+            this.toolStripButton3.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton3.Text = "当前列左移";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
+            // 
+            // toolStripButton4
+            // 
+            this.toolStripButton4.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButton4.Image = global::CellGameEdit.Resource1.Image64;
+            this.toolStripButton4.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.toolStripButton4.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton4.Name = "toolStripButton4";
+            this.toolStripButton4.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButton4.Text = "当前列右移";
+            this.toolStripButton4.Click += new System.EventHandler(this.toolStripButton4_Click);
             // 
             // columnMenu
             // 
@@ -218,46 +276,13 @@
             // 
             // tabControl1
             // 
-            this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.HotTrack = true;
             this.tabControl1.Location = new System.Drawing.Point(0, 25);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
             this.tabControl1.Size = new System.Drawing.Size(646, 382);
             this.tabControl1.TabIndex = 4;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.dataGridView1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(638, 356);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "表1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tableMenu
-            // 
-            this.tableMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.重命名表头ToolStripMenuItem,
-            this.删除表ToolStripMenuItem});
-            this.tableMenu.Name = "dataGridMenu";
-            this.tableMenu.Size = new System.Drawing.Size(153, 70);
-            // 
-            // 重命名表头ToolStripMenuItem
-            // 
-            this.重命名表头ToolStripMenuItem.Name = "重命名表头ToolStripMenuItem";
-            this.重命名表头ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.重命名表头ToolStripMenuItem.Text = "重命名表头";
-            this.重命名表头ToolStripMenuItem.Click += new System.EventHandler(this.重命名表头ToolStripMenuItem_Click);
-            // 
-            // 删除表ToolStripMenuItem
-            // 
-            this.删除表ToolStripMenuItem.Name = "删除表ToolStripMenuItem";
-            this.删除表ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.删除表ToolStripMenuItem.Text = "删除表";
-            this.删除表ToolStripMenuItem.Click += new System.EventHandler(this.删除表ToolStripMenuItem_Click);
             // 
             // CommandForm
             // 
@@ -272,7 +297,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "CommandForm";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CommandForm_FormClosing);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.dataGridMenu.ResumeLayout(false);
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
@@ -280,9 +304,6 @@
             this.rowMenu.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.tabControl1.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
-            this.tableMenu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -290,7 +311,6 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.ContextMenuStrip dataGridMenu;
         private System.Windows.Forms.ToolStripMenuItem 属性ToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
@@ -304,13 +324,17 @@
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel dataLable;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton2;
-        private System.Windows.Forms.ToolStripMenuItem 查看设置ToolStripMenuItem;
-        private System.Windows.Forms.TabControl tabControl1;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ToolStripMenuItem 表头样式;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton3;
         private System.Windows.Forms.ToolStripMenuItem 添加表ToolStripMenuItem;
-        private System.Windows.Forms.ContextMenuStrip tableMenu;
-        private System.Windows.Forms.ToolStripMenuItem 重命名表头ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem 删除表ToolStripMenuItem;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.ToolStripMenuItem 重命名当前表ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 删除当前表ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButton2;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
+        private System.Windows.Forms.ToolStripButton toolStripButton4;
     }
 }

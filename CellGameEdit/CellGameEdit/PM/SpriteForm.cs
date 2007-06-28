@@ -16,7 +16,7 @@ namespace CellGameEdit.PM
 {
 
     [Serializable]
-    public partial class SpriteForm : Form, ISerializable 
+    public partial class SpriteForm : Form, ISerializable ,IEditForm
     {
         public String id;
 
@@ -184,7 +184,15 @@ namespace CellGameEdit.PM
                 MessageBox.Show(err.StackTrace + "  at  " +err.Message);
             }
         }
+        public String getID()
+        {
+            return id;
+        }
 
+        public Form getForm()
+        {
+            return this;
+        }
         public void ChangeSuper(ArrayList images)
         {
             Hashtable imagesHT = new Hashtable();

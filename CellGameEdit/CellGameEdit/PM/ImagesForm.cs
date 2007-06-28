@@ -17,14 +17,14 @@ namespace CellGameEdit.PM
 
 
     [Serializable]
-    public partial class ImagesForm : Form, ISerializable
+    public partial class ImagesForm : Form, ISerializable , IEditForm
     {
         public String id;
 
         int CellW = 16;
         int CellH = 16;
         public ArrayList dstImages;
-
+        public ArrayList dstDataKeys;
 
         //[NoneSerializable]
         javax.microedition.lcdui.Image srcImage;
@@ -36,9 +36,9 @@ namespace CellGameEdit.PM
         int srcQY;
         int srcSize = 1;
 
-        
 
-
+        System.Drawing.Color backColor = System.Drawing.Color.Magenta;
+        System.Drawing.Color keyColor = System.Drawing.Color.MediumBlue;
         
         
 
@@ -50,6 +50,7 @@ namespace CellGameEdit.PM
             CellW = 16;
             CellH = 16;
             dstImages = new ArrayList();
+            dstDataKeys = new ArrayList();
             toolStripTextBox1.Text = CellW.ToString();
             toolStripTextBox2.Text = CellH.ToString();
 
@@ -100,6 +101,18 @@ namespace CellGameEdit.PM
                     for (int i = 0; i < output.Count; i++)
                     {
                         outK.Add(false);
+                    }
+                }
+                try
+                {
+                    dstDataKeys = (ArrayList)info.GetValue("dstDataKeys", typeof(ArrayList));
+                }
+                catch (Exception err)
+                {
+                    dstDataKeys = new ArrayList();
+                    for (int i = 0; i < output.Count; i++)
+                    {
+                        dstDataKeys.Add("");
                     }
                 }
                 dstImages = new ArrayList();
@@ -228,6 +241,8 @@ namespace CellGameEdit.PM
                 info.AddValue("outX", outX);
                 info.AddValue("outY", outY);
                 info.AddValue("outK",outK);
+
+                info.AddValue("dstDataKeys", dstDataKeys);
             }
             catch (Exception err)
             {
@@ -362,17 +377,17 @@ namespace CellGameEdit.PM
                                 string Y = getDstImage(i).killed ? "0" : getDstImage(i).y.ToString();
                                 string W = getDstImage(i).killed ? "0" : getDstImage(i).getWidth().ToString();
                                 string H = getDstImage(i).killed ? "0" : getDstImage(i).getHeight().ToString();
-
+                                string DATA = getDstImage(i).killed ? "" : (String)dstDataKeys[i];
                                 clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
-                                    new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
-                                    new string[] { i.ToString(), X, Y, W, H }
+                                    new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" ,"<DATA>"},
+                                    new string[] { i.ToString(), X, Y, W, H ,DATA}
                                     );
                             }
                             else
                             {
                                 clips[i] = Util.replaceKeywordsScript(images, "#<CLIP>", "#<END CLIP>",
-                                       new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" },
-                                       new string[] { i.ToString(), "0", "0", "0", "0" }
+                                       new string[] { "<INDEX>", "<X>", "<Y>", "<W>", "<H>" ,"<DATA>"},
+                                       new string[] { i.ToString(), "0", "0", "0", "0" ,""}
                                        );
                             }
                         }
@@ -406,8 +421,6 @@ namespace CellGameEdit.PM
             }
         }
 
-   
-
 
         private void ImagesForm_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -422,7 +435,15 @@ namespace CellGameEdit.PM
 
         }
 
-        
+        public String getID()
+        {
+            return id;
+        }
+
+        public Form getForm()
+        {
+            return this;
+        }
 
         public void setSrcImage()
         {
@@ -475,6 +496,7 @@ namespace CellGameEdit.PM
                 }
             }
             dstImages.Add(img);
+            dstDataKeys.Add("");
         }
 
         public void addDirImages()
@@ -823,7 +845,15 @@ namespace CellGameEdit.PM
                         g.setColor(0x7fffffff);
                         g.drawRect(x + getDstImage(i).x * dstSize, y + getDstImage(i).y * dstSize, getDstImage(i).getWidth() * dstSize, getDstImage(i).getHeight() * dstSize);
                     }
-                
+                    if (toolStripButton15.Checked)
+                    {
+                        int tx = x + getDstImage(i).x * dstSize;
+                        int ty = y + getDstImage(i).y * dstSize;
+                        g.setColor(0xff, 0x80, 0, 0);
+                        g.drawString((String)dstDataKeys[i], tx, ty+1, 0);
+                        g.setColor(0xff, 0xff, 0, 0);
+                        g.drawString((String)dstDataKeys[i], tx, ty, 0);
+                    }
                 }
             }
         }
@@ -1171,13 +1201,12 @@ namespace CellGameEdit.PM
         }
         private void pictureBox2_MouseDown(object sender, MouseEventArgs e)
         {
+
            
-            if (e.Button == MouseButtons.Left)
-            {
                 System.Drawing.Rectangle dst = new System.Drawing.Rectangle(0, 0, 1, 1);
                 for (int i = 0; i < getDstImageCount(); i++)
                 {
-                    if (getDstImage(i) != null && getDstImage(i).killed==false)
+                    if (getDstImage(i) != null && getDstImage(i).killed == false)
                     {
                         dst.X = getDstImage(i).x;
                         dst.Y = getDstImage(i).y;
@@ -1195,20 +1224,29 @@ namespace CellGameEdit.PM
                             dstRect = dst;
 
                             toolStripStatusLabel1.Text =
-                                "目标Tile：[" + dstSelectIndex + "]" + 
+                                "目标Tile：[" + dstSelectIndex + "]" +
                                 " X=" + dstSelected.x +
                                 " Y=" + dstSelected.y +
                                 " W=" + dstSelected.getWidth() +
-                                " H=" + dstSelected.getHeight() 
-                                
+                                " H=" + dstSelected.getHeight() +
+                                " Key=\"" + ((String)dstDataKeys[dstSelectIndex]) + "\""
                                 ;
 
                             pictureBox2.Refresh();
+
+                            if (e.Button == MouseButtons.Left)
+                            {
+                            }
+                            else if (e.Button == MouseButtons.Right)
+                            {
+                                clipMenu.Show(pictureBox2,e.X,e.Y);
+                            }
+
                             break;
                         }
                     }
                 }
-            }
+            
             
             
         }
@@ -1224,28 +1262,30 @@ namespace CellGameEdit.PM
         {
             if (dstDown)
             {
-                int px = (e.X / dstSize - dstPX);
-                int py = (e.Y / dstSize - dstPY);
-                dstPX = e.X / dstSize;
-                dstPY = e.Y / dstSize;
+               
+                    int px = (e.X / dstSize - dstPX);
+                    int py = (e.Y / dstSize - dstPY);
+                    dstPX = e.X / dstSize;
+                    dstPY = e.Y / dstSize;
 
-                if (moveDstImage(dstSelectIndex, px, py))
-                {
-                    dstRect.X += px;
-                    dstRect.Y += py;
-                }
+                    if (moveDstImage(dstSelectIndex, px, py))
+                    {
+                        dstRect.X += px;
+                        dstRect.Y += py;
+                    }
 
-                toolStripStatusLabel1.Text =
-                               "目标Tile：[" + dstSelectIndex + "]" +
-                               " X=" + dstSelected.x +
-                               " Y=" + dstSelected.y +
-                               " W=" + dstSelected.getWidth() +
-                               " H=" + dstSelected.getHeight()
+                    toolStripStatusLabel1.Text =
+                                   "目标Tile：[" + dstSelectIndex + "]" +
+                                   " X=" + dstSelected.x +
+                                   " Y=" + dstSelected.y +
+                                   " W=" + dstSelected.getWidth() +
+                                   " H=" + dstSelected.getHeight() +
+                                   " Key=\"" + ((String)dstDataKeys[dstSelectIndex]) + "\""
 
-                               ;
+                                   ;
 
-                pictureBox2.Refresh();
-              
+                    pictureBox2.Refresh();
+               
             }
             
         }
@@ -1266,6 +1306,20 @@ namespace CellGameEdit.PM
             toolStripButton12_Click(null,null);
         }
 
+        private void 编辑ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                String name = (String)dstDataKeys[dstSelectIndex];
+                TextDialog nameDialog = new TextDialog(name);
+                if (nameDialog.ShowDialog() == DialogResult.OK)
+                {
+                    dstDataKeys[dstSelectIndex] = nameDialog.getText();
+                    pictureBox2.Refresh();
+                }
+            }
+            catch (Exception err) { }
+        }
 
         //-------------------------------------------------------------------------------------------------------------------------------------
         
@@ -1337,23 +1391,13 @@ namespace CellGameEdit.PM
             this.id = this.Text;
         }
 
-
-      
-
-  
-
-
-
-
-
-       
-
-       
+        private void toolStripButton15_Click(object sender, EventArgs e)
+        {
+            pictureBox2.Refresh();
+        }
 
 
 
 
-
-      
     }
 }
