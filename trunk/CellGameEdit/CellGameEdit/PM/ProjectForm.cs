@@ -62,6 +62,17 @@ namespace CellGameEdit.PM
 
             //treeView1.ExpandAll();
 
+            //Util.checkWildcard("1234", "1234");
+            //Util.checkWildcard("123", "1234");
+            //Util.checkWildcard("1234", "123");
+            //Util.checkWildcard("4321", "1234");
+            //Util.checkWildcard("A?56", "A456");
+            //Util.checkWildcard("A?5?0", "A4530");
+            //Util.checkWildcard("A*", "A456");
+            //Util.checkWildcard("A*5", "A456");
+            //Util.checkWildcard("A*56", "A456");
+            //Util.checkWildcard("A*5?7", "A4567");
+            //Util.checkWildcard("A*5*", "A42543");
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
@@ -373,34 +384,57 @@ namespace CellGameEdit.PM
             {
                 for (int i = 0; i < forms.Count; i++)
                 {
+                    String ignore = Util.getCommandScript(sub,"<IGNORE>");
 
+                    if (ignore != "")
+                    {
+                        
+                        try
+                        {
+                            IEditForm form = ((IEditForm)forms[i]);
+                            if (Util.checkWildcard(ignore, form.getID()) == 0)
+                            {
+                                Console.Write("Ignore : " + ignore);
+                                Console.Write(" : " + form.GetType().ToString() + " : " + form.getID());
+                                Console.WriteLine("");
+                                continue;
+                            }
+                        }
+                        catch (Exception err)
+                        {
+                            Console.Write("Error : " + err.Message);
+                        }
+                        
+                    }
+                   
+                        
                     StringWriter output = new StringWriter();
                     //
                     if (forms[i].GetType().Equals(typeof(ImagesForm)))
                     {
                         ((ImagesForm)forms[i]).OutputCustom(i, sub, output, OutputDirImage, ImageType,ImageTile,ImageTileData,ImageGroup,ImageGroupData);
-                        Console.WriteLine("Output : " + ((ImagesForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                        Console.WriteLine("Output Images : " + ((ImagesForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(MapForm)))
                     {
                         ((MapForm)forms[i]).OutputCustom(i, sub, output);
-                        Console.WriteLine("Output : " + ((MapForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                        Console.WriteLine("Output Map : " + ((MapForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(SpriteForm)))
                     {
                         ((SpriteForm)forms[i]).OutputCustom(i, sub, output);
-                        Console.WriteLine("Output : " + ((SpriteForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                        Console.WriteLine("Output Sprite : " + ((SpriteForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     if (forms[i].GetType().Equals(typeof(WorldForm)))
                     {
                         ((WorldForm)forms[i]).OutputCustom(i, sub, output);
-                        Console.WriteLine("Output : " + ((WorldForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                        Console.WriteLine("Output World : " + ((WorldForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     //
                     if (forms[i].GetType().Equals(typeof(CommandForm)))
                     {
                         ((CommandForm)forms[i]).OutputCustom(i, sub, output);
-                        Console.WriteLine("Output : " + ((CommandForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
+                        Console.WriteLine("Output Command : " + ((CommandForm)forms[i]).id + " -> " + output.ToString().Length + "(Chars)");
                     }
                     scripts.Add(output.ToString());
 
@@ -481,13 +515,13 @@ namespace CellGameEdit.PM
                     do
                     {
                         fix = false;
-                        string table = fillScriptSub(command, "#<TABLE>", "#<END TABLE>", FormsCommands);
+                        string table = fillScriptSub(command, "#<TABLE GROUP>", "#<END TABLE GROUP>", FormsCommands);
                         if (table != null) { command = table; fix = true; }
 
                     } while (fix);
                 
                  command = Util.replaceKeywordsScript(command, "#<COMMAND>", "#<END COMMAND>",
-                      new string[] { "<COMMAND TABLE COUNT>" },
+                      new string[] { "<COMMAND TABLE GROUP COUNT>" },
                       new string[] { FormsCommands.Count.ToString() });
                  script = Util.replaceSubTrunksScript(script, "#<COMMAND>", "#<END COMMAND>", new string[] { command });
              }

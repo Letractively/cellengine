@@ -11,7 +11,7 @@ namespace CellGameEdit.PM
 
         Form getForm();
 
-        System.Drawing.Image getImage();
+        String getID();
 
     }
 }

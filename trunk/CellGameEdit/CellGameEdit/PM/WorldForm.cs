@@ -18,7 +18,7 @@ using System.Runtime.Remoting;
 namespace CellGameEdit.PM
 {
     [Serializable]
-    public partial class WorldForm : Form, ISerializable
+    public partial class WorldForm : Form, ISerializable , IEditForm
     {
         public String id;
         public StringBuilder Data = new StringBuilder();
@@ -261,7 +261,15 @@ namespace CellGameEdit.PM
                 Console.WriteLine(this.id + " : " + err.StackTrace);
             }
         }
-        
+        public String getID()
+        {
+            return id;
+        }
+
+        public Form getForm()
+        {
+            return this;
+        }
         public void ChangeAllUnits(ArrayList maps,ArrayList sprs)
         {
             Hashtable mapsHT = new Hashtable();
@@ -568,6 +576,7 @@ namespace CellGameEdit.PM
             }
         }
 
+ 
 
         private void WorldForm_FormClosing(object sender, FormClosingEventArgs e)
         {

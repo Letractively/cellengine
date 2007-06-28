@@ -14,9 +14,18 @@ using System.IO;
 namespace CellGameEdit.PM
 {
     [Serializable]
-    public partial class CommandForm : Form, ISerializable
+    public partial class CommandForm : Form, ISerializable ,IEditForm
     {
         public string id;
+        
+        ArrayList Tables = new ArrayList();
+        ArrayList Pages = new ArrayList();
+
+        Hashtable tablemap = new Hashtable();
+   
+
+
+//-----------------------------------------------------------------------------------------------------------------------------------
 
         public CommandForm(String name)
         {
@@ -31,252 +40,340 @@ namespace CellGameEdit.PM
         protected CommandForm(SerializationInfo info, StreamingContext context)
         {
             InitializeComponent();
-
+           
+            
             try
             {
-
                 id = (String)info.GetValue("id", typeof(String));
                 this.Text = id;
 
-                ArrayList heads = (ArrayList)info.GetValue("heads", typeof(ArrayList));
-                ArrayList cells = (ArrayList)info.GetValue("cells", typeof(ArrayList));
-                int ColumnsCount = (int)info.GetValue("ColumnsCount", typeof(int));
-                int RowsCount = (int)info.GetValue("RowsCount", typeof(int));
+                int TableCount = (int)info.GetValue("TableCount", typeof(int));
+                ArrayList TableNames = (ArrayList)info.GetValue("TableNames", typeof(ArrayList));
 
-                for (int c = 0; c < ColumnsCount; c++)
+                for (int i = 0; i < TableCount; i++)
                 {
-                    string head = (String)heads[c];
-                    dataGridView1.Columns.Add(head, head);
-                }
+                    String name = (String)TableNames[i];
 
-                for (int r = 0; r < RowsCount; r++)
-                {
-                    string[] row = new string[ColumnsCount];
-                    
+                    appendTable(name);
+
+                    ArrayList heads = (ArrayList)info.GetValue("heads" + i, typeof(ArrayList));
+                    ArrayList cells = (ArrayList)info.GetValue("cells" + i, typeof(ArrayList));
+                    int ColumnsCount = (int)info.GetValue("ColumnsCount" + i, typeof(int));
+                    int RowsCount = (int)info.GetValue("RowsCount" + i, typeof(int));
+
                     for (int c = 0; c < ColumnsCount; c++)
                     {
-                        int i = r * ColumnsCount + c;
-                        row[c] = (String)cells[i];
+                        string head = (String)heads[c];
+                        getTable(i).Columns.Add(c.ToString(), head);
                     }
 
-                    dataGridView1.Rows.Add(row);
+                    for (int r = 0; r < RowsCount; r++)
+                    {
+                        string[] row = new string[ColumnsCount];
+
+                        for (int c = 0; c < ColumnsCount; c++)
+                        {
+                            int ci = r * ColumnsCount + c;
+                            row[c] = (String)cells[ci];
+                        }
+
+                       getTable(i).Rows.Add(row);
+                    }
+                
+
+
                 }
+              
                 
 
             }catch(Exception err){
-          
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message);
             }
         }
 
         [SecurityPermissionAttribute(SecurityAction.Demand, SerializationFormatter = true)]
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
-            info.AddValue("id", id);
+           
+           info.AddValue("id", id);
 
-            ArrayList heads = new ArrayList();
-            ArrayList cells = new ArrayList();
-            int ColumnsCount = this.dataGridView1.Columns.Count;
-            int RowsCount = this.dataGridView1.Rows.Count - 1;
+           info.AddValue("TableCount",getTableCount());
 
-            for (int c = 0; c < ColumnsCount; c++)
-            {
-                string head = getHeadText(c);
-                heads.Add(head);
-            }
+           ArrayList TableNames = new ArrayList();
 
-            for (int r = 0; r < RowsCount; r++)
-            {
-                for (int c = 0; c < this.dataGridView1.Columns.Count; c++)
-                {
-                    int i = r * this.dataGridView1.Columns.Count + c;
-                    string cell = getCellText(r,c);
-                    if (cell == null) cell = "";
-                    cells.Add(cell);
-                }
-            }
+           for (int i = 0; i < getTableCount(); i++)
+           {
+               TableNames.Add(getTableName(i));
 
-            info.AddValue("heads",heads);
-            info.AddValue("cells",cells);
-            info.AddValue("ColumnsCount", ColumnsCount);
-            info.AddValue("RowsCount", RowsCount);
+               ArrayList heads = new ArrayList();
+               ArrayList cells = new ArrayList();
+               int ColumnsCount = getTable(i).Columns.Count;
+               int RowsCount = getTable(i).Rows.Count - 1;
 
+               for (int c = 0; c < ColumnsCount; c++)
+               {
+                   string head = getHeadText(i,c);
+                   heads.Add(head);
+               }
+
+               for (int r = 0; r < RowsCount; r++)
+               {
+                   for (int c = 0; c < getTable(i).Columns.Count; c++)
+                   {
+                       int ci = r * getTable(i).Columns.Count + c;
+                       string cell = getCellText(i, r, c);
+                       if (cell == null) cell = "";
+                       cells.Add(cell);
+                   }
+               }
+
+               info.AddValue("heads" + i, heads);
+               info.AddValue("cells" + i, cells);
+               info.AddValue("ColumnsCount" + i, ColumnsCount);
+               info.AddValue("RowsCount" + i, RowsCount);
+           }
+
+           info.AddValue("TableNames", TableNames);
+           
         }
 
-        public void OutputCustom(int index, String script, System.IO.StringWriter output)
+        public void OutputCustom(int index, String src, System.IO.StringWriter output)
         {
             lock (this)
             {
-                int ColumnsCount = this.dataGridView1.Columns.Count;
-                int RowsCount = this.dataGridView1.Rows.Count - 1;
-
-                String[][] cell_matrix_c_r = new string[ColumnsCount][];
-                for (int c = 0; c < ColumnsCount; c++)
-                {
-                    cell_matrix_c_r[c] = new string[RowsCount];
-                    for (int r = 0; r < RowsCount; r++)
-                    {
-                        cell_matrix_c_r[c][r] = getCellText(r, c);
-                    }
-                }
-
-                String[][] cell_matrix_r_c = new string[RowsCount][];
-                for (int r = 0; r < RowsCount; r++)
-                {
-                    cell_matrix_r_c[r] = new string[ColumnsCount];
-                    for (int c = 0; c < ColumnsCount; c++)
-                    {
-                        cell_matrix_r_c[r][c] = getCellText(r, c);
-                    }
-                }
-
-
+                String tableGroup = src.Substring(0, src.Length);
                 try
                 {
-                    String table = Util.getFullTrunkScript(script, "#<TABLE>", "#<END TABLE>");
-
-                    bool fix = false;
-
-                    // column heads
-                    do
+                    string command = Util.getTopTrunk(tableGroup, "#<TABLE GROUP>", "#<END TABLE GROUP>");
+                    if (command != null)
                     {
-
-                        String[] heads = new string[ColumnsCount];
-                        
-                        for (int c = 0; c < heads.Length; c++)
-                        {
-                            string TEXT = getHeadText(c);
-
-                            heads[c] = Util.replaceKeywordsScript(table, "#<COLUMN HEAD>", "#<END COLUMN HEAD>",
-                                new string[] { "<INDEX>", "<TEXT>"},
-                                new string[] { c.ToString(), TEXT}
-                                );
-                        }
-                        string temp = Util.replaceSubTrunksScript(table, "#<COLUMN HEAD>", "#<END COLUMN HEAD>", heads);
-                        if (temp == null)
+                        bool fix = false;
+                        do
                         {
                             fix = false;
-                        }
-                        else
-                        {
-                            fix = true;
-                            table = temp;
-                        }
-                    } while (fix);
+                            string table = fillScriptSub(command, "#<TABLE>", "#<END TABLE>");
+                            if (table != null) { command = table; fix = true; }
 
-                    // cells
-                    do
-                    {
-                        String[] cells = new string[ColumnsCount * RowsCount];
-                        for (int r = 0; r < RowsCount; r++)
-                        {
-                            for (int c = 0; c < ColumnsCount; c++)
-                            {
-                                int i = r * ColumnsCount + c;
+                        } while (fix);
 
-                                string TEXT = getCellText(r, c);
-                                if (TEXT == null) TEXT = "";
-                                cells[i] = Util.replaceKeywordsScript(table, "#<CELL>", "#<END CELL>",
-                                    new string[] { "<COLUMN INDEX>", "<ROW INDEX>", "<TEXT>" },
-                                    new string[] { c.ToString(), r.ToString(), TEXT }
-                                    );
+                        command = Util.replaceKeywordsScript(command, "#<TABLE GROUP>", "#<END TABLE GROUP>",
+                             new string[] { 
+                            "<TABLE GROUP NAME>", 
+                            "<TABLE GROUP INDEX>",
+                            "<TABLE COUNT>",
+                            },
+                            new string[] { 
+                                this.id, 
+                                index.ToString(),
+                                getTableCount().ToString(),
                             }
-                           
-                        }
-                        string temp = Util.replaceSubTrunksScript(table, "#<CELL>", "#<END CELL>", cells);
-                        if (temp == null)
-                        {
-                            fix = false;
-                        }
-                        else
-                        {
-                            fix = true;
-                            table = temp;
-                        }
-                    } while (fix);
+                            );
+                        tableGroup = Util.replaceSubTrunksScript(tableGroup, "#<TABLE GROUP>", "#<END TABLE GROUP>", new string[] { command });
 
-                    // rows
-                    //#<ROWS>                /* 表行数据 开始 横向输出 */
-                    //    <INDEX>                /* (int)行 号码 */
-                    //    <ARRAY>                /* (obj)[]行 数据*/
-                    //    <ARRAY STR>            /* (str)[]行 数据*/
-                    //    <ARRAY NUM>            /* (int)[]行 数据*/
-                    //    <ARRAY SMART>          /* (ato)[]行 数据*/
-                    //#<END ROWS>            /* 表行数据 结束*/
-                    do
+                        output.WriteLine(tableGroup);
+                    }
+                }
+                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
+
+            }
+        }
+
+        private string fillScriptSub(string src, string start, string end)
+        {
+            string script = src.Substring(0, src.Length);
+            string sub = Util.getTopTrunk(script, start, end);
+            if (sub == null) return null;
+
+            ArrayList scripts = new ArrayList();
+            try
+            {
+                for (int i = 0; i < getTableCount(); i++)
+                {
+                    String node = outputSubTable(i,sub);
+                    scripts.Add(node);
+                }
+            }
+            catch (Exception err) { MessageBox.Show(err.StackTrace + "  at  " + err.Message); }
+
+            script = Util.replaceSubTrunksScript(script, start, end, (string[])scripts.ToArray(typeof(string)));
+
+            return script;
+        }
+
+        private String outputSubTable(int index, String script)
+        {
+          
+            int ColumnsCount = getTable(index).Columns.Count;
+            int RowsCount = getTable(index).Rows.Count - 1;
+
+            String[][] cell_matrix_c_r = new string[ColumnsCount][];
+            for (int c = 0; c < ColumnsCount; c++)
+            {
+                cell_matrix_c_r[c] = new string[RowsCount];
+                for (int r = 0; r < RowsCount; r++)
+                {
+                    cell_matrix_c_r[c][r] = getCellText(index, r, c);
+                }
+            }
+
+            String[][] cell_matrix_r_c = new string[RowsCount][];
+            for (int r = 0; r < RowsCount; r++)
+            {
+                cell_matrix_r_c[r] = new string[ColumnsCount];
+                for (int c = 0; c < ColumnsCount; c++)
+                {
+                    cell_matrix_r_c[r][c] = getCellText(index, r, c);
+                }
+            }
+
+
+            try
+            {
+                String table = Util.getFullTrunkScript(script, "#<TABLE>", "#<END TABLE>");
+
+                bool fix = false;
+
+                // column heads
+                do
+                {
+
+                    String[] heads = new string[ColumnsCount];
+
+                    for (int c = 0; c < heads.Length; c++)
                     {
-                        String[] rows = new string[RowsCount];
-                        for (int r = 0; r < RowsCount; r++)
-                        {
-                            string ARRAY = Util.toArray1D(ref cell_matrix_r_c[r]);
-                            string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_r_c[r]);
-                            string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_r_c[r]);
-                            string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_r_c[r]);
+                        string TEXT = getHeadText(index, c);
 
-                            rows[r] = Util.replaceKeywordsScript(table, "#<ROWS>", "#<END ROWS>",
-                                new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
-                                new string[] { r.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
-                                );
-                        }
-                        string temp = Util.replaceSubTrunksScript(table, "#<ROWS>", "#<END ROWS>", rows);
-                        if (temp == null)
-                        {
-                            fix = false;
-                        }
-                        else
-                        {
-                            fix = true;
-                            table = temp;
-                        }
-                    } while (fix);
-
-
-                    // columns
-                    //#<COLUMNS>             /* 表列数据 开始 纵向输出 */
-                    //    <INDEX>                /* (int)列 号码 */
-                    //    <ARRAY>                /* (obj)[]列 数据*/
-                    //    <ARRAY STR>            /* (str)[]列 数据*/
-                    //    <ARRAY NUM>            /* (int)[]列 数据*/
-                    //    <ARRAY SMART>          /* (ato)[]列 数据*/
-                    //#<END COLUMNS>         /* 表列数据 结束*/
-                    do
+                        heads[c] = Util.replaceKeywordsScript(table, "#<COLUMN HEAD>", "#<END COLUMN HEAD>",
+                            new string[] { "<INDEX>", "<TEXT>" },
+                            new string[] { c.ToString(), TEXT }
+                            );
+                    }
+                    string temp = Util.replaceSubTrunksScript(table, "#<COLUMN HEAD>", "#<END COLUMN HEAD>", heads);
+                    if (temp == null)
                     {
-                        String[] columns = new string[ColumnsCount];
+                        fix = false;
+                    }
+                    else
+                    {
+                        fix = true;
+                        table = temp;
+                    }
+                } while (fix);
+
+                // cells
+                do
+                {
+                    String[] cells = new string[ColumnsCount * RowsCount];
+                    for (int r = 0; r < RowsCount; r++)
+                    {
                         for (int c = 0; c < ColumnsCount; c++)
                         {
-                            string ARRAY = Util.toArray1D(ref cell_matrix_c_r[c]);
-                            string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_c_r[c]);
-                            string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_c_r[c]);
-                            string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_c_r[c]);
+                            int i = r * ColumnsCount + c;
 
-                            columns[c] = Util.replaceKeywordsScript(table, "#<COLUMNS>", "#<END COLUMNS>",
-                                new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
-                                new string[] { c.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
+                            string TEXT = getCellText(index, r, c);
+                            if (TEXT == null) TEXT = "";
+                            cells[i] = Util.replaceKeywordsScript(table, "#<CELL>", "#<END CELL>",
+                                new string[] { "<COLUMN INDEX>", "<ROW INDEX>", "<TEXT>" },
+                                new string[] { c.ToString(), r.ToString(), TEXT }
                                 );
                         }
-                        string temp = Util.replaceSubTrunksScript(table, "#<COLUMNS>", "#<END COLUMNS>", columns);
-                        if (temp == null)
-                        {
-                            fix = false;
-                        }
-                        else
-                        {
-                            fix = true;
-                            table = temp;
-                        }
-                    } while (fix);
-                   
+
+                    }
+                    string temp = Util.replaceSubTrunksScript(table, "#<CELL>", "#<END CELL>", cells);
+                    if (temp == null)
+                    {
+                        fix = false;
+                    }
+                    else
+                    {
+                        fix = true;
+                        table = temp;
+                    }
+                } while (fix);
+
+                // rows
+                //#<ROWS>                /* 表行数据 开始 横向输出 */
+                //    <INDEX>                /* (int)行 号码 */
+                //    <ARRAY>                /* (obj)[]行 数据*/
+                //    <ARRAY STR>            /* (str)[]行 数据*/
+                //    <ARRAY NUM>            /* (int)[]行 数据*/
+                //    <ARRAY SMART>          /* (ato)[]行 数据*/
+                //#<END ROWS>            /* 表行数据 结束*/
+                do
+                {
+                    String[] rows = new string[RowsCount];
+                    for (int r = 0; r < RowsCount; r++)
+                    {
+                        string ARRAY = Util.toArray1D(ref cell_matrix_r_c[r]);
+                        string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_r_c[r]);
+                        string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_r_c[r]);
+                        string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_r_c[r]);
+
+                        rows[r] = Util.replaceKeywordsScript(table, "#<ROWS>", "#<END ROWS>",
+                            new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
+                            new string[] { r.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
+                            );
+                    }
+                    string temp = Util.replaceSubTrunksScript(table, "#<ROWS>", "#<END ROWS>", rows);
+                    if (temp == null)
+                    {
+                        fix = false;
+                    }
+                    else
+                    {
+                        fix = true;
+                        table = temp;
+                    }
+                } while (fix);
+
+
+                // columns
+                //#<COLUMNS>             /* 表列数据 开始 纵向输出 */
+                //    <INDEX>                /* (int)列 号码 */
+                //    <ARRAY>                /* (obj)[]列 数据*/
+                //    <ARRAY STR>            /* (str)[]列 数据*/
+                //    <ARRAY NUM>            /* (int)[]列 数据*/
+                //    <ARRAY SMART>          /* (ato)[]列 数据*/
+                //#<END COLUMNS>         /* 表列数据 结束*/
+                do
+                {
+                    String[] columns = new string[ColumnsCount];
+                    for (int c = 0; c < ColumnsCount; c++)
+                    {
+                        string ARRAY = Util.toArray1D(ref cell_matrix_c_r[c]);
+                        string ARRAY_NUM = Util.toNumberArray1D(ref cell_matrix_c_r[c]);
+                        string ARRAY_STR = Util.toStringArray1D(ref cell_matrix_c_r[c]);
+                        string ARRAY_SMART = Util.toSmartArray1D(ref cell_matrix_c_r[c]);
+
+                        columns[c] = Util.replaceKeywordsScript(table, "#<COLUMNS>", "#<END COLUMNS>",
+                            new string[] { "<INDEX>", "<ARRAY>", "<ARRAY STR>", "<ARRAY NUM>", "<ARRAY SMART>" },
+                            new string[] { c.ToString(), ARRAY, ARRAY_STR, ARRAY_NUM, ARRAY_SMART }
+                            );
+                    }
+                    string temp = Util.replaceSubTrunksScript(table, "#<COLUMNS>", "#<END COLUMNS>", columns);
+                    if (temp == null)
+                    {
+                        fix = false;
+                    }
+                    else
+                    {
+                        fix = true;
+                        table = temp;
+                    }
+                } while (fix);
 
 
 
-                    //matrix
-                    string matrix = Util.toArray2D(ref cell_matrix_r_c);
-                    string strMatrix = Util.toStringArray2D(ref cell_matrix_r_c);
-                    string numMatrix = Util.toNumberArray2D(ref cell_matrix_r_c);
-                    string smartMatrix = Util.toSmartArray2D(ref cell_matrix_r_c);
 
-                    table = Util.replaceKeywordsScript(table, "#<TABLE>", "#<END TABLE>",
-                        new string[] { 
-                            "<NAME>", 
+                //matrix
+                string matrix = Util.toArray2D(ref cell_matrix_r_c);
+                string strMatrix = Util.toStringArray2D(ref cell_matrix_r_c);
+                string numMatrix = Util.toNumberArray2D(ref cell_matrix_r_c);
+                string smartMatrix = Util.toSmartArray2D(ref cell_matrix_r_c);
+
+                table = Util.replaceKeywordsScript(table, "#<TABLE>", "#<END TABLE>",
+                    new string[] { 
+                            "<TABLE NAME>", 
                             "<TABLE INDEX>",
                             "<COLUMN COUNT>",
                             "<ROW COUNT>",
@@ -285,8 +382,8 @@ namespace CellGameEdit.PM
                             "<TABLE MATRIX NUM>",         /*(str)[][] 表数字二维数组 */
                             "<TABLE MATRIX SMART>",       /*(str)[][] 表自动二维数组 */
                         },
-                        new string[] { 
-                            this.id, 
+                    new string[] { 
+                            getTableName(index), 
                             index.ToString(),
                             ColumnsCount.ToString(),
                             RowsCount.ToString(),
@@ -295,14 +392,15 @@ namespace CellGameEdit.PM
                             numMatrix,
                             smartMatrix,
                         }
-                     );
+                 );
 
-                    output.WriteLine(table);
-                    //Console.WriteLine(map);
-                }
-                catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
+                return table;
 
             }
+            catch (Exception err) { Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message); }
+
+            return "";
+
         }
 
         private void CommandForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -314,49 +412,180 @@ namespace CellGameEdit.PM
             }
         }
 
-        private string getCellText(int r,int c)
+        public String getID()
+        {
+            return id;
+        }
+
+        public Form getForm()
+        {
+            return this;
+        }
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+        private int getTableCount()
+        {
+            try
+            {
+                return Pages.Count;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message);
+                return -1;
+            }
+        }
+
+        private DataGridView getTable(TabPage head)
+        {
+            try
+            {
+                DataGridView table = (DataGridView)tablemap[head];
+                return table;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message);
+                return null;
+            }
+        }
+
+        private DataGridView getTable(int index)
+        {
+            try
+            {
+                DataGridView table = (DataGridView)tablemap[tabControl1.TabPages[index]];
+                return table;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message);
+                return null;
+            }
+        }
+
+
+        private String getTableName(int index)
+        {
+            try
+            {
+                return tabControl1.TabPages[index].Text;
+            }
+            catch (Exception err)
+            {
+                Console.WriteLine(this.id + " : " + err.StackTrace + "  at  " + err.Message);
+                return null;
+            }
+        }
+
+        private DataGridView getCurTable()
+        {
+            return getTable(tabControl1.SelectedTab);
+        }
+
+        private TabPage getCurPage()
+        {
+            return tabControl1.SelectedTab;
+        }
+
+        private void addTable(String name)
+        {
+            if (getTableCount() > 0)
+            {
+                appendTable(name);
+
+                for (int c = 0; c < getTable(getTableCount() - 2).Columns.Count; c++)
+                {
+                    string chead = getTable(getTableCount() - 2).Columns[c].HeaderText;
+                    string cname = getTable(getTableCount() - 2).Columns[c].Name;
+                    getTable(getTableCount() - 1).Columns.Add(cname, chead);
+                }
+                getTable(getTableCount() - 1).AutoSizeColumnsMode = getTable(getTableCount() - 2).AutoSizeColumnsMode;
+
+                //for (int r = 0; r < getTable(getTableCount() - 2).Rows.Count-1; r++)
+                //{
+                //    string[] row = new string[getTable(getTableCount() - 2).Columns.Count];
+
+                //    for (int c = 0; c < getTable(getTableCount() - 2).Columns.Count; c++)
+                //    {
+                //        int ci = r * getTable(getTableCount() - 2).Columns.Count + c;
+                //        row[c] = getCellText(getTableCount() - 2, r, c);
+                //    }
+
+                //    getTable(getTableCount() - 1).Rows.Add(row);
+                //}
+                
+
+            }
+            else
+            {
+                appendTable(name);
+            }
+        }
+
+
+        private void appendTable(String name)
+        {
+            //datagridview
+            DataGridView table = new System.Windows.Forms.DataGridView();
+            table.AllowUserToOrderColumns = true;
+            table.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.None;
+            table.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
+            table.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            table.Dock = System.Windows.Forms.DockStyle.Fill;
+            table.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
+            table.Location = new System.Drawing.Point(3, 3);
+            table.Name = name;
+            table.RowTemplate.Height = 23;
+            table.Size = new System.Drawing.Size(632, 350);
+            table.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellClick);
+            table.ColumnHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_ColumnHeaderMouseClick);
+            table.RowHeaderMouseClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.dataGridView1_RowHeaderMouseClick);
+            //table.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.dataGridView1_ColumnDisplayIndexChanged);
+            table.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+
+
+            // tabpage
+            TabPage tabPage = new System.Windows.Forms.TabPage();
+            tabPage.Location = new System.Drawing.Point(4, 22);
+            tabPage.Name = name;
+            tabPage.Padding = new System.Windows.Forms.Padding(3);
+            tabPage.Size = new System.Drawing.Size(638, 356);
+            //tabPage.TabIndex = 0;
+            tabPage.Text = tabPage.Name;
+            //tabPage.UseVisualStyleBackColor = true;
+            //tabPage.ContextMenuStrip = this.tableMenu;
+
+            // data set
+            Tables.Add(table);
+            Pages.Add(tabPage);
+            tablemap.Add(tabPage, table);
+
+            tabPage.Controls.Add(table);
+            tabControl1.Controls.Add(tabPage);
+        }
+
+//-----------------------------------------------------------------------------------------------------------------------------------
+
+
+        private string getCellText(int index,int r,int c)
         {   
             string text = "";
             try
             {
                 int dc = c;
-                if (dataGridView1.Columns[c].DisplayIndex != c)
+                if (getTable(index).Columns[c].DisplayIndex != c)
                 {
-                    foreach (DataGridViewColumn column in dataGridView1.Columns)
+                    foreach (DataGridViewColumn column in getTable(index).Columns)
                     {
                         if (column.DisplayIndex == c)
                         {
-                            dc = dataGridView1.Columns.IndexOf(column);
+                            dc = getTable(index).Columns.IndexOf(column);
                             break;
                         }
                     }
                 }
-               text  = dataGridView1.Rows[r].Cells[dc].Value.ToString();
-            }
-            catch (Exception err) { 
-                text = ""; 
-            }
-            return text;
-        }
-
-        private string getHeadText(int c)
-        {
-            string text = "";
-            try
-            {
-                int dc = c;
-                if (dataGridView1.Columns[c].DisplayIndex != c)
-                {
-                    foreach (DataGridViewColumn column in dataGridView1.Columns)
-                    {
-                        if (column.DisplayIndex == c)
-                        {
-                            dc = dataGridView1.Columns.IndexOf(column);
-                            break;
-                        }
-                    }
-                }
-                text = dataGridView1.Columns[dc].HeaderText;
+                text = getTable(index).Rows[r].Cells[dc].Value.ToString();
             }
             catch (Exception err)
             {
@@ -365,15 +594,60 @@ namespace CellGameEdit.PM
             return text;
         }
 
+        private string getHeadText(int index, int c)
+        {
+            string text = "";
+            try
+            {
+                int dc = c;
+                if (getTable(index).Columns[c].DisplayIndex != c)
+                {
+                    foreach (DataGridViewColumn column in getTable(index).Columns)
+                    {
+                        if (column.DisplayIndex == c)
+                        {
+                            dc = getTable(index).Columns.IndexOf(column);
+                            break;
+                        }
+                    }
+                }
+                text = getTable(index).Columns[dc].HeaderText;
+            }
+            catch (Exception err)
+            {
+                text = "";
+            }
+            return text;
+        }
+
+        private DataGridViewColumn getColumn(int index, int c)
+        {
+            try
+            {
+                int dc = c;
+                if (getTable(index).Columns[c].DisplayIndex != c)
+                {
+                    foreach (DataGridViewColumn column in getTable(index).Columns)
+                    {
+                        if (column.DisplayIndex == c)
+                        {
+                            return column;
+                        }
+                    }
+                }
+                else
+                {
+                    return getTable(index).Columns[c];
+                }
+            }
+            catch (Exception err)
+            {
+            }
+            return null;
+        }
+
 //----------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-        private void 属性ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            PropertyEdit edit = new PropertyEdit(this.dataGridView1);
-            edit.MdiParent = this.MdiParent;
-            edit.Show();
-        }
 
         // add column
         private void 文本ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -382,15 +656,11 @@ namespace CellGameEdit.PM
             TextDialog nameDialog = new TextDialog(name);
             if (nameDialog.ShowDialog() == DialogResult.OK)
             {
-                this.dataGridView1.Columns.Add(nameDialog.getText(), nameDialog.getText());
+                for (int i = 0; i < getTableCount(); i++)
+                {
+                    getTable(i).Columns.Add(getTable(i).ColumnCount.ToString(), nameDialog.getText());
+                }
             }
-
-            
-        }
-
-        private void dataGridView1_ColumnAdded(object sender, DataGridViewColumnEventArgs e)
-        {
-
         }
 
         // delete column
@@ -401,18 +671,50 @@ namespace CellGameEdit.PM
             {
                 PopedColumnIndex = e.ColumnIndex;
                 columnMenu.Show(
-                    dataGridView1,
-                    e.Location.X + dataGridView1.GetColumnDisplayRectangle(e.ColumnIndex, false).Location.X,
-                    e.Location.Y + dataGridView1.GetColumnDisplayRectangle(e.ColumnIndex, false).Location.Y
+                    getCurTable(),
+                    e.Location.X + getCurTable().GetColumnDisplayRectangle(e.ColumnIndex, false).Location.X,
+                    e.Location.Y + getCurTable().GetColumnDisplayRectangle(e.ColumnIndex, false).Location.Y
                     );
             }
+
         }
+        private void dataGridView1_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
+        {
+            try
+            {
+
+                //int dst = e.Column.DisplayIndex;
+                //int src = Int32.Parse(e.Column.Name);
+                //e.Column.Name = dst.ToString();
+
+                //Console.WriteLine(" column=" + dst);
+
+                //for (int i = 0; i < getTableCount(); i++)
+                //{
+                //    if (i != Tables.IndexOf(e.Column.DataGridView))
+                //    {
+                //        getColumn(i, src).DisplayIndex = dst;
+                //    }
+                //}
+
+            }
+            catch (Exception err)
+            {
+            }
+
+
+        }
+
 
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
             {
-                dataGridView1.Columns.RemoveAt(PopedColumnIndex);
+                for (int i = 0; i < getTableCount(); i++)
+                {
+                    getTable(i).Columns.RemoveAt(PopedColumnIndex);
+                }
+                
             }
             catch (Exception err) { }
         }
@@ -421,12 +723,14 @@ namespace CellGameEdit.PM
         {
             try
             {
-                String name = dataGridView1.Columns[PopedColumnIndex].HeaderText;
+                String name = getCurTable().Columns[PopedColumnIndex].HeaderText;
                 TextDialog nameDialog = new TextDialog(name);
                 if (nameDialog.ShowDialog() == DialogResult.OK)
                 {
-                    dataGridView1.Columns[PopedColumnIndex].HeaderText = nameDialog.getText();
-                    dataGridView1.Columns[PopedColumnIndex].Name = nameDialog.getText();
+                    for (int i = 0; i < getTableCount(); i++)
+                    {
+                        getTable(i).Columns[PopedColumnIndex].HeaderText = nameDialog.getText();
+                    }
                 }
                 
             }
@@ -442,9 +746,9 @@ namespace CellGameEdit.PM
             {
                 PopedRowIndex = e.RowIndex;
                 rowMenu.Show(
-                    dataGridView1,
-                    e.Location.X + dataGridView1.GetRowDisplayRectangle(e.RowIndex, false).Location.X,
-                    e.Location.Y + dataGridView1.GetRowDisplayRectangle(e.RowIndex, false).Location.Y
+                    getCurTable(),
+                    e.Location.X + getCurTable().GetRowDisplayRectangle(e.RowIndex, false).Location.X,
+                    e.Location.Y + getCurTable().GetRowDisplayRectangle(e.RowIndex, false).Location.Y
                     );
             }
         }
@@ -453,7 +757,12 @@ namespace CellGameEdit.PM
         {
             try
             {
-                dataGridView1.Rows.RemoveAt(PopedRowIndex);
+                //for (int i = 0; i < getTableCount(); i++)
+                //{
+                    getCurTable().Rows.RemoveAt(PopedRowIndex);
+                //}
+                
+                
             }
             catch (Exception err) { }
         }
@@ -462,72 +771,216 @@ namespace CellGameEdit.PM
         {
 
         }
-
-        //----------------------------------------------------------------------------------------------------------------------------------------------------------
-
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            dataLable.Text = "行=" + e.RowIndex;
+            dataLable.Text = "表=" + tabControl1.TabPages.IndexOf(getCurPage());
+            dataLable.Text += " 行=" + e.RowIndex;
             try
             {
-                dataLable.Text += " 列=" + dataGridView1.Columns[e.ColumnIndex].DisplayIndex;
+                dataLable.Text += " 列=" + getCurTable().Columns[e.ColumnIndex].DisplayIndex;
             }
-            catch (Exception err) {
+            catch (Exception err)
+            {
             }
         }
 
-        private void 查看设置ToolStripMenuItem_Click(object sender, EventArgs e)
+//----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+       
+        private void 表头样式_DropDownOpening(object sender, EventArgs e)
         {
-            PropertyEdit edit = new PropertyEdit(this.dataGridView1);
-            edit.MdiParent = this.MdiParent;
-            edit.Show();
-        }
+            try
+            {
+                 DataGridViewAutoSizeColumnMode[] ColumnModes = new DataGridViewAutoSizeColumnMode[]
+                {
+                    DataGridViewAutoSizeColumnMode.None,
+                    DataGridViewAutoSizeColumnMode.AllCells,
+                    DataGridViewAutoSizeColumnMode.AllCellsExceptHeader,
+                    DataGridViewAutoSizeColumnMode.ColumnHeader,
+                    DataGridViewAutoSizeColumnMode.DisplayedCells,
+                    DataGridViewAutoSizeColumnMode.DisplayedCellsExceptHeader,
+                    DataGridViewAutoSizeColumnMode.Fill,
+                };
 
+                表头样式.DropDownItems.Clear();
 
-
-        private void dataGridView1_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
-        {
-            Console.WriteLine("ColumnIndex = "+e.Column.DisplayIndex);
-
-            //if (dataGridView1.Columns[e.Column.DisplayIndex] != e.Column)
-            //{
-            //    DataGridViewColumn d = dataGridView1.Columns[e.Column.DisplayIndex];
-            //    DataGridViewColumn s = e.Column;
-            //    int src = dataGridView1.Columns.IndexOf(s);
-            //    int dst = dataGridView1.Columns.IndexOf(d);
+                for (int i = 0; i < ColumnModes.Length; i++)
+                {
+                    ToolStripMenuItem item = new ToolStripMenuItem();
+                    item.Text = ColumnModes[i].ToString();
+                    item.AutoSize = true;
+                    item.Click += new EventHandler(表头样式Item_Click);
+                    表头样式.DropDownItems.Add(item);
+                    item.Tag = ColumnModes[i];
+                }
+             
                 
-            //    dataGridView1.Columns.RemoveAt(dst);
-            //    dataGridView1.Columns.Insert(dst,s);
-
-            //    dataGridView1.Columns.RemoveAt(src);
-            //    dataGridView1.Columns.Insert(src, d);
-
-            //    //dataGridView1.Columns[e.Column.DisplayIndex] = e.Column;
-            //    //dataGridView1.Columns[temp.DisplayIndex] = temp;
-
-            //}
+            }
+            catch (Exception err)
+            {
+            }
 
         }
+        private void 表头样式Item_Click(object sender, EventArgs e)
+        {
+            try{
+                ToolStripMenuItem item = (ToolStripMenuItem)sender;
+                for (int i = 0; i < getTableCount(); i++)
+                {
+                    getTable(i).AutoSizeColumnsMode = (DataGridViewAutoSizeColumnsMode)item.Tag;
+                }
 
+            }catch(Exception err){
+            }
+        }
+
+       
         private void 添加表ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            
+            String name = "TableName";
+            TextDialog nameDialog = new TextDialog(name);
+            if (nameDialog.ShowDialog() == DialogResult.OK)
+            {
+                addTable(nameDialog.getText());
+            }
+           
         }
 
-        private void 删除表ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void 重命名当前表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TabPage page = getCurPage();
+                String name = page.Text;
+                TextDialog nameDialog = new TextDialog(name);
+                if (nameDialog.ShowDialog() == DialogResult.OK)
+                {
+                    page.Text = nameDialog.getText();
+                }
+            }
+            catch (Exception err) { }
+        }
+
+        private void 删除当前表ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                TabPage page = getCurPage();
+                DataGridView table = getTable(page);
+
+                Pages.Remove(page);
+                tablemap.Remove(page);
+                Tables.Remove(table);
+
+                try
+                {
+                    tabControl1.SelectedIndex = tabControl1.TabPages.IndexOf(page) - 1;
+                }
+                catch (Exception err) { }
+
+                tabControl1.TabPages.Remove(page);
+
+                
+                
+            }
+            catch (Exception err) { }
+        }
+
+        private void exchageTable(int src,int dst)
+        {
+            tabControl1.SuspendLayout();
+
+            TabPage page1 = tabControl1.TabPages[src];
+            TabPage page2 = tabControl1.TabPages[dst];
+
+            tabControl1.TabPages[src] = page2;
+            tabControl1.TabPages[dst] = page1;
+
+            tabControl1.ResumeLayout();
+        }
+
+        //tablle move left
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            int src = tabControl1.TabPages.IndexOf(tabControl1.SelectedTab);
+            int dst = src - 1;
+            if (src > 0)
+            {
+                exchageTable(src, dst);
+
+                tabControl1.SelectedTab = tabControl1.TabPages[dst];
+            }
+
+            //tabControl1.SelectedTab.
+        }
+
+        //table move right
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            int src = tabControl1.TabPages.IndexOf(tabControl1.SelectedTab);
+            int dst = src + 1;
+            if (dst < tabControl1.TabCount)
+            {
+                exchageTable(src, dst);
+
+                tabControl1.SelectedTab = tabControl1.TabPages[dst];
+            }
+        }
+
+        private void exchageColumn(int src, int dst)
         {
 
+            for (int i = 0; i < getTableCount(); i++)
+            {
+                getTable(i).SuspendLayout();
+
+                DataGridViewColumn column1 = getColumn(i, src);
+                DataGridViewColumn column2 = getColumn(i, dst);
+
+                column1.DisplayIndex = dst;
+                column2.DisplayIndex = src;
+
+                getTable(i).ResumeLayout();
+            }
+            
         }
 
-        private void 重命名表头ToolStripMenuItem_Click(object sender, EventArgs e)
+        //column move left
+        private void toolStripButton3_Click(object sender, EventArgs e)
         {
+            int src = getCurTable().Columns[getCurTable().SelectedCells[0].ColumnIndex].DisplayIndex;
+            int dst = src - 1;
+            if (src > 0)
+            {
+                exchageColumn(src, dst);
+            }
+        }
 
+        //column move right
+        private void toolStripButton4_Click(object sender, EventArgs e)
+        {
+            int src = getCurTable().Columns[getCurTable().SelectedCells[0].ColumnIndex].DisplayIndex;
+            int dst = src + 1;
+            if (dst < getCurTable().ColumnCount)
+            {
+                exchageColumn(src, dst);
+            }
         }
 
 
 
-        /*
-          
+
+
+
+
+
+
+        /* 
+         * this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
    // 
             // tabPage1
             // 

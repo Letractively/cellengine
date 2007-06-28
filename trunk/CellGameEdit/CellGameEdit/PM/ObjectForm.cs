@@ -14,7 +14,7 @@ using System.IO;
 namespace CellGameEdit.PM
 {
     [Serializable]
-    public partial class ObjectForm : Form, ISerializable
+    public partial class ObjectForm : Form, ISerializable , IEditForm
     {
         public string id;
 
@@ -36,6 +36,16 @@ namespace CellGameEdit.PM
         public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("id", id);
+        }
+
+        public String getID()
+        {
+            return id;
+        }
+
+        public Form getForm()
+        {
+            return this;
         }
 
         private void ObjectForm_Load(object sender, EventArgs e)

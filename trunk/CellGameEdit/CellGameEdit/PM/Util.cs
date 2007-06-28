@@ -111,7 +111,56 @@ namespace CellGameEdit.PM
         }
 
 
-       
+        public static int checkWildcard(String wildcard, String str)
+        {
+            try
+            {
+                char[] wc = wildcard.ToCharArray();
+                char[] sc = str.ToCharArray();
+                int wi = 0;
+                int si = 0;
+                int count = Math.Max(sc.Length,wc.Length);
+
+                for (int i = 0; i < count ; i++)
+                {
+                        if (sc[si] == wc[wi])
+                        {
+                            wi++;
+                            si++;
+                            continue;
+                        }
+                        if (wc[wi] == '?')
+                        {
+                            wi++;
+                            si++;
+                            continue;
+                        }
+                        if (wc[wi] == '*')
+                        {
+                            if (wi + 1 < wc.Length && si + 1 < sc.Length && wc[wi + 1] == sc[si + 1])
+                            {
+                                wi++;
+                                si++;
+                            }
+                            else
+                            {
+                                si++;
+                            }
+                            continue;
+                        }
+                        //Console.WriteLine("Wildard False : " + wildcard + " -> " + str);
+                        return 1;
+                    
+                }
+                //Console.WriteLine("Wildard True : " + wildcard + " -> " + str);
+                return 0;
+            }
+            catch (Exception err)
+            {
+                //Console.WriteLine("Wildard Error : " + wildcard + " -> " + str);
+                return -1;
+            }
+        }
 
 
 
@@ -638,11 +687,20 @@ namespace CellGameEdit.PM
             {
                 if (funcTrunk.Contains(FUNC_PARSE_TO_INT))
                 {
-                    Decimal dec = Decimal.Parse(arg.Trim());
-                    Int32 value = (Int32)dec;
-                    ret = value.ToString();
-                    output = ret;
+                    String v = arg.Trim();
+                    if (v != "")
+                    {
+                        Decimal dec = Decimal.Parse(v);
+                        Int32 value = (Int32)dec;
+                        ret = value.ToString();
+                        output = ret;
+                    }
+                    else
+                    {
+                        output = "0";
+                    }
                     return true;
+
                 }
             }
             catch (Exception err)
@@ -661,8 +719,16 @@ namespace CellGameEdit.PM
             {
                 if (funcTrunk.Contains(FUNC_PARSE_TO_DECIMAL))
                 {
-                    ret = Decimal.Parse(arg.Trim()).ToString();
-                    output = ret;
+                    String v = arg.Trim();
+                    if (v != "")
+                    {
+                        ret = Decimal.Parse(v).ToString();
+                        output = ret;
+                    }
+                    else
+                    {
+                        output = "0";
+                    }
                     return true;
                 }
             }
