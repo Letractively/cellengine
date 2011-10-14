@@ -2,14 +2,32 @@
 
 
 = 概述 =
+
 熟悉flash游戏引擎的人都知道，flash游戏开发中主要用2种渲染方式来实现游戏逻辑。
+
 1、显示列表，即显示单位为DisplayObject
+
 2、位图，所有的显示单位都是BitmapData
+
 
 这里不讨论这2种方式哪个好哪个坏，感兴趣的朋友可以搜索"Flash游戏引擎"。比较有名的有pushbutton engine，flixel，FlashPunk等。
 
 
-= Details =
+
+= 位图引擎的实现 =
+
+1、画布
+com.cell.gfx.game.world.CWorld
+画布就是一个位图缓冲区，所有游戏世界种的精灵都存在于此。
+
+2、精灵
+com.cell.gfx.game.world.CWorldSprite
+世界种的一个显示对象，比如一发子弹，一架飞机等等。
+
+3、摄像机
+com.cell.gfx.game.world.CWorldCamera
+如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
+
 
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
