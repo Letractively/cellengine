@@ -5,9 +5,9 @@
 
 熟悉flash游戏引擎的人都知道，flash游戏开发中主要用2种渲染方式来实现游戏逻辑。
 
-1、显示列表，即显示单位为DisplayObject
+  # *显示列表*<br>即显示单位为DisplayObject
 
-2、位图，所有的显示单位都是BitmapData
+  # *位图*<br>所有的显示单位都是BitmapData
 
 
 这里不讨论这2种方式哪个好哪个坏，感兴趣的朋友可以搜索"Flash游戏引擎"。比较有名的有pushbutton engine，flixel，FlashPunk等。
@@ -21,6 +21,7 @@
  * 精灵 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorldSprite.as CWorldSprite]<br>世界种的一个显示对象，比如一发子弹，一架飞机等等。
 
  * 摄像机 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorldCamera.as CWorldCamera]<br>如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
+
 {{{
 CWorld是一个Bitmap的继承类，主要负责将最终渲染结果显示到Sprite里面。
 在CWorld里有一个数组
@@ -50,12 +51,25 @@ protected function renderSprites(g:IGraphics, sprites:Vector.<CWorldSprite>) : v
 	}
 }
 
-CWorldSprite.render，此方法最终会调用到CWorld的bitmapData的copyPixels方法。
-public function copyPixels(sourceBitmapData:BitmapData, sourceRect:Rectangle, destPoint:Point, alphaBitmapData:BitmapData = null, alphaPoint:Point = null, mergeAlpha:Boolean = false):void
-这里的sourceBitmapData就是包含在精灵里的图片资源BitmapData。
-	
+CWorldSprite.render，此方法最终会调用到CWorld的bitmapData的copyPixels方法或draw方法。
+这里的sourceBitmapData就是包含在精灵里的图片资源BitmapData，将精灵的图片复制或绘制到世界的缓冲区里。
+
+以上是实现位图引擎的核心思想和逻辑。
 }}}
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+
+
+== 使画面动起来 ==
+{{{
+位图引擎需要每帧都对缓冲区重绘更新，所以EnterFrame事件可以满足这个需求。
+在主Sprite里，添加EnterFrame的事件监听。将cworld创建出来后添加到Sprite容器里。
+在你的EnterFrame事件里写
+public function update(e:Event) : void 
+{
+	//更新世界中所有精灵的逻辑（比如移动，播放动画帧等等。）
+	cworld.update();
+	//重绘世界所有精灵
+	cworld.render();
+}
+游戏逻辑需要和渲染逻辑分开以适应比如说暂停时的一些功能。
+此时，一个游戏主循环框架就出来了，你只需要管理cworld里所有的精灵的状态来控制游戏逻辑。
+}}}
