@@ -16,19 +16,40 @@
 
 = 位图引擎的实现 =
 
-* 画布
-com.cell.gfx.game.world.CWorld
-画布就是一个位图缓冲区，所有游戏世界种的精灵都存在于此。
+ * 世界 com.cell.gfx.game.world.CWorld<br>世界就是一个画布，位图缓冲区，所有游戏世界种的精灵都存在于此。
 
-* 精灵
-com.cell.gfx.game.world.CWorldSprite
-世界种的一个显示对象，比如一发子弹，一架飞机等等。
+ * 精灵 com.cell.gfx.game.world.CWorldSprite<br>世界种的一个显示对象，比如一发子弹，一架飞机等等。
 
-* 摄像机
-com.cell.gfx.game.world.CWorldCamera
-如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
+ * 摄像机 com.cell.gfx.game.world.CWorldCamera<br>如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
+{{{
+CWorld是一个Bitmap的继承类，主要负责将最终渲染结果显示到Sprite里面。
+在CWorld里有一个数组
+private var _sprites : Vector.<CWorldSprite> = new Vector.<CWorldSprite>();
+该数组实际上就保存了这个世界里的所有的精灵，精灵最终都以BitmapData的形式绘制到CWorld的缓冲区里面。
+对于位图引擎来说，摄像机的作用就是计算所有的精灵应该画到世界缓冲区的什么位置。
 
-
+这个函数就是最终将所有精灵绘制到世界缓冲区上。
+protected function renderSprites(g:IGraphics, sprites:Vector.<CWorldSprite>) : void
+{
+	var x1:int = getCameraX();
+	var y1:int = getCameraY();
+	var x2:int = getCameraX() + getCameraWidth();
+	var y2:int = getCameraY() + getCameraHeight();
+ 			
+	for each (var spr : CWorldSprite in sprites)
+	{
+		if(CMath.intersectRect(
+			spr.x + spr.getAnimates().w_left, 
+			spr.y + spr.getAnimates().w_top, 
+			spr.x + spr.getAnimates().w_right, 
+			spr.y + spr.getAnimates().w_bottom, 
+			x1, y1, x2, y2))
+		{
+			spr.render(g, spr.x - x1, spr.y - y1, spr.getCurrentAnimate(), spr.getCurrentFrame());
+		}
+	}
+}
+}}}
 Add your content here.  Format your content with:
   * Text in *bold* or _italic_
   * Headings, paragraphs, and lists
