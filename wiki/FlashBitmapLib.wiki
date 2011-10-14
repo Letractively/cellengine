@@ -1,0 +1,17 @@
+#summary Flash位图引擎解决方案
+
+
+= 概述 =
+熟悉flash游戏引擎的人都知道，flash游戏开发中主要用2种渲染方式来实现游戏逻辑。
+1、显示列表，即显示单位为DisplayObject
+2、位图，所有的显示单位都是BitmapData
+
+这里不讨论这2种方式哪个好哪个坏，感兴趣的朋友可以搜索"Flash游戏引擎"。比较有名的有pushbutton engine，flixel，FlashPunk等。
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
