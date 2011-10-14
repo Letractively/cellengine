@@ -16,15 +16,15 @@
 
 = 位图引擎的实现 =
 
-1、画布
+* 画布
 com.cell.gfx.game.world.CWorld
 画布就是一个位图缓冲区，所有游戏世界种的精灵都存在于此。
 
-2、精灵
+* 精灵
 com.cell.gfx.game.world.CWorldSprite
 世界种的一个显示对象，比如一发子弹，一架飞机等等。
 
-3、摄像机
+* 摄像机
 com.cell.gfx.game.world.CWorldCamera
 如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
 
