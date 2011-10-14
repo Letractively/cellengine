@@ -20,7 +20,7 @@
 
  * 世界 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorld.as CWorld]<br>世界就是一个画布，位图缓冲区，所有游戏世界种的精灵都存在于此。
 
- * 精灵 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorldSprite.as CWorldSprite]<br>世界种的一个显示对象，比如一发子弹，一架飞机等等。
+ * 精灵 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorldSprite.as CWorldSprite]<br>世界中的一个显示对象，比如一发子弹，一架飞机等等。
 
  * 摄像机 [http://code.google.com/p/cellengine/source/browse/trunk/engine_flash/EngineGFX/src/com/cell/gfx/game/world/CWorldCamera.as CWorldCamera]<br>如果一个世界足够大，那么不可能在一个屏幕里显示所有的精灵，因此需要卷动屏幕显示不同位置的精灵，即卷轴。
 
