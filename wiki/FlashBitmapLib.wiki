@@ -6,7 +6,6 @@
 熟悉flash游戏引擎的人都知道，flash游戏开发中主要用2种渲染方式来实现游戏逻辑。
 
   # *显示列表*<br>即显示单位为DisplayObject
-
   # *位图*<br>所有的显示单位都是BitmapData
 
 
