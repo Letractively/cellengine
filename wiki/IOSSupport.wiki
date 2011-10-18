@@ -1,0 +1,111 @@
+#summary 利用CellEngine创建IOS项目
+
+= 简介 =
+
+CellEngineIOS模块时用OpenGLES和OpenAL开发的2d游戏和声音解决方案。
+（本文阅读对象需要了解IOS的OpenGLES项目）
+引擎代码svn地址
+http://code.google.com/p/cellengine/source/browse/trunk/engine_ios/CellEngineIOS
+
+= 创建IOS项目 =
+ # 创建你的IOS项目<br>选择OpenG LES Application并将CellEngineIOS导入到你的项目里
+ # 初始化项目<br>在你的IOS项目的EAGLView里，找到这几个地方。
+{{{
+- (id)initWithCoder:(NSCoder*)coder
+{
+	// 你的其他的初始化代码 ...
+		
+	// 初始化CellEngine
+	com_cell::ScreenManager::init(new Screens());
+	// 这里的Screens时你的屏幕管理类
+}
+- (void)dealloc 
+{
+	// 清理CellEngine内存
+	com_cell::ScreenManager::destory();
+
+	// 你的其他的清理代码 ...
+}
+- (void)drawView 
+{
+	// 你的重绘方法
+	// Replace the implementation of this method to do your own custom drawing
+	[EAGLContext setCurrentContext:context];
+	glBindFramebufferOES(GL_FRAMEBUFFER_OES, viewFramebuffer);
+    
+	// main update
+	com_cell::getScreenManager()->call_Update([self bounds]);
+	
+	glBindRenderbufferOES(GL_RENDERBUFFER_OES, viewRenderbuffer);
+	[context presentRenderbuffer:GL_RENDERBUFFER_OES];
+	
+	[[NSRunLoop currentRunLoop] runUntilDate: [NSDate distantPast]];
+}
+- (void)stopAnimation
+{
+	// 你的动画暂停事件
+	com_cell::getScreenManager()->call_Pause();
+}
+////////////////////////////////////////////////////////////////////////////////////////////////
+// touch events
+// 触摸事件和重力感应事件的传播
+// pointer pressed
+- (void) touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	/////////////////////////////////////////////////////////////////////////
+	// CELL ENGINE EVENT
+	// system call
+	com_cell::getScreenManager()->call_PointerPressed(touches, self);
+	/////////////////////////////////////////////////////////////////////////
+	
+}
+
+// pointer moved
+- (void) touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	
+	/////////////////////////////////////////////////////////////////////////
+	// CELL ENGINE EVENT
+	// system call
+	com_cell::getScreenManager()->call_PointerDragged(touches, self);
+	/////////////////////////////////////////////////////////////////////////
+	
+}
+
+
+
+// pointer released
+- (void) touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+	/////////////////////////////////////////////////////////////////////////
+	// CELL ENGINE EVENT
+	// system call
+	com_cell::getScreenManager()->call_PointerReleased(touches, self);
+	/////////////////////////////////////////////////////////////////////////
+	
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////
+// accelerometer events
+// 
+- (void)accelerometer:(UIAccelerometer*)accelerometer didAccelerate:(UIAcceleration*)acceleration
+{
+	//Use a basic low-pass filter to only keep the gravity in the accelerometer values
+	//printf("acc : x=%f y=%f z=%f\n",acceleration.x,acceleration.y,acceleration.z);
+	com_cell::Vector3D vector;
+	vector.x = acceleration.x;
+	vector.y = acceleration.y;
+	vector.z = acceleration.z;
+	/////////////////////////////////////////////////////////////////////////
+	// CELL ENGINE EVENT
+	com_cell::getScreenManager()->call_Accelerometer(vector);
+	/////////////////////////////////////////////////////////////////////////
+}
+}}}
+
+
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
